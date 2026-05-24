@@ -1,0 +1,107 @@
+.brutalist-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  font-family: var(--font-mono);
+  overflow: hidden;
+}
+
+.brutalist-container {
+  width: 80vw;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 3rem;
+  border-left: 6px solid var(--border-black);
+  border-right: 6px solid var(--border-black);
+  box-shadow: 16px 0 0 0 rgba(0,0,0,0.1), -16px 0 0 0 rgba(0,0,0,0.1);
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
+}
+
+.brutalist-container::-webkit-scrollbar {
+  display: none;
+}
+
+.masonry-grid {
+  column-count: 4;
+  column-gap: 1.5rem;
+}
+
+@media (max-width: 1200px) {
+  .masonry-grid { column-count: 3; }
+}
+
+@media (max-width: 768px) {
+  .masonry-grid { column-count: 2; }
+  .brutalist-container { width: 95vw; padding: 1.5rem; }
+}
+
+.masonry-item {
+  break-inside: avoid;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.masonry-image-wrapper {
+  position: relative;
+  overflow: hidden;
+  border: 5px solid var(--border-black);
+  box-shadow: 10px 10px 0 0 var(--border-black);
+  /* Spring physics transition */
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+              box-shadow 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+}
+.masonry-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  /* Desaturate slightly to fit the brutalist vibe by default */
+  filter: grayscale(30%) contrast(1.1);
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.6s ease;
+}
+
+/* Interaction: Item jumps aggressively up/left, shadow deepens to ground it */
+.masonry-item:hover .masonry-image-wrapper {
+  transform: translate(-8px, -8px);
+  box-shadow: 18px 18px 0 0 var(--border-black);
+}
+
+/* Interaction: Image zooms subtly and regains full color */
+.masonry-item:hover .masonry-image {
+  transform: scale(1.08);
+  filter: grayscale(0%) contrast(1.15);
+}
+/* Interaction: Satisfying active click state */
+.masonry-image-wrapper:active {
+  transform: translate(0px, 0px);
+  box-shadow: 10px 10px 0 0 var(--border-black);
+  transition: all 0.1s ease;
+}
+
+.masonry-label {
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  background-color: var(--primary);
+  border: 4px solid var(--surface-velvet);
+  padding: 0.5rem 1rem;
+  color: var(--gold);
+  font-family: var(--monospace);
+  font-weight: 800;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  box-shadow: 6px 6px 0 0 var(--sapphire-deep);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(15px) rotate(-3deg);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+/* Interaction: Spring slide-up and snap straight on hover */
+.masonry-item:hover .masonry-label {
+  opacity: 1;
+  transform: translateY(0) rotate(0deg);
+}
