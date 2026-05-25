@@ -4,8 +4,10 @@ import '../assets/styles/Navbar.css';
 
 const NAV_ITEMS = [
   { label: 'Home', path: '/' },
-  { label: 'About', path: '/about' },
-  { label: 'Contact', path: '/contact' }
+  { label: 'Contact', path: '/contact' },
+  { label: 'About', path: '/About' },
+  { label: 'GetInvolve', path: '/GetInvolve' },
+  { label: 'Blog', path: '/Blog' }
 ];
 
 export default function Navbar() {

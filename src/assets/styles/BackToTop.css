@@ -1,0 +1,76 @@
+
+.brutalist-btt {
+  position: fixed;
+  bottom: 2.5rem;
+  right: 2.5rem;
+  z-index: 100;
+  width: 3rem;
+  height: 3rem;
+ 
+  /* Neobrutalist shape */
+  background-color: var(--jade-glow);
+  border: 4px solid var(--border-black);
+  border-radius: 50%; /* Strictly pointy */
+ 
+  /* Centering the icon */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+ 
+  /*
+    The Magic: Double Box-Shadow
+    Shadow 1: The solid black brutalist block
+    Shadow 2: The blurred, ambient jade glow bleeding out behind it
+  */
+  box-shadow:
+    6px 6px 0 0 var(--border-black),
+    0 0 25px 5px rgba(0, 242, 96, 0.4);
+ 
+  /* Hidden state for entry animation */
+  opacity: 0;
+  transform: translateY(80px) rotate(15deg);
+  pointer-events: none;
+ 
+  /* Spring physics transition */
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+/* Scroll reveal state */
+.brutalist-btt.visible {
+  opacity: 1;
+  transform: translateY(0) rotate(0deg);
+  pointer-events: auto;
+}
+/*
+  Micro-interaction: Hover
+  Button pops up and left, solid shadow deepens, glow intensifies and spreads
+*/
+.brutalist-btt:hover {
+  transform: translate(-4px, -4px);
+  box-shadow:
+    10px 10px 0 0 var(--border-black),
+    0 0 35px 10px rgba(0, 242, 96, 0.6);
+}
+/*
+  Micro-interaction: Active (Click)
+  Button slams down to the bottom right, erasing the black offset shadow
+  and compressing the glow. Fast transition for a snappy, tactile feel.
+*/
+.brutalist-btt:active {
+  transform: translate(6px, 6px);
+  box-shadow:
+    0px 0px 0 0 var(--border-black),
+    0 0 10px 2px rgba(0, 242, 96, 0.8);
+  transition: all 0.1s ease;
+}
+/* Icon styling */
+.btt-icon {
+  width: 28px;
+  height: 28px;
+  fill: var(--border-black);
+  /* Slight transition on the icon itself to make it jump on hover */
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.brutalist-btt:hover .btt-icon {
+  transform: translateY(-3px);
+}
