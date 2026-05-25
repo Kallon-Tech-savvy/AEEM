@@ -27,7 +27,9 @@ export default function Footer() {
                 <li><Link to='/'>Home</Link></li>
                 <li><Link to='/about'>About</Link></li>
                 <li><Link to='/contact'>Contact</Link></li>
-                <li><Link to='/toc'>Theory of Change</Link></li>
+                <li><Link to='/Event'>Attend an Event</Link></li>
+                <li><Link to='/GetInvolve'>Get Involve</Link></li>
+                <li><Link to='/Blog'>Blog</Link></li>
               </ul>
             </nav>
           </div>
@@ -36,6 +38,8 @@ export default function Footer() {
             <p className='footer-links__title'>Resources</p>
             <nav aria-label='Footer policies'>
               <ul>
+                <li><Link to='/AwardsandRecognition'>Awards and Recognition</Link></li>
+                <li><Link to='/toc'>Theory of Change</Link></li>
                 <li><Link to='/tos'>Terms of Service</Link></li>
                 <li><Link to='/privacy'>Privacy Policy</Link></li>
               </ul>

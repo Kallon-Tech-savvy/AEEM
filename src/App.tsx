@@ -7,8 +7,6 @@ import Contact from './pages/Contact'
 import About from './pages/About'
 import GetInvolve from './pages/GetInvolve'
 import Event from './pages/Event'
-import Stories from './pages/ImpactStories'
-import Resources from './pages/Resource'
 import Blog from './pages/Blog'
 import Award from './pages/Awards'
 import TOC from './pages/TOC'
@@ -30,9 +28,7 @@ function App() {
           <Route path='/About' element={<About />} />
           <Route path='/Event' element={<Event />} />
           <Route path='/Blog' element={<Blog />} />
-          <Route path='/Resources' element={<Resources />} />
           <Route path='/GetInvolve' element={<GetInvolve />} />
-          <Route path='/Stories' element={<Stories />} />
           <Route path='/AwardsandRecognition' element={<Award />} />
           <Route path='/toc' element={<TOC />} />
           <Route path='/tos' element={<TOS />} />
