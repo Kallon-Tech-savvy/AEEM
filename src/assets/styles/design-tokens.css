@@ -1,0 +1,506 @@
+@layer base, tokens, layout, components, utilities;
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   LAYER: base  (reset + element defaults)
+   ───────────────────────────────────────────────────────────────────────────── */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Prevent layout shift from scrollbar appearing on long pages */
+  html {
+    scrollbar-gutter: stable;
+    color-scheme: dark;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /*
+     * Blueprint grid — declared here (not in a deferred sheet) to prevent
+     * a visible background-color → background-image flash on first paint.
+     */
+    background-image:
+      linear-gradient(rgba(243, 245, 250, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(243, 245, 250, 0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  img {
+    max-width: 100%;
+    display: block;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  ul,
+  ol {
+    list-style: none;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   LAYER: tokens  (custom properties — the single source of truth)
+   ───────────────────────────────────────────────────────────────────────────── */
+@layer tokens {
+  :root {
+    /* Typography */
+    --font-heading : ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-body    : ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono    : ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
+    --font-editorial: Georgia, 'Times New Roman', serif;
+
+    /* Surfaces */
+    --bg-obsidian     : #060913;
+    --surface-velvet  : #0E1322;
+    --surface-elevated: #151C30;
+
+    /* Accents */
+    --champagne-gold: #D4AF37;
+    --silk-white    : #F3F5FA;
+    --sapphire-glow : #3B71F3;
+    --jade-glow     : #62A87C;
+
+    /* Legacy aliases (keep for backwards compat with existing components) */
+    --gold        : #D4AF37;
+    --accent-gold : #D4AF37;
+    --accent-moss : #62A87C;
+    --charcoal    : #0E1322;
+    --warm-cream  : #F6F0E6;
+
+    /* Semantic */
+    --bg        : var(--bg-obsidian);
+    --surface   : var(--surface-velvet);
+    --text      : var(--silk-white);
+    --text-muted: rgba(243, 245, 250, 0.7);
+    --text-soft : rgba(243, 245, 250, 0.45);
+    --text-secondary: rgba(243, 245, 250, 0.6);
+    --text-disabled : rgba(243, 245, 250, 0.35);
+    --stark-border  : rgba(243, 245, 250, 0.15);
+    --glass-border  : rgba(243, 245, 250, 0.08);
+
+    /* Spacing */
+    --space-xs  : 0.5rem;
+    --space-sm  : 1rem;
+    --space-md  : 2rem;
+    --space-lg  : 4rem;
+    --space-xl  : 7rem;
+    --inset-sm  : 1.25rem;
+    --inset-lg  : 3rem;
+    --max-width : 1240px;
+
+    /* Radii — all sharp (neo-brutalist) */
+    --radius-sm  : 0px;
+    --radius-md  : 0px;
+    --radius-lg  : 0px;
+    --radius-pill: 0px;
+
+    /* Shadows */
+    --neo-shadow-sm     : 3px 3px 0px var(--bg-obsidian);
+    --neo-shadow-md     : 6px 6px 0px rgba(6, 9, 19, 0.95);
+    --neo-shadow-lg     : 8px 8px 0px rgba(6, 9, 19, 0.95);
+    --neo-shadow-gold   : 5px 5px 0px var(--champagne-gold);
+    --neo-shadow-sapphire: 5px 5px 0px var(--sapphire-glow);
+    --shadow-soft       : var(--neo-shadow-sm);
+    --elevated-2        : var(--neo-shadow-md);
+
+    /* Transitions — only declared here; not applied until deferred sheets */
+    --transition        : 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-luxury : 400ms cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-fast   : 150ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+    /* Borders */
+    --border-hard  : 2px solid var(--silk-white);
+    --border-subtle: 1px solid var(--stark-border);
+    --border-gold  : 2px solid var(--champagne-gold);
+
+    /* Focus */
+    --focus-ring: 0 0 0 3px var(--champagne-gold);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   LAYER: layout  (structural shells visible on first paint)
+   ───────────────────────────────────────────────────────────────────────────── */
+@layer layout {
+  .App {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  .page-shell {
+    width: min(1180px, calc(100% - 1rem));
+    margin: 0 auto;
+    padding: 3rem 0 2rem;
+    flex: 1;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   LAYER: components  (navbar + hero — both in the initial viewport)
+   ───────────────────────────────────────────────────────────────────────────── */
+@layer components {
+
+  /* ── Navbar ─────────────────────────────────────────────────── */
+  .premium-nav {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: var(--bg);
+    border-bottom: 2px solid var(--champagne-gold);
+    box-shadow: var(--neo-shadow-sm);
+    /*
+     * z-index explicitly below lightbox (999) but above page content.
+     * Lightbox will be deferred — but declaring this here avoids a
+     * stacking-context repaint when lightbox.css loads later.
+     */
+    z-index: 1000;
+  }
+
+  .nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: var(--max-width);
+    height: 4.5rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .nav-brand-lockup {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+  }
+
+  .brand-logo {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 1.2rem;
+    letter-spacing: 0.1em;
+    color: var(--silk-white);
+  }
+
+  .brand-separator {
+    width: 1px;
+    height: 2.2rem;
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .brand-subtext {
+    color: var(--text-soft);
+    font-size: 0.75rem;
+    line-height: 1.3;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+
+  .nav-drawer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    margin-left: 2rem;
+  }
+
+  .nav-menu {
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-list {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nav-link {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-soft);
+    text-decoration: none;
+    position: relative;
+    padding: 0.5rem 0;
+  }
+
+  /* Underline indicator — painted immediately for active route */
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -0.15rem;
+    width: 100%;
+    height: 2px;
+    background: var(--champagne-gold);
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  .nav-link--active::after {
+    transform: scaleX(1);
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+  }
+
+  /*
+   * .nav-cta uses a specific class (not .button-secondary) to avoid
+   * the App.css cascade conflict identified previously.
+   * background + color set here win unconditionally inside this layer.
+   */
+  .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--champagne-gold);
+    background: var(--champagne-gold);
+    color: var(--bg);
+    padding: 0.85rem 1.4rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-radius: 0;
+    box-shadow: var(--neo-shadow-sm);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  /* Mobile toggle — hidden by default; shown via media query below */
+  .nav-mobile-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.35rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    z-index: 1001;
+    padding: 0;
+  }
+
+  .hamburger-line {
+    display: block;
+    width: 1.5rem;
+    height: 2px;
+    background-color: var(--silk-white);
+  }
+
+  /* ── Hero ────────────────────────────────────────────────────── */
+  .hero-panel {
+    position: relative;
+    overflow: hidden;
+    padding: 4rem 2rem 3rem;
+    border: 2px solid var(--champagne-gold);
+    background: linear-gradient(145deg, rgba(10, 14, 22, 0.98), rgba(17, 21, 34, 0.99));
+    box-shadow: var(--neo-shadow-lg);
+  }
+
+  /*
+   * Grid texture inside hero — same paint-avoidance logic as body above.
+   * Inlining prevents a repaint when HeroSection.css loads async.
+   */
+  .hero-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 80px 80px;
+    opacity: 0.14;
+    pointer-events: none;
+  }
+
+  .hero-text {
+    max-width: 720px;
+    margin: 1.75rem 0 2.25rem;
+    font-size: 1.05rem;
+    color: var(--text-soft);
+    line-height: 1.8;
+  }
+
+  /* ── Buttons — only the properties needed to prevent layout shift ── */
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3rem;
+    border: 2px solid transparent;
+    border-radius: 0;
+    padding: 0 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+
+  .button-primary {
+    background: var(--silk-white);
+    color: var(--bg);
+    border-color: var(--champagne-gold);
+    box-shadow: var(--neo-shadow-sm);
+  }
+
+  .button-secondary {
+    background: transparent;
+    color: var(--silk-white);
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+
+  /* ── Eyebrow / section chrome visible on first scroll ── */
+  .eyebrow {
+    font-size: 0.82rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    opacity: 0.95;
+    color: var(--champagne-gold);
+  }
+
+  .cinematic-headline {
+    font-size: clamp(2rem, 5vw, 4rem);
+    line-height: 1.02;
+    margin: 0;
+    max-width: 25ch;
+    text-transform: uppercase;
+    letter-spacing: -0.08em;
+  }
+
+  /* ── Mobile nav layout (structural only — no transitions yet) ── */
+  @media (max-width: 860px) {
+    .brand-subtext,
+    .brand-separator {
+      display: none;
+    }
+
+    .nav-mobile-toggle {
+      display: flex;
+    }
+
+    .nav-drawer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100dvh;
+      padding: 4rem 1.5rem;
+      background: var(--bg);
+      flex-direction: column;
+      justify-content: center;
+      gap: 2rem;
+      /*
+       * Hidden state: opacity + visibility declared here so the menu
+       * doesn't flash open before nav-deferred.css applies transitions.
+       */
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      z-index: 1000;
+    }
+
+    .nav-drawer.drawer--active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .nav-list {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .nav-link {
+      font-size: 1.35rem;
+      text-align: center;
+    }
+
+    .nav-actions {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .nav-cta {
+      width: 100%;
+      max-width: 340px;
+      text-align: center;
+    }
+
+    /* Hamburger → X transform (structural, no animation until deferred loads) */
+    .nav--open .hamburger-line:nth-child(1) {
+      transform: translateY(3.8px) rotate(45deg);
+    }
+
+    .nav--open .hamburger-line:nth-child(2) {
+      transform: translateY(-3.8px) rotate(-45deg);
+    }
+  }
+
+  @media (min-width: 860px) {
+    .hero-panel {
+      padding: 5rem 2.5rem 4rem;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .hero-panel {
+      padding: 3rem 1rem 2.5rem;
+    }
+
+    .hero-text {
+      font-size: 1rem;
+    }
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   LAYER: utilities  (single-purpose helpers, always win — intentionally last)
+   ───────────────────────────────────────────────────────────────────────────── */
+@layer utilities {
+  .gold-text        { color: var(--champagne-gold); }
+  .editorial-text   { font-family: var(--font-editorial); font-style: italic; text-transform: none; color: var(--champagne-gold); }
+  .site-canvas-dark { min-height: 100%; position: relative; }
+
+  /* Reduced motion — global kill-switch, must be in critical path */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}

@@ -1,0 +1,49 @@
+@layer components {
+
+  .nav-link {
+    transition: color var(--saphire-glow), transform var(--transition);
+  }
+
+  .nav-link:hover,
+  .nav-link:focus-visible {
+    color: var(--champagne-gold);
+    transform: translateX(2px);
+  }
+
+  .nav-link::after {
+    transition: transform var(--transition);
+  }
+
+  .nav-cta {
+    transition: transform var(--transition);
+  }
+
+  .nav-cta:hover {
+    transform: translate(-3px, -3px);
+  }
+
+  /* Smooth drawer open/close — deferred because it only matters after first interaction */
+  .nav-drawer {
+    transition:
+      opacity var(--transition),
+      transform var(--transition),
+      visibility var(--transition);
+  }
+
+  .hamburger-line {
+    transition: transform var(--transition), opacity var(--transition);
+  }
+
+  /* Focus-visible ring on toggle button */
+  .nav-mobile-toggle:focus-visible {
+    outline: 3px solid var(--champagne-gold);
+    outline-offset: 2px;
+  }
+
+  /* Nav menu bottom margin — only relevant once drawer is interactive */
+  @media (max-width: 860px) {
+    .nav-menu {
+      margin-bottom: 2rem;
+    }
+  }
+}

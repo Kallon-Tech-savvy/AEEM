@@ -1,0 +1,108 @@
+/*
+ * footer-deferred.css
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Footer is always below the fold — defer completely.
+ * ─────────────────────────────────────────────────────────────────────────────
+ */
+
+@layer components {
+
+  .footer-container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem;
+    background: var(--surface);
+    border: 2px solid var(--champagne-gold);
+    box-shadow: var(--neo-shadow-md);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.75rem;
+  }
+
+  .brand h3 {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    letter-spacing: 0.08em;
+    color: var(--silk-white);
+  }
+
+  .brand h4 {
+    margin: 1rem 0 0;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--champagne-gold);
+  }
+
+  .brand i {
+    display: block;
+    margin-top: 1rem;
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: var(--text-soft);
+  }
+
+  .footer-nav {
+    display: inline-flex;
+    gap: 1.5rem;
+  }
+
+  .footer-links__title {
+    margin: 0 0 1rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--champagne-gold);
+  }
+
+  .footer-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .footer-nav a {
+    color: var(--text-soft);
+    text-decoration: none;
+    transition: color var(--transition), transform var(--transition);
+  }
+
+  .footer-nav a:hover,
+  .footer-nav a:focus-visible {
+    color: var(--silk-white);
+    transform: translateX(2px);
+  }
+
+  footer p {
+    margin: 0;
+    color: var(--text-disabled);
+    font-size: 0.95rem;
+    line-height: 1.8;
+  }
+
+  @media (min-width: 600px) {
+    .footer-grid {
+      grid-template-columns: 1fr 2fr;
+    }
+
+    .footer-nav {
+      justify-content: space-around;
+      grid-column: 2 / 3;
+      grid-row: 2 / 3;
+    }
+
+    footer p {
+      display: flex;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+  }
+}

@@ -1,0 +1,54 @@
+/*
+ * partner-deferred.css
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Partner logo strip with scroll animation.
+ * Contains will-change and @keyframes — deferring avoids blocking the parser
+ * on animation machinery the user won't see until they scroll.
+ * ─────────────────────────────────────────────────────────────────────────────
+ */
+
+@layer components {
+
+  .partner-strip-wrap {
+    margin-top: 2rem;
+    overflow: hidden;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), transparent);
+  }
+
+  .partner-strip {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    animation: scroll-left 20s linear infinite;
+    will-change: transform;
+  }
+
+  .partner-item {
+    flex: 0 0 auto;
+  }
+
+  .partner-tile svg {
+    display: block;
+  }
+
+  @keyframes scroll-left {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .partner-strip {
+      animation: none;
+      overflow-x: auto;
+      will-change: auto;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .partner-strip { gap: 0.6rem; padding: 0.6rem; }
+    .partner-tile svg { width: 86px; height: 36px; }
+  }
+}

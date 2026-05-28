@@ -1,0 +1,303 @@
+/*
+ * sections-deferred.css
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Everything below the hero fold: section headings, cards, forms,
+ * metrics, partner strip, FAQ, and shared layout helpers.
+ * ─────────────────────────────────────────────────────────────────────────────
+ */
+
+@layer layout {
+
+  .section-block {
+    margin-top: 3rem;
+  }
+
+  .structural-alignment-zone {
+    padding-top: 3rem;
+  }
+
+  .alignment-minimal {
+    padding-bottom: 4rem;
+  }
+
+  .bento-impact-strip {
+    padding: 1.5rem 0;
+  }
+
+  .visual-frame {
+    position: relative;
+    z-index: 0;
+  }
+
+  .premium-editorial-grid {
+    display: grid;
+    gap: 3rem;
+  }
+
+  .spotlight-grid,
+  .cards-grid,
+  .media-grid,
+  .faq-grid {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 1.75rem;
+  }
+
+  .cards-grid,
+  .spotlight-grid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+
+  .hero-metrics,
+  .metric-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0 0;
+  }
+}
+
+@layer components {
+
+  /* ── Section headings ────────────────────────────────────────── */
+  .section-heading {
+    display: grid;
+    gap: 0.9rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-heading--center {
+    text-align: center;
+  }
+
+  .section-heading h2 {
+    margin: 0;
+    font-size: clamp(2rem, 3vw, 2.75rem);
+    line-height: 1.04;
+    color: var(--champagne-gold);
+    text-transform: uppercase;
+  }
+
+  .section-heading p {
+    max-width: 720px;
+    color: var(--silk-white);
+    margin: 0;
+  }
+
+  /* ── Metrics ─────────────────────────────────────────────────── */
+  .impact-badge {
+    padding: 1.6rem 1.5rem;
+    border: 2px solid rgba(212, 175, 55, 0.25);
+    background: rgba(15, 18, 28, 0.9);
+    box-shadow: var(--neo-shadow-sm);
+  }
+
+  .impact-badge strong {
+    display: block;
+    font-size: 2rem;
+    line-height: 1.05;
+    margin-bottom: 0.55rem;
+    color: var(--champagne-gold);
+  }
+
+  .impact-badge span {
+    color: var(--text-soft);
+  }
+
+  /* ── Cards ───────────────────────────────────────────────────── */
+  .info-card,
+  .layer-card,
+  .bot-card,
+  .contact-panel,
+  .feature-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    border-radius: 0;
+    padding: 1.75rem;
+    box-shadow: 0 10px 0 rgba(0, 0, 0, 0.18);
+  }
+
+  .info-card h3,
+  .feature-card h3,
+  .bot-card h3 {
+    margin: 0 0 0.9rem;
+    color: var(--silk-white);
+  }
+
+  .card-text-muted,
+  .info-card p,
+  .feature-card p,
+  .contact-panel p {
+    color: var(--text-soft);
+    margin: 0;
+    line-height: 1.7;
+  }
+
+  .dynamic-luxury-cards > * {
+    min-height: 180px;
+  }
+
+  /* Hover interaction for cards */
+  .micro-glow-interaction {
+    transition:
+      transform var(--transition),
+      box-shadow var(--transition),
+      border-color var(--transition);
+  }
+
+  .micro-glow-interaction:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 0 8px 0 rgba(212, 175, 55, 0.18);
+    border-color: rgba(212, 175, 55, 0.3);
+  }
+
+  /* ── FAQ ─────────────────────────────────────────────────────── */
+  .faq-item {
+    background: rgba(255, 255, 255, 0.04);
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    padding: 1.75rem;
+    box-shadow: 0 10px 0 rgba(0, 0, 0, 0.18);
+    transition: transform var(--transition), box-shadow var(--transition);
+  }
+
+  .faq-item:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 0 8px 0 rgba(0, 0, 0, 0.18);
+  }
+
+  .faq-item summary {
+    cursor: pointer;
+    font-size: 1.03rem;
+    font-weight: 700;
+    outline: none;
+    position: relative;
+    padding-right: 1.75rem;
+    list-style: none;
+  }
+
+  .faq-item summary::marker { display: none; }
+
+  .faq-item summary::after {
+    content: '+';
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: var(--text-soft);
+    transition: transform var(--transition);
+  }
+
+  .faq-item[open] summary::after {
+    transform: rotate(45deg);
+  }
+
+  .faq-item p {
+    color: var(--text-soft);
+    margin: 0.95rem 0 0;
+    line-height: 1.7;
+  }
+
+  /* ── Structural glow ─────────────────────────────────────────── */
+  .structural-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 15% 15%, rgba(212, 175, 55, 0.12), transparent 24%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── Section label ───────────────────────────────────────────── */
+  .section-label {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--silk-white);
+    margin: 0 0 0.75rem;
+  }
+
+  /* ── Premium card (design-tokens.css component) ──────────────── */
+  .premium-card {
+    background: var(--surface-velvet);
+    border: var(--border-hard);
+    padding: var(--space-md);
+    position: relative;
+    box-shadow: var(--neo-shadow-md);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .premium-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: var(--neo-shadow-sapphire);
+    border-color: var(--sapphire-glow);
+  }
+
+  .premium-card::before {
+    content: 'SYS // DATA_NODE';
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    background: var(--bg-obsidian);
+    color: var(--text-soft);
+    padding: 0 6px;
+    border: 1px solid var(--stark-border);
+  }
+
+  /* ── Typography helpers ──────────────────────────────────────── */
+  .label-caps {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: var(--champagne-gold);
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .editorial-link {
+    color: var(--champagne-gold);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: color var(--transition);
+  }
+
+  .editorial-link:hover {
+    color: var(--silk-white);
+  }
+
+  /* ── Policy page ─────────────────────────────────────────────── */
+  .policy-page {
+    display: grid;
+    gap: 2rem;
+    padding: 2rem 0 3rem;
+  }
+
+  /* ── Btn-primary (design-tokens variant) ─────────────────────── */
+  .btn-primary {
+    background: var(--silk-white);
+    color: var(--bg-obsidian);
+    padding: 0.85rem 2rem;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    border: 2px solid var(--silk-white);
+    box-shadow: 4px 4px 0px var(--sapphire-glow);
+    cursor: pointer;
+    transition:
+      transform var(--transition-fast),
+      box-shadow var(--transition-fast),
+      background var(--transition-fast),
+      color var(--transition-fast);
+  }
+
+  .btn-primary:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px var(--champagne-gold);
+    background: var(--bg-obsidian);
+    color: var(--silk-white);
+    border-color: var(--champagne-gold);
+  }
+}

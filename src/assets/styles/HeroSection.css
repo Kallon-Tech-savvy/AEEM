@@ -1,0 +1,79 @@
+/*
+ * hero-deferred.css
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Decorative hero elements and interaction polish.
+ * None of these affect layout geometry — safe to defer.
+ * ─────────────────────────────────────────────────────────────────────────────
+ */
+
+@layer components {
+
+  .hero-patterns {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero-bg-left {
+    position: absolute;
+    width: 160px;
+    height: 100px;
+    bottom: 1.25rem;
+    left: 1.25rem;
+    z-index: 0;
+    opacity: 0.95;
+    pointer-events: none;
+  }
+
+  .hero-text {
+    text-align: justify;
+  }
+
+  /* Decorative geometry — hidden on small screens; defer safely */
+  @media (max-width: 720px) {
+    .hero-geometry--large,
+    .hero-geometry--small,
+    .spotlight-grid-shape {
+      display: none;
+    }
+  }
+
+  /* Hero actions layout polish */
+  @media (min-width: 860px) {
+    .hero-actions {
+      flex-wrap: nowrap;
+    }
+  }
+
+  .button {
+    transition:
+      transform var(--transition),
+      box-shadow var(--transition),
+      background var(--transition),
+      color var(--transition),
+      border-color var(--transition);
+  }
+
+  .button:hover,
+  .button:focus-visible {
+    transform: translate(-3px, -3px);
+  }
+
+  .button-primary:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring), var(--neo-shadow-sm);
+  }
+
+  .button-secondary:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+  }
+
+  .button-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+}

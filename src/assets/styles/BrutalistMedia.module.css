@@ -1,0 +1,115 @@
+/* ==========================================================================
+   Brutalist Media Composition
+   ========================================================================== */
+
+.brutalistFrame {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-obsidian);
+  border: 1px solid var(--silk-white);
+  margin: var(--space-md) 0;
+  overflow: visible; /* Allow crosshairs to bleed out */
+}
+
+/* Aspect Ratio Modifiers */
+.video { aspect-ratio: 16 / 9; }
+.square { aspect-ratio: 1 / 1; }
+.portrait { aspect-ratio: 3 / 4; }
+
+/* Structural Crosshairs */
+.crosshairTopLeft,
+.crosshairBottomRight {
+  position: absolute;
+  width: 1.5rem;
+  height: 1.5rem;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.crosshairTopLeft {
+  top: -0.75rem;
+  left: -0.75rem;
+  border-top: 1px solid var(--champagne-gold);
+  border-left: 1px solid var(--champagne-gold);
+}
+
+.crosshairBottomRight {
+  bottom: -0.75rem;
+  right: -0.75rem;
+  border-bottom: 1px solid var(--champagne-gold);
+  border-right: 1px solid var(--champagne-gold);
+}
+
+/* System Typography Labeling */
+.systemLabel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--silk-white);
+  color: var(--bg-obsidian);
+  padding: 0.25rem 0.5rem;
+  font-family: monospace; /* Forces the functional, brutalist feel */
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--bg-obsidian);
+}
+
+.labelTitle {
+  font-weight: 700;
+}
+
+.labelMeta {
+  opacity: 0.7;
+}
+
+/* Media Treatment */
+.mediaContainer {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  background: repeating-linear-gradient(
+    45deg,
+    var(--bg-obsidian),
+    var(--bg-obsidian) 10px,
+    #0a0e1c 10px,
+    #0a0e1c 20px
+  );
+}
+
+.rawImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Brutalist Image Treatment: High contrast, desaturated, gritty */
+  filter: grayscale(100%) contrast(125%) brightness(90%);
+  mix-blend-mode: luminosity;
+  transition: filter 0.3s ease;
+}
+
+/* Reveal true colors on hover for micro-interaction */
+.brutalistFrame:hover .rawImage {
+  filter: grayscale(0%) contrast(105%) brightness(100%);
+  mix-blend-mode: normal;
+}
+
+/* Placeholder Styling */
+.placeholderGrid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border: 1px dashed rgba(243, 245, 250, 0.2);
+}
+
+.placeholderText {
+  font-family: monospace;
+  color: rgba(243, 245, 250, 0.3);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  transform: rotate(-10deg);
+}

@@ -1,0 +1,114 @@
+/*
+ * lightbox-deferred.css
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Lightbox overlay — never visible on load, only after a gallery click.
+ * Contains animations and fixed positioning; deferring avoids main-thread
+ * style recalculation cost at startup.
+ * ─────────────────────────────────────────────────────────────────────────────
+ */
+
+@layer components {
+
+  .lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.88);
+    display: grid;
+    place-items: center;
+    padding: 1.5rem;
+    z-index: 999;
+    animation: lb-fade-in 120ms ease-out;
+  }
+
+  .lightbox-frame {
+    position: relative;
+    width: min(800px, 100%);
+    height: min(80vh, 100%);
+    display: grid;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    right: 1.5rem;
+    top: 1rem;
+    border: none;
+    background: transparent;
+    color: var(--silk-white);
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: opacity var(--transition);
+  }
+
+  .lightbox-close:hover { opacity: 0.7; }
+
+  .lightbox-content {
+    background: rgba(17, 20, 34, 0.95);
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    padding: 1rem;
+    overflow: hidden;
+  }
+
+  .lightbox-image {
+    width: 100%;
+    max-height: 75vh;
+    object-fit: contain;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    display: block;
+    margin-bottom: 1rem;
+    animation: lb-scale-in 220ms ease-out;
+  }
+
+  .lightbox-copy h3 {
+    margin: 0 0 0.6rem;
+    color: var(--champagne-gold);
+  }
+
+  .lightbox-copy p {
+    margin: 0;
+    color: var(--text-soft);
+    line-height: 1.8;
+  }
+
+  .lightbox-controls {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .lightbox-action {
+    flex: 1;
+    min-width: 0;
+    border: 2px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--silk-white);
+    padding: 0.9rem 1rem;
+    cursor: pointer;
+    transition:
+      transform var(--transition),
+      background var(--transition),
+      border-color var(--transition);
+  }
+
+  .lightbox-action:hover:not(:disabled) {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .lightbox-action:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  @keyframes lb-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes lb-scale-in {
+    from { transform: scale(0.98); opacity: 0.8; }
+    to   { transform: scale(1);    opacity: 1;   }
+  }
+}

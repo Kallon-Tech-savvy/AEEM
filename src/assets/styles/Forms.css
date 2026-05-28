@@ -1,0 +1,87 @@
+/*
+ * forms-deferred.css
+ * ─────────────────────────────────────────────────────────────────────────────
+ * All form chrome: inputs, labels, validation states, contact panel.
+ * Forms are never above the fold — safe to fully defer.
+ * ─────────────────────────────────────────────────────────────────────────────
+ */
+
+@layer components {
+
+  .contact-panel {
+    background: rgba(255, 255, 255, 0.04);
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    padding: 1.75rem;
+    box-shadow: 0 10px 0 rgba(0, 0, 0, 0.18);
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .volunteer-form,
+  .partner-contact {
+    display: grid;
+    gap: 0.6rem;
+    grid-template-columns: 1fr;
+    padding: 1rem;
+    border: 2px solid rgba(255, 255, 255, 0.06);
+    background: rgba(17, 20, 34, 0.6);
+  }
+
+  .volunteer-form label,
+  .partner-contact label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    color: var(--silk-white);
+  }
+
+  .volunteer-actions,
+  .partner-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .form-status { color: var(--text-soft); margin: 0; }
+
+  .form-field {
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .form-field__label {
+    color: var(--silk-white);
+    font-weight: 700;
+  }
+
+  .form-input {
+    width: 100%;
+    min-height: 3rem;
+    border: 2px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.04);
+    padding: 0.95rem;
+    color: var(--silk-white);
+    transition:
+      border-color var(--transition),
+      box-shadow var(--transition),
+      background var(--transition);
+  }
+
+  .form-input:hover,
+  .form-input:focus {
+    border-color: rgba(212, 175, 55, 0.45);
+    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.08);
+    outline: none;
+  }
+
+  .form-input--error { border-color: rgba(235, 87, 87, 0.9); }
+  .form-input--valid { border-color: rgba(255, 255, 255, 0.14); }
+
+  .input-hint    { color: var(--text-soft); font-size: 0.95rem; }
+  .error-message { color: #ff6f6f; font-size: 0.95rem; }
+
+  .subscribe-status--success { color: #b6ffb8; }
+  .subscribe-status--error   { color: #ff9a9a; }
+  .form-status--success      { color: #b6ffb8; }
+  .form-status--warning      { color: #ff9a9a; }
+}

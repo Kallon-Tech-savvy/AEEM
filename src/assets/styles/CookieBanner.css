@@ -1,0 +1,39 @@
+.cookie-banner {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: min(480px, calc(100% - 4rem));
+  z-index: 9999;
+  background: var(--bg-obsidian, #0a0e1c);
+  border: 2px solid var(--silk-white, #f3f5fa);
+  padding: var(--space-md, 1.5rem);
+  box-shadow: 8px 8px 0px var(--bg-obsidian, #0a0e1c);
+  
+  /* Will-change hints the browser to promote this node to its own GPU layer */
+  will-change: transform, opacity;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+
+/* Structural States: Animates transforms to keep the document flow unshifted */
+.cookie-banner--enter {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cookie-banner--exit {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.cookie-banner__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md, 1.5rem);
+}
+
+.cookie-banner__actions {
+  display: flex;
+  gap: var(--space-sm, 1rem);
+  justify-content: flex-end;
+  align-items: center;
+}
