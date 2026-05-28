@@ -14,18 +14,15 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
 
-  // Flawless UX: Auto-close mobile menu on route change
-  useEffect(() => {
-    if (!isMenuOpen) return;
-    const id = window.setTimeout(() => setIsMenuOpen(false), 0);
-    return () => window.clearTimeout(id);
-  }, [location.pathname, isMenuOpen]);
-
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? 'hidden' : 'unset';
     return () => { document.body.style.overflow = 'unset'; };
   }, [isMenuOpen]);
+
+    useEffect(() => {
+    const id = window.setTimeout(() => setIsMenuOpen(false), 0);
+    return () => window.clearTimeout(id);
+  }, [location.pathname]);
 
   return (
     <header className={`premium-nav ${isMenuOpen ? 'nav--open' : ''}`} role='banner'>
@@ -66,7 +63,7 @@ export default function Navbar() {
 
           <div className='nav-actions'>
             {/* Kept secure portal isolated from primary marketing routes */}
-            <Link to='/portal' className='button button-secondary nav-cta'>
+            <Link to='/portal' className='button nav-cta'>
               Secure Access
             </Link>
           </div>

@@ -1,9 +1,9 @@
-
 import './App.css'
 import Navbar from './data/components/Navbar'
 import { Route, Routes } from 'react-router-dom'
 import { lazy, Suspense } from 'react'
 
+const About = lazy(() => import('./pages/About') )
 const Home = lazy(() => import('./pages/Home'))
 const Contact = lazy(() => import('./pages/Contact'))
 const GetInvolve = lazy(() => import('./pages/GetInvolve'))
@@ -106,7 +106,15 @@ function App() {
             path='*'
             element={
               <Suspense fallback={<div className='page-loading' aria-live='polite'>Loading…</div>}>
-                <Home />
+                <About />
+              </Suspense>
+            }
+          />
+          <Route
+            path='*'
+            element={
+              <Suspense fallback={<div className='page-loading' aria-live='polite'>Loading…</div>}>
+                <Home/>
               </Suspense>
             }
           />

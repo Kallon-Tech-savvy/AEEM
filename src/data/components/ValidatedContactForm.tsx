@@ -2,7 +2,7 @@ import { useState } from 'react'
 import type { ChangeEvent, FormEvent } from 'react'
 import { Button } from './Button'
 import { FormField } from './FormField'
-
+import '../../assets/styles/Forms.css'
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 type ContactValues = {

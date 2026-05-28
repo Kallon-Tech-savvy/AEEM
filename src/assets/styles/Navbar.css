@@ -1,216 +1,49 @@
-.premium-nav {
-  position: sticky;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: var(--bg);
-  border-bottom: 2px solid var(--champagne-gold);
-  box-shadow: var(--neo-shadow-sm);
-  z-index: 1000;
-}
-
-.nav-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  max-width: var(--max-width);
-  height: 4.5rem;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
-
-.nav-brand-lockup {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  text-decoration: none;
-}
-
-.brand-logo {
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: 1.2rem;
-  letter-spacing: 0.1em;
-  color: var(--silk-white);
-}
-
-.brand-separator {
-  width: 1px;
-  height: 2.2rem;
-  background: rgba(255, 255, 255, 0.12);
-}
-
-.brand-subtext {
-  color: var(--text-soft);
-  font-size: 0.75rem;
-  line-height: 1.3;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-}
-
-.nav-drawer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex: 1;
-  margin-left: 2rem;
-}
-
-.nav-menu {
-  display: flex;
-  align-items: center;
-}
-
-.nav-list {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.nav-link {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--text-soft);
-  text-decoration: none;
-  position: relative;
-  padding: 0.5rem 0;
-  transition: color var(--transition), transform var(--transition);
-}
-
-.nav-link:hover,
-.nav-link:focus-visible {
-  color: var(--champagne-gold);
-  transform: translateX(2px);
-}
-
-.nav-link::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: -0.15rem;
-  width: 100%;
-  height: 2px;
-  background: var(--champagne-gold);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform var(--transition);
-}
-
-.nav-link--active::after {
-  transform: scaleX(1);
-}
-
-.nav-actions {
-  display: flex;
-  align-items: center;
-}
-
-.nav-cta {
-  border: 2px solid var(--champagne-gold);
-  background: var(--champagne-gold);
-  color: var(--bg);
-  padding: 0.85rem 1.4rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  border-radius: 0;
-  box-shadow: var(--neo-shadow-sm);
-  transition: transform var(--transition);
-}
-
-.nav-cta:hover {
-  transform: translate(-3px, -3px);
-}
-
-.nav-mobile-toggle {
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0.35rem;
-  width: 2.5rem;
-  height: 2.5rem;
-  background: transparent;
-  border: 0;
-  cursor: pointer;
-  z-index: 1001;
-  padding: 0;
-}
-
-.hamburger-line {
-  display: block;
-  width: 1.5rem;
-  height: 2px;
-  background-color: var(--silk-white);
-  transition: transform var(--transition), opacity var(--transition);
-}
-
-@media (max-width: 860px) {
-  .brand-subtext,
-  .brand-separator {
-    display: none;
-  }
-
-  .nav-mobile-toggle {
-    display: flex;
-  }
-
-  .nav-drawer {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100dvh;
-    padding: 4rem 1.5rem;
-    background: var(--bg);
-    flex-direction: column;
-    justify-content: center;
-    gap: 2rem;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    transition: opacity var(--transition), transform var(--transition), visibility var(--transition);
-    z-index: 1000;
-  }
-
-  .nav-drawer.drawer--active {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-  }
-
-  .nav-menu {
-    margin-bottom: 2rem;
-  }
-
-  .nav-list {
-    flex-direction: column;
-    gap: 1.5rem;
-  }
+@layer components {
 
   .nav-link {
-    font-size: 1.35rem;
-    text-align: center;
+    transition: color var(--saphire-glow), transform var(--transition);
   }
 
-  .nav-actions {
-    width: 100%;
-    justify-content: center;
+  .nav-link:hover,
+  .nav-link:focus-visible {
+    color: var(--champagne-gold);
+    transform: translateX(2px);
+  }
+
+  .nav-link::after {
+    transition: transform var(--transition);
   }
 
   .nav-cta {
-    width: 100%;
-    max-width: 340px;
-    text-align: center;
+    transition: transform var(--transition);
   }
 
-  .nav--open .hamburger-line:nth-child(1) {
-    transform: translateY(6px) rotate(45deg);
+  .nav-cta:hover {
+    transform: translate(-3px, -3px);
   }
 
-  .nav--open .hamburger-line:nth-child(2) {
-    transform: translateY(-6px) rotate(-45deg);
+  /* Smooth drawer open/close — deferred because it only matters after first interaction */
+  .nav-drawer {
+    transition:
+      opacity var(--transition),
+      transform var(--transition),
+      visibility var(--transition);
+  }
+
+  .hamburger-line {
+    transition: transform var(--transition), opacity var(--transition);
+  }
+
+  /* Focus-visible ring on toggle button */
+  .nav-mobile-toggle:focus-visible {
+    outline: 3px solid var(--champagne-gold);
+    outline-offset: 2px;
+  }
+
+  /* Nav menu bottom margin — only relevant once drawer is interactive */
+  @media (max-width: 860px) {
+    .nav-menu {
+      margin-bottom: 2rem;
+    }
   }
 }

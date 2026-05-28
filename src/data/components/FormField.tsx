@@ -1,4 +1,5 @@
 import type { ChangeEvent, InputHTMLAttributes, TextareaHTMLAttributes } from 'react'
+import '../../assets/styles/Forms.css'
 
 type FormFieldProps = {
   label: string

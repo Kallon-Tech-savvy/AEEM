@@ -7,6 +7,8 @@ import { AEEM_MISSION_TEXT } from '../constants/copy'
 import BrutalistMedia from '../data/components/BrutalistMedia'
 import PhotoGallery from '../data/components/PhotoGallery'
 
+import '../assets/styles/HeroSection.css'
+
 export type Accent = 'gold' | 'jade' | 'berry'
 
 const metrics = [
@@ -57,8 +59,8 @@ export default function Home() {
   return (
     <main className="site-canvas-dark">
       <header className='hero-panel premium-editorial-grid' aria-label="Introduction">
-        <div className='hero-copy fade-in-up'>
-          <p className='label-caps'>Africa Education Empowerment Movement</p>
+        <div className='fade-in-up'>
+          <p className=''>Africa Education Empowerment Movement</p>
           <h1 className='cinematic-headline'>
             Transforming lives and transforming every child's <span className='editorial-text'>right to learn.</span>
           </h1>

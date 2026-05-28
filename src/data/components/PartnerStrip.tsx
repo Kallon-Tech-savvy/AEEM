@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react'
 
+import '../../assets/styles/Partner.css'
+
 type Partner = { id: string; name: string }
 
 const partners: Partner[] = [
