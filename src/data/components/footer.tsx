@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
-import SubscribeToUpdate from './SubscribeToUpdate';
-import '../assets/styles/footer.css';
+import { lazy, Suspense } from 'react'
+import '../../assets/styles/footer.css';
+
+const SubscribeToUpdate = lazy(() => import('./SubscribeToUpdate'))
 
 export default function Footer() {
   return (
@@ -16,7 +18,9 @@ export default function Footer() {
           </div>
         </section>
           <div className="subscribe">
-            <SubscribeToUpdate />
+            <Suspense fallback={<div className='subscribe-loading'>Loading updates…</div>}>
+              <SubscribeToUpdate />
+            </Suspense>
           </div>
         <section className='footer-nav'>
           

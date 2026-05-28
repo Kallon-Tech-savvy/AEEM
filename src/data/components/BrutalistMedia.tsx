@@ -1,4 +1,4 @@
-import styles from '../assets/styles/BrutalistMedia.module.css';
+import styles from '../../assets/styles/BrutalistMedia.module.css';
 
 interface BrutalistMediaProps {
   src?: string;
@@ -37,7 +37,11 @@ export default function BrutalistMedia({
             src={src} 
             alt={alt} 
             className={styles.rawImage}
-            loading="lazy"
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
+            width={aspectRatio === 'video' ? 1200 : aspectRatio === 'square' ? 900 : 800}
+            height={aspectRatio === 'video' ? 675 : aspectRatio === 'square' ? 900 : 1200}
           />
         ) : (
           <div className={styles.placeholderGrid} aria-label="Image placeholder">

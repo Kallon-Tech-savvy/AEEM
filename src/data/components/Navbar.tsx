@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
-import '../assets/styles/Navbar.css';
+import '../../assets/styles/Navbar.css';
 
 const NAV_ITEMS = [
   { label: 'Home', path: '/' },
-  { label: 'Contact', path: '/contact' },
-  { label: 'About', path: '/About' },
-  { label: 'GetInvolve', path: '/GetInvolve' },
-  { label: 'Blog', path: '/Blog' }
+  { label: 'Events', path: '/Event' },
+  { label: 'Get Involved', path: '/GetInvolve' },
+  { label: 'Awards', path: '/AwardsandRecognition' },
+  { label: 'Contact', path: '/contact' }
 ];
 
 export default function Navbar() {
@@ -16,8 +16,10 @@ export default function Navbar() {
 
   // Flawless UX: Auto-close mobile menu on route change
   useEffect(() => {
-    setIsMenuOpen(false);
-  }, [location.pathname]);
+    if (!isMenuOpen) return;
+    const id = window.setTimeout(() => setIsMenuOpen(false), 0);
+    return () => window.clearTimeout(id);
+  }, [location.pathname, isMenuOpen]);
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -35,7 +37,6 @@ export default function Navbar() {
           <span className='brand-subtext'>Africa Education<br/>Empowerment Movement</span>
         </Link>
 
-        {/* Mobile Toggle */}
         <button 
           className='nav-mobile-toggle'
           onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -46,7 +47,6 @@ export default function Navbar() {
           <span className='hamburger-line'></span>
         </button>
 
-        {/* Navigation & Actions */}
         <div className={`nav-drawer ${isMenuOpen ? 'drawer--active' : ''}`}>
           <nav className='nav-menu' aria-label='Primary navigation'>
             <ul className='nav-list'>
@@ -65,12 +65,12 @@ export default function Navbar() {
           </nav>
 
           <div className='nav-actions'>
+            {/* Kept secure portal isolated from primary marketing routes */}
             <Link to='/portal' className='button button-secondary nav-cta'>
               Secure Access
             </Link>
           </div>
         </div>
-
       </div>
     </header>
   );

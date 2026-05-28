@@ -5,22 +5,24 @@ type Partner = { id: string; name: string }
 const partners: Partner[] = [
   { id: 'rcbank', name: 'RCBANK' },
   { id: 'npha', name: 'NPHA' },
-  { id: 'Mage-SL', name: 'MAGE_SL' },
+  { id: 'mage-sl', name: 'MAGE-SL' },
+  { id: 'ndlea', name: 'NDLEA' },
 ]
 
 function LogoTile({ name }: { name: string }) {
   return (
     <div className="partner-tile" aria-hidden>
       <svg width="120" height="48" viewBox="0 0 120 48" role="img">
-        <rect width="120" height="48" rx="4" fill="#111" />
-        <text x="50%" y="50%" fill="#d4af37" fontSize="10" fontFamily="sans-serif" fontWeight="700" textAnchor="middle" dominantBaseline="middle">{name}</text>
+        <rect width="120" height="48" rx="0" fill="var(--surface-elevated, #151C30)" stroke="var(--stark-border, rgba(243, 245, 250, 0.15))" strokeWidth="1"/>
+        <text x="50%" y="50%" fill="var(--champagne-gold, #D4AF37)" fontSize="11" fontFamily="var(--font-mono, monospace)" fontWeight="600" letterSpacing="0.05em" textAnchor="middle" dominantBaseline="middle">
+          {name}
+        </text>
       </svg>
     </div>
   )
 }
 
 export default function PartnerStrip({ children }: { children?: ReactNode }) {
-  // Duplicate the set to create a seamless looping effect via CSS animation
   const items = [...partners, ...partners]
 
   return (

@@ -1,5 +1,6 @@
-import { Button } from '../components/Button'
-import SectionHeader from '../components/SectionHeader'
+import { Button } from '../data/components/Button'
+import SectionHeader from '../data/components/SectionHeader'
+import ValidatedContactForm from '../data/components/ValidatedContactForm'
 import { faqItems } from '../data/faq'
 
 export default function Contact() {
@@ -8,16 +9,23 @@ export default function Contact() {
       <section className='section-block'>
         <SectionHeader
           title='Contact AEEM'
-          description='Have a question, want to collaborate, or need support? Use the links below to connect with our team and learn how AEEM can help your community.'
+          description='Have a question, want to collaborate, or need support? Use the contact form below for immediate input validation and a clear next step.'
         />
         <section className='contact-panel'>
           <h3>Get in touch</h3>
-          <p>Email us at <strong>africaeducationempowermentmov@gmail.com</strong> or send a request through the community support channel.</p>
+          <p>
+            Email us at <strong>africaeducationempowermentmov@gmail.com</strong> or describe your request below.
+            We read every message and respond with relevant next steps.
+          </p>
           <div className='button-row'>
             <Button variant='primary' as='a' href='mailto:africaeducationempowermentmov@gmail.com'>Email AEEM</Button>
             <Button variant='secondary' as='a' href='/'>Return home</Button>
           </div>
         </section>
+      </section>
+
+      <section className='section-block'>
+        <ValidatedContactForm />
       </section>
 
       <section className='section-block'>

@@ -1,4 +1,4 @@
-import SectionHeader from '../components/SectionHeader'
+import SectionHeader from '../data/components/SectionHeader'
 
 export default function Cookies() {
   return (
