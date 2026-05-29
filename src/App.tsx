@@ -4,6 +4,7 @@ import Hero from './components/sections/Hero'
 import ImpactStats from './components/sections/ImpactStats'
 import Pillars from './components/sections/Pillars'
 import GlobalReach from './components/sections/GlobalReach'
+import AfricaImpactMap from './components/sections/AfricaImpactMap'
 import ModernGallery from './components/sections/ModernGallery'
 import Footer from './components/layout/Footer'
 
@@ -27,6 +28,7 @@ function App() {
         <ImpactStats />
         <Pillars />
         <GlobalReach />
+        <AfricaImpactMap />
         <ModernGallery />
       </main>
       <Footer />
