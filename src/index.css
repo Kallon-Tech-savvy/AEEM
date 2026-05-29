@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --aeem-gold: #D4AF37;
+}
+
+body {
+  @apply bg-white text-aeem-charcoal overflow-x-hidden;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-aeem-gold/50 rounded-full hover:bg-aeem-gold transition-colors;
+}
