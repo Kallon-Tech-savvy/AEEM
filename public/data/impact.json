@@ -1,0 +1,10 @@
+[
+  { "name": "Freetown", "impact": "Regional Hub & HQ", "coords": [-13.2344, 8.4844] },
+  { "name": "Lagos", "impact": "Tech & Innovation Center", "coords": [3.3792, 6.5244] },
+  { "name": "Nairobi", "impact": "Community Outreach", "coords": [36.8219, -1.2921] },
+  { "name": "Accra", "impact": "Educational Partnership", "coords": [-0.1870, 5.6037] },
+  { "name": "Johannesburg", "impact": "Strategic Development", "coords": [28.0473, -26.2041] },
+  { "name": "Dakar", "impact": "West African Expansion", "coords": [-17.4467, 14.6937] },
+  { "name": "Cairo", "impact": "Northern Initiative", "coords": [31.2357, 30.0444] },
+  { "name": "Addis Ababa", "impact": "Pan-African Coordination", "coords": [38.7578, 9.0249] }
+]
