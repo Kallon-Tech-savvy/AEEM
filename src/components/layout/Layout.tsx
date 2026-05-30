@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import { motion, useScroll, useSpring } from 'framer-motion';
+import ScrollToTop from '../ui/ScrollToTop';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -31,6 +32,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         {children}
       </motion.main>
       <Footer />
+      <ScrollToTop />
     </div>
   );
 };

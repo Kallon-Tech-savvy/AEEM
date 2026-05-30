@@ -1,14 +1,25 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Mail, Phone, MapPin, Send, CheckCircle2, Loader2, Globe } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, CheckCircle2, Loader2, Globe, AlertCircle } from 'lucide-react';
 import { supabase } from '../services/supabase';
+import { z } from 'zod';
+
+const contactSchema = z.object({
+  full_name: z.string().min(2, 'Name must be at least 2 characters'),
+  email: z.string().email('Invalid email address'),
+  phone: z.string().optional(),
+  message: z.string().min(10, 'Message must be at least 10 characters')
+});
+
+type ContactFormData = z.infer<typeof contactSchema>;
 
 const Contact: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Partial<Record<keyof ContactFormData, string>>>({});
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ContactFormData>({
     full_name: '',
     email: '',
     phone: '',
@@ -16,31 +27,46 @@ const Contact: React.FC = () => {
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    if (fieldErrors[name as keyof ContactFormData]) {
+      setFieldErrors({ ...fieldErrors, [name]: undefined });
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setError(null);
+    setFieldErrors({});
 
     try {
-      const { error } = await supabase
+      const validatedData = contactSchema.parse(formData);
+      const { error: supabaseError } = await supabase
         .from('inquiries')
         .insert([
           {
             inquiry_type: 'contact',
-            ...formData
+            ...validatedData
           }
         ]);
 
-      if (error) throw error;
+      if (supabaseError) throw supabaseError;
       setSubmitted(true);
       setFormData({ full_name: '', email: '', phone: '', message: '' });
     } catch (err) {
-      const errorMsg = err instanceof Error ? err.message : 'Failed to send message. Please try again.';
-      console.error('Submission error:', err);
-      setError(errorMsg);
+      if (err instanceof z.ZodError) {
+        const errors: Partial<Record<keyof ContactFormData, string>> = {};
+        err.errors.forEach((e) => {
+          const path = e.path[0] as keyof ContactFormData;
+          if (path) errors[path] = e.message;
+        });
+        setFieldErrors(errors);
+      } else {
+        const errorMsg = err instanceof Error ? err.message : 'Failed to send message. Please try again.';
+        console.error('Submission error:', err);
+        setError(errorMsg);
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -150,9 +176,10 @@ const Contact: React.FC = () => {
                               value={formData.full_name}
                               onChange={handleChange}
                               type="text"
-                              className="w-full bg-gray-50 border border-transparent rounded-2xl px-6 py-4 focus:outline-none focus:bg-white focus:border-aeem-gold transition-all"
+                              className={`w-full bg-gray-50 border ${fieldErrors.full_name ? 'border-red-500' : 'border-transparent'} rounded-2xl px-6 py-4 focus:outline-none focus:bg-white focus:border-aeem-gold transition-all`}
                               placeholder="Your Name"
                            />
+                           {fieldErrors.full_name && <p className="text-red-500 text-[10px] font-bold ml-1 flex items-center gap-1"><AlertCircle size={10} /> {fieldErrors.full_name}</p>}
                         </div>
                         <div className="space-y-2">
                            <label className="text-xs font-black uppercase tracking-widest text-gray-400 ml-1">Email Address</label>
@@ -162,9 +189,10 @@ const Contact: React.FC = () => {
                               value={formData.email}
                               onChange={handleChange}
                               type="email"
-                              className="w-full bg-gray-50 border border-transparent rounded-2xl px-6 py-4 focus:outline-none focus:bg-white focus:border-aeem-gold transition-all"
+                              className={`w-full bg-gray-50 border ${fieldErrors.email ? 'border-red-500' : 'border-transparent'} rounded-2xl px-6 py-4 focus:outline-none focus:bg-white focus:border-aeem-gold transition-all`}
                               placeholder="email@example.com"
                            />
+                           {fieldErrors.email && <p className="text-red-500 text-[10px] font-bold ml-1 flex items-center gap-1"><AlertCircle size={10} /> {fieldErrors.email}</p>}
                         </div>
                      </div>
                      <div className="space-y-2">
@@ -186,9 +214,10 @@ const Contact: React.FC = () => {
                            value={formData.message}
                            onChange={handleChange}
                            rows={6}
-                           className="w-full bg-gray-50 border border-transparent rounded-2xl px-6 py-4 focus:outline-none focus:bg-white focus:border-aeem-gold transition-all"
+                           className={`w-full bg-gray-50 border ${fieldErrors.message ? 'border-red-500' : 'border-transparent'} rounded-2xl px-6 py-4 focus:outline-none focus:bg-white focus:border-aeem-gold transition-all`}
                            placeholder="Tell us more..."
                         />
+                        {fieldErrors.message && <p className="text-red-500 text-[10px] font-bold ml-1 flex items-center gap-1"><AlertCircle size={10} /> {fieldErrors.message}</p>}
                      </div>
                      <button
                         disabled={isSubmitting}

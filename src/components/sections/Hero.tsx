@@ -23,7 +23,7 @@ export default function Hero() {
           >
             Education for All
           </motion.span>
-          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-[1] mb-8 tracking-tighter text-aeem-charcoal">
+          <h1 className="text-fluid-h1 font-black leading-[1] mb-8 tracking-tighter text-aeem-charcoal">
             Empowering the <br className="hidden md:block" />
             <motion.span
               initial={{ color: "#1A1A1A" }}
