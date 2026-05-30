@@ -15,6 +15,29 @@ interface EventType {
   status: 'upcoming' | 'completed';
 }
 
+const FALLBACK_EVENTS: Record<string, EventType> = {
+  'summit-2026': {
+    id: 'f-1',
+    title: "AEEM Education Summit 2026",
+    slug: "summit-2026",
+    event_date: "2026-08-15",
+    location: "Freetown City Council Hall",
+    status: "upcoming",
+    cover_image_url: "https://images.unsplash.com/photo-1540575861501-7ad060e39fe5?auto=format&fit=crop&q=80&w=1200",
+    description: "Bringing together policy makers, educators, and youth leaders to discuss the future of inclusive education in West Africa."
+  },
+  'leadership-workshop': {
+    id: 'f-2',
+    title: "Youth Leadership Workshop",
+    slug: "leadership-workshop",
+    event_date: "2026-09-22",
+    location: "Makeni University Campus",
+    status: "upcoming",
+    cover_image_url: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=1200",
+    description: "A hands-on training session for student leaders focused on advocacy and community organizing."
+  }
+};
+
 const EventDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
 
@@ -46,6 +69,9 @@ const EventDetail: React.FC = () => {
         setEvent(data);
       } catch (err) {
         console.error('Error fetching event:', err);
+        if (slug && FALLBACK_EVENTS[slug]) {
+          setEvent(FALLBACK_EVENTS[slug]);
+        }
       } finally {
         setLoading(false);
       }
@@ -107,7 +133,8 @@ const EventDetail: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>{event.title} | AEEM Events</title>
+        <title>{`${event.title} | AEEM Events`}</title>
+        <meta name="description" content={event.description || "Join AEEM's upcoming events and workshops."} />
       </Helmet>
 
       <section className="pt-40 pb-20">

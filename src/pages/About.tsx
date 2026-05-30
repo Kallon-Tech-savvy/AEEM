@@ -2,6 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { Target, Heart, Eye } from 'lucide-react';
+import MasonryGallery from '../components/Gallery/MasonryGallery';
 
 const About: React.FC = () => {
   return (
@@ -75,8 +76,25 @@ const About: React.FC = () => {
         </div>
       </section>
 
+      {/* Life at AEEM Gallery */}
+      <section className="py-24 bg-white overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+            <div className="max-w-2xl">
+              <span className="text-aeem-gold font-bold uppercase tracking-[0.3em] text-xs mb-4 block">Visual Journey</span>
+              <h2 className="text-4xl md:text-5xl font-black mb-6">Life at <span className="text-aeem-gold">AEEM</span></h2>
+              <p className="text-lg text-gray-600 leading-relaxed">
+                Moments from our workshops, community gatherings, and team sessions that define who we are.
+              </p>
+            </div>
+          </div>
+
+          <MasonryGallery />
+        </div>
+      </section>
+
       {/* Partners Section */}
-      <section className="py-24 bg-white border-t border-gray-100">
+      <section className="py-24 bg-gray-50 border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-6 text-center">
            <h2 className="text-2xl font-bold mb-12 text-gray-400">Trusted by Forward-Thinking Partners</h2>
            <div className="flex flex-wrap justify-center items-center gap-12 opacity-50 grayscale">

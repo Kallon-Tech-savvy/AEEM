@@ -7,8 +7,14 @@
 }
 
 body {
-  @apply bg-white text-aeem-charcoal overflow-x-hidden;
+  @apply bg-aeem-white text-aeem-charcoal overflow-x-hidden;
   font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+@layer utilities {
+  .text-fluid-h1 {
+    font-size: clamp(2.5rem, 8vw, 5rem);
+  }
 }
 
 .text-balance {

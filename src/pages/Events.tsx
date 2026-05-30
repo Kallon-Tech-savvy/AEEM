@@ -1,41 +1,91 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Calendar, MapPin, ArrowRight, Clock } from 'lucide-react';
+import { Calendar, MapPin, ArrowRight, Clock, Loader2 } from 'lucide-react';
+import { supabase } from '../services/supabase';
+
+interface Event {
+  id: string;
+  title: string;
+  slug: string;
+  description: string;
+  event_date: string;
+  location: string;
+  status: 'upcoming' | 'completed';
+  cover_image_url: string;
+}
+
+const FALLBACK_EVENTS: Event[] = [
+  {
+    id: 'f-1',
+    title: "AEEM Education Summit 2026",
+    slug: "summit-2026",
+    event_date: "2026-08-15",
+    location: "Freetown City Council Hall",
+    status: "upcoming",
+    cover_image_url: "https://images.unsplash.com/photo-1540575861501-7ad060e39fe5?auto=format&fit=crop&q=80&w=800",
+    description: "Bringing together policy makers, educators, and youth leaders to discuss the future of inclusive education in West Africa."
+  },
+  {
+    id: 'f-2',
+    title: "Youth Leadership Workshop",
+    slug: "leadership-workshop",
+    event_date: "2026-09-22",
+    location: "Makeni University Campus",
+    status: "upcoming",
+    cover_image_url: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=800",
+    description: "A hands-on training session for student leaders focused on advocacy and community organizing."
+  },
+  {
+    id: 'f-3',
+    title: "I AM SOMEBODY - Session 1",
+    slug: "i-am-somebody-1",
+    event_date: "2026-01-10",
+    location: "Prince of Wales School",
+    status: "completed",
+    cover_image_url: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=800",
+    description: "Our inaugural empowerment workshop for 42 participants from six schools."
+  }
+];
 
 const Events: React.FC = () => {
-  const events = [
-    {
-      title: "AEEM Education Summit 2026",
-      slug: "summit-2026",
-      date: "August 15, 2026",
-      time: "09:00 AM",
-      location: "Freetown City Council Hall",
-      type: "upcoming",
-      image: "https://images.unsplash.com/photo-1540575861501-7ad060e39fe5?auto=format&fit=crop&q=80&w=800",
-      desc: "Bringing together policy makers, educators, and youth leaders to discuss the future of inclusive education in West Africa."
-    },
-    {
-      title: "Youth Leadership Workshop",
-      slug: "leadership-workshop",
-      date: "September 22, 2026",
-      time: "10:30 AM",
-      location: "Makeni University Campus",
-      type: "upcoming",
-      image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=800",
-      desc: "A hands-on training session for student leaders focused on advocacy and community organizing."
-    },
-    {
-      title: "I AM SOMEBODY - Session 1",
-      slug: "i-am-somebody-1",
-      date: "January 10, 2026",
-      location: "Prince of Wales School",
-      type: "completed",
-      image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=800",
-      desc: "Our inaugural empowerment workshop for 42 participants from six schools."
-    }
-  ];
+  const [events, setEvents] = useState<Event[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('events')
+          .select('*')
+          .order('event_date', { ascending: true });
+
+        if (error) throw error;
+
+        if (data && data.length > 0) {
+          setEvents(data);
+        } else {
+          setEvents(FALLBACK_EVENTS);
+        }
+      } catch (err) {
+        console.error('Error fetching events:', err);
+        setEvents(FALLBACK_EVENTS);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvents();
+  }, []);
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
 
   return (
     <>
@@ -57,45 +107,53 @@ const Events: React.FC = () => {
 
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-3xl font-black mb-12">Upcoming Events</h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-24">
-            {events.filter(e => e.type === 'upcoming').map((event) => (
-              <div key={event.slug} className="group flex flex-col md:flex-row bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all">
-                <div className="w-full md:w-2/5 aspect-square md:aspect-auto overflow-hidden">
-                   <img src={event.image} alt={event.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                </div>
-                <div className="p-8 md:w-3/5 flex flex-col">
-                   <div className="flex flex-wrap gap-4 text-[10px] font-black uppercase tracking-widest text-aeem-gold mb-4">
-                      <span className="flex items-center gap-1"><Calendar size={12} /> {event.date}</span>
-                      <span className="flex items-center gap-1 text-gray-400"><Clock size={12} /> {event.time}</span>
-                   </div>
-                   <h3 className="text-2xl font-black mb-4 group-hover:text-aeem-gold transition-colors">{event.title}</h3>
-                   <p className="text-sm text-gray-500 mb-8 leading-relaxed line-clamp-3">{event.desc}</p>
-                   <div className="mt-auto flex items-center justify-between">
-                      <div className="flex items-center gap-1.5 text-xs font-bold text-gray-400">
-                         <MapPin size={14} className="text-aeem-gold" /> {event.location}
-                      </div>
-                      <Link to={`/events/${event.slug}`} className="p-3 bg-aeem-charcoal text-white rounded-full hover:bg-aeem-gold transition-colors">
-                        <ArrowRight size={20} />
-                      </Link>
-                   </div>
-                </div>
+          {loading ? (
+            <div className="flex justify-center items-center py-24">
+              <Loader2 className="animate-spin text-aeem-gold" size={48} />
+            </div>
+          ) : (
+            <>
+              <h2 className="text-3xl font-black mb-12">Upcoming Events</h2>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-24">
+                {events.filter(e => e.status === 'upcoming').map((event) => (
+                  <div key={event.slug} className="group flex flex-col md:flex-row bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all">
+                    <div className="w-full md:w-2/5 aspect-square md:aspect-auto overflow-hidden">
+                       <img src={event.cover_image_url} alt={event.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                    </div>
+                    <div className="p-8 md:w-3/5 flex flex-col">
+                       <div className="flex flex-wrap gap-4 text-[10px] font-black uppercase tracking-widest text-aeem-gold mb-4">
+                          <span className="flex items-center gap-1"><Calendar size={12} /> {formatDate(event.event_date)}</span>
+                          <span className="flex items-center gap-1 text-gray-400"><Clock size={12} /> 09:00 AM</span>
+                       </div>
+                       <h3 className="text-2xl font-black mb-4 group-hover:text-aeem-gold transition-colors">{event.title}</h3>
+                       <p className="text-sm text-gray-500 mb-8 leading-relaxed line-clamp-3">{event.description}</p>
+                       <div className="mt-auto flex items-center justify-between">
+                          <div className="flex items-center gap-1.5 text-xs font-bold text-gray-400">
+                             <MapPin size={14} className="text-aeem-gold" /> {event.location}
+                          </div>
+                          <Link to={`/events/${event.slug}`} className="p-3 bg-aeem-charcoal text-white rounded-full hover:bg-aeem-gold transition-colors">
+                            <ArrowRight size={20} />
+                          </Link>
+                       </div>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
 
-          <h2 className="text-3xl font-black mb-12">Past Highlights</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {events.filter(e => e.type === 'completed').map((event) => (
-              <div key={event.slug} className="group grayscale hover:grayscale-0 transition-all">
-                 <div className="aspect-[4/3] rounded-2xl overflow-hidden mb-6">
-                    <img src={event.image} alt={event.title} className="w-full h-full object-cover" />
-                 </div>
-                 <h3 className="font-bold text-lg mb-2">{event.title}</h3>
-                 <p className="text-sm text-gray-500">{event.date} • {event.location}</p>
+              <h2 className="text-3xl font-black mb-12">Past Highlights</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {events.filter(e => e.status === 'completed').map((event) => (
+                  <div key={event.slug} className="group grayscale hover:grayscale-0 transition-all">
+                     <div className="aspect-[4/3] rounded-2xl overflow-hidden mb-6">
+                        <img src={event.cover_image_url} alt={event.title} className="w-full h-full object-cover" />
+                     </div>
+                     <h3 className="font-bold text-lg mb-2">{event.title}</h3>
+                     <p className="text-sm text-gray-500">{formatDate(event.event_date)} • {event.location}</p>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </>
+          )}
         </div>
       </section>
     </>
