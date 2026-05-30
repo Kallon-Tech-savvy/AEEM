@@ -22,9 +22,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         style={{ scaleX }}
       />
       <Navbar />
-      <main>
+      <motion.main
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.5 }}
+      >
         {children}
-      </main>
+      </motion.main>
       <Footer />
     </div>
   );

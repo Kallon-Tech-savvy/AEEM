@@ -99,6 +99,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
+                whileHover={{ y: -10 }}
                 className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-all group"
               >
                 <div className="w-14 h-14 bg-aeem-gold/10 rounded-xl flex items-center justify-center text-aeem-gold mb-6 group-hover:bg-aeem-gold group-hover:text-white transition-colors">

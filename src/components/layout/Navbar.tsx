@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
@@ -64,35 +64,54 @@ export default function Navbar() {
 
         {/* Mobile Menu Button */}
         <div className="md:hidden">
-          <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMobileMenuOpen}
+          >
             {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
       </div>
 
       {/* Mobile Navigation */}
-      {isMobileMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-          className="md:hidden bg-white border-t border-gray-100 px-6 py-8 flex flex-col gap-6"
-        >
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              to={link.path}
-              className={`text-lg font-bold ${
-                location.pathname === link.path ? 'text-aeem-gold' : 'text-aeem-charcoal'
-              }`}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="absolute top-full left-0 w-full md:hidden bg-white/95 backdrop-blur-xl border-t border-gray-100 px-6 py-12 flex flex-col gap-8 shadow-2xl overflow-hidden rounded-b-[2rem]"
+          >
+            {navLinks.map((link, i) => (
+              <motion.div
+                key={link.name}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.1 }}
+              >
+                <Link
+                  to={link.path}
+                  className={`text-2xl font-black ${
+                    location.pathname === link.path ? 'text-aeem-gold' : 'text-aeem-charcoal'
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              </motion.div>
+            ))}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: navLinks.length * 0.1 }}
             >
-              {link.name}
-            </Link>
-          ))}
-          <Link to="/get-involved" className="bg-aeem-gold text-white px-8 py-4 rounded-xl text-center font-bold shadow-lg">
-            Get Involved
-          </Link>
-        </motion.div>
-      )}
+              <Link to="/get-involved" className="bg-aeem-charcoal text-white px-8 py-5 rounded-2xl text-center font-black text-lg shadow-xl block">
+                Get Involved
+              </Link>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.nav>
   )
 }
