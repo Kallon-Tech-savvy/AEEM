@@ -1,7 +1,46 @@
-import { Mail, Instagram, Twitter, Linkedin } from 'lucide-react'
+import { useState } from 'react'
+import { Mail, Instagram, Twitter, Linkedin, Loader2, CheckCircle2, ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { supabase } from '../../services/supabase'
 
 export default function Footer() {
+  const [email, setEmail] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle')
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!email) return
+
+    setLoading(true)
+    setStatus('idle')
+
+    try {
+      const { error } = await supabase
+        .from('subscriptions')
+        .insert([{ email }])
+
+      if (error) {
+        if (error.code === '23505') {
+          setStatus('success') // Treat as success if already subscribed
+        } else {
+          throw error
+        }
+      } else {
+        setStatus('success')
+      }
+      setEmail('')
+    } catch (err) {
+      console.error('Subscription error:', err)
+      setStatus('error')
+    } finally {
+      setLoading(false)
+      if (status === 'success') {
+        setTimeout(() => setStatus('idle'), 5000)
+      }
+    }
+  }
+
   return (
     <footer className="bg-aeem-charcoal text-white py-20">
       <div className="max-w-7xl mx-auto px-6">
@@ -45,13 +84,37 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="font-bold mb-6 text-aeem-gold uppercase tracking-widest text-xs">Resources</h4>
-            <ul className="space-y-4 text-gray-400 text-sm">
-              <li><Link to="/resources" className="hover:text-aeem-gold transition-colors">Knowledge Hub</Link></li>
-              <li><Link to="/press-kit" className="hover:text-aeem-gold transition-colors">Press Kit</Link></li>
-              <li><Link to="/recognition-awards" className="hover:text-aeem-gold transition-colors">Awards</Link></li>
-              <li><Link to="/contact" className="hover:text-aeem-gold transition-colors">Contact</Link></li>
-            </ul>
+            <h4 className="font-bold mb-6 text-aeem-gold uppercase tracking-widest text-xs">Stay Updated</h4>
+            <p className="text-gray-400 text-sm mb-6">Join our newsletter for the latest impact stories and events.</p>
+            <form onSubmit={handleSubscribe} className="relative mb-4">
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email Address"
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-aeem-gold transition-colors"
+              />
+              <button
+                disabled={loading}
+                type="submit"
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-aeem-gold hover:text-white transition-colors"
+              >
+                {loading ? <Loader2 className="animate-spin" size={18} /> : <ArrowRight size={18} />}
+              </button>
+            </form>
+
+            {status === 'success' && (
+              <div className="flex items-center gap-2 text-green-400 text-xs font-bold animate-fade-in">
+                <CheckCircle2 size={14} />
+                Subscribed successfully!
+              </div>
+            )}
+            {status === 'error' && (
+              <div className="text-red-400 text-xs font-bold">
+                Something went wrong. Try again.
+              </div>
+            )}
           </div>
         </div>
 

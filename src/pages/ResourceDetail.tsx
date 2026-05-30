@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Clock, Share2, Download, CheckCircle2 } from 'lucide-react';
@@ -157,7 +157,7 @@ const ResourceDetail: React.FC = () => {
                      className="flex items-center gap-3 bg-aeem-gold text-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-aeem-charcoal hover:scale-105 active:scale-95 transition-all shrink-0 shadow-lg shadow-aeem-gold/20"
                    >
                       <Download size={20} /> Download PDF
-                   </button>
+                   </a>
                 </div>
              )}
           </div>

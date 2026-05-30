@@ -25,6 +25,12 @@ body {
   font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
+@layer utilities {
+  .text-fluid-h1 {
+    font-size: clamp(2.5rem, 8vw, 5rem);
+  }
+}
+
 .text-balance {
   text-wrap: balance;
 }

@@ -1,7 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Share2, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, Share2, CheckCircle2, Loader2 } from 'lucide-react';
+import { supabase } from '../services/supabase';
+
+interface ImpactStory {
+  id: string;
+  title: string;
+  slug: string;
+  summary: string;
+  body: string;
+  location: string;
+  participants_count: number;
+  schools_count: number;
+  cover_image_url: string;
+}
+
+const FALLBACK_STORY: ImpactStory = {
+  id: 'fallback-1',
+  title: "I AM SOMEBODY Initiative",
+  slug: "i-am-somebody",
+  summary: "Our flagship 2-day empowerment workshop trained 42 participants from six schools, addressing leadership, civic awareness, and resilience.",
+  body: `<p>The "I AM SOMEBODY" initiative was designed as a high-impact empowerment program to address the critical gaps in traditional education. Beyond textbooks, we focused on the human element—leadership, civic awareness, and personal resilience.</p>
+         <p>Participants reported a significant increase in their confidence to lead school initiatives and a deeper understanding of their roles as active citizens in Sierra Leone. By training 42 participants from six different schools, AEEM created a cross-institutional network of youth leaders ready to advocate for educational equity.</p>`,
+  cover_image_url: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=1200",
+  participants_count: 42,
+  schools_count: 6,
+  location: "Freetown, Sierra Leone"
+};
 
 interface StoryData {
   title: string;
