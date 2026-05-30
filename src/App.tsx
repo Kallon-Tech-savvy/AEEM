@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import Layout from './components/layout/Layout'
 
@@ -16,12 +16,11 @@ import PressKit from './pages/PressKit'
 import Awards from './pages/Awards'
 import Contact from './pages/Contact'
 
-function App() {
+function AnimatedRoutes() {
+  const location = useLocation()
+
   return (
-    <HelmetProvider>
-      <Router>
-        <Layout>
-          <Routes>
+    <Routes location={location} key={location.pathname}>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/impact" element={<Impact />} />
@@ -34,7 +33,16 @@ function App() {
             <Route path="/press-kit" element={<PressKit />} />
             <Route path="/recognition-awards" element={<Awards />} />
             <Route path="/contact" element={<Contact />} />
-          </Routes>
+    </Routes>
+  )
+}
+
+function App() {
+  return (
+    <HelmetProvider>
+      <Router>
+        <Layout>
+          <AnimatedRoutes />
         </Layout>
       </Router>
     </HelmetProvider>

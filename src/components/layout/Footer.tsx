@@ -15,8 +15,18 @@ export default function Footer() {
               "Fair access to quality education for every child through community-led action, clarity, and care."
             </p>
             <div className="flex gap-4">
-              {[Twitter, Instagram, Linkedin, Mail].map((Icon, i) => (
-                <a key={i} href="#" className="w-10 h-10 border border-gray-700 rounded-full flex items-center justify-center text-gray-400 hover:bg-aeem-gold hover:text-white hover:border-aeem-gold transition-all">
+              {[
+                { Icon: Twitter, label: "Twitter" },
+                { Icon: Instagram, label: "Instagram" },
+                { Icon: Linkedin, label: "LinkedIn" },
+                { Icon: Mail, label: "Email" }
+              ].map(({ Icon, label }, i) => (
+                <a
+                  key={i}
+                  href="#"
+                  aria-label={label}
+                  className="w-10 h-10 border border-gray-700 rounded-full flex items-center justify-center text-gray-400 hover:bg-aeem-gold hover:text-white hover:border-aeem-gold transition-all"
+                >
                   <Icon size={18} />
                 </a>
               ))}
