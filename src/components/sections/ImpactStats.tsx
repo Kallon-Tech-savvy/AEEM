@@ -23,7 +23,7 @@ const stats: Stat[] = [
     numericValue: 2500,
     suffix: '',
     prefix: '',
-    color: 'text-aeem-charcoal',
+    color: 'text-aeem-charcoal dark:text-white',
     description: 'Life-changing opportunities created',
   },
   {
@@ -37,7 +37,7 @@ const stats: Stat[] = [
     label: 'Active Mentors',
     numericValue: 480,
     suffix: '',
-    color: 'text-aeem-charcoal',
+    color: 'text-aeem-charcoal dark:text-white',
     description: 'Professionals giving back',
   },
 ]
@@ -89,10 +89,10 @@ function AnimatedStat({ stat, index }: { stat: Stat; index: number }) {
 
         <div className="w-8 h-0.5 bg-aeem-gold/30 mx-auto my-4 group-hover:w-16 transition-all duration-500" />
 
-        <p className="text-sm font-black uppercase tracking-widest text-gray-600 mb-2">
+        <p className="text-sm font-black uppercase tracking-widest text-gray-600 dark:text-gray-300 mb-2">
           {stat.label}
         </p>
-        <p className="text-xs text-gray-400 leading-relaxed">{stat.description}</p>
+        <p className="text-xs text-gray-400 dark:text-gray-500 leading-relaxed">{stat.description}</p>
       </div>
     </motion.div>
   )
@@ -100,13 +100,13 @@ function AnimatedStat({ stat, index }: { stat: Stat; index: number }) {
 
 export default function ImpactStats() {
   return (
-    <section id="impact" className="py-24 bg-gray-50 relative overflow-hidden">
+    <section id="impact" className="py-24 bg-gray-50 dark:bg-zinc-900/40 relative overflow-hidden transition-colors duration-300">
       {/* Decorative background text */}
       <div
         className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
         aria-hidden
       >
-        <span className="text-[20vw] font-black text-gray-100 tracking-tighter leading-none">
+        <span className="text-[20vw] font-black text-gray-100 dark:text-zinc-800/10 tracking-tighter leading-none transition-colors duration-300">
           IMPACT
         </span>
       </div>
@@ -121,12 +121,12 @@ export default function ImpactStats() {
           <span className="text-aeem-gold font-bold uppercase tracking-[0.3em] text-xs mb-4 block">
             Our Numbers
           </span>
-          <h2 className="text-4xl md:text-5xl font-black">
+          <h2 className="text-4xl md:text-5xl font-black text-aeem-charcoal dark:text-white">
             Real <span className="text-aeem-gold">Impact</span>, Real Lives
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-0 md:divide-x divide-gray-200">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-0 md:divide-x divide-gray-200 dark:divide-zinc-800 transition-colors duration-300">
           {stats.map((stat, i) => (
             <AnimatedStat key={stat.label} stat={stat} index={i} />
           ))}
