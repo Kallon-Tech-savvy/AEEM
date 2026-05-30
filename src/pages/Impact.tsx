@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, MapPin, Users, Calendar } from 'lucide-react';
+import { ArrowRight, MapPin } from 'lucide-react';
 
 const Impact: React.FC = () => {
   // Mock data for the MVP

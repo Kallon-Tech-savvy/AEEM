@@ -40,9 +40,10 @@ const EventDetail: React.FC = () => {
 
       if (error) throw error;
       setSubmitted(true);
-    } catch (err: any) {
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : 'Failed to register. Please try again.';
       console.error('Registration error:', err);
-      setError(err.message || 'Failed to register. Please try again.');
+      setError(errorMsg);
     } finally {
       setIsSubmitting(false);
     }

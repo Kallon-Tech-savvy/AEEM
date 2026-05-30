@@ -1,4 +1,4 @@
-import { Mail, Globe, Users, Instagram, Twitter, Linkedin } from 'lucide-react'
+import { Mail, Instagram, Twitter, Linkedin } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 export default function Footer() {
@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-8 h-8 bg-aeem-gold flex items-center justify-center rounded font-bold text-white text-lg">A</div>
+              <img src="/assets/logo.jpg" alt="AEEM Logo" className="w-10 h-10 object-contain rounded shadow-md" />
               <h3 className="font-extrabold text-2xl tracking-tight">AEEM</h3>
             </div>
             <p className="text-gray-400 max-w-sm mb-8 leading-relaxed italic">

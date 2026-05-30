@@ -37,7 +37,7 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
         <Link to="/" className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-aeem-gold flex items-center justify-center rounded-lg font-bold text-white text-xl shadow-lg">A</div>
+          <img src="/assets/logo.jpg" alt="AEEM Logo" className="w-12 h-12 object-contain rounded-lg shadow-md" />
           <div className="leading-tight">
             <h1 className="font-extrabold text-lg tracking-tight">AEEM</h1>
             <p className="text-[10px] uppercase tracking-[0.2em] text-gray-500">Movement</p>

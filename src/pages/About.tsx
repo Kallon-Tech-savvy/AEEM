@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
-import { Target, Heart, Eye, Award } from 'lucide-react';
+import { Target, Heart, Eye } from 'lucide-react';
 
 const About: React.FC = () => {
   return (

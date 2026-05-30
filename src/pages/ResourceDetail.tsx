@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Clock, Share2, Download, BookOpen } from 'lucide-react';
+import { ArrowLeft, Clock, Share2, Download } from 'lucide-react';
 
 const ResourceDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { motion } from 'framer-motion';
 import { Search, Download, BookOpen, Newspaper, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
 

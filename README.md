@@ -22,12 +22,12 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to see the application.
+Open [http://localhost:5173](http://localhost:5173) to see the application.
 
 ## 📁 Project Structure
 
 ```
-app/
+src/
 ├── components/
 │   ├── layout/
 │   │   ├── Navbar.tsx
@@ -36,15 +36,17 @@ app/
 │       ├── Hero.tsx
 │       ├── ImpactStats.tsx
 │       ├── Pillars.tsx
-│       ├── GlobalReach.tsx
-│       └── ModernGallery.tsx
-├── about/
-├── impact/
-├── initiatives/
-├── contact/
-├── page.tsx
-├── layout.tsx
-└── globals.css
+│       └── GlobalReach.tsx
+├── pages/
+│   ├── About.tsx
+│   ├── Home.tsx
+│   ├── Impact.tsx
+│   └── ...
+├── services/
+│   └── supabase.ts
+├── App.tsx
+├── main.tsx
+└── index.css
 ```
 
 ## 🎨 Design System
@@ -65,15 +67,19 @@ app/
 | Home | `/` | Main landing page with all sections |
 | About | `/about` | Mission, vision, values, and story |
 | Impact | `/impact` | Metrics, statistics, and success stories |
-| Initiatives | `/initiatives` | Strategic programs and frameworks |
+| Events | `/events` | Upcoming events and registrations |
+| Get Involved | `/get-involved` | Volunteer, partner, and donor inquiries |
+| Resources | `/resources` | Knowledge Hub and blog |
 | Contact | `/contact` | Contact form and information |
 
 ## 🛠️ Tech Stack
 
-- **Framework**: Next.js 14
+- **Framework**: React 18 (Vite)
 - **Styling**: Tailwind CSS
 - **Animations**: Framer Motion
+- **3D Graphics**: Three.js / React Three Fiber
 - **Icons**: Lucide React
+- **Backend**: Supabase
 - **Type Safety**: TypeScript
 
 ## 📦 Build & Deploy
@@ -82,8 +88,8 @@ app/
 # Build for production
 npm run build
 
-# Start production server
-npm start
+# Preview production build
+npm run preview
 
 # Check for linting issues
 npm run lint
@@ -99,9 +105,8 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 📞 Contact
 
-- **Email**: hello@aeem.org
-- **Phone**: +234 (0) 123 456 7890
-- **Location**: Lagos, Nigeria
+- **Email**: info@aeem.org
+- **Location**: Freetown, Sierra Leone
 
 ---
 

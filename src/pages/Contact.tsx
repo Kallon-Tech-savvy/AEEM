@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Send, CheckCircle2, Loader2, Globe } from 'lucide-react';
 import { supabase } from '../services/supabase';
 
@@ -38,9 +37,10 @@ const Contact: React.FC = () => {
       if (error) throw error;
       setSubmitted(true);
       setFormData({ full_name: '', email: '', phone: '', message: '' });
-    } catch (err: any) {
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : 'Failed to send message. Please try again.';
       console.error('Submission error:', err);
-      setError(err.message || 'Failed to send message. Please try again.');
+      setError(errorMsg);
     } finally {
       setIsSubmitting(false);
     }
