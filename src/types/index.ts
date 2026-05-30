@@ -74,3 +74,16 @@ export interface Subscription {
   email: string;
   created_at?: string;
 }
+
+export interface Award {
+  id: string;
+  verification_code: string;
+  recipient_name: string;
+  award_title: string;
+  category: 'academic' | 'leadership' | 'community' | 'innovation';
+  issue_date: string;
+  institution?: string;
+  description?: string;
+  verification_status: 'verified' | 'revoked' | 'pending';
+  created_at: string;
+}
