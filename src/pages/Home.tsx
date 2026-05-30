@@ -32,7 +32,7 @@ export default function Home() {
       </div>
 
       {/* The Problem Section */}
-      <section className="py-24 bg-white overflow-hidden">
+      <section className="py-24 bg-white dark:bg-aeem-charcoal overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -40,10 +40,10 @@ export default function Home() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl md:text-5xl font-black mb-8 leading-tight">
+              <h2 className="text-4xl md:text-5xl font-black mb-8 leading-tight text-aeem-charcoal dark:text-white">
                 The Invisible <span className="text-aeem-gold">Barriers</span> to Education
               </h2>
-              <p className="text-xl text-gray-600 leading-relaxed mb-8">
+              <p className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed mb-8">
                 Too many learners across Africa are excluded by barriers that are visible locally but invisible institutionally. From physical distance to systemic inequality, these obstacles prevent millions from reaching their full potential.
               </p>
               <div className="space-y-4">
@@ -56,13 +56,13 @@ export default function Home() {
                     <div className="w-6 h-6 rounded-full bg-aeem-gold/20 flex items-center justify-center text-aeem-gold">
                        <Shield size={14} />
                     </div>
-                    <span className="font-semibold text-gray-700">{item}</span>
+                    <span className="font-semibold text-gray-700 dark:text-gray-300">{item}</span>
                   </div>
                 ))}
               </div>
             </motion.div>
             <div className="relative">
-              <div className="aspect-square bg-gray-100 rounded-3xl overflow-hidden shadow-2xl relative z-10">
+              <div className="aspect-square bg-gray-100 dark:bg-zinc-800 rounded-3xl overflow-hidden shadow-2xl relative z-10">
                  <img
                    src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&q=80&w=800"
                    alt="Students in a classroom"
@@ -79,11 +79,11 @@ export default function Home() {
       <ImpactStats />
 
       {/* What AEEM Does */}
-      <section className="py-24 bg-gray-50">
+      <section className="py-24 bg-gray-50 dark:bg-zinc-900/40">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-4xl md:text-5xl font-black mb-6">Our Approach to <span className="text-aeem-gold">Change</span></h2>
-            <p className="text-lg text-gray-600 italic">"Fair access to quality education for every child through community-led action, clarity, and care."</p>
+            <h2 className="text-4xl md:text-5xl font-black mb-6 text-aeem-charcoal dark:text-white">Our Approach to <span className="text-aeem-gold">Change</span></h2>
+            <p className="text-lg text-gray-600 dark:text-gray-400 italic">"Fair access to quality education for every child through community-led action, clarity, and care."</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -100,13 +100,13 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
                 whileHover={{ y: -10 }}
-                className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-all group"
+                className="bg-white dark:bg-zinc-900 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-zinc-800 hover:shadow-xl dark:hover:shadow-black/20 transition-all group"
               >
                 <div className="w-14 h-14 bg-aeem-gold/10 rounded-xl flex items-center justify-center text-aeem-gold mb-6 group-hover:bg-aeem-gold group-hover:text-white transition-colors">
                   <item.icon size={28} />
                 </div>
-                <h3 className="text-xl font-bold mb-4">{item.title}</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
+                <h3 className="text-xl font-bold mb-4 text-aeem-charcoal dark:text-white">{item.title}</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
           </div>

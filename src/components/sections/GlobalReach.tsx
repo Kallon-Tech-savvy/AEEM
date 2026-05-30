@@ -77,7 +77,7 @@ const BOTTOM_STATS = [
 
 export default function GlobalReach() {
   return (
-    <section className="py-24 bg-white overflow-hidden">
+    <section className="py-24 bg-white dark:bg-aeem-charcoal overflow-hidden transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <motion.div
@@ -89,17 +89,17 @@ export default function GlobalReach() {
           <span className="text-aeem-gold font-bold uppercase tracking-[0.3em] text-xs mb-4 block">
             Our Reach
           </span>
-          <h2 className="text-5xl font-black mb-4">
+          <h2 className="text-5xl font-black mb-4 text-aeem-charcoal dark:text-white">
             Expanding our <span className="text-aeem-gold">Footprint</span>
           </h2>
-          <p className="text-gray-500 max-w-2xl mx-auto text-lg">
+          <p className="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto text-lg">
             From West Africa to the entire continent, we are building bridges
             to better futures — one community at a time.
           </p>
         </motion.div>
 
         {/* Globe + floating chips */}
-        <div className="relative h-[560px] w-full bg-gradient-to-b from-gray-50 to-white rounded-[3rem] overflow-hidden border border-gray-100 shadow-sm">
+        <div className="relative h-[560px] w-full bg-gradient-to-b from-gray-50 to-white dark:from-zinc-900/50 dark:to-zinc-900/10 rounded-[3rem] overflow-hidden border border-gray-100 dark:border-zinc-800 shadow-sm transition-colors duration-300">
           {/* Canvas */}
           <Canvas camera={{ position: [0, 0, 4] }}>
             <ambientLight intensity={1.2} />
@@ -116,9 +116,9 @@ export default function GlobalReach() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.4 }}
-              className="text-center bg-white/70 backdrop-blur-xl px-10 py-8 rounded-3xl border border-gray-100 shadow-xl"
+              className="text-center bg-white/70 dark:bg-zinc-900/70 backdrop-blur-xl px-10 py-8 rounded-3xl border border-gray-100 dark:border-zinc-800 shadow-xl transition-colors duration-300"
             >
-              <p className="text-7xl font-black text-aeem-charcoal leading-none">24</p>
+              <p className="text-7xl font-black text-aeem-charcoal dark:text-white leading-none">24</p>
               <p className="text-xs font-bold uppercase tracking-widest text-aeem-gold mt-2">
                 Countries Reached
               </p>
@@ -136,9 +136,9 @@ export default function GlobalReach() {
               className={`absolute pointer-events-none ${r.side === 'left' ? 'left-6' : 'right-6'}`}
               style={{ top: r.top }}
             >
-              <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-gray-100 rounded-full px-4 py-2 shadow-sm">
+              <div className="flex items-center gap-2 bg-white/80 dark:bg-zinc-800/80 backdrop-blur-sm border border-gray-100 dark:border-zinc-700 rounded-full px-4 py-2 shadow-sm transition-colors duration-300">
                 <span className="w-2 h-2 rounded-full bg-aeem-gold flex-shrink-0" />
-                <span className="text-xs font-bold text-gray-700">{r.label}</span>
+                <span className="text-xs font-bold text-gray-700 dark:text-gray-300">{r.label}</span>
                 <span className="text-xs font-black text-aeem-gold ml-1">{r.count}</span>
               </div>
             </motion.div>
@@ -156,9 +156,9 @@ export default function GlobalReach() {
           {BOTTOM_STATS.map((s) => (
             <div
               key={s.label}
-              className="text-center py-8 px-6 rounded-3xl bg-gray-50 border border-gray-100 hover:border-aeem-gold/30 hover:bg-aeem-gold/5 transition-all group"
+              className="text-center py-8 px-6 rounded-3xl bg-gray-50 dark:bg-zinc-900/40 border border-gray-100 dark:border-zinc-800 hover:border-aeem-gold/30 hover:bg-aeem-gold/5 transition-all group"
             >
-              <p className="text-4xl font-black text-aeem-charcoal group-hover:text-aeem-gold transition-colors">
+              <p className="text-4xl font-black text-aeem-charcoal dark:text-white group-hover:text-aeem-gold transition-colors">
                 {s.val}
               </p>
               <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mt-2">
