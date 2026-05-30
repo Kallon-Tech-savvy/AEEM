@@ -1,6 +1,49 @@
-import { motion } from 'framer-motion'
-import { Canvas } from '@react-three/fiber'
+import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, Sphere } from '@react-three/drei'
+import { useRef } from 'react'
+import * as THREE from 'three'
+
+function Globe() {
+  const groupRef = useRef<THREE.Group>(null)
+
+  useFrame(() => {
+    if (groupRef.current) {
+      groupRef.current.rotation.y += 0.005
+    }
+  })
+
+  return (
+    <group ref={groupRef}>
+      {/* Wireframe Outer Globe */}
+      <Sphere args={[1.6, 32, 32]}>
+        <meshStandardMaterial
+          color="#D4AF37"
+          wireframe
+          transparent
+          opacity={0.3}
+        />
+      </Sphere>
+
+      {/* Main Globe Body */}
+      <Sphere args={[1.5, 64, 64]}>
+        <meshStandardMaterial
+          color="#D4AF37"
+          metalness={0.8}
+          roughness={0.2}
+        />
+      </Sphere>
+
+      {/* Inner Core Glow */}
+      <Sphere args={[1.4, 32, 32]}>
+        <meshStandardMaterial
+          color="#FFFFFF"
+          transparent
+          opacity={0.1}
+        />
+      </Sphere>
+    </group>
+  )
+}
 
 export default function GlobalReach() {
   return (
@@ -14,35 +57,9 @@ export default function GlobalReach() {
              <ambientLight intensity={1} />
              <pointLight position={[10, 10, 10]} />
 
-             {/* Wireframe Outer Globe */}
-             <Sphere args={[1.6, 32, 32]}>
-               <meshStandardMaterial
-                 color="#D4AF37"
-                 wireframe
-                 transparent
-                 opacity={0.3}
-               />
-             </Sphere>
+             <Globe />
 
-             {/* Main Globe Body */}
-             <Sphere args={[1.5, 64, 64]}>
-                <meshStandardMaterial
-                  color="#D4AF37"
-                  metalness={0.8}
-                  roughness={0.2}
-                />
-             </Sphere>
-
-             {/* Inner Core Glow */}
-             <Sphere args={[1.4, 32, 32]}>
-               <meshStandardMaterial
-                 color="#FFFFFF"
-                 transparent
-                 opacity={0.1}
-               />
-             </Sphere>
-
-             <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={1} />
+             <OrbitControls enableZoom={false} />
            </Canvas>
 
            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">

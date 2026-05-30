@@ -40,9 +40,10 @@ const GetInvolved: React.FC = () => {
       if (error) throw error;
       setSubmitted(true);
       setFormData({ full_name: '', email: '', phone: '', organization: '', message: '' });
-    } catch (err: any) {
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : 'Failed to submit inquiry. Please try again.';
       console.error('Submission error:', err);
-      setError(err.message || 'Failed to submit inquiry. Please try again.');
+      setError(errorMsg);
     } finally {
       setIsSubmitting(false);
     }
@@ -80,7 +81,7 @@ const GetInvolved: React.FC = () => {
               {tabs.map((tab) => (
                 <button
                   key={tab.id}
-                  onClick={() => { setActiveTab(tab.id as any); setSubmitted(false); }}
+                  onClick={() => { setActiveTab(tab.id as 'volunteer' | 'partner' | 'donor'); setSubmitted(false); }}
                   className={`w-full text-left p-8 rounded-3xl transition-all border-2 ${activeTab === tab.id ? 'border-aeem-gold bg-aeem-gold/5 shadow-lg shadow-aeem-gold/10' : 'border-gray-100 bg-white hover:border-gray-200'}`}
                 >
                   <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-6 ${activeTab === tab.id ? 'bg-aeem-gold text-white' : 'bg-gray-100 text-gray-400'}`}>
