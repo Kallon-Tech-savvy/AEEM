@@ -13,10 +13,10 @@ interface Stat {
 const stats: Stat[] = [
   {
     label: 'Communities Reached',
-    numericValue: 150,
+    numericValue: 120,
     suffix: '+',
     color: 'text-aeem-gold',
-    description: 'Across 24 African nations',
+    description: 'Across 8 African nations',
   },
   {
     label: 'Scholarships Awarded',
@@ -25,13 +25,6 @@ const stats: Stat[] = [
     prefix: '',
     color: 'text-aeem-charcoal dark:text-white',
     description: 'Life-changing opportunities created',
-  },
-  {
-    label: 'Training Centers',
-    numericValue: 12,
-    suffix: '',
-    color: 'text-aeem-gold',
-    description: 'Active learning hubs operating',
   },
   {
     label: 'Active Mentors',
@@ -122,11 +115,11 @@ export default function ImpactStats() {
             Our Numbers
           </span>
           <h2 className="text-4xl md:text-5xl font-black text-aeem-charcoal dark:text-white">
-            Real <span className="text-aeem-gold">Impact</span>, Real Lives
+            Impacting <span className="text-aeem-gold">Real</span> Lives
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-0 md:divide-x divide-gray-200 dark:divide-zinc-800 transition-colors duration-300">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-0 md:divide-x divide-gray-200 dark:divide-zinc-800 transition-colors duration-300">
           {stats.map((stat, i) => (
             <AnimatedStat key={stat.label} stat={stat} index={i} />
           ))}

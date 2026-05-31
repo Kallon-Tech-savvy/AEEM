@@ -32,7 +32,7 @@ export default function Navbar() {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed w-full z-[100] transition-all duration-500 ${
+      className={`fixed w-full z-[100] transition-all duration-200 ${
         isScrolled || isMobileMenuOpen 
           ? 'bg-white/95 dark:bg-aeem-charcoal/95 border-b border-gray-100 dark:border-zinc-800 py-4 shadow-sm backdrop-blur-xl' 
           : 'bg-transparent py-8'
@@ -76,7 +76,7 @@ export default function Navbar() {
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMobileMenuOpen}
-            className="text-aeem-charcoal dark:text-white"
+            className="text-aeem-charcoal dark:text-aeem-gold"
           >
             {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>

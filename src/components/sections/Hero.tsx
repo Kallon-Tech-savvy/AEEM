@@ -41,26 +41,10 @@ const CITIES = [
   { name: 'Conakry',       x: 24,  y: 192, delay: 0.4 },
   { name: 'Monrovia',      x: 46,  y: 223, delay: 0.6 },
   { name: 'Dakar',         x: 5,   y: 160, delay: 0.8 },
-  { name: 'Bamako',        x: 63,  y: 175, delay: 1.0 },
-  { name: 'Abidjan',       x: 89,  y: 228, delay: 1.2 },
   { name: 'Accra',         x: 107, y: 226, delay: 1.4 },
-  { name: 'Ouagadougou',   x: 103, y: 178, delay: 1.6 },
   { name: 'Lagos',         x: 133, y: 220, delay: 1.8 },
-  { name: 'Abuja',         x: 156, y: 202, delay: 2.0 },
-  { name: 'Yaoundé',       x: 184, y: 242, delay: 2.2 },
-  { name: 'Tunis',         x: 176, y: 2,   delay: 2.4 },
-  { name: 'Cairo',         x: 267, y: 45,  delay: 2.6 },
-  { name: 'Khartoum',      x: 314, y: 153, delay: 2.8 },
-  { name: 'Addis Ababa',   x: 359, y: 202, delay: 3.0 },
-  { name: 'Kinshasa',      x: 209, y: 302, delay: 3.2 },
-  { name: 'Luanda',        x: 194, y: 324, delay: 3.4 },
   { name: 'Kampala',       x: 314, y: 266, delay: 3.6 },
   { name: 'Nairobi',       x: 348, y: 276, delay: 3.8 },
-  { name: 'Dar es Salaam', x: 361, y: 311, delay: 4.0 },
-  { name: 'Lusaka',        x: 291, y: 377, delay: 4.2 },
-  { name: 'Harare',        x: 317, y: 421, delay: 4.4 },
-  { name: 'Johannesburg',  x: 290, y: 452, delay: 4.6 },
-  { name: 'Cape Town',     x: 226, y: 514, delay: 4.8 },
 ]
 
 function lineLen(x2: number, y2: number) {
@@ -68,16 +52,16 @@ function lineLen(x2: number, y2: number) {
 }
 
 const MINI_STATS = [
-  { val: '24',   label: 'Countries' },
+  { val: '8',   label: 'Countries' },
   { val: '150+', label: 'Communities' },
-  { val: '2.5k', label: 'Scholarships' },
+  { val: '1.5k', label: 'People Empowered' },
 ]
 
 export default function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center pt-20 overflow-hidden bg-aeem-charcoal"
+      className="bg-aeem-bg dark:bg-aeem-charcoal relative min-h-screen flex items-center pt-20 overflow-hidden "
     >
       {/* Subtle dot-grid texture */}
       <div
@@ -102,17 +86,17 @@ export default function Hero() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="inline-block px-4 py-1.5 bg-aeem-gold/15 text-aeem-gold rounded-full text-xs font-bold uppercase tracking-widest mb-6"
+            className="inline-block px-4 py-1.5 bg-aeem-focus/50 dark:bg-aeem-gold/15 text-white dark:text-aeem-gold rounded-full text-xs font-bold uppercase tracking-widest mb-6"
           >
-            Education for All
+            Fair access to education for all
           </motion.span>
 
-          <h1 className="text-6xl md:text-7xl font-black leading-[0.9] mb-8 tracking-tighter text-white">
+          <h1 className="text-aeem-charcoal dark:text-aeem-dark-text text-6xl md:text-7xl font-black leading-[0.9] mb-8 tracking-tighter">
             Empowering the{' '}
             <span className="text-aeem-gold">Future</span> of Africa
           </h1>
 
-          <p className="text-xl text-gray-400 max-w-lg mb-10 leading-relaxed">
+          <p className="text-xl text-aeem-charcoal dark:text-gray-400 max-w-lg mb-10 leading-relaxed">
             Pioneering inclusive, equitable, and quality education across the
             continent through community-led action and innovative mentorship.
           </p>
@@ -126,14 +110,14 @@ export default function Hero() {
             </Link>
             <Link
               to="/events"
-              className="px-10 py-4 border-2 border-white/15 text-white rounded-full font-bold hover:border-aeem-gold hover:text-aeem-gold transition-all"
+              className="px-10 py-4 border-2 border-aeem-focus/70 text-aeem-charcoal dark:text-aeem-bg rounded-full font-bold hover:border-aeem-gold hover:text-aeem-gold transition-all"
             >
               Upcoming Events
             </Link>
           </div>
 
           {/* Mini stats */}
-          <div className="flex gap-10 mt-14 pt-10 border-t border-white/10">
+          <div className="flex gap-10  mt-14 pt-10 border-t dark:border-white/10 border-aeem-focus/50">
             {MINI_STATS.map((s, i) => (
               <motion.div
                 key={s.label}
@@ -142,7 +126,7 @@ export default function Hero() {
                 transition={{ delay: 0.6 + i * 0.15 }}
               >
                 <p className="text-3xl font-black text-aeem-gold">{s.val}</p>
-                <p className="text-xs text-gray-500 font-bold uppercase tracking-wider mt-1">
+                <p className="text-xs dark:text-gray-500 text-aeem-charcoal font-bold uppercase tracking-wider mt-1">
                   {s.label}
                 </p>
               </motion.div>
@@ -265,23 +249,6 @@ export default function Hero() {
               transition={{ delay: 0.5 }}
             >
               Freetown
-            </motion.text>
-
-            {/* City count badge */}
-            <motion.text
-              x={420} y={520}
-              textAnchor="end"
-              fill="#D4AF37"
-              fillOpacity="0.5"
-              fontSize="9"
-              fontFamily="sans-serif"
-              fontWeight="bold"
-              letterSpacing="2"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 5.5 }}
-            >
-              24 NATIONS REACHED
             </motion.text>
           </svg>
         </motion.div>

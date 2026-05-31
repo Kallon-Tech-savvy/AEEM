@@ -12,7 +12,7 @@ const NotFound: React.FC = () => {
         <meta name="description" content="The page you are looking for does not exist on the AEEM platform." />
       </Helmet>
 
-      <section className="min-h-screen bg-aeem-charcoal text-white flex items-center justify-center pt-20 overflow-hidden relative">
+      <section className="min-h-screen bg-aeem text-aeem flex items-center justify-center pt-20 overflow-hidden relative">
         {/* Ambient bloom background */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-aeem-gold/10 rounded-full blur-[100px] pointer-events-none" />
         
@@ -41,24 +41,24 @@ const NotFound: React.FC = () => {
               404
             </h1>
 
-            <h2 className="text-2xl md:text-3xl font-extrabold mb-4 text-white">
-              Lost Pathway
+            <h2 className="text-2xl md:text-3xl font-extrabold mb-4 text-aeem">
+              Lost your way?
             </h2>
 
-            <p className="text-gray-400 text-sm md:text-base leading-relaxed mb-12">
+            <p className="text-gray-500 text-sm md:text-base leading-relaxed mb-12">
               The page you are looking for might have been removed, had its name changed, or is temporarily unavailable. Let us guide you back to the right track.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 to="/"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-aeem-gold text-aeem-charcoal rounded-full font-black hover:bg-white hover:text-aeem-charcoal transition-all shadow-xl shadow-aeem-gold/20 active:scale-95 text-sm"
+                className="inline-flex items-center justify-center gap-2 px-4 py-4 bg-aeem-gold text-aeem-charcoal rounded-full font-black hover:bg-white hover:text-aeem-focus transition-all shadow-xl shadow-aeem-gold/20 active:scale-95 text-sm"
               >
                 <Home size={16} /> Back to Home
               </Link>
               <Link
                 to="/contact"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-white/10 text-white rounded-full font-bold hover:border-aeem-gold hover:text-aeem-gold transition-all active:scale-95 text-sm"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-aeem-focus/50 text-aeem rounded-full font-bold hover:border-aeem-gold hover:text-aeem-gold transition-all active:scale-95 text-sm"
               >
                 <ArrowLeft size={16} /> Contact Support
               </Link>

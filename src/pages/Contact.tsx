@@ -69,33 +69,33 @@ const Contact: React.FC = () => {
         <meta name="description" content="Reach out to the Africa Education Empowerment Movement team directly." />
       </Helmet>
 
-      <section className="pt-40 pb-24 bg-aeem-charcoal text-white overflow-hidden relative">
+      <section className="pt-40 pb-24 bg-aeem text-aeem overflow-hidden relative">
         <div className="absolute top-0 right-0 w-1/3 h-full bg-aeem-gold/5 -skew-x-12 translate-x-1/2" />
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="max-w-3xl">
             <span className="text-aeem-gold font-bold uppercase tracking-[0.3em] text-xs mb-4 block">Get in Touch</span>
             <h1 className="text-5xl md:text-7xl font-black mb-8 leading-tight">Contact <span className="text-aeem-gold">AEEM</span></h1>
-            <p className="text-xl text-gray-400">
+            <p className="text-xl text-gray-500">
               Have questions or want to learn more about our initiatives? We're here to help. Reach out to our team directly.
             </p>
           </div>
         </div>
       </section>
 
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-aeem-focus/10">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
             {/* Contact Info */}
             <div className="lg:col-span-5 space-y-12">
                <div>
-                  <h2 className="text-3xl font-black mb-8 text-aeem-charcoal">Reach Us Directly</h2>
+                  <h2 className="text-3xl font-black mb-8 text-aeem">Reach Us Directly</h2>
                   <div className="space-y-8">
                      <div className="flex gap-6">
                         <div className="w-14 h-14 bg-aeem-gold/10 rounded-2xl flex items-center justify-center text-aeem-gold shrink-0">
                            <Mail size={24} />
                         </div>
                         <div>
-                           <h4 className="font-bold text-lg mb-1 text-aeem-charcoal">Email</h4>
+                           <h4 className="font-bold text-lg mb-1 text-aeem">Email</h4>
                            <p className="text-gray-500">info@aeem.org</p>
                            <p className="text-gray-500 text-sm">Our team typically responds within 24 hours.</p>
                         </div>
@@ -105,8 +105,8 @@ const Contact: React.FC = () => {
                            <Phone size={24} />
                         </div>
                         <div>
-                           <h4 className="font-bold text-lg mb-1 text-aeem-charcoal">Phone</h4>
-                           <p className="text-gray-500">+232 77 123456</p>
+                           <h4 className="font-bold text-lg mb-1 text-aeem">Phone</h4>
+                           <p className="text-gray-500">+232 76 406 281</p>
                            <p className="text-gray-500 text-sm">Mon - Fri, 9am - 5pm GMT.</p>
                         </div>
                      </div>
@@ -115,7 +115,7 @@ const Contact: React.FC = () => {
                            <MapPin size={24} />
                         </div>
                         <div>
-                           <h4 className="font-bold text-lg mb-1 text-aeem-charcoal">Office</h4>
+                           <h4 className="font-bold text-lg mb-1 text-aeem">Office</h4>
                            <p className="text-gray-500">Freetown, Sierra Leone</p>
                            <p className="text-gray-500 text-sm">The heart of our West African operations.</p>
                         </div>
@@ -123,8 +123,8 @@ const Contact: React.FC = () => {
                   </div>
                </div>
 
-               <div className="bg-gray-50 p-8 rounded-[2rem] border border-gray-100">
-                  <h3 className="font-bold text-xl mb-4 flex items-center gap-3 text-aeem-charcoal">
+               <div className=" p-8 rounded-[2rem] border border-aeem-border">
+                  <h3 className="font-bold text-xl mb-4 flex items-center gap-3 text-aeem">
                      <Globe className="text-aeem-gold" size={24} /> Global Presence
                   </h3>
                   <p className="text-gray-500 text-sm leading-relaxed">
@@ -134,7 +134,7 @@ const Contact: React.FC = () => {
             </div>
 
             {/* Contact Form */}
-            <div className="lg:col-span-7 bg-white rounded-[2.5rem] p-8 md:p-16 border border-gray-100 shadow-2xl">
+            <div className="lg:col-span-7 bg-white dark:bg-black rounded-[2.5rem] p-8 md:p-16 border border-gray-100 shadow-2xl">
                {submitted ? (
                   <div className="text-center py-12">
                      <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-8">
@@ -160,57 +160,57 @@ const Contact: React.FC = () => {
                      )}
                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div className="space-y-2">
-                           <label className="text-xs font-black uppercase tracking-widest text-gray-400 ml-1">Full Name</label>
+                           <label className="text-xs font-black uppercase tracking-widest text-aeem ml-1">Full Name</label>
                            <input
                               required
                               name="full_name"
                               value={formData.full_name}
                               onChange={handleChange}
                               type="text"
-                              className="w-full bg-gray-50 border border-transparent rounded-2xl px-6 py-4 focus:outline-none focus:bg-white focus:border-aeem-gold focus:ring-1 focus:ring-aeem-gold transition-all"
+                              className="w-full bg-aeem-focus/20 border border-transparent rounded-2xl px-6 py-4 focus:outline-none focus:bg-white focus:border-aeem-gold focus:ring-1 focus:ring-aeem-gold transition-all"
                               placeholder="Your Name"
                            />
                         </div>
                         <div className="space-y-2">
-                           <label className="text-xs font-black uppercase tracking-widest text-gray-400 ml-1">Email Address</label>
+                           <label className="text-xs font-black uppercase tracking-widest text-aeem ml-1">Email Address</label>
                            <input
                               required
                               name="email"
                               value={formData.email}
                               onChange={handleChange}
                               type="email"
-                              className="w-full bg-gray-50 border border-transparent rounded-2xl px-6 py-4 focus:outline-none focus:bg-white focus:border-aeem-gold focus:ring-1 focus:ring-aeem-gold transition-all"
+                              className="w-full bg-aeem-focus/20 border border-transparent rounded-2xl px-6 py-4 focus:outline-none focus:bg-white focus:border-aeem-gold focus:ring-1 focus:ring-aeem-gold transition-all"
                               placeholder="email@example.com"
                            />
                         </div>
                      </div>
                      <div className="space-y-2">
-                        <label className="text-xs font-black uppercase tracking-widest text-gray-400 ml-1">Subject (Optional)</label>
+                        <label className="text-xs font-black uppercase tracking-widest text-aeem ml-1">Subject (Optional)</label>
                         <input
                            name="subject"
                            value={formData.subject}
                            onChange={handleChange}
                            type="text"
-                           className="w-full bg-gray-50 border border-transparent rounded-2xl px-6 py-4 focus:outline-none focus:bg-white focus:border-aeem-gold focus:ring-1 focus:ring-aeem-gold transition-all"
+                           className="w-full bg-aeem-focus/20 border border-transparent rounded-2xl px-6 py-4 focus:outline-none focus:bg-white focus:border-aeem-gold focus:ring-1 focus:ring-aeem-gold transition-all"
                            placeholder="How can we help?"
                         />
                      </div>
                      <div className="space-y-2">
-                        <label className="text-xs font-black uppercase tracking-widest text-gray-400 ml-1">Message</label>
+                        <label className="text-xs font-black uppercase tracking-widest text-aeem ml-1">Message</label>
                         <textarea
                            required
                            name="message"
                            value={formData.message}
                            onChange={handleChange}
                            rows={6}
-                           className="w-full bg-gray-50 border border-transparent rounded-2xl px-6 py-4 focus:outline-none focus:bg-white focus:border-aeem-gold focus:ring-1 focus:ring-aeem-gold transition-all"
+                           className="w-full bg-aeem-focus/20 border border-transparent rounded-2xl px-6 py-4 focus:outline-none focus:bg-white focus:border-aeem-gold focus:ring-1 focus:ring-aeem-gold transition-all"
                            placeholder="Tell us more..."
                         />
                      </div>
                      <button
                         disabled={isSubmitting}
                         type="submit"
-                        className="w-full bg-aeem-charcoal text-white py-5 rounded-2xl font-black text-lg hover:bg-aeem-gold transition-all shadow-xl flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95"
+                        className="w-full bg-aeem-focus/70 text-white py-5 rounded-2xl font-black text-lg hover:bg-aeem-gold transition-all shadow-xl flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95"
                      >
                         {isSubmitting ? <><Loader2 className="animate-spin" /> Sending...</> : <><Send size={20} /> Send Message</>}
                      </button>

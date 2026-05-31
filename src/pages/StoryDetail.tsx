@@ -23,7 +23,7 @@ const FALLBACK_STORY: ImpactStory = {
   summary: "Our flagship 2-day empowerment workshop trained 42 participants from six schools, addressing leadership, civic awareness, and resilience.",
   body: `<p>The "I AM SOMEBODY" initiative was designed as a high-impact empowerment program to address the critical gaps in traditional education. Beyond textbooks, we focused on the human element—leadership, civic awareness, and personal resilience.</p>
          <p>Participants reported a significant increase in their confidence to lead school initiatives and a deeper understanding of their roles as active citizens in Sierra Leone. By training 42 participants from six different schools, AEEM created a cross-institutional network of youth leaders ready to advocate for educational equity.</p>`,
-  cover_image_url: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=1200",
+  cover_image_url: "/assets/gallery/Activity.jpg",
   participants_count: 42,
   schools_count: 6,
   location: "Freetown, Sierra Leone"
@@ -49,7 +49,7 @@ const STORIES_DB: Record<string, StoryData> = {
   'i-am-somebody': {
     title: "I AM SOMEBODY Initiative",
     quote: "A movement to instill agency, resilience, and leadership in the next generation of African scholars.",
-    image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=1200",
+    image: "/assets/gallery/Activity.jpg",
     stats: {
       participants: "42 Students",
       schools: "6 Institutions",
@@ -67,28 +67,6 @@ const STORIES_DB: Record<string, StoryData> = {
     impact: "Participants reported a significant increase in their confidence to lead school initiatives and a deeper understanding of their roles as active citizens in Sierra Leone. By training 42 participants from six different schools, AEEM created a cross-institutional network of youth leaders ready to advocate for educational equity.",
     quoteText: "This workshop changed how I view my future. I realized that my voice matters and that I have the power to create change in my community.",
     quoteAuthor: "Participant from Prince of Wales School"
-  },
-  'digital-literacy': {
-    title: "Digital Literacy Campaign",
-    quote: "Bridging the digital divide by providing foundational computer skills to rural youth in marginalized areas.",
-    image: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=1200",
-    stats: {
-      participants: "156 Students",
-      schools: "4 Communities",
-      duration: "Ongoing Campaign"
-    },
-    overview: "Access to computers and digital knowledge is no longer optional; it is a fundamental requirement for the modern world. Our Digital Literacy Campaign brings hands-on computer workshops and internet safety courses directly to rural youth hubs in Sierra Leone, giving students their very first interactive experience with modern computers.",
-    focusAreas: [
-      "Operating Systems Basics",
-      "Word Processing & Docs",
-      "Safe Internet Research",
-      "Digital Communication",
-      "Intro to Coding Concepts",
-      "Community ICT Resource Management"
-    ],
-    impact: "Over 150 students have completed their first technical course, gaining critical digital competencies for secondary and tertiary learning. The project has established a pilot solar-powered computer lab in Makeni, maintaining a self-sustaining peer learning network.",
-    quoteText: "I had never touched a real computer before this campaign. Now I can type essays, search for school topics, and I feel ready for the modern digital era.",
-    quoteAuthor: "Student from Makeni Secondary School"
   }
 };
 
@@ -133,57 +111,57 @@ const StoryDetail: React.FC = () => {
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20 p-10 bg-gray-50 rounded-3xl">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20 p-10 bg-aeem rounded-3xl">
              <div>
                 <h4 className="text-xs font-bold uppercase tracking-widest text-aeem-gold mb-2">Participants</h4>
-                <p className="text-2xl font-black text-aeem-charcoal">{story.stats.participants}</p>
+                <p className="text-2xl font-black text-aeem">{story.stats.participants}</p>
              </div>
              <div>
                 <h4 className="text-xs font-bold uppercase tracking-widest text-aeem-gold mb-2">Communities / Schools</h4>
-                <p className="text-2xl font-black text-aeem-charcoal">{story.stats.schools}</p>
+                <p className="text-2xl font-black text-aeem">{story.stats.schools}</p>
              </div>
              <div>
                 <h4 className="text-xs font-bold uppercase tracking-widest text-aeem-gold mb-2">Duration</h4>
-                <p className="text-2xl font-black text-aeem-charcoal">{story.stats.duration}</p>
+                <p className="text-2xl font-black text-aeem">{story.stats.duration}</p>
              </div>
           </div>
 
-          <div className="prose prose-lg max-w-none text-gray-600 leading-relaxed space-y-8">
-             <h2 className="text-3xl font-black text-aeem-charcoal">Overview</h2>
+          <div className="prose prose-lg max-w-none text-gray-500 leading-relaxed space-y-8">
+             <h2 className="text-3xl font-black text-aeem">Overview</h2>
              <p>{story.overview}</p>
 
-             <h2 className="text-3xl font-black text-aeem-charcoal">Key Focus Areas</h2>
+             <h2 className="text-3xl font-black text-aeem">Key Focus Areas</h2>
              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 not-prose">
                 {story.focusAreas.map((item, i) => (
-                   <div key={i} className="flex items-center gap-3 p-4 bg-white border border-gray-100 rounded-xl shadow-sm hover:border-aeem-gold/50 transition-colors">
+                   <div key={i} className="flex items-center gap-3 p-4 bg-aeem-focus/20 border border-gray-100 rounded-xl shadow-sm hover:border-aeem-gold/50 transition-colors">
                      <CheckCircle2 className="text-aeem-gold" size={20} />
-                     <span className="font-bold text-aeem-charcoal">{item}</span>
+                     <span className="font-bold text-aeem">{item}</span>
                    </div>
                 ))}
              </div>
 
-             <h2 className="text-3xl font-black text-aeem-charcoal mt-12">The Impact</h2>
+             <h2 className="text-3xl font-black text-aeem mt-12">The Impact</h2>
              <p>{story.impact}</p>
 
-             <blockquote className="border-l-4 border-aeem-gold pl-8 py-4 italic text-2xl font-medium text-aeem-charcoal my-12 bg-aeem-gold/5 rounded-r-2xl pr-6">
+             <blockquote className="border-l-4 border-aeem-gold pl-8 py-4 italic text-2xl font-medium text-aeem my-12 bg-aeem-gold/15 rounded-r-2xl pr-6">
                 "{story.quoteText}"
-                <footer className="mt-4 text-sm font-bold text-gray-400">— {story.quoteAuthor}</footer>
+                <footer className="mt-4 text-sm font-bold text-aeem">— {story.quoteAuthor}</footer>
              </blockquote>
           </div>
 
-          <div className="mt-20 pt-12 border-t border-gray-100 flex justify-between items-center">
+          <div className="mt-20 pt-12 border-t border-aeem-gold flex justify-between items-center">
              <div className="flex gap-4">
                 <button 
                   onClick={() => {
                     navigator.clipboard.writeText(window.location.href);
                     alert("Link copied to clipboard!");
                   }}
-                  className="flex items-center gap-2 px-6 py-3 bg-gray-100 text-aeem-charcoal rounded-full font-bold hover:bg-aeem-gold hover:text-white transition-all active:scale-95"
+                  className="flex items-center gap-2 px-6 py-3 bg-aeem-focus/70 text-aeem rounded-full font-bold hover:bg-aeem-gold hover:text-white transition-all active:scale-95"
                 >
                   <Share2 size={18} /> Share Impact
                 </button>
              </div>
-             <Link to="/get-involved" className="bg-aeem-charcoal text-white px-10 py-4 rounded-full font-bold hover:bg-aeem-gold transition-all hover:scale-105 active:scale-95">
+             <Link to="/get-involved" className="bg-aeem-focus/20 text-aeem px-10 py-4 rounded-full font-bold hover:bg-aeem-gold transition-all hover:scale-105 active:scale-95">
                 Support Similar Programs
              </Link>
           </div>

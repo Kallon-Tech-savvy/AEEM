@@ -101,7 +101,7 @@ const Resources: React.FC = () => {
         <title>Resources & Blog | AEEM</title>
       </Helmet>
 
-      <section className="pt-40 pb-24 bg-gray-50">
+      <section className="pt-40 pb-24 bg-aeem-focus/10">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
             <div className="max-w-2xl">
@@ -109,13 +109,13 @@ const Resources: React.FC = () => {
               <h1 className="text-5xl md:text-7xl font-black mb-0 leading-tight">Resources</h1>
             </div>
             <div className="relative w-full md:w-96">
-               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-aeem-focus" size={20} />
                <input
                  type="text"
                  value={searchTerm}
                  onChange={(e) => setSearchTerm(e.target.value)}
                  placeholder="Search articles & downloads..."
-                 className="w-full pl-12 pr-6 py-4 rounded-2xl border border-gray-200 focus:outline-none focus:border-aeem-gold transition-colors shadow-sm"
+                 className="w-full pl-12 pr-6 py-4 rounded-2xl bg-aeem-focus/30 border border-gray-200 focus:outline-none focus:border-aeem-gold transition-colors shadow-sm"
                />
             </div>
           </div>
@@ -125,7 +125,7 @@ const Resources: React.FC = () => {
                <button
                  key={cat}
                  onClick={() => setActiveCategory(cat)}
-                 className={`px-8 py-2.5 rounded-full text-sm font-bold whitespace-nowrap transition-all ${activeCategory === cat ? 'bg-aeem-charcoal text-white' : 'bg-white text-gray-500 border border-gray-100 hover:border-aeem-gold'}`}
+                 className={`px-8 py-2.5 rounded-full text-sm font-bold whitespace-nowrap transition-all ${activeCategory === cat ? 'bg-aeem-gold/50 text-aeem-focus' : 'bg-aeem-focus/30 text-aeem-gold border border-gray-100 hover:border-aeem-gold'}`}
                >
                  {cat}
                </button>
@@ -134,7 +134,7 @@ const Resources: React.FC = () => {
         </div>
       </section>
 
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-aeem">
         <div className="max-w-7xl mx-auto px-6">
           {loading ? (
             <div className="flex justify-center items-center py-24">
@@ -148,15 +148,15 @@ const Resources: React.FC = () => {
                   <Link
                     to={`/resources/${item.slug}`}
                     key={item.slug}
-                    className="group p-8 rounded-3xl border border-gray-100 bg-white hover:border-aeem-gold hover:shadow-2xl transition-all flex flex-col h-full"
+                    className="group p-8 rounded-3xl border border-gray-100 bg-aeem-focus/20 hover:border-aeem-gold hover:shadow-2xl transition-all flex flex-col h-full"
                   >
                     <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center text-aeem-gold mb-8 group-hover:bg-aeem-gold group-hover:text-white transition-all">
                       <Icon size={28} />
                     </div>
                     <div className="text-[10px] font-black uppercase tracking-widest text-aeem-gold mb-4">{item.category}</div>
                     <h3 className="text-xl font-bold mb-4 group-hover:text-aeem-gold transition-colors">{item.title}</h3>
-                    <p className="text-sm text-gray-500 leading-relaxed mb-8 line-clamp-3">{item.description}</p>
-                    <div className="mt-auto flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-aeem-charcoal">
+                    <p className="text-sm text-aeem leading-relaxed mb-8 line-clamp-3">{item.description}</p>
+                    <div className="mt-auto flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-aeem">
                        {item.type === 'download' ? 'Download PDF' : 'Read Article'}
                        <div className="w-6 h-[2px] bg-aeem-gold group-hover:w-10 transition-all" />
                     </div>

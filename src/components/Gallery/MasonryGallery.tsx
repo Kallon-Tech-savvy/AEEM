@@ -129,8 +129,8 @@ const MasonryGallery: React.FC<MasonryGalleryProps> = ({ category, limit }) => {
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 alt={(photo as CustomPhoto).alt}
               />
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 text-white pointer-events-none">
-                <h3 className="text-lg font-bold transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 pointer-events-none">
+                <h3 className="text-lg font-bold transform translate-y-4 group-hover:translate-y-0 text-white transition-transform duration-300">
                   {(photo as CustomPhoto).title}
                 </h3>
                 {(photo as CustomPhoto).alt && (

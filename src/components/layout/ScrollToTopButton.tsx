@@ -35,7 +35,7 @@ const ScrollToTopButton: React.FC = () => {
           whileHover={{ scale: 1.1, translateY: -2 }}
           whileTap={{ scale: 0.9 }}
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-[90] p-4 bg-aeem-charcoal text-white hover:bg-aeem-gold text-white rounded-full shadow-2xl transition-colors border border-white/10 group focus:outline-none"
+          className="fixed bottom-8 right-8 z-[90] p-4 bg-aeem-charcoal dark:bg-aeem-focus/70 text-white hover:bg-aeem-gold rounded-full shadow-2xl transition-colors border border-white/10 group focus:outline-none"
           aria-label="Scroll to top"
         >
           <ArrowUp size={20} className="group-hover:animate-bounce" />
