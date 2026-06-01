@@ -166,20 +166,20 @@ const EventDetail: React.FC = () => {
             <div>
               <div className="aspect-video rounded-[2.5rem] overflow-hidden mb-12 shadow-2xl bg-gray-400">
                 <img
-                  src={event.cover_image_url ?? '../../public/assets/gallery/Teacher_and_Student.jpg'}
+                  src={event.cover_image_url ?? '/assets/gallery/Teacher_and_Student.jpg'}
                   alt={event.title}
                   className="w-full h-full object-cover"
                 />
               </div>
 
-              <h1 className="text-4xl md:text-5xl font-black mb-8 leading-tight text-aeem">{event.title}</h1>
+              <h1 className="text-4xl md:text-5xl font-black mb-8 leading-tight text-aeem-charcoal dark:text-white">{event.title}</h1>
 
               <div className="flex flex-wrap gap-8 mb-12">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-aeem-gold/20 rounded-full flex items-center justify-center text-aeem-gold">
                     <Calendar size={18} />
                   </div>
-                  <span className="font-bold text-aeem">
+                  <span className="font-bold text-aeem-charcoal dark:text-white">
                     {new Date(event.event_date).toLocaleDateString('en-GB', {
                       day: 'numeric', month: 'long', year: 'numeric'
                     })}
@@ -191,7 +191,7 @@ const EventDetail: React.FC = () => {
                     <div className="w-10 h-10 bg-aeem-gold/10 rounded-full flex items-center justify-center text-aeem-gold">
                       <MapPin size={18} />
                     </div>
-                    <span className="font-bold text-aeem">{event.location}</span>
+                    <span className="font-bold text-aeem-charcoal dark:text-white">{event.location}</span>
                   </div>
                 )}
               </div>
@@ -210,8 +210,8 @@ const EventDetail: React.FC = () => {
                   <div className="w-20 h-20 bg-green-100 text-aeem-success rounded-full flex items-center justify-center mx-auto mb-8">
                     <CheckCircle2 size={40} />
                   </div>
-                  <h2 className="text-3xl font-black mb-4 text-aeem-charcoal">Registration Confirmed!</h2>
-                  <p className="text-aeem mb-10">
+                  <h2 className="text-3xl font-black mb-4 text-aeem-charcoal dark:text-white">Registration Confirmed!</h2>
+                  <p className="text-aeem-charcoal dark:text-white mb-10">
                     Thank you for registering. You will receive a confirmation email with further details shortly.
                   </p>
                   <Link

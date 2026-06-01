@@ -37,9 +37,9 @@ const FALLBACK_RESOURCES: Record<string, Resource> = {
     readingTime: '12 min read',
     category: 'Policy Report',
     image:
-      'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=1200',
+      '',
     isReport: true,
-    file_url: 'https://example.com/equity-report-2025.pdf',
+    file_url: '',
     bulletPoints: [
       'Systemic inequality remains the primary barrier to higher education access.',
       'Community-led mentorship programs show a 40% increase in student retention rates.',
@@ -58,7 +58,7 @@ const FALLBACK_RESOURCES: Record<string, Resource> = {
     readingTime: '6 min read',
     category: 'Education',
     image:
-      'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&q=80&w=1200',
+      '',
     tags: ['Education', 'Mentorship', 'Community'],
   },
 };
@@ -150,8 +150,8 @@ const ResourceDetail: React.FC = () => {
           <div className="aspect-[21/9] rounded-[2.5rem] overflow-hidden mb-16 shadow-2xl">
             <img
               src={resource.image ?? (resource.type === 'download'
-                ? 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=1200'
-                : 'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&q=80&w=1200')}
+                ? ''
+                : '')}
               alt={resource.title}
               className="w-full h-full object-cover"
             />
@@ -159,13 +159,13 @@ const ResourceDetail: React.FC = () => {
 
           <div className="prose prose-lg max-w-none text-gray-600 leading-relaxed">
             {resource.summary ? (
-              <p className="text-xl font-medium text-aeem-charcoal mb-8">{resource.summary}</p>
+              <p className="text-xl font-medium text-aeem-charcoal dark:text-white mb-8">{resource.summary}</p>
             ) : null}
 
             {resource.body ? (
               <div dangerouslySetInnerHTML={{ __html: resource.body }} />
             ) : (
-              <p className="text-base leading-relaxed text-aeem-charcoal">{resource.fullBody ?? resource.description}</p>
+              <p className="text-base leading-relaxed text-aeem-charcoal dark:text-white">{resource.fullBody ?? resource.description}</p>
             )}
 
             {resource.bulletPoints?.length ? (
@@ -173,7 +173,7 @@ const ResourceDetail: React.FC = () => {
                 {resource.bulletPoints.map((point, index) => (
                   <li key={index} className="flex gap-4 items-start">
                     <div className="w-6 h-6 rounded-full bg-aeem-gold/10 flex items-center justify-center text-aeem-gold shrink-0 mt-1">{index + 1}</div>
-                    <span className="font-semibold text-aeem-charcoal">{point}</span>
+                    <span className="font-semibold text-aeem-charcoal dark:text-white">{point}</span>
                   </li>
                 ))}
               </ul>
@@ -183,11 +183,11 @@ const ResourceDetail: React.FC = () => {
               <div className="my-16 p-10 bg-aeem rounded-[2.5rem] text-aeem flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl border border-white/5">
                 <div>
                   <h3 className="text-2xl font-black mb-2 text-aeem-gold">Download Full Resource</h3>
-                  <p className="text-aeem">Get the complete material with all data and methodology.</p>
+                  <p className="text-aeem-charcoal dark:text-white">Get the complete material with all data and methodology.</p>
                 </div>
                 <button
                   onClick={handleDownload}
-                  className="flex items-center gap-3 bg-aeem-gold text-white px-8 py-4 rounded-full font-bold hover:scale-105 transition-all shrink-0 shadow-lg shadow-aeem-gold/20"
+                  className="flex items-center gap-3 bg-aeem-gold text-white dark:text-black px-8 py-4 rounded-full font-bold hover:scale-105 transition-all shrink-0 shadow-lg shadow-aeem-gold/20"
                 >
                   <Download size={24} /> Download PDF
                 </button>
@@ -201,7 +201,7 @@ const ResourceDetail: React.FC = () => {
                 navigator.clipboard.writeText(window.location.href);
                 alert('Resource link copied to clipboard!');
               }}
-              className="inline-flex items-center gap-3 px-4 py-3 rounded-full bg-aeem-focus/20 text-aeem-charcoal hover:bg-aeem-gold hover:text-white transition-all active:scale-95 shadow-sm"
+              className="inline-flex items-center gap-3 px-4 py-3 rounded-full bg-aeem-focus/20 text-aeem-charcoal dark:text-white hover:bg-aeem-gold hover:text-white transition-all active:scale-95 shadow-sm"
               aria-label="Share"
             >
               <Share2 size={20} /> Share
@@ -211,7 +211,7 @@ const ResourceDetail: React.FC = () => {
               <span className="text-sm font-bold text-aeem-gold uppercase">Tags:</span>
               {resource.tags?.length ? (
                 resource.tags.map((tag) => (
-                  <span key={tag} className="text-xs font-bold px-3 py-1 bg-aeem rounded-md text-aeem-charcoal">
+                  <span key={tag} className="text-xs font-bold px-3 py-1 bg-aeem rounded-md text-aeem-charcoal dark:text-white">
                     {tag}
                   </span>
                 ))

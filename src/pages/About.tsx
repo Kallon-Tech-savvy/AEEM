@@ -27,11 +27,11 @@ const About: React.FC = () => {
   ];
 
   const partners = [
-    { name: "RCBank", sub: "Rokel Commercial Bank", url:"" },
-    { name: "MAGE-SL", sub: "West Africa Youth Forum", url:"" },
+    { name: "RCBank", sub: "Rokel Commercial Bank", url:"/assets/Partner/RCBank.jpg" },
+    { name: "MAGE-SL", sub: "Men's Association for Gender Equality Sierra Leone", url:"/assets/Partner/Mage_sl.jpg" },
     { name: "KWD", sub: "Kallon's World", url:"/assets/gallery/kallon1.png" },
-    { name: "NYA", sub: "New Youth Africa", url:"" },
-    { name: "ACC", sub: "Anti Corruption Commission", url:"" }
+    { name: "NYA", sub: "New Youth Africa", url:"/assets/Partner/NYA.jpg" },
+    { name: "ACC", sub: "Anti Corruption Commission", url:"/assets/Partner/ACC.jpg" }
   ];
 
   return (
@@ -82,12 +82,12 @@ const About: React.FC = () => {
       <section className="py-24 bg-aeem">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-black mb-4 text-aeem-charcoal dark:text-aeem-focus/60">Our Leadership</h2>
-            <p className="text-aeem">The passionate team behind the movement.</p>
+            <h2 className="text-4xl font-black mb-4 text-aeem-charcoal dark:text-white">Our Leadership</h2>
+            <p className="text-aeem-charcoal dark:text-white">The passionate team behind the movement.</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {leadershipTeam.map((member, i) => (
-              <div key={i} className="bg-aeem rounded-3xl overflow-hidden shadow-sm border border-gray-100 group hover:shadow-xl transition-all">
+              <div key={i} className="bg-aeem-dark-bg rounded-3xl overflow-hidden shadow-sm border border-gray-100 group hover:shadow-xl transition-all">
                 <div className="aspect-[4/5] relative overflow-hidden">
                    <img
                      src={member.image}
@@ -96,9 +96,9 @@ const About: React.FC = () => {
                    />
                 </div>
                 <div className="p-6">
-                   <h4 className="font-bold text-lg mb-1 text-aeem">{member.name}</h4>
+                   <h4 className="font-bold text-lg mb-1 text-aeem-charcoal dark:text-white">{member.name}</h4>
                    <p className="text-aeem-gold text-xs font-bold uppercase tracking-wider mb-3">{member.title}</p>
-                   <p className="text-aeem text-xs leading-relaxed">{member.bio}</p>
+                   <p className="text-aeem-charcoal dark:text-white  text-xs leading-relaxed">{member.bio}</p>
                 </div>
               </div>
             ))}
@@ -107,13 +107,13 @@ const About: React.FC = () => {
       </section>
 
       {/* Life at AEEM Gallery */}
-      <section className="py-24 bg-aeem overflow-hidden">
+      <section className="py-24 bg-aeem-bg dark:bg-aeem-focus/5 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
             <div className="max-w-2xl">
               <span className="text-aeem-gold font-bold uppercase tracking-[0.3em] text-xs mb-4 block">Visual Journey</span>
               <h2 className="text-4xl md:text-5xl font-black mb-6">Life at <span className="text-aeem-gold">AEEM</span></h2>
-              <p className="text-lg text-aeem leading-relaxed">
+              <p className="text-lg text-aeem-charcoal dark:text-white leading-relaxed">
                 Moments from our workshops, community gatherings, and team sessions that define who we are.
               </p>
             </div>
@@ -126,7 +126,7 @@ const About: React.FC = () => {
       {/* Partners Section */}
       <section className="py-24 bg-aeem border-t border-aeem">
         <div className="max-w-7xl mx-auto px-6 text-center">
-           <h2 className="text-xl font-bold mb-12 text-aeem uppercase tracking-widest">Trusted by Forward-Thinking Partners</h2>
+           <h2 className="text-xl font-bold mb-12 text-aeem-charcoal dark:text-white uppercase tracking-widest">Trusted by Forward-Thinking Partners</h2>
            <div className="grid grid-cols-2 md:grid-cols-5 gap-6 items-stretch justify-center">
               {partners.map((p, i) => (
                 <div 

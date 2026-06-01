@@ -54,14 +54,14 @@ export default function Navbar() {
               key={link.name}
               to={link.path}
               className={`text-sm font-semibold transition-colors hover:text-aeem-gold ${
-                location.pathname === link.path ? 'text-aeem-gold' : 'text-aeem-charcoal dark:text-aeem-white'
+                location.pathname === link.path ? 'text-aeem-gold' : 'text-aeem-charcoal dark:text-white'
               }`}
             >
               {link.name}
             </Link>
           ))}
           <ThemeToggle />
-          <Link to="/get-involved" className="bg-aeem-charcoal dark:bg-aeem-gold text-white px-8 py-3 rounded-full text-sm font-bold hover:bg-aeem-gold dark:hover:bg-aeem-white dark:hover:text-aeem-charcoal transition-all hover:scale-105 active:scale-95 shadow-xl">
+          <Link to="/get-involved" className="bg-aeem-charcoal dark:bg-aeem-gold text-white dark:text-black px-8 py-3 rounded-full text-sm font-bold hover:bg-aeem-gold dark:hover:bg-aeem-white dark:hover:text-aeem-charcoal transition-all hover:scale-105 active:scale-95 shadow-xl">
             Get Involved
           </Link>
         </div>
@@ -99,7 +99,7 @@ export default function Navbar() {
                 <Link
                   to={link.path}
                   className={`text-2xl font-black ${
-                    location.pathname === link.path ? 'text-aeem-gold' : 'text-aeem-charcoal dark:text-aeem-white'
+                    location.pathname === link.path ? 'text-aeem-gold' : 'text-aeem-charcoal dark:text-white'
                   }`}
                 >
                   {link.name}

@@ -78,7 +78,7 @@ const Impact: React.FC = () => {
             <h1 className="text-5xl md:text-7xl font-black mb-8 leading-tight">
               Impact & <span className="text-aeem-gold">Stories</span>
             </h1>
-            <p className="text-xl text-aeem leading-relaxed">
+            <p className="text-xl text-aeem-charcoal dark:text-aeem-dark-text leading-relaxed">
               We don't just advocate; we execute. Explore how our programs are transforming lives and empowering the next generation of African leaders.
             </p>
           </motion.div>
@@ -111,23 +111,23 @@ const Impact: React.FC = () => {
                   </div>
                   <div className="p-10 flex flex-col flex-grow">
                     <div className="flex items-center gap-4 text-xs font-bold text-aeem uppercase tracking-widest mb-6">
-                      <span className="flex items-center gap-1.5"><MapPin size={14} className="text-aeem-gold" /> {story.location}</span>
+                      <span className="flex text-aeem-charcoal dark:text-white items-center gap-1.5"><MapPin size={14} className="text-aeem-gold" /> {story.location}</span>
                     </div>
                     <h2 className="text-3xl font-black mb-6 group-hover:text-aeem-gold transition-colors">{story.title}</h2>
-                    <p className="text-aeem mb-10 line-clamp-3 leading-relaxed">{story.summary}</p>
+                    <p className="text-aeem-charcoal dark:text-white mb-10 line-clamp-3 leading-relaxed">{story.summary}</p>
 
                     <div className="grid grid-cols-2 gap-4 mb-10 py-6 border-y border-aeem-focus dark:border-aeem-border">
                       <div>
                         <div className="text-xl font-black text-aeem-focus">{story.participants_count}</div>
-                        <div className="text-[10px] text-aeem font-bold uppercase">Participants</div>
+                        <div className="text-[10px] text-aeem-charcoal dark:text-white font-bold uppercase">Participants</div>
                       </div>
                       <div>
                         <div className="text-xl font-black text-aeem-focus">{story.schools_count}</div>
-                        <div className="text-[10px] text-aeem font-bold uppercase">Schools</div>
+                        <div className="text-[10px] text-aeem-charcoal dark:text-white font-bold uppercase">Schools</div>
                       </div>
                     </div>
 
-                    <Link to={`/impact/${story.slug}`} className="mt-auto group/btn flex items-center gap-3 text-aeem font-black">
+                    <Link to={`/impact/${story.slug}`} className="mt-auto group/btn flex items-center gap-3 text-aeem-charcoal dark:text-aeem-dark-text font-black">
                       Read Case Study <ArrowRight size={20} className="group-hover/btn:translate-x-2 transition-transform text-aeem-gold" />
                     </Link>
                   </div>
@@ -145,7 +145,7 @@ const Impact: React.FC = () => {
             <div className="max-w-2xl">
               <span className="text-aeem-gold font-bold uppercase tracking-[0.3em] text-xs mb-4 block">Impact in Action</span>
               <h2 className="text-4xl md:text-5xl font-black mb-6">Our Work in <span className="text-aeem-gold">Pictures</span></h2>
-              <p className="text-lg text-aeem leading-relaxed">
+              <p className="text-lg text-aeem-charcoal dark:text-white leading-relaxed">
                 Transparency is at our core. Here is a look at our latest initiatives and the participants we serve.
               </p>
             </div>

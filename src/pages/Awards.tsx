@@ -72,7 +72,7 @@ const Awards: React.FC = () => {
             <h1 className="text-5xl md:text-7xl font-black mb-8 leading-tight">
               Recognition & <span className="text-aeem-gold">Awards</span>
             </h1>
-            <p className="text-xl text-gray-500 leading-relaxed mb-10">
+            <p className="text-xl text-aeem-charcoal dark:text-white leading-relaxed mb-10">
               We are building a revolutionary verification system to honor educational excellence and community impact across Africa.
             </p>
           </div>
@@ -84,7 +84,7 @@ const Awards: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
             <div className="bg-aeem-focus/10 p-8 md:p-12 rounded-[2.5rem] shadow-soft border border-aeem-border">
                <h2 className="text-3xl font-black mb-6">Verify Achievement</h2>
-               <p className="text-aeem mb-8 leading-relaxed">
+               <p className="text-aeem-charcoal dark:text-white mb-8 leading-relaxed">
                  Enter the unique verification code found on your AEEM certificate to validate its authenticity.
                </p>
 
@@ -127,7 +127,7 @@ const Awards: React.FC = () => {
                           <CheckCircle2 size={20} />
                           Verified Achievement
                        </div>
-                       <span className="text-[10px] font-black uppercase tracking-widest text-green-600 bg-white px-3 py-1 rounded-full shadow-sm">
+                       <span className="text-[10px] font-black uppercase tracking-widest text-green-600 dark:text-green-300 bg-white dark:bg-green-600 px-3 py-1 rounded-full shadow-sm">
                           ID: {result.verification_code}
                        </span>
                     </div>
@@ -142,7 +142,7 @@ const Awards: React.FC = () => {
                              />
                           </div>
                           <div>
-                             <h3 className="text-2xl font-black text-aeem mb-1">{result.recipient_name}</h3>
+                             <h3 className="text-2xl font-black text-aeem-charcoal dark:text-white mb-1">{result.recipient_name}</h3>
                              <p className="text-aeem-gold font-bold uppercase tracking-widest text-xs">{result.award_type}</p>
                           </div>
                        </div>
@@ -153,8 +153,8 @@ const Awards: React.FC = () => {
                                 <Calendar size={18} />
                              </div>
                              <div>
-                                <p className="text-[10px] font-bold text-gray-500 uppercase">Issue Date</p>
-                                <p className="text-sm font-black text-aeem">{new Date(result.issue_date).toLocaleDateString()}</p>
+                                <p className="text-[10px] font-bold text-aeem uppercase">Issue Date</p>
+                                <p className="text-sm font-black text-aeem-charcoal dark:text-white">{new Date(result.issue_date).toLocaleDateString()}</p>
                              </div>
                           </div>
                           <div className="flex items-center gap-3">
@@ -162,8 +162,8 @@ const Awards: React.FC = () => {
                                 <Tag size={18} />
                              </div>
                              <div>
-                                <p className="text-[10px] font-bold text-gray-500 uppercase">Category</p>
-                                <p className="text-sm font-black text-aeem">{result.metadata.category || "Excellence"}</p>
+                                <p className="text-[10px] font-bold text-aeem uppercase">Category</p>
+                                <p className="text-sm font-black text-aeem-charcoal dark:text-white">{result.metadata.category || "Excellence"}</p>
                              </div>
                           </div>
                           <div className="flex items-center gap-3 sm:col-span-2">
@@ -171,14 +171,14 @@ const Awards: React.FC = () => {
                                 <FileText size={18} />
                              </div>
                              <div>
-                                <p className="text-[10px] font-bold text-gray-500 uppercase">Identity Reference</p>
-                                <p className="text-sm font-black text-aeem">{result.metadata.identity_ref || "N/A"}</p>
+                                <p className="text-[10px] font-bold text-aeem uppercase">Identity Reference</p>
+                                <p className="text-sm font-black text-aeem-charcoal dark:text-white">{result.metadata.identity_ref || "N/A"}</p>
                              </div>
                           </div>
                        </div>
 
                        <div className="p-6 bg-aeem rounded-2xl border border-aeem-border">
-                          <p className="text-sm text-aeem leading-relaxed italic">
+                          <p className="text-sm text-aeem-charcoal dark:text-white leading-relaxed italic">
                              "{result.description}"
                           </p>
                        </div>
@@ -191,7 +191,7 @@ const Awards: React.FC = () => {
                     <div className="w-16 h-16 bg-aeem-focus/50 rounded-full flex items-center justify-center mx-auto mb-4">
                        <ShieldCheck size={32} />
                     </div>
-                    <p className="text-sm font-bold text-aeem">Waiting for verification code...</p>
+                    <p className="text-sm font-bold text-aeem-charcoal dark:text-white">Waiting for verification code...</p>
                  </div>
                )}
             </div>
@@ -202,7 +202,7 @@ const Awards: React.FC = () => {
                     <Award className="text-aeem-gold" size={28} />
                     Excellence Awards
                   </h3>
-                  <p className="text-aeem leading-relaxed mb-8">
+                  <p className="text-aeem-charcoal dark:text-white leading-relaxed mb-8">
                     Annual recognition for schools and youth leaders who demonstrate exceptional commitment to educational empowerment and local community growth.
                   </p>
                   <ul className="space-y-4">
@@ -226,7 +226,7 @@ const Awards: React.FC = () => {
                     <ShieldCheck className="text-aeem-gold" size={28} />
                     Verification Standards
                   </h3>
-                  <p className="text-aeem leading-relaxed">
+                  <p className="text-aeem-charcoal dark:text-white leading-relaxed">
                     Our rigorous standards ensure that every award represents genuine impact and verified progress toward educational equity. Every certificate is cryptographically signed and stored in our secure database.
                   </p>
                </div>
@@ -248,7 +248,7 @@ const Awards: React.FC = () => {
               <div key={i} className={`p-8 rounded-2xl border-2 transition-all ${i === 1 ? 'border-aeem-gold bg-aeem-gold/5 shadow-lg' : 'border-gray-100 grayscale'}`}>
                 <span className="text-xs font-bold uppercase tracking-widest mb-4 block">{step.phase}</span>
                 <h4 className="text-xl font-bold mb-4">{step.title}</h4>
-                <p className="text-sm text-gray-500 leading-relaxed">{step.desc}</p>
+                <p className="text-sm text-aeem-charcoal dark:text-white leading-relaxed">{step.desc}</p>
               </div>
             ))}
           </div>

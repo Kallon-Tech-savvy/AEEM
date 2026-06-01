@@ -29,6 +29,7 @@ import PressKit from './pages/PressKit'
 import Awards from './pages/Awards'
 import Contact from './pages/Contact'
 import NotFound from './pages/NotFound'
+import ScrollToTopButton from './components/layout/ScrollToTopButton'
 
 function AnimatedRoutes() {
   const location = useLocation()
@@ -59,6 +60,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <HelmetProvider>
         <Router>
+          <ScrollToTopButton />
           <Layout>
             <AnimatedRoutes />
           </Layout>
