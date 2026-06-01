@@ -6,14 +6,13 @@
 // ─────────────────────────────────────────────────────────────────────────────
 import {
   createContext,
-  // useContext,
+  useContext,
   useEffect,
   useState,
   useCallback,
   type ReactNode,
   type ReactElement,
 } from 'react'
-import { useTheme } from './services/hooks'
 import { Moon, Sun, Monitor } from 'lucide-react'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -205,4 +204,11 @@ export function ThemeToggle({ className = '' }: { className?: string }) {
       {icons[theme]}
     </button>
   )
+}
+
+// ── Hook exported for other components to consume the same context ──────────
+export function useTheme(): ThemeContextValue {
+  const ctx = useContext(ThemeContext)
+  if (!ctx) throw new Error('useTheme must be used within <ThemeProvider>')
+  return ctx
 }

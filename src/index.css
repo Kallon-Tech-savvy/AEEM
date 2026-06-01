@@ -78,23 +78,23 @@
    Applied when <html class="dark"> (toggled by ThemeProvider)
    ────────────────────────────────────────────────────────── */
 .dark {
-  --color-bg:          #111110;
-  --color-surface:     #1C1C1A;
-  --color-surface-alt: #252523;
-  --color-border:      #3A3A37;
-  --color-border-sub:  #2A2A28;
+  --color-bg:          #0f0f0f;
+  --color-surface:     #1F1F1D; /* slightly lighter for improved separation */
+  --color-surface-alt: #272725;
+  --color-border:      #50504C; /* stronger border for contrast */
+  --color-border-sub:  #3B3B38;
 
-  --color-text-primary:   #F0EDE6;   /* ~17:1 on --color-bg            */
-  --color-text-secondary: #C8C3BA;   /* ~ 9:1 on --color-bg            */
-  --color-text-muted:     #A89F91;   /* ~4.6:1 on --color-bg — AA large */
-  --color-text-disabled:  #5A5650;
-  --color-text-inverse:   #1A1A1A;
+  --color-text-primary:   #FBF8F2;   /* brighter for improved contrast */
+  --color-text-secondary: #E6E1D9;   /* clearer secondary text */
+  --color-text-muted:     #CFC6B8;   /* higher contrast muted text */
+  --color-text-disabled:  #6B6762;
+  --color-text-inverse:   #0f0f0f;
 
-  --color-gold:        #D4AF37;   /* ~7.1:1 on #111110                  */
-  --color-gold-subtle: #E8C84A;
-  --color-gold-deep:   #F0D870;
-  --color-gold-tint:   #1E1A08;
-  --color-charcoal:    #F0EDE6;
+  --color-gold:        #E1C85A;   /* tuned for better readability on dark */
+  --color-gold-subtle: #ECD286;
+  --color-gold-deep:   #C9A934;
+  --color-gold-tint:   #221C08;
+  --color-charcoal:    #FBF8F2;
 
   --color-success:      #34D399;
   --color-success-bg:   #022C22;
@@ -106,10 +106,10 @@
   --color-info-bg:      #0C1A2E;
 
   --color-focus: #60A5FA;
-  --focus-ring:  0 0 0 3px rgba(96, 165, 250, 0.55);
+  --focus-ring:  0 0 0 3px rgba(96, 165, 250, 0.65);
 
-  --shadow-card:   0 4px 24px rgba(0, 0, 0, 0.45);
-  --shadow-soft:   0 20px 50px rgba(0, 0, 0, 0.50);
+  --shadow-card:   0 6px 28px rgba(0, 0, 0, 0.55);
+  --shadow-soft:   0 26px 60px rgba(0, 0, 0, 0.60);
   --shadow-gold:   0 8px 28px rgba(212, 175, 55, 0.18);
   --shadow-raised: 0 8px 32px rgba(0, 0, 0, 0.60);
 }
@@ -289,6 +289,11 @@
     background-color: var(--color-gold-deep);
     color: #F8F7F4;
     box-shadow: var(--shadow-gold);
+  }
+
+  /* Ensure primary buttons remain readable in dark mode */
+  .dark .btn-primary {
+    color: #0f0f0f; /* dark text on gold for contrast */
   }
 
   .btn-outline {
