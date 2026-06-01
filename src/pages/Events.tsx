@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Calendar, MapPin, ArrowRight, Clock, Loader2 } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
 import { supabase } from '../services/supabase';
 
 interface Event {
@@ -50,34 +51,19 @@ const FALLBACK_EVENTS: Event[] = [
 ];
 
 const Events: React.FC = () => {
-  const [events, setEvents] = useState<Event[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { data: events, isLoading } = useQuery({
+    queryKey: ['events'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('events')
+        .select('*')
+        .order('event_date', { ascending: true });
 
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('events')
-          .select('*')
-          .order('event_date', { ascending: true });
-
-        if (error) throw error;
-
-        if (data && data.length > 0) {
-          setEvents(data);
-        } else {
-          setEvents(FALLBACK_EVENTS);
-        }
-      } catch (err) {
-        console.error('Error fetching events:', err);
-        setEvents(FALLBACK_EVENTS);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchEvents();
-  }, []);
+      if (error) throw error;
+      return (data && data.length > 0) ? (data as Event[]) : FALLBACK_EVENTS;
+    },
+    initialData: FALLBACK_EVENTS
+  });
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -105,18 +91,18 @@ const Events: React.FC = () => {
         </div>
       </section>
 
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-white dark:bg-aeem-charcoal">
         <div className="max-w-7xl mx-auto px-6">
-          {loading ? (
+          {isLoading ? (
             <div className="flex justify-center items-center py-24">
               <Loader2 className="animate-spin text-aeem-gold" size={48} />
             </div>
           ) : (
             <>
-              <h2 className="text-3xl font-black mb-12">Upcoming Events</h2>
+              <h2 className="text-3xl font-black mb-12 dark:text-aeem-white">Upcoming Events</h2>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-24">
-                {events.filter(e => e.status === 'upcoming').map((event) => (
-                  <div key={event.slug} className="group flex flex-col md:flex-row bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all">
+                {events?.filter(e => e.status === 'upcoming').map((event) => (
+                  <div key={event.slug} className="group flex flex-col md:flex-row bg-white dark:bg-white/5 rounded-3xl overflow-hidden border border-gray-100 dark:border-white/10 shadow-sm hover:shadow-xl transition-all">
                     <div className="w-full md:w-2/5 aspect-square md:aspect-auto overflow-hidden">
                        <img src={event.cover_image_url} alt={event.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                     </div>
@@ -125,8 +111,8 @@ const Events: React.FC = () => {
                           <span className="flex items-center gap-1"><Calendar size={12} /> {formatDate(event.event_date)}</span>
                           <span className="flex items-center gap-1 text-gray-400"><Clock size={12} /> 09:00 AM</span>
                        </div>
-                       <h3 className="text-2xl font-black mb-4 group-hover:text-aeem-gold transition-colors">{event.title}</h3>
-                       <p className="text-sm text-gray-500 mb-8 leading-relaxed line-clamp-3">{event.description}</p>
+                       <h3 className="text-2xl font-black mb-4 group-hover:text-aeem-gold transition-colors dark:text-aeem-white">{event.title}</h3>
+                       <p className="text-sm text-gray-500 dark:text-gray-400 mb-8 leading-relaxed line-clamp-3">{event.description}</p>
                        <div className="mt-auto flex items-center justify-between">
                           <div className="flex items-center gap-1.5 text-xs font-bold text-gray-400">
                              <MapPin size={14} className="text-aeem-gold" /> {event.location}
@@ -140,15 +126,15 @@ const Events: React.FC = () => {
                 ))}
               </div>
 
-              <h2 className="text-3xl font-black mb-12">Past Highlights</h2>
+              <h2 className="text-3xl font-black mb-12 dark:text-aeem-white">Past Highlights</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {events.filter(e => e.status === 'completed').map((event) => (
+                {events?.filter(e => e.status === 'completed').map((event) => (
                   <div key={event.slug} className="group grayscale hover:grayscale-0 transition-all">
                      <div className="aspect-[4/3] rounded-2xl overflow-hidden mb-6">
                         <img src={event.cover_image_url} alt={event.title} className="w-full h-full object-cover" />
                      </div>
-                     <h3 className="font-bold text-lg mb-2">{event.title}</h3>
-                     <p className="text-sm text-gray-500">{formatDate(event.event_date)} • {event.location}</p>
+                     <h3 className="font-bold text-lg mb-2 dark:text-aeem-white">{event.title}</h3>
+                     <p className="text-sm text-gray-500 dark:text-gray-400">{formatDate(event.event_date)} • {event.location}</p>
                   </div>
                 ))}
               </div>

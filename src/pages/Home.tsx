@@ -40,7 +40,7 @@ export default function Home() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl md:text-5xl font-black mb-8 leading-tight text-aeem-charcoal dark:text-white">
+              <h2 className="text-4xl md:text-5xl font-black mb-8 leading-tight dark:text-aeem-white">
                 The Invisible <span className="text-aeem-gold">Barriers</span> to Education
               </h2>
               <p className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed mb-8">
@@ -62,7 +62,7 @@ export default function Home() {
               </div>
             </motion.div>
             <div className="relative">
-              <div className="aspect-square bg-gray-100 dark:bg-zinc-800 rounded-3xl overflow-hidden shadow-2xl relative z-10">
+              <div className="aspect-square bg-gray-100 rounded-3xl overflow-hidden shadow-2xl relative z-10">
                  <img
                    src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&q=80&w=800"
                    alt="Students in a classroom"
@@ -79,10 +79,10 @@ export default function Home() {
       <ImpactStats />
 
       {/* What AEEM Does */}
-      <section className="py-24 bg-gray-50 dark:bg-zinc-900/40">
+      <section className="py-24 bg-gray-50 dark:bg-white/5">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-4xl md:text-5xl font-black mb-6 text-aeem-charcoal dark:text-white">Our Approach to <span className="text-aeem-gold">Change</span></h2>
+            <h2 className="text-4xl md:text-5xl font-black mb-6 dark:text-aeem-white">Our Approach to <span className="text-aeem-gold">Change</span></h2>
             <p className="text-lg text-gray-600 dark:text-gray-400 italic">"Fair access to quality education for every child through community-led action, clarity, and care."</p>
           </div>
 
@@ -100,12 +100,12 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
                 whileHover={{ y: -10 }}
-                className="bg-white dark:bg-zinc-900 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-zinc-800 hover:shadow-xl dark:hover:shadow-black/20 transition-all group"
+                className="bg-white dark:bg-aeem-charcoal p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-white/10 hover:shadow-xl transition-all group"
               >
                 <div className="w-14 h-14 bg-aeem-gold/10 rounded-xl flex items-center justify-center text-aeem-gold mb-6 group-hover:bg-aeem-gold group-hover:text-white transition-colors">
                   <item.icon size={28} />
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-aeem-charcoal dark:text-white">{item.title}</h3>
+                <h3 className="text-xl font-bold mb-4 dark:text-aeem-white">{item.title}</h3>
                 <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
@@ -114,7 +114,7 @@ export default function Home() {
       </section>
 
       {/* Featured Impact - I AM SOMEBODY */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-white dark:bg-aeem-charcoal">
         <div className="max-w-7xl mx-auto px-6">
           <div className="bg-aeem-charcoal rounded-[2.5rem] overflow-hidden shadow-2xl">
             <div className="grid grid-cols-1 lg:grid-cols-2">

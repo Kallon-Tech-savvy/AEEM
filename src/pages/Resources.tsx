@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Search, BookOpen, Newspaper, FileText, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import { supabase } from '../services/supabase';
 
 interface Resource {
@@ -56,39 +57,25 @@ const getIcon = (type: string, category?: string) => {
 };
 
 const Resources: React.FC = () => {
-  const [resources, setResources] = useState<Resource[]>([]);
-  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
 
-  useEffect(() => {
-    const fetchResources = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('resources')
-          .select('*')
-          .eq('published', true)
-          .order('created_at', { ascending: false });
+  const { data: resources, isLoading } = useQuery({
+    queryKey: ['resources'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('resources')
+        .select('*')
+        .eq('published', true)
+        .order('created_at', { ascending: false });
 
-        if (error) throw error;
+      if (error) throw error;
+      return (data && data.length > 0) ? (data as Resource[]) : FALLBACK_RESOURCES;
+    },
+    initialData: FALLBACK_RESOURCES
+  });
 
-        if (data && data.length > 0) {
-          setResources(data);
-        } else {
-          setResources(FALLBACK_RESOURCES);
-        }
-      } catch (err) {
-        console.error('Error fetching resources:', err);
-        setResources(FALLBACK_RESOURCES);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchResources();
-  }, []);
-
-  const filteredResources = resources.filter(res => {
+  const filteredResources = (resources || []).filter(res => {
     const matchesSearch = res.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                           res.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = activeCategory === 'All' || res.category === activeCategory;
@@ -134,9 +121,9 @@ const Resources: React.FC = () => {
         </div>
       </section>
 
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-white dark:bg-aeem-charcoal">
         <div className="max-w-7xl mx-auto px-6">
-          {loading ? (
+          {isLoading ? (
             <div className="flex justify-center items-center py-24">
               <Loader2 className="animate-spin text-aeem-gold" size={48} />
             </div>
@@ -148,15 +135,15 @@ const Resources: React.FC = () => {
                   <Link
                     to={`/resources/${item.slug}`}
                     key={item.slug}
-                    className="group p-8 rounded-3xl border border-gray-100 bg-white hover:border-aeem-gold hover:shadow-2xl transition-all flex flex-col h-full"
+                    className="group p-8 rounded-3xl border border-gray-100 dark:border-white/10 bg-white dark:bg-white/5 hover:border-aeem-gold hover:shadow-2xl transition-all flex flex-col h-full"
                   >
                     <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center text-aeem-gold mb-8 group-hover:bg-aeem-gold group-hover:text-white transition-all">
                       <Icon size={28} />
                     </div>
                     <div className="text-[10px] font-black uppercase tracking-widest text-aeem-gold mb-4">{item.category}</div>
-                    <h3 className="text-xl font-bold mb-4 group-hover:text-aeem-gold transition-colors">{item.title}</h3>
-                    <p className="text-sm text-gray-500 leading-relaxed mb-8 line-clamp-3">{item.description}</p>
-                    <div className="mt-auto flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-aeem-charcoal">
+                    <h3 className="text-xl font-bold mb-4 group-hover:text-aeem-gold transition-colors dark:text-aeem-white">{item.title}</h3>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mb-8 line-clamp-3">{item.description}</p>
+                    <div className="mt-auto flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-aeem-charcoal dark:text-aeem-white">
                        {item.type === 'download' ? 'Download PDF' : 'Read Article'}
                        <div className="w-6 h-[2px] bg-aeem-gold group-hover:w-10 transition-all" />
                     </div>

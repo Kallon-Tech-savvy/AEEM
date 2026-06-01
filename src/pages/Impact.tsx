@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, MapPin, Loader2 } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
 import MasonryGallery from '../components/Gallery/MasonryGallery';
 import { supabase } from '../services/supabase';
 
@@ -39,35 +40,20 @@ const FALLBACK_STORIES = [
 ];
 
 const Impact: React.FC = () => {
-  const [stories, setStories] = useState<ImpactStory[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { data: stories, isLoading } = useQuery({
+    queryKey: ['impact_stories'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('impact_stories')
+        .select('id, title, slug, summary, location, participants_count, schools_count, cover_image_url')
+        .eq('published', true)
+        .order('created_at', { ascending: false });
 
-  useEffect(() => {
-    const fetchStories = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('impact_stories')
-          .select('id, title, slug, summary, location, participants_count, schools_count, cover_image_url')
-          .eq('published', true)
-          .order('created_at', { ascending: false });
-
-        if (error) throw error;
-
-        if (data && data.length > 0) {
-          setStories(data);
-        } else {
-          setStories(FALLBACK_STORIES as ImpactStory[]);
-        }
-      } catch (err) {
-        console.error('Error fetching impact stories:', err);
-        setStories(FALLBACK_STORIES as ImpactStory[]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchStories();
-  }, []);
+      if (error) throw error;
+      return (data && data.length > 0) ? (data as ImpactStory[]) : (FALLBACK_STORIES as ImpactStory[]);
+    },
+    initialData: FALLBACK_STORIES as ImpactStory[]
+  });
 
   return (
     <>
@@ -94,22 +80,22 @@ const Impact: React.FC = () => {
         </div>
       </section>
 
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-white dark:bg-aeem-charcoal">
         <div className="max-w-7xl mx-auto px-6">
-          {loading ? (
+          {isLoading ? (
             <div className="flex justify-center items-center py-24">
               <Loader2 className="animate-spin text-aeem-gold" size={48} />
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-              {stories.map((story, i) => (
+              {stories?.map((story, i) => (
                 <motion.div
                   key={story.slug}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
-                  className="group flex flex-col h-full bg-white rounded-[2.5rem] overflow-hidden border border-gray-100 shadow-sm hover:shadow-2xl transition-all"
+                  className="group flex flex-col h-full bg-white dark:bg-white/5 rounded-[2.5rem] overflow-hidden border border-gray-100 dark:border-white/10 shadow-sm hover:shadow-2xl transition-all"
                 >
                   <div className="aspect-[16/9] overflow-hidden">
                     <img
@@ -122,21 +108,21 @@ const Impact: React.FC = () => {
                     <div className="flex items-center gap-4 text-xs font-bold text-gray-400 uppercase tracking-widest mb-6">
                       <span className="flex items-center gap-1.5"><MapPin size={14} className="text-aeem-gold" /> {story.location}</span>
                     </div>
-                    <h2 className="text-3xl font-black mb-6 group-hover:text-aeem-gold transition-colors">{story.title}</h2>
-                    <p className="text-gray-600 mb-10 line-clamp-3 leading-relaxed">{story.summary}</p>
+                    <h2 className="text-3xl font-black mb-6 group-hover:text-aeem-gold transition-colors dark:text-aeem-white">{story.title}</h2>
+                    <p className="text-gray-600 dark:text-gray-400 mb-10 line-clamp-3 leading-relaxed">{story.summary}</p>
 
-                    <div className="grid grid-cols-2 gap-4 mb-10 py-6 border-y border-gray-50">
+                    <div className="grid grid-cols-2 gap-4 mb-10 py-6 border-y border-gray-50 dark:border-white/10">
                       <div>
-                        <div className="text-xl font-black text-aeem-charcoal">{story.participants_count}</div>
+                        <div className="text-xl font-black text-aeem-charcoal dark:text-aeem-white">{story.participants_count}</div>
                         <div className="text-[10px] text-gray-400 font-bold uppercase">Participants</div>
                       </div>
                       <div>
-                        <div className="text-xl font-black text-aeem-charcoal">{story.schools_count}</div>
+                        <div className="text-xl font-black text-aeem-charcoal dark:text-aeem-white">{story.schools_count}</div>
                         <div className="text-[10px] text-gray-400 font-bold uppercase">Schools</div>
                       </div>
                     </div>
 
-                    <Link to={`/impact/${story.slug}`} className="mt-auto group/btn flex items-center gap-3 text-aeem-charcoal font-black">
+                    <Link to={`/impact/${story.slug}`} className="mt-auto group/btn flex items-center gap-3 text-aeem-charcoal dark:text-aeem-white font-black">
                       Read Case Study <ArrowRight size={20} className="group-hover/btn:translate-x-2 transition-transform text-aeem-gold" />
                     </Link>
                   </div>

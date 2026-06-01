@@ -1,7 +1,18 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import Layout from './components/layout/Layout'
-import ScrollToTop from './components/layout/ScrollToTop'
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      gcTime: 1000 * 60 * 30, // 30 minutes
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  },
+})
 
 // Pages
 import Home from './pages/Home'
@@ -16,7 +27,6 @@ import ResourceDetail from './pages/ResourceDetail'
 import PressKit from './pages/PressKit'
 import Awards from './pages/Awards'
 import Contact from './pages/Contact'
-import NotFound from './pages/NotFound'
 
 function AnimatedRoutes() {
   const location = useLocation()
@@ -35,21 +45,21 @@ function AnimatedRoutes() {
             <Route path="/press-kit" element={<PressKit />} />
             <Route path="/recognition-awards" element={<Awards />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="*" element={<NotFound />} />
     </Routes>
   )
 }
 
 function App() {
   return (
-    <HelmetProvider>
-      <Router>
-        <ScrollToTop />
-        <Layout>
-          <AnimatedRoutes />
-        </Layout>
-      </Router>
-    </HelmetProvider>
+    <QueryClientProvider client={queryClient}>
+      <HelmetProvider>
+        <Router>
+          <Layout>
+            <AnimatedRoutes />
+          </Layout>
+        </Router>
+      </HelmetProvider>
+    </QueryClientProvider>
   )
 }
 

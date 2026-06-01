@@ -1,7 +1,6 @@
 import React from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
-import ScrollToTopButton from './ScrollToTopButton';
 import { motion, useScroll, useSpring } from 'framer-motion';
 
 interface LayoutProps {
@@ -17,7 +16,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   });
 
   return (
-    <div className="relative min-h-screen font-sans bg-white dark:bg-aeem-charcoal text-aeem-charcoal dark:text-white transition-colors duration-300">
+    <div className="relative min-h-screen font-sans bg-white dark:bg-aeem-charcoal text-aeem-charcoal dark:text-aeem-white transition-colors duration-300">
       <motion.div
         className="fixed top-0 left-0 right-0 h-1 bg-aeem-gold z-[110] origin-left"
         style={{ scaleX }}
@@ -31,7 +30,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       >
         {children}
       </motion.main>
-      <ScrollToTopButton />
       <Footer />
     </div>
   );
