@@ -92,7 +92,7 @@ const About: React.FC = () => {
                    <img
                      src={member.image}
                      alt={member.name}
-                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 grayscale hover:grayscale-0"
+                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                    />
                 </div>
                 <div className="p-6">

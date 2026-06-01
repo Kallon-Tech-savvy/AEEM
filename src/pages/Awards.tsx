@@ -99,7 +99,7 @@ const Awards: React.FC = () => {
                   <button
                     disabled={loading}
                     type="submit"
-                    className="absolute right-3 top-1/2 -translate-y-1/2 w-12 h-12 bg-aeem-gold/50 text-white rounded-xl flex items-center justify-center hover:bg-aeem-gold transition-colors disabled:opacity-50"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-12 h-12 bg-aeem-gold/70 text-white rounded-xl flex items-center justify-center hover:bg-aeem-gold transition-colors disabled:opacity-50"
                   >
                     {loading ? <Loader2 className="animate-spin" size={20} /> : <Search size={20} />}
                   </button>
@@ -177,8 +177,8 @@ const Awards: React.FC = () => {
                           </div>
                        </div>
 
-                       <div className="p-6 bg-aeem rounded-2xl border border-gray-100">
-                          <p className="text-sm text-gray-500 leading-relaxed italic">
+                       <div className="p-6 bg-aeem rounded-2xl border border-aeem-border">
+                          <p className="text-sm text-aeem leading-relaxed italic">
                              "{result.description}"
                           </p>
                        </div>
@@ -187,11 +187,11 @@ const Awards: React.FC = () => {
                )}
 
                {!result && !error && (
-                 <div className="text-center py-8 grayscale opacity-50">
-                    <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                 <div className="text-center py-8 opacity-50">
+                    <div className="w-16 h-16 bg-aeem-focus/50 rounded-full flex items-center justify-center mx-auto mb-4">
                        <ShieldCheck size={32} />
                     </div>
-                    <p className="text-sm font-bold text-gray-400">Waiting for verification code...</p>
+                    <p className="text-sm font-bold text-aeem">Waiting for verification code...</p>
                  </div>
                )}
             </div>

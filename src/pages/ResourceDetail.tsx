@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Clock, Share2, Download, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, Clock, Share2, Download, Loader2 } from 'lucide-react';
+import { supabase } from '../services/supabase';
 
 interface ResourceData {
   title: string;
@@ -80,8 +81,54 @@ const RESOURCES_DB: Record<string, ResourceData> = {
 
 const ResourceDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
-  const resource = slug ? RESOURCES_DB[slug] : null;
+  const [resource, setResource] = useState<ResourceData | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+  
+    useEffect(() => {
+      const fetchStory = async () => {
+        try {
+          setLoading(true);
+          setError(null);
+  
+          //Try fetch from supabase
+          const { data, error } = await supabase
+            .from('resources')
+            .select('*')
+            .eq('slug', slug)
+            .single();
+  
+            if(error){
+              throw error;
+            }
+  
+            if (data){
+              setResource(data);
+            } else {
+              const localStory = slug ? RESOURCES_DB[slug] : null;
+              setResource(localStory);
+            }
+        } catch {
+          console.warn('Supabase fetch failed or missing. Falling back to local Stories database:', error);
+          const localResource =slug ?  RESOURCES_DB[slug] : null;
+          setResource(localResource);
+        }finally {
+          setLoading(false)
+        }
+      };
+  
+      if (slug) fetchStory();
+    }, [slug, error]);
+  
 
+  if(loading){
+    return (
+      <div className='flex h-screen items-center justify-center'>
+        <Loader2 className='h-8 w-8 animate-spin text-aeem-gold' />
+      </div>
+    )
+  }
+  
   if (!resource) {
     return (
       <div className="pt-40 pb-24 text-center max-w-7xl mx-auto min-h-screen flex flex-col justify-center items-center">
@@ -106,20 +153,20 @@ const ResourceDetail: React.FC = () => {
 
       <section className="pt-40 pb-20">
         <div className="max-w-4xl mx-auto px-6">
-          <Link to="/resources" className="inline-flex items-center gap-2 text-sm font-bold text-gray-400 hover:text-aeem-gold mb-12 transition-colors">
+          <Link to="/resources" className="inline-flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-aeem-gold mb-12 transition-colors">
             <ArrowLeft size={16} /> Back to Knowledge Hub
           </Link>
 
           <div className="flex items-center gap-3 text-aeem-gold font-bold uppercase tracking-widest text-xs mb-6">
              <span className="px-3 py-1 bg-aeem-gold/10 rounded-md">{resource.type}</span>
-             <span className="flex items-center gap-1 text-gray-400"><Clock size={14} /> {resource.readingTime}</span>
+             <span className="flex items-center gap-1 text-gray-500"><Clock size={14} /> {resource.readingTime}</span>
           </div>
 
           <h1 className="text-4xl md:text-6xl font-black mb-8 leading-tight">
              {resource.title}
           </h1>
 
-          <div className="aspect-[21/9] rounded-[2.5rem] overflow-hidden mb-16 shadow-2xl bg-gray-100">
+          <div className="aspect-[21/9] rounded-[2.5rem] overflow-hidden mb-16 shadow-2xl ">
              <img
                 src={resource.image}
                 alt={resource.title}
@@ -127,12 +174,12 @@ const ResourceDetail: React.FC = () => {
              />
           </div>
 
-          <div className="prose prose-lg max-w-none text-gray-600 leading-relaxed">
-             <p className="text-xl font-medium text-aeem-charcoal mb-8">
+          <div className="prose prose-lg max-w-none text-aeem leading-relaxed">
+             <p className="text-xl font-medium text-aeem mb-8">
                 {resource.summary}
              </p>
 
-             <h2 className="text-2xl font-black text-aeem-charcoal mt-12 mb-6">Core Points & Highlights</h2>
+             <h2 className="text-2xl font-black text-aeem mt-12 mb-6">Core Points & Highlights</h2>
              <p>{resource.fullBody}</p>
 
              <ul className="space-y-4 my-8">
@@ -141,44 +188,44 @@ const ResourceDetail: React.FC = () => {
                      <div className="w-6 h-6 rounded-full bg-aeem-gold/10 flex items-center justify-center text-aeem-gold shrink-0 mt-1">
                         {index + 1}
                      </div>
-                     <span className="font-semibold text-aeem-charcoal">{point}</span>
+                     <span className="font-semibold text-aeem">{point}</span>
                   </li>
                 ))}
              </ul>
 
              {resource.isReport && (
-                <div className="my-16 p-10 bg-aeem-charcoal rounded-[2.5rem] text-white flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl border border-white/5">
+                <div className="my-16 p-10 bg-aeem rounded-[2.5rem] text-aeem flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl border border-white/5">
                    <div>
                       <h3 className="text-2xl font-black mb-2 text-aeem-gold">Download Full Resource</h3>
-                      <p className="text-gray-400 text-sm">Get the complete digital file, charts, and methodologies.</p>
+                      <p className="text-aeem text-sm">Get the complete digital file, charts, and methodologies.</p>
                    </div>
                    <button 
                      onClick={handleDownload}
-                     className="flex items-center gap-3 bg-aeem-gold text-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-aeem-charcoal hover:scale-105 active:scale-95 transition-all shrink-0 shadow-lg shadow-aeem-gold/20"
+                     className="flex items-center gap-3 bg-aeem-gold text-aeem px-8 py-4 rounded-full font-bold hover:bg-white hover:text-aeem-focus hover:scale-105 active:scale-95 transition-all shrink-0 shadow-lg shadow-aeem-gold/20"
                    >
-                      <Download size={20} /> Download PDF
+                      <Download size={24} /> Download PDF
                    </button>
                 </div>
              )}
           </div>
 
-          <div className="mt-20 pt-12 border-t border-gray-100 flex justify-between items-center">
+          <div className="mt-20 pt-12 border-t border-aeem-focus flex justify-between items-center">
              <div className="flex gap-4">
                 <button 
                   onClick={() => {
                     navigator.clipboard.writeText(window.location.href);
                     alert("Resource link copied to clipboard!");
                   }}
-                  className="p-3 rounded-full bg-gray-100 text-gray-500 hover:bg-aeem-gold hover:text-white transition-all active:scale-95 shadow-sm"
+                  className="p-3 rounded-full bg-aeem-focus/30 text-aeem hover:bg-aeem-gold hover:text-white transition-all active:scale-95 shadow-sm"
                   aria-label="Share"
                 >
                   <Share2 size={20} />
                 </button>
              </div>
              <div className="flex items-center gap-3">
-                <span className="text-sm font-bold text-gray-400 uppercase">Tags:</span>
+                <span className="text-sm font-bold text-aeem-gold uppercase">Tags:</span>
                 {resource.tags.map((tag) => (
-                  <span key={tag} className="text-xs font-bold px-3 py-1 bg-gray-100 rounded-md text-aeem-charcoal">
+                  <span key={tag} className="text-xs font-bold px-3 py-1 bg-aeem rounded-md text-aeem">
                     {tag}
                   </span>
                 ))}

@@ -4,31 +4,6 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Share2, CheckCircle2, Loader2 } from 'lucide-react';
 import { supabase } from '../services/supabase';
 
-interface ImpactStory {
-  id: string;
-  title: string;
-  slug: string;
-  summary: string;
-  body: string;
-  location: string;
-  participants_count: number;
-  schools_count: number;
-  cover_image_url: string;
-}
-
-const FALLBACK_STORY: ImpactStory = {
-  id: 'fallback-1',
-  title: "I AM SOMEBODY Initiative",
-  slug: "i-am-somebody",
-  summary: "Our flagship 2-day empowerment workshop trained 42 participants from six schools, addressing leadership, civic awareness, and resilience.",
-  body: `<p>The "I AM SOMEBODY" initiative was designed as a high-impact empowerment program to address the critical gaps in traditional education. Beyond textbooks, we focused on the human element—leadership, civic awareness, and personal resilience.</p>
-         <p>Participants reported a significant increase in their confidence to lead school initiatives and a deeper understanding of their roles as active citizens in Sierra Leone. By training 42 participants from six different schools, AEEM created a cross-institutional network of youth leaders ready to advocate for educational equity.</p>`,
-  cover_image_url: "/assets/gallery/Activity.jpg",
-  participants_count: 42,
-  schools_count: 6,
-  location: "Freetown, Sierra Leone"
-};
-
 interface StoryData {
   title: string;
   quote: string;
@@ -72,7 +47,52 @@ const STORIES_DB: Record<string, StoryData> = {
 
 const StoryDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
-  const story = slug ? STORIES_DB[slug] : null;
+  const [story, setStory] = useState<StoryData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchStory = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        //Try fetch from supabase
+        const { data, error } = await supabase
+          .from('stories')
+          .select('*')
+          .eq('slug', slug)
+          .single();
+
+          if(error){
+            throw error;
+          }
+
+          if (data){
+            setStory(data);
+          } else {
+            const localStory = slug ? STORIES_DB[slug] : null;
+            setStory(localStory);
+          }
+      } catch {
+        console.warn('Supabase fetch failed or missing. Falling back to local Stories database:', error);
+        const localStory =slug ?  STORIES_DB[slug] : null;
+        setStory(localStory);
+      }finally {
+        setLoading(false)
+      }
+    };
+
+    if (slug) fetchStory();
+  }, [slug, error]);
+
+  if(loading){
+    return (
+      <div className='flex h-screen items-center justify-center'>
+        <Loader2 className='h-8 w-8 animate-spin text-aeem-gold' />
+      </div>
+    )
+  }
 
   if (!story) {
     return (
@@ -85,6 +105,7 @@ const StoryDetail: React.FC = () => {
     );
   }
 
+// Story
   return (
     <>
       <Helmet>

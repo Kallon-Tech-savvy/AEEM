@@ -42,26 +42,26 @@ export default function Pillars() {
              <div className="relative z-10 grid grid-cols-3 gap-4">
                 <div className="space-y-4 pt-12">
                    <div className="h-64 bg-white/5 rounded-3xl overflow-hidden border dark:border-white/10 group">
-                      <img src="/assets/gallery/Mage_Award.jpg" alt="AEEM Award Ceremony" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+                      <img src="/assets/gallery/Mage_Award.jpg" alt="AEEM Award Ceremony" className="w-full h-full object-cover transition-all duration-700" />
                    </div>
                    <div className="h-48 bg-white/5 rounded-3xl overflow-hidden border border-white/10 group">
-                      <img src="/assets/gallery/Girls_Fram.jpg" alt="Empowered girls in a classroom" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+                      <img src="/assets/gallery/Girls_Fram.jpg" alt="Empowered girls in a classroom" className="w-full h-full object-cover transition-all duration-700" />
                    </div>
                 </div>
                 <div className="space-y-4">
                    <div className="h-48 bg-white/5 rounded-3xl overflow-hidden border border-white/10 group">
-                      <img src="/assets/gallery/Boys_Fram.jpg" alt="Students collaborating on a project" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+                      <img src="/assets/gallery/Boys_Fram.jpg" alt="Students collaborating on a project" className="w-full h-full object-cover transition-all duration-700" />
                    </div>
                    <div className="h-64 bg-white/5 rounded-3xl overflow-hidden border border-white/10 group">
-                      <img src="/assets/gallery/Activity.jpg" alt="Community educational activity" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+                      <img src="/assets/gallery/Activity.jpg" alt="Community educational activity" className="w-full h-full object-cover transition-all duration-700" />
                    </div>
                 </div>
                 <div className="space-y-4 pt-12">
                    <div className="h-48 bg-white/5 rounded-3xl overflow-hidden border border-white/10 group">
-                      <img src="../../../public/assets/gallery/AEEMTEAM_Photo.jpg" alt="Students collaborating on a project" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+                      <img src="../../../public/assets/gallery/AEEMTEAM_Photo.jpg" alt="Students collaborating on a project" className="w-full h-full object-cover transition-all duration-700" />
                    </div>
                    <div className="h-64 bg-white/5 rounded-3xl overflow-hidden border border-white/10 group">
-                      <img src="../../../public/assets/gallery/AEEM.jpg" alt="Community educational activity" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+                      <img src="../../../public/assets/gallery/AEEM.jpg" alt="Community educational activity" className="w-full h-full object-cover transition-all duration-700" />
                    </div>
                 </div>
              </div>
