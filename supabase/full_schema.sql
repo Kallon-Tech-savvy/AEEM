@@ -22,7 +22,9 @@ CREATE TABLE event_registrations (
   phone TEXT,
   school_or_org TEXT,
   message TEXT,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  -- Prevent duplicate registrations for the same event with the same email
+  UNIQUE(event_id, email)
 );
 
 -- 3. Impact Stories Table

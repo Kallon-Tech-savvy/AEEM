@@ -23,14 +23,14 @@ const stats: Stat[] = [
     numericValue: 2500,
     suffix: '',
     prefix: '',
-    color: 'text-aeem-charcoal dark:text-white',
+    color: 'text-aeem-charcoal',
     description: 'Life-changing opportunities created',
   },
   {
     label: 'Active Mentors',
     numericValue: 480,
     suffix: '',
-    color: 'text-aeem-charcoal dark:text-white',
+    color: 'text-aeem-charcoal',
     description: 'Professionals giving back',
   },
 ]
@@ -82,10 +82,10 @@ function AnimatedStat({ stat, index }: { stat: Stat; index: number }) {
 
         <div className="w-8 h-0.5 bg-aeem-gold/30 mx-auto my-4 group-hover:w-16 transition-all duration-500" />
 
-        <p className="text-sm font-black uppercase tracking-widest text-gray-600 dark:text-gray-300 mb-2">
+        <p className="text-sm font-black uppercase tracking-widest text-gray-600 mb-2">
           {stat.label}
         </p>
-        <p className="text-xs text-gray-400 dark:text-gray-500 leading-relaxed">{stat.description}</p>
+        <p className="text-xs text-gray-400 leading-relaxed">{stat.description}</p>
       </div>
     </motion.div>
   )
@@ -93,13 +93,13 @@ function AnimatedStat({ stat, index }: { stat: Stat; index: number }) {
 
 export default function ImpactStats() {
   return (
-    <section id="impact" className="py-24 bg-gray-50 dark:bg-zinc-900/40 relative overflow-hidden transition-colors duration-300">
+    <section id="impact" className="py-24 bg-gray-50 relative overflow-hidden">
       {/* Decorative background text */}
       <div
         className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
         aria-hidden
       >
-        <span className="text-[20vw] font-black text-gray-100 dark:text-zinc-800/10 tracking-tighter leading-none transition-colors duration-300">
+        <span className="text-[20vw] font-black text-gray-100 tracking-tighter leading-none">
           IMPACT
         </span>
       </div>

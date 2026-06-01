@@ -11,8 +11,7 @@ const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
     full_name: '',
     email: '',
-    phone: '', // Keep for schema compatibility
-    subject: '', // Added subject
+    phone: '',
     message: ''
   });
 
@@ -26,39 +25,24 @@ const Contact: React.FC = () => {
     setError(null);
 
     try {
-      if (!supabase || !supabase.auth) {
-        throw new Error('Supabase client unconfigured');
-      }
-
       const { error } = await supabase
         .from('inquiries')
         .insert([
           {
             inquiry_type: 'contact',
-            full_name: formData.full_name,
-            email: formData.email,
-            phone: formData.phone || formData.subject, // Map subject to phone as fallback for DB integrity
-            message: `Subject: ${formData.subject}\n\n${formData.message}` // prepend subject to message body for safety
+            ...formData
           }
         ]);
 
       if (error) throw error;
-      
       setSubmitted(true);
-      setFormData({ full_name: '', email: '', phone: '', subject: '', message: '' });
+      setFormData({ full_name: '', email: '', phone: '', message: '' });
     } catch (err) {
-      console.warn('Supabase inquiries submission failed. Simulating local mock submission...', err);
-      // QA/UX Fallback: Simulated success response for robust experience
-      setTimeout(() => {
-        setSubmitted(true);
-        setFormData({ full_name: '', email: '', phone: '', subject: '', message: '' });
-        setIsSubmitting(false);
-      }, 1000);
-      return;
+      const errorMsg = err instanceof Error ? err.message : 'Failed to send message. Please try again.';
+      console.error('Submission error:', err);
+      setError(errorMsg);
     } finally {
-      if (!submitted && !isSubmitting) {
-        setIsSubmitting(false);
-      }
+      setIsSubmitting(false);
     }
   };
 
@@ -66,7 +50,6 @@ const Contact: React.FC = () => {
     <>
       <Helmet>
         <title>Contact AEEM | Get in Touch</title>
-        <meta name="description" content="Reach out to the Africa Education Empowerment Movement team directly." />
       </Helmet>
 
       <section className="pt-40 pb-24 bg-aeem text-aeem overflow-hidden relative">
@@ -88,6 +71,7 @@ const Contact: React.FC = () => {
             {/* Contact Info */}
             <div className="lg:col-span-5 space-y-12">
                <div>
+                  <h2 className="text-3xl font-black mb-8">Reach Us Directly</h2>
                   <h2 className="text-3xl font-black mb-8 text-aeem">Reach Us Directly</h2>
                   <div className="space-y-8">
                      <div className="flex gap-6">
@@ -128,7 +112,7 @@ const Contact: React.FC = () => {
                      <Globe className="text-aeem-gold" size={24} /> Global Presence
                   </h3>
                   <p className="text-gray-500 text-sm leading-relaxed">
-                     AEEM is expanding across the continent. If you're interested in starting a chapter in your region, please mention \"New Chapter\" in your message.
+                     AEEM is expanding across the continent. If you're interested in starting a chapter in your region, please mention "New Chapter" in your message.
                   </p>
                </div>
             </div>
@@ -140,13 +124,13 @@ const Contact: React.FC = () => {
                      <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-8">
                         <CheckCircle2 size={40} />
                      </div>
-                     <h2 className="text-3xl font-black mb-4 text-aeem-charcoal">Message Sent!</h2>
+                     <h2 className="text-3xl font-black mb-4">Message Sent!</h2>
                      <p className="text-gray-600 mb-10">
                         Thank you for reaching out. We've received your message and will get back to you shortly.
                      </p>
                      <button
                         onClick={() => setSubmitted(false)}
-                        className="px-10 py-4 bg-aeem-charcoal text-white rounded-full font-bold hover:bg-aeem-gold transition-colors active:scale-95 shadow-lg"
+                        className="px-10 py-4 bg-aeem-charcoal text-white rounded-full font-bold hover:bg-aeem-gold transition-colors"
                      >
                         Send Another Message
                      </button>
@@ -187,8 +171,8 @@ const Contact: React.FC = () => {
                      <div className="space-y-2">
                         <label className="text-xs font-black uppercase tracking-widest text-aeem ml-1">Subject (Optional)</label>
                         <input
-                           name="subject"
-                           value={formData.subject}
+                           name="phone"
+                           value={formData.phone}
                            onChange={handleChange}
                            type="text"
                            className="w-full bg-aeem-focus/20 border border-transparent rounded-2xl px-6 py-4 focus:outline-none focus:bg-white focus:border-aeem-gold focus:ring-1 focus:ring-aeem-gold transition-all"
@@ -210,9 +194,9 @@ const Contact: React.FC = () => {
                      <button
                         disabled={isSubmitting}
                         type="submit"
-                        className="w-full bg-aeem-focus/70 text-white py-5 rounded-2xl font-black text-lg hover:bg-aeem-gold transition-all shadow-xl flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95"
+                        className="w-full bg-aeem-focus/70 text-white py-5 rounded-2xl font-black text-lg hover:bg-aeem-gold transition-all shadow-xl flex items-center justify-center gap-3"
                      >
-                        {isSubmitting ? <><Loader2 className="animate-spin" /> Sending...</> : <><Send size={20} /> Send Message</>}
+                        {isSubmitting ? <Loader2 className="animate-spin" /> : <><Send size={20} /> Send Message</>}
                      </button>
                   </form>
                )}
