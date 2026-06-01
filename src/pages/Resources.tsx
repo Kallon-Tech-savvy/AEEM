@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Search, BookOpen, Newspaper, FileText, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
 import { supabase } from '../services/supabase';
 
 interface Resource {
@@ -57,25 +56,39 @@ const getIcon = (type: string, category?: string) => {
 };
 
 const Resources: React.FC = () => {
+  const [resources, setResources] = useState<Resource[]>([]);
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
 
-  const { data: resources, isLoading } = useQuery({
-    queryKey: ['resources'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('resources')
-        .select('*')
-        .eq('published', true)
-        .order('created_at', { ascending: false });
+  useEffect(() => {
+    const fetchResources = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('resources')
+          .select('*')
+          .eq('published', true)
+          .order('created_at', { ascending: false });
 
-      if (error) throw error;
-      return (data && data.length > 0) ? (data as Resource[]) : FALLBACK_RESOURCES;
-    },
-    initialData: FALLBACK_RESOURCES
-  });
+        if (error) throw error;
 
-  const filteredResources = (resources || []).filter(res => {
+        if (data && data.length > 0) {
+          setResources(data);
+        } else {
+          setResources(FALLBACK_RESOURCES);
+        }
+      } catch (err) {
+        console.error('Error fetching resources:', err);
+        setResources(FALLBACK_RESOURCES);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchResources();
+  }, []);
+
+  const filteredResources = resources.filter(res => {
     const matchesSearch = res.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                           res.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = activeCategory === 'All' || res.category === activeCategory;
@@ -88,7 +101,7 @@ const Resources: React.FC = () => {
         <title>Resources & Blog | AEEM</title>
       </Helmet>
 
-      <section className="pt-40 pb-24 bg-gray-50">
+      <section className="pt-40 pb-24 bg-aeem-focus/10">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
             <div className="max-w-2xl">
@@ -96,13 +109,13 @@ const Resources: React.FC = () => {
               <h1 className="text-5xl md:text-7xl font-black mb-0 leading-tight">Resources</h1>
             </div>
             <div className="relative w-full md:w-96">
-               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-aeem-focus" size={20} />
                <input
                  type="text"
                  value={searchTerm}
                  onChange={(e) => setSearchTerm(e.target.value)}
                  placeholder="Search articles & downloads..."
-                 className="w-full pl-12 pr-6 py-4 rounded-2xl border border-gray-200 focus:outline-none focus:border-aeem-gold transition-colors shadow-sm"
+                 className="w-full pl-12 pr-6 py-4 rounded-2xl bg-aeem-focus/30 border border-gray-200 focus:outline-none focus:border-aeem-gold transition-colors shadow-sm"
                />
             </div>
           </div>
@@ -112,7 +125,7 @@ const Resources: React.FC = () => {
                <button
                  key={cat}
                  onClick={() => setActiveCategory(cat)}
-                 className={`px-8 py-2.5 rounded-full text-sm font-bold whitespace-nowrap transition-all ${activeCategory === cat ? 'bg-aeem-charcoal text-white' : 'bg-white text-gray-500 border border-gray-100 hover:border-aeem-gold'}`}
+                 className={`px-8 py-2.5 rounded-full text-sm font-bold whitespace-nowrap transition-all ${activeCategory === cat ? 'bg-aeem-gold/50 text-aeem-focus' : 'bg-aeem-focus/30 text-aeem-gold border border-gray-100 hover:border-aeem-gold'}`}
                >
                  {cat}
                </button>
@@ -121,9 +134,9 @@ const Resources: React.FC = () => {
         </div>
       </section>
 
-      <section className="py-24 bg-white dark:bg-aeem-charcoal">
+      <section className="py-24 bg-aeem">
         <div className="max-w-7xl mx-auto px-6">
-          {isLoading ? (
+          {loading ? (
             <div className="flex justify-center items-center py-24">
               <Loader2 className="animate-spin text-aeem-gold" size={48} />
             </div>
@@ -135,15 +148,15 @@ const Resources: React.FC = () => {
                   <Link
                     to={`/resources/${item.slug}`}
                     key={item.slug}
-                    className="group p-8 rounded-3xl border border-gray-100 dark:border-white/10 bg-white dark:bg-white/5 hover:border-aeem-gold hover:shadow-2xl transition-all flex flex-col h-full"
+                    className="group p-8 rounded-3xl border border-gray-100 bg-aeem-focus/20 hover:border-aeem-gold hover:shadow-2xl transition-all flex flex-col h-full"
                   >
                     <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center text-aeem-gold mb-8 group-hover:bg-aeem-gold group-hover:text-white transition-all">
                       <Icon size={28} />
                     </div>
                     <div className="text-[10px] font-black uppercase tracking-widest text-aeem-gold mb-4">{item.category}</div>
-                    <h3 className="text-xl font-bold mb-4 group-hover:text-aeem-gold transition-colors dark:text-aeem-white">{item.title}</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mb-8 line-clamp-3">{item.description}</p>
-                    <div className="mt-auto flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-aeem-charcoal dark:text-aeem-white">
+                    <h3 className="text-xl font-bold mb-4 group-hover:text-aeem-gold transition-colors">{item.title}</h3>
+                    <p className="text-sm text-aeem leading-relaxed mb-8 line-clamp-3">{item.description}</p>
+                    <div className="mt-auto flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-aeem">
                        {item.type === 'download' ? 'Download PDF' : 'Read Article'}
                        <div className="w-6 h-[2px] bg-aeem-gold group-hover:w-10 transition-all" />
                     </div>

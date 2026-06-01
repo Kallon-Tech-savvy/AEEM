@@ -135,7 +135,7 @@ const ResourceDetail: React.FC = () => {
                      className="flex items-center gap-3 bg-aeem-gold text-white px-8 py-4 rounded-full font-bold hover:scale-105 transition-all shrink-0"
                    >
                       <Download size={20} /> Download PDF
-                   </a>
+                   </button>
                 </div>
              )}
           </div>

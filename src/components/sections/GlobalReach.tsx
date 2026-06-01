@@ -61,18 +61,18 @@ function Globe() {
 }
 
 const REGIONS = [
-  { label: 'West Africa',    count: 9,  side: 'left',  top: '18%' },
-  { label: 'North Africa',   count: 3,  side: 'left',  top: '40%' },
-  { label: 'East Africa',    count: 7,  side: 'right', top: '25%' },
-  { label: 'Central Africa', count: 3,  side: 'right', top: '48%' },
-  { label: 'Southern Africa', count: 5, side: 'right', top: '70%' },
+  { label: 'West Africa',    count: 6,  side: 'left',  top: '18%' },
+  { label: 'North Africa',   count: 0,  side: 'left',  top: '40%' },
+  { label: 'East Africa',    count: 2,  side: 'right', top: '25%' },
+  { label: 'Central Africa', count: 0,  side: 'right', top: '48%' },
+  { label: 'Southern Africa', count: 0, side: 'right', top: '70%' },
 ]
 
 const BOTTOM_STATS = [
-  { val: '24',  label: 'Countries' },
-  { val: '14M', label: 'People Impacted' },
-  { val: '8',   label: 'Years Active' },
-  { val: '3',   label: 'Sub-Regions' },
+  { val: '8',  label: 'Countries' },
+  { val: '2.5K', label: 'People Impacted' },
+  { val: '3',   label: 'Years Active' },
+  { val: '2',   label: 'Sub-Regions' },
 ]
 
 export default function GlobalReach() {
@@ -92,9 +92,9 @@ export default function GlobalReach() {
           <h2 className="text-5xl font-black mb-4">
             Expanding our <span className="text-aeem-gold">Footprint</span>
           </h2>
-          <p className="text-gray-500 max-w-2xl mx-auto text-lg">
-            From West Africa to the entire continent, we are building bridges
-            to better futures — one community at a time.
+          <p className="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto text-lg">
+            From West Africa to East Africa, we are building bridges, leading change
+            to better future for our young people — From Community to Community.
           </p>
         </motion.div>
 
@@ -118,7 +118,7 @@ export default function GlobalReach() {
               transition={{ delay: 0.4 }}
               className="text-center bg-white/70 backdrop-blur-xl px-10 py-8 rounded-3xl border border-gray-100 shadow-xl"
             >
-              <p className="text-7xl font-black text-aeem-charcoal leading-none">24</p>
+              <p className="text-7xl font-black text-aeem-charcoal dark:text-white leading-none">8</p>
               <p className="text-xs font-bold uppercase tracking-widest text-aeem-gold mt-2">
                 Countries Reached
               </p>
