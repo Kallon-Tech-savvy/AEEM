@@ -10,7 +10,7 @@ const About: React.FC = () => {
       name: "Patrick P Williams",
       title: "Chief Executive Officer",
       bio: "",
-      image: ""
+      image: "/assets/gallery/CEO.jpg"
     },
     {
       name: "Alhaji C. M. Kallon",
@@ -22,7 +22,7 @@ const About: React.FC = () => {
       name: "Ann Moore",
       title: "Executive Director",
       bio: "",
-      image: ""
+      image: "/assets/gallery/ED.jpg"
     }
   ];
 

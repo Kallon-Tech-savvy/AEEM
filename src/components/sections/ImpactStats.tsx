@@ -23,14 +23,14 @@ const stats: Stat[] = [
     numericValue: 2500,
     suffix: '',
     prefix: '',
-    color: 'text-aeem-charcoal',
+    color: 'text-aeem-charcoal dark:text-white/80',
     description: 'Life-changing opportunities created',
   },
   {
     label: 'Active Mentors',
     numericValue: 480,
     suffix: '',
-    color: 'text-aeem-charcoal',
+    color: 'text-aeem-charcoal dark:text-white/80',
     description: 'Professionals giving back',
   },
 ]
@@ -93,13 +93,13 @@ function AnimatedStat({ stat, index }: { stat: Stat; index: number }) {
 
 export default function ImpactStats() {
   return (
-    <section id="impact" className="py-24 bg-gray-50 relative overflow-hidden">
+    <section id="impact" className="py-24 bg-aeem relative overflow-hidden">
       {/* Decorative background text */}
       <div
         className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
         aria-hidden
       >
-        <span className="text-[20vw] font-black text-gray-100 tracking-tighter leading-none">
+        <span className="text-[20vw] font-black text-gray-100 dark:text-gray-900 tracking-tighter leading-none">
           IMPACT
         </span>
       </div>

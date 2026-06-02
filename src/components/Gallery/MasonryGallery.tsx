@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import PhotoAlbum, { Photo } from 'react-photo-album';
 import Lightbox from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
-import 'react-photo-album/styles.css';
 import { motion } from 'framer-motion';
 import { supabase } from '../../services/supabase';
 
@@ -16,33 +14,82 @@ interface GalleryImage {
   category: string;
 }
 
-interface MasonryGalleryProps {
+interface MosaicGalleryProps {
   category?: string;
   limit?: number;
 }
 
-interface CustomPhoto extends Photo {
+// Ensure CustomPhoto includes our custom span properties
+interface CustomPhoto {
+  src: string;
+  width: number;
+  height: number;
   title: string;
   alt: string;
+  key: string;
+  colSpan?: number;
+  rowSpan?: number;
 }
 
 const FALLBACK_PHOTOS: CustomPhoto[] = [
   { src: '/assets/gallery/AEEMTEAM_Photo.jpg', width: 1080, height: 720, title: 'Team AEEM', alt: 'The core team behind the AEEM movement.', key: '1' },
-  { src: '/assets/gallery/Activity.jpg', width: 1080, height: 720, title: 'Interactive Sessions', alt: 'Engaging activities during the workshop.', key: '2' },
-  { src: '/assets/gallery/Award.jpg', width: 1080, height: 1440, title: 'Recognizing Excellence', alt: 'Award ceremony for outstanding participants.', key: '3' },
-  { src: '/assets/gallery/Boys_Fram.jpg', width: 1080, height: 720, title: 'Youth Leaders', alt: 'Empowered students ready to lead.', key: '4' },
+  { src: '/assets/gallery/Activity.jpg', width: 720, height: 1080, title: 'Interactive Sessions', alt: 'Engaging activities during the workshop.', key: '2' }, 
+  { src: '/assets/gallery/Award.jpg', width: 1080, height: 1440, title: 'Recognizing Excellence', alt: 'Award ceremony for outstanding participants.', key: '3' }, 
+  { src: '/assets/gallery/Boys_Fram.jpg', width: 1080, height: 1080, title: 'Youth Leaders', alt: 'Empowered students ready to lead.', key: '4' }, 
   { src: '/assets/gallery/Girls_Fram.jpg', width: 1080, height: 720, title: 'Future Leaders', alt: 'Supporting the next generation of female leaders.', key: '5' },
-  { src: '/assets/gallery/Group_Discussion.jpg', width: 1080, height: 720, title: 'Group Discussions', alt: 'Collaborative learning in action.', key: '6' },
+  { src: '/assets/gallery/Group_Discussion.jpg', width: 1080, height: 540, title: 'Group Discussions', alt: 'Collaborative learning in action.', key: '6' }, 
   { src: '/assets/gallery/Mage_Award.jpg', width: 1080, height: 1440, title: 'Celebrating Success', alt: 'Moments of achievement.', key: '7' },
-  { src: '/assets/gallery/Male_Participant.jpg', width: 1080, height: 720, title: 'Dedicated Participants', alt: 'Focused on growth and learning.', key: '8' },
+  { src: '/assets/gallery/Male_Participant.jpg', width: 720, height: 1080, title: 'Dedicated Participants', alt: 'Focused on growth and learning.', key: '8' },
   { src: '/assets/gallery/Participant_Group_Picture.jpg', width: 1080, height: 720, title: 'The AEEM Family', alt: 'A collective effort for educational change.', key: '9' },
-  { src: '/assets/gallery/Teacher_and_Student.jpg', width: 1080, height: 720, title: 'Mentorship Matters', alt: 'Building bridges between teachers and students.', key: '10' },
-  { src: '/assets/gallery/AEEM.jpg', width: 1080, height: 720, title: 'Our Brand', alt: 'Africa Education Empowerment Movement.', key: '11' }
+  { src: '/assets/gallery/Teacher_and_Student.jpg', width: 1080, height: 1080, title: 'Mentorship Matters', alt: 'Building bridges between teachers and students.', key: '10' },
+  { src: '/assets/gallery/AEEM boy.jpg', width: 1080, height: 720, title: 'Our Brand', alt: 'Africa Education Empowerment Movement.', key: '11' },
+  { src: '/assets/gallery/AEEMENGAGEMENTWITHMAGE.jpg', width: 720, height: 1080, title: 'Our Brand', alt: 'Engagement with mage-sl', key: '12' },
+  { src: '/assets/gallery/Health.jpg', width: 1080, height: 720, title: 'Our Brand', alt: 'Health awareness.', key: '13' },
+  { src: '/assets/gallery/Group_Discussion3.jpg', width: 1080, height: 1080, title: 'Our Brand', alt: 'Group discussion session.', key: '14' },
+  { src: '/assets/gallery/Group_Discussion2.jpg', width: 1080, height: 720, title: 'Our Brand', alt: 'group discussion session', key: '15' },
+  { src: '/assets/gallery/AEEM volunateer.jpg', width: 720, height: 1080, title: 'Our Brand', alt: 'Africa Education Empowerment Movement.', key: '16' },
+  { src: '/assets/gallery/Foods.jpg', width: 1080, height: 540, title: 'Our Brand', alt: 'Africa Education Empowerment Movement.', key: '17' },
+  { src: '/assets/gallery/Mentorship.jpg', width: 540, height: 720, title: 'Our Brand', alt: 'Africa Education Empowerment Movement.', key: '18' },
+  { src: '/assets/gallery/Engadgement with RCBank.jpg', width: 1080, height: 1440, title: 'Our Brand', alt: 'Africa Education Empowerment Movement.', key: '19' },
+  { src: '/assets/gallery/AEEMTEAM.jpg', width: 720, height: 720, title: 'Our Brand', alt: 'Africa Education Empowerment Movement.', key: '20' },
 ];
 
-const MasonryGallery: React.FC<MasonryGalleryProps> = ({ category, limit }) => {
+/**
+ * Calculates how many grid cells an image should span based on its natural dimensions.
+ * This creates the "Mosaic" puzzle-piece effect.
+ */
+const calculateSpans = (width: number, height: number, index: number) => {
+  const ratio = width / height;
+  
+  let colSpan = 1;
+  let rowSpan = 1;
+
+  if (ratio > 1.5) {
+    // Wide Landscape
+    colSpan = 2;
+    rowSpan = 1;
+  } else if (ratio < 0.8) {
+    // Tall Portrait
+    colSpan = 1;
+    rowSpan = 2;
+  } else {
+    // Square-ish
+    // We make every 5th square image large to create visual interest
+    if (index % 5 === 0) {
+      colSpan = 2;
+      rowSpan = 2;
+    } else {
+      colSpan = 1;
+      rowSpan = 1;
+    }
+  }
+
+  return { colSpan, rowSpan };
+};
+
+const MasonryGallery: React.FC<MosaicGalleryProps> = ({ category, limit }) => {
   const [photos, setPhotos] = useState<CustomPhoto[]>([]);
-  const [index, setIndex] = useState(-1);
+  const [lightboxIndex, setLightboxIndex] = useState(-1);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -65,23 +112,32 @@ const MasonryGallery: React.FC<MasonryGalleryProps> = ({ category, limit }) => {
 
         if (error) throw error;
 
-        if (data && data.length > 0) {
-          const mappedPhotos = data.map((item: GalleryImage) => ({
-            src: item.image_url,
-            width: item.width || 1080,
-            height: item.height || 720,
-            title: item.title,
-            alt: item.caption || item.title,
-            key: item.id
-          }));
-          setPhotos(mappedPhotos);
-        } else {
-          // Use local fallback if database is empty or not yet set up
-          setPhotos(category ? FALLBACK_PHOTOS.filter(p => p.src.includes(category)) : FALLBACK_PHOTOS);
+        let rawData = data && data.length > 0 ? data : FALLBACK_PHOTOS;
+        if (category && rawData === FALLBACK_PHOTOS) {
+            rawData = FALLBACK_PHOTOS.filter(p => p.src.includes(category));
         }
+
+        const processedPhotos = (rawData as (GalleryImage | CustomPhoto)[]).map((item, index) => {
+          const w = item.width || 1080;
+          const h = item.height || 720;
+          const spans = calculateSpans(w, h, index);
+          
+          return {
+            src: 'image_url' in item ? item.image_url : item.src,
+            width: w,
+            height: h,
+            title: item.title,
+            alt: ('caption' in item ? item.caption : item.alt) || item.title,
+            key: 'id' in item ? item.id : item.key,
+            colSpan: spans.colSpan,
+            rowSpan: spans.rowSpan
+          };
+        });
+
+        setPhotos(processedPhotos);
+
       } catch (err) {
         console.error('Error fetching gallery:', err);
-        setPhotos(FALLBACK_PHOTOS);
       } finally {
         setLoading(false);
       }
@@ -109,46 +165,57 @@ const MasonryGallery: React.FC<MasonryGalleryProps> = ({ category, limit }) => {
       viewport={{ once: true }}
       className="w-full"
     >
-      <PhotoAlbum
-        layout="masonry"
-        photos={photos}
-        columns={(containerWidth: number) => {
-          if (containerWidth < 640) return 1;
-          if (containerWidth < 1024) return 2;
-          return 3;
-        }}
-        spacing={24}
-        onClick={({ index }: { index: number }) => setIndex(index)}
-        render={{
-          image: (props, { photo }) => (
+      {/* The Core Mosaic Grid
+        - grid-flow-dense: Tells CSS to pack items into empty spaces
+        - grid-cols-2: Mobile default (2 columns)
+        - md:grid-cols-4: Tablet (4 columns)
+        - lg:grid-cols-6: Desktop (6 columns)
+        - auto-rows-[200px]: Defines the base height of 1 grid cell
+      */}
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 grid-flow-dense auto-rows-[200px] gap-4 sm:gap-6">
+        {photos.map((photo, index) => {
+          
+          // Tailwind requires full classes to be present at build time, 
+          // so we map our calculated spans to explicit strings.
+          // Note: On mobile (2 cols), we cap col-span at 2 so it doesn't break the layout.
+          const spanClasses = `
+            ${photo.colSpan === 2 ? 'col-span-2' : 'col-span-1'}
+            ${photo.rowSpan === 2 ? 'row-span-2' : 'row-span-1'}
+          `;
+
+          return (
             <div
-              className="group relative overflow-hidden rounded-2xl shadow-soft transition-all duration-500 hover:shadow-xl hover:-translate-y-1 bg-aeem-charcoal/5 h-full w-full"
+              key={photo.key}
+              onClick={() => setLightboxIndex(index)}
+              className={`group relative overflow-hidden rounded-2xl shadow-soft transition-all duration-500 hover:shadow-xl hover:-translate-y-1 bg-aeem-charcoal/5 cursor-pointer block ${spanClasses}`}
             >
               <img
-                {...props}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                alt={(photo as CustomPhoto).alt}
+                src={photo.src}
+                alt={photo.alt}
+                loading="lazy"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-black/40 transition-opacity duration-300 flex flex-col justify-end p-6 pointer-events-none">
+              
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 pointer-events-none">
                 <h3 className="text-lg font-bold transform translate-y-4 group-hover:translate-y-0 text-white transition-transform duration-300">
-                  {(photo as CustomPhoto).title}
+                  {photo.title}
                 </h3>
-                {(photo as CustomPhoto).alt && (
-                  <p className="text-sm text-gray-200 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75">
-                    {(photo as CustomPhoto).alt}
+                {photo.alt && (
+                  <p className="text-sm text-gray-200 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75 line-clamp-2">
+                    {photo.alt}
                   </p>
                 )}
               </div>
             </div>
-          )
-        }}
-      />
+          );
+        })}
+      </div>
 
       <Lightbox
-        index={index}
+        index={lightboxIndex}
         slides={photos}
-        open={index >= 0}
-        close={() => setIndex(-1)}
+        open={lightboxIndex >= 0}
+        close={() => setLightboxIndex(-1)}
       />
     </motion.div>
   );

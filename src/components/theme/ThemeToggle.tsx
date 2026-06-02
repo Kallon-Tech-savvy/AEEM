@@ -23,10 +23,10 @@ const ThemeToggle: React.FC = () => {
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-10 h-10 flex items-center justify-center rounded-full bg-aeem-charcoal/5 dark:bg-white/10 text-aeem-charcoal dark:text-aeem-white hover:bg-aeem-gold/10 dark:hover:bg-aeem-gold/20 transition-colors"
+        className="w-10 h-10 flex items-center justify-center rounded-full bg-aeem-charcoal/15 dark:bg-white/20 text-aeem-charcoal dark:text-aeem-white hover:bg-aeem-gold/10 dark:hover:bg-aeem-gold/20 transition-colors"
         aria-label="Toggle theme"
       >
-        <Icon size={20} />
+        <Icon size={20} className='text-aeem-gold ' />
       </button>
 
       <AnimatePresence>
