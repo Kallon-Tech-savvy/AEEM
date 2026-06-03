@@ -6,6 +6,9 @@ import Hero from '../components/sections/Hero'
 import ImpactStats from '../components/sections/ImpactStats'
 import Pillars from '../components/sections/Pillars'
 import GlobalReach from '../components/sections/GlobalReach'
+import { WebGLGuard } from '../components/sections/WebGlGuard'
+import { AwardSlider } from '../components/sections/AwardSlider'
+import { PartnerTicker } from '../components/sections/PartnerSlide'
 
 export default function Home() {
   return (
@@ -109,7 +112,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-
+      
       {/* Featured Impact - I AM SOMEBODY */}
       <section className="py-24 bg-aeem-focus/10">
         <div className="max-w-7xl mx-auto px-6">
@@ -152,9 +155,13 @@ export default function Home() {
           </div>
         </div>
       </section>
-
+      <AwardSlider />
+      <PartnerTicker />
       <Pillars />
-      <GlobalReach />
+      
+      <WebGLGuard fallback={<div className="h-64 flex items-center justify-center text-gray-600 dark:text-gray-300">Interactive map unavailable</div>}>
+        <GlobalReach />
+      </WebGLGuard>
 
       {/* Get Involved CTA */}
       <section className="py-24 bg-aeem-gold/10">

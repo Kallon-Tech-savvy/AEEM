@@ -202,7 +202,13 @@ const EventDetail: React.FC = () => {
                 </div>
               )}
             </div>
-
+            <div className="absolute right-0 bottom-0 w-full h-full opacity-[0.07] dark:opacity-[0.03] pointer-events-none z-1 mix-blend-luminosity select-none">
+          <img 
+            src="/assets/Illustrate africa.png" 
+            alt="" 
+            className="w-full h-full object-contain"
+          />
+        </div>
             {/* Right — Registration Form */}
             <div className="bg-aeem-focus/30 rounded-[2.5rem] p-8 md:p-12 border border-gray-100 sticky top-32 shadow-sm">
               {submitted ? (
@@ -239,7 +245,7 @@ const EventDetail: React.FC = () => {
                       value={formData.full_name}
                       onChange={handleChange}
                       placeholder="Full Name"
-                      className="w-full px-6 py-4 rounded-2xl bg-white dark:bg-black/70 border border-aeem-focus focus:outline-none focus:border-aeem-gold transition-colors focus:ring-1 focus:ring-aeem-gold"
+                      className="w-full text-aeem-charcoal dark:text-white  px-6 py-4 rounded-2xl bg-white dark:bg-black/70 border border-aeem-focus focus:outline-none focus:border-aeem-gold transition-colors focus:ring-1 focus:ring-aeem-gold"
                     />
                     <input
                       required
@@ -248,21 +254,21 @@ const EventDetail: React.FC = () => {
                       onChange={handleChange}
                       type="email"
                       placeholder="Email Address"
-                      className="w-full px-6 py-4 rounded-2xl bg-white dark:bg-black/70 border border-gray-200 focus:outline-none focus:border-aeem-gold transition-colors focus:ring-1 focus:ring-aeem-gold"
+                      className="w-full text-aeem-charcoal dark:text-white  px-6 py-4 rounded-2xl bg-white dark:bg-black/70 border border-aeem-focus focus:outline-none focus:border-aeem-gold transition-colors focus:ring-1 focus:ring-aeem-gold"
                     />
                     <input
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
                       placeholder="Phone Number"
-                      className="w-full px-6 py-4 rounded-2xl bg-white dark:bg-black/70 border border-gray-200 focus:outline-none focus:border-aeem-gold transition-colors focus:ring-1 focus:ring-aeem-gold"
+                      className="w-full text-aeem-charcoal dark:text-white  px-6 py-4 rounded-2xl bg-white dark:bg-black/70 border border-aeem-focus focus:outline-none focus:border-aeem-gold transition-colors focus:ring-1 focus:ring-aeem-gold"
                     />
                     <input
                       name="school_or_org"
                       value={formData.school_or_org}
                       onChange={handleChange}
                       placeholder="School or Organization"
-                      className="w-full px-6 py-4 rounded-2xl bg-white dark:bg-black/70 border border-gray-200 focus:outline-none focus:border-aeem-gold transition-colors focus:ring-1 focus:ring-aeem-gold"
+                      className="w-full text-aeem-charcoal dark:text-white  px-6 py-4 rounded-2xl bg-white dark:bg-black/70 border border-aeem-focus focus:outline-none focus:border-aeem-gold transition-colors focus:ring-1 focus:ring-aeem-gold"
                     />
                     <textarea
                       name="message"
@@ -270,7 +276,7 @@ const EventDetail: React.FC = () => {
                       onChange={handleChange}
                       placeholder="What do you hope to learn?"
                       rows={3}
-                      className="w-full px-6 py-4 rounded-2xl dark:bg-black/70 bg-white border border-gray-200 focus:outline-none focus:border-aeem-gold transition-colors focus:ring-1 focus:ring-aeem-gold"
+                      className="w-full text-aeem-charcoal dark:text-white  px-6 py-4 rounded-2xl dark:bg-black/70 bg-white border border-aeem-focus focus:outline-none focus:border-aeem-gold transition-colors focus:ring-1 focus:ring-aeem-gold"
                     />
                     <button
                       disabled={isSubmitting}

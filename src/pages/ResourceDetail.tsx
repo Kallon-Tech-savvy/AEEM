@@ -156,7 +156,13 @@ const ResourceDetail: React.FC = () => {
               className="w-full h-full object-cover"
             />
           </div>
-
+          <div className="absolute right-0 bottom-0 w-full h-full opacity-[0.07] dark:opacity-[0.03] pointer-events-none z-1 mix-blend-luminosity select-none">
+          <img 
+            src="/assets/Illustrate africa.png" 
+            alt="" 
+            className="w-full h-full object-contain"
+          />
+        </div>
           <div className="prose prose-lg max-w-none text-gray-600 leading-relaxed">
             {resource.summary ? (
               <p className="text-xl font-medium text-aeem-charcoal dark:text-white mb-8">{resource.summary}</p>
@@ -221,6 +227,7 @@ const ResourceDetail: React.FC = () => {
             </div>
           </div>
         </div>
+        
       </section>
     </>
   );

@@ -79,10 +79,19 @@ const Awards: React.FC = () => {
         </div>
       </section>
 
-      <section className="py-24 bg-aeem-gold/5">
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="py-24 bg-aeem-gold/5 relative overflow-hidden">
+        {/* SUITABLE LOCATION: Structural Watermark for Crypto/Data Metrics Token */}
+        <div className="absolute right-[-5%] bottom-[-5%] w-full h-full opacity-[0.07] dark:opacity-[0.03] pointer-events-none z-1 mix-blend-luminosity select-none">
+          <img 
+            src="/assets/Illustrate africa.png" 
+            alt="" 
+            className="w-full h-full object-contain"
+          />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-            <div className="bg-aeem-focus/10 p-8 md:p-12 rounded-[2.5rem] shadow-soft border border-aeem-border">
+            <div className="bg-aeem-focus/10 p-8 md:p-12 rounded-[2.5rem] shadow-soft border border-aeem-border backdrop-blur-sm">
                <h2 className="text-3xl font-black mb-6">Verify Achievement</h2>
                <p className="text-aeem-charcoal dark:text-white mb-8 leading-relaxed">
                  Enter the unique verification code found on your AEEM certificate to validate its authenticity.
@@ -94,7 +103,7 @@ const Awards: React.FC = () => {
                     value={code}
                     onChange={(e) => setCode(e.target.value)}
                     placeholder="e.g., AEEM-2026-LDR-001"
-                    className="w-full pl-6 pr-16 bg-aeem-focus/10 py-5 rounded-2xl border border-aeem-border focus:outline-none focus:border-aeem-gold transition-all font-bold tracking-wider uppercase"
+                    className="w-full text-aeem-charcoal dark:text-white  pl-6 pr-16 bg-aeem-focus/10 py-5 rounded-2xl border border-aeem-border focus:outline-none focus:border-aeem-gold transition-all font-bold tracking-wider uppercase"
                   />
                   <button
                     disabled={loading}

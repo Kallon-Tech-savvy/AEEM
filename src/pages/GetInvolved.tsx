@@ -78,7 +78,7 @@ const GetInvolved: React.FC = () => {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <span className="text-aeem-gold font-bold uppercase tracking-[0.3em] text-xs mb-4 block">Take Action</span>
             <h1 className="text-5xl md:text-7xl font-black mb-8 leading-tight">Join the <span className="text-aeem-gold">Movement</span></h1>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-aeem-charcoal dark:text-aeem-dark-text max-w-2xl mx-auto">
               Whether you're a student, a professional, or an institution, there's a place for you at AEEM.
             </p>
           </motion.div>
@@ -100,7 +100,7 @@ const GetInvolved: React.FC = () => {
                     <tab.icon size={24} />
                   </div>
                   <h3 className="text-xl font-bold mb-2 text-aeem">{tab.title}</h3>
-                  <p className="text-sm text-aeem leading-relaxed">{tab.desc}</p>
+                  <p className="text-sm text-aeem-charcoal dark:text-aeem-dark-text leading-relaxed">{tab.desc}</p>
                 </button>
               ))}
             </div>
@@ -112,13 +112,13 @@ const GetInvolved: React.FC = () => {
                    <div className="w-20 h-20 bg-aeem-success/40 text-aeem-success rounded-full flex items-center justify-center mx-auto mb-8">
                       <CheckCircle2 size={40} />
                    </div>
-                   <h2 className="text-3xl font-black mb-4 text-aeem-charcoal">Inquiry Received!</h2>
-                   <p className="text-aeem max-w-md mx-auto mb-10 leading-relaxed">
+                   <h2 className="text-3xl font-black mb-4 text-aeem-charcoal dark:text-aeem-dark-text">Inquiry Received!</h2>
+                   <p className="text-aeem-charcoal dark:text-aeem-dark-text max-w-md mx-auto mb-10 leading-relaxed">
                      Thank you for your interest in AEEM. Our team will review your {activeTab} inquiry and get back to you within 48 hours.
                    </p>
                    <button
                      onClick={() => setSubmitted(false)}
-                     className="px-10 py-4 bg-aeem text-aeem rounded-full font-bold hover:bg-aeem-gold transition-colors active:scale-95 shadow-lg"
+                     className="px-10 py-4 bg-aeem text-aeem-charcoal dark:text-aeem-dark-text rounded-full font-bold hover:bg-aeem-gold transition-colors active:scale-95 shadow-lg"
                    >
                      Submit Another Request
                    </button>
@@ -126,7 +126,7 @@ const GetInvolved: React.FC = () => {
               ) : (
                 <>
                   <h2 className="text-3xl font-black mb-2 text-aeem">{activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} Inquiry</h2>
-                  <p className="text-aeem mb-12">Fill out the form below and we'll reach out to discuss how we can work together.</p>
+                  <p className="text-aeem-charcoal dark:text-aeem-dark-text mb-12">Fill out the form below and we'll reach out to discuss how we can work together.</p>
 
                   {error && (
                     <div className="mb-8 p-4 bg-aeem-error/30 border-l-4 border-aeem-error/50 text-aeem-error text-sm">
@@ -137,26 +137,26 @@ const GetInvolved: React.FC = () => {
                   <form onSubmit={handleSubmit} className="space-y-8">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                        <div className="space-y-2">
-                          <label className="text-xs font-black uppercase tracking-widest text-aeem ml-1">Full Name</label>
+                          <label className="text-xs font-black uppercase tracking-widest text-aeem-charcoal dark:text-aeem-dark-text ml-1">Full Name</label>
                           <input
                             required
                             name="full_name"
                             value={formData.full_name}
                             onChange={handleChange}
                             type="text"
-                            className="w-full bg-aeem-focus/10 border border-aeem-border rounded-2xl px-6 py-4 focus:outline-none focus:border-aeem-gold transition-colors focus:ring-1 focus:ring-aeem-gold"
+                            className="w-full bg-aeem-focus/10 border border-aeem-border rounded-2xl px-6 py-4 focus:outline-none focus:border-aeem-gold transition-colors focus:ring-1 focus:ring-aeem-gold dark:text-aeem-dark-text"
                             placeholder="Alhaji C M Kallon"
                           />
                        </div>
                        <div className="space-y-2">
-                          <label className="text-xs font-black uppercase tracking-widest text- ml-1">Email Address</label>
+                          <label className="text-xs text-aeem-charcoal dark:text-aeem-dark-text font-black uppercase tracking-widest text-ml-1">Email Address</label>
                           <input
                             required
                             name="email"
                             value={formData.email}
                             onChange={handleChange}
                             type="email"
-                            className="w-full bg-aeem-focus/10 border border-aeem-border rounded-2xl px-6 py-4 focus:outline-none focus:border-aeem-gold transition-colors focus:ring-1 focus:ring-aeem-gold"
+                            className="w-full text-aeem-charcoal dark:text-aeem-dark-text bg-aeem-focus/10 border border-aeem-border rounded-2xl px-6 py-4 focus:outline-none focus:border-aeem-gold transition-colors focus:ring-1 focus:ring-aeem-gold"
                             placeholder="Mohamed@example.com"
                           />
                        </div>
@@ -164,38 +164,38 @@ const GetInvolved: React.FC = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                        <div className="space-y-2">
-                          <label className="text-xs font-black uppercase tracking-widest text-aeem ml-1">Phone Number (Optional)</label>
+                          <label className="text-xs font-black text-aeem-charcoal dark:text-aeem-dark-text uppercase tracking-widest text-aeem ml-1">Phone Number (Optional)</label>
                           <input
                             name="phone"
                             value={formData.phone}
                             onChange={handleChange}
                             type="tel"
-                            className="w-full bg-aeem-focus/10 border border-aeem-border rounded-2xl px-6 py-4 focus:outline-none focus:border-aeem-gold transition-colors focus:ring-1 focus:ring-aeem-gold"
+                            className="w-full text-aeem-charcoal dark:text-aeem-dark-text bg-aeem-focus/10 border border-aeem-border rounded-2xl px-6 py-4 focus:outline-none focus:border-aeem-gold transition-colors focus:ring-1 focus:ring-aeem-gold"
                             placeholder="+232 00 000000"
                           />
                        </div>
                        <div className="space-y-2">
-                          <label className="text-xs font-black uppercase tracking-widest text-aeem ml-1">{activeTab === 'partner' ? 'Organization' : 'School / Organization'}</label>
+                          <label className="text-xs font-black text-aeem-charcoal dark:text-aeem-dark-text uppercase tracking-widest text-aeem ml-1">{activeTab === 'partner' ? 'Organization' : 'School / Organization'}</label>
                           <input
                             name="organization"
                             value={formData.organization}
                             onChange={handleChange}
                             type="text"
-                            className="w-full bg-aeem-focus/10 border border-aeem-border rounded-2xl px-6 py-4 focus:outline-none focus:border-aeem-gold transition-colors focus:ring-1 focus:ring-aeem-gold"
+                            className="w-full text-aeem-charcoal dark:text-aeem-dark-text bg-aeem-focus/10 border border-aeem-border rounded-2xl px-6 py-4 focus:outline-none focus:border-aeem-gold transition-colors focus:ring-1 focus:ring-aeem-gold"
                             placeholder="Your organization"
                           />
                        </div>
                     </div>
 
                     <div className="space-y-2">
-                       <label className="text-xs font-black uppercase tracking-widest text-aeem ml-1">Your Message</label>
+                       <label className="text-xs font-black text-aeem-charcoal dark:text-aeem-dark-text uppercase tracking-widest text-aeem ml-1">Your Message</label>
                        <textarea
                          required
                          name="message"
                          value={formData.message}
                          onChange={handleChange}
                          rows={5}
-                         className="w-full bg-aeem-focus/10 border border-gray-200 rounded-2xl px-6 py-4 focus:outline-none focus:border-aeem-gold transition-colors focus:ring-1 focus:ring-aeem-gold"
+                         className="w-full text-aeem-charcoal dark:text-aeem-dark-text bg-aeem-focus/10 border border-aeem-border rounded-2xl px-6 py-4 focus:outline-none focus:border-aeem-gold transition-colors focus:ring-1 focus:ring-aeem-gold"
                          placeholder="How would you like to contribute?"
                        />
                     </div>

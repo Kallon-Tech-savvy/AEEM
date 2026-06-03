@@ -2,7 +2,8 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { Target, Heart, Eye } from 'lucide-react';
-import MasonryGallery from '../components/Gallery/MasonryGallery';
+import MasonryGallery from '../../dist/Gallery/MasonryGallery';
+import { partners } from '../data/Partner';
 
 const About: React.FC = () => {
   const leadershipTeam = [
@@ -19,19 +20,11 @@ const About: React.FC = () => {
       image: "/assets/gallery/kallon1.png"
     },
     {
-      name: "Ann Moore",
+      name: "Ann Ambrose",
       title: "Executive Director",
       bio: "",
       image: "/assets/gallery/ED.jpg"
     }
-  ];
-
-  const partners = [
-    { name: "RCBank", sub: "Rokel Commercial Bank", url:"/assets/Partner/RCBank.jpg" },
-    { name: "MAGE-SL", sub: "Men's Association for Gender Equality Sierra Leone", url:"/assets/Partner/Mage_sl.jpg" },
-    { name: "KWD", sub: "Kallon's World", url:"/assets/gallery/kallon1.png" },
-    { name: "NYA", sub: "New Youth Africa", url:"/assets/Partner/NYA.jpg" },
-    { name: "ACC", sub: "Anti Corruption Commission", url:"/assets/Partner/ACC.jpg" }
   ];
 
   return (
@@ -56,6 +49,7 @@ const About: React.FC = () => {
             </p>
           </motion.div>
         </div>
+        
       </section>
 
       <section className="py-24 bg-aeem-bg dark:bg-aeem-focus/5">

@@ -38,13 +38,9 @@ export default function Navbar() {
           : 'bg-transparent py-8'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        <Link to="/" className="flex items-center gap-3">
-          <img src="/assets/logo.jpg" alt="AEEM Logo" className="w-12 h-12 object-contain rounded-lg shadow-md" />
-          <div className="leading-tight">
-            <h1 className="font-extrabold text-lg tracking-tight dark:text-aeem-white">AEEM</h1>
-            <p className="text-[10px] uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">Movement</p>
-          </div>
+      <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
+        <Link to="/" className="dark:bg-white/95">
+          <img src="/assets/AEEM_logo.png" alt="AEEM Logo" className="w-36 h-14 object-fill rounded-lg shadow-md" />
         </Link>
 
         {/* Desktop Navigation */}

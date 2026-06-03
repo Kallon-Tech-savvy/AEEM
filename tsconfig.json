@@ -17,6 +17,6 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src"],
+  "include": ["src", "dist/Gallery"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

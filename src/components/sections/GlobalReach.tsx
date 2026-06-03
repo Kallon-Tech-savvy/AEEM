@@ -77,7 +77,7 @@ const BOTTOM_STATS = [
 
 export default function GlobalReach() {
   return (
-    <section className="py-24 bg-white overflow-hidden">
+    <section className="py-24 bg-aeem overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <motion.div
@@ -99,7 +99,7 @@ export default function GlobalReach() {
         </motion.div>
 
         {/* Globe + floating chips */}
-        <div className="relative h-[560px] w-full bg-gradient-to-b from-gray-50 to-white rounded-[3rem] overflow-hidden border border-gray-100 shadow-sm">
+        <div className="relative h-[560px] w-full bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 rounded-[3rem] overflow-hidden border border-gray-100 shadow-sm">
           {/* Canvas */}
           <Canvas camera={{ position: [0, 0, 4] }}>
             <ambientLight intensity={1.2} />
@@ -110,13 +110,13 @@ export default function GlobalReach() {
           </Canvas>
 
           {/* Centre badge */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="absolute inset-0 opacity-40 flex items-center justify-center pointer-events-none">
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.4 }}
-              className="text-center bg-white/70 backdrop-blur-xl px-10 py-8 rounded-3xl border border-gray-100 shadow-xl"
+              className="text-center bg-white/70 dark:bg-black/70  backdrop-blur-xl px-10 py-8 rounded-3xl border border-gray-100 shadow-xl"
             >
               <p className="text-7xl font-black text-aeem-charcoal dark:text-white leading-none">8</p>
               <p className="text-xs font-bold uppercase tracking-widest text-aeem-gold mt-2">
@@ -136,9 +136,9 @@ export default function GlobalReach() {
               className={`absolute pointer-events-none ${r.side === 'left' ? 'left-6' : 'right-6'}`}
               style={{ top: r.top }}
             >
-              <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-gray-100 rounded-full px-4 py-2 shadow-sm">
+              <div className="flex items-center gap-2 bg-aeem backdrop-blur-sm border border-gray-100 rounded-full px-4 py-2 shadow-sm">
                 <span className="w-2 h-2 rounded-full bg-aeem-gold flex-shrink-0" />
-                <span className="text-xs font-bold text-gray-700">{r.label}</span>
+                <span className="text-xs font-bold text-aeem-charcoal/70 dark:text-white/70">{r.label}</span>
                 <span className="text-xs font-black text-aeem-gold ml-1">{r.count}</span>
               </div>
             </motion.div>
@@ -156,9 +156,9 @@ export default function GlobalReach() {
           {BOTTOM_STATS.map((s) => (
             <div
               key={s.label}
-              className="text-center py-8 px-6 rounded-3xl bg-gray-50 border border-gray-100 hover:border-aeem-gold/30 hover:bg-aeem-gold/5 transition-all group"
+              className="text-center py-8 px-6 rounded-3xl bg-aeem border border-gray-100 hover:border-aeem-gold/30 hover:bg-aeem-gold/5 transition-all group"
             >
-              <p className="text-4xl font-black text-aeem-charcoal group-hover:text-aeem-gold transition-colors">
+              <p className="text-4xl font-black text-aeem-charcoal dark:text-white/80 group-hover:text-aeem-gold transition-colors">
                 {s.val}
               </p>
               <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mt-2">

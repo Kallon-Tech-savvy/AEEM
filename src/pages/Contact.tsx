@@ -52,16 +52,25 @@ const Contact: React.FC = () => {
         <title>Contact AEEM | Get in Touch</title>
       </Helmet>
 
-      <section className="pt-40 pb-24 bg-aeem text-aeem overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-1/3 h-full bg-aeem-gold/5 -skew-x-12 translate-x-1/2" />
+      <section className="pt-40 ch- pb-24 bg-aeem text-aeem overflow-hidden relative">
+        {/* SUITABLE LOCATION: Replaced plain skew block with the rich educational tree graphic */}
+         <div className="absolute top-12 right-0 w-full md:w-[45%] h-full pointer-events-none -z-1 opacity-[0.2] dark:opacity-[0.1] pointer-events-none z-1 mix-blend-luminosity select-none">
+          <img 
+            src="/assets/Illustrate Africa 2.png" 
+            alt="" 
+            className=" md:w-full h-full object-contain absolute top-0 right-0"
+          />
+        </div>
+
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="max-w-3xl">
             <span className="text-aeem-gold font-bold uppercase tracking-[0.3em] text-xs mb-4 block">Get in Touch</span>
             <h1 className="text-5xl md:text-7xl font-black mb-8 leading-tight">Contact <span className="text-aeem-gold">AEEM</span></h1>
-            <p className="text-xl text-gray-500">
+            <p className="text-xl text-aeem-charcoal dark:text-aeem-dark-text/80 mb-12 leading-relaxed">
               Have questions or want to learn more about our initiatives? We're here to help. Reach out to our team directly.
             </p>
           </div>
+         
         </div>
       </section>
 
@@ -71,15 +80,14 @@ const Contact: React.FC = () => {
             {/* Contact Info */}
             <div className="lg:col-span-5 space-y-12">
                <div>
-                  <h2 className="text-3xl font-black mb-8">Reach Us Directly</h2>
-                  <h2 className="text-3xl font-black mb-8 text-aeem">Reach Us Directly</h2>
+                  <h2 className="text-3xl font-black mb-8 text-aeem-charcoal dark:text-white">Reach Us Directly</h2>
                   <div className="space-y-8">
                      <div className="flex gap-6">
                         <div className="w-14 h-14 bg-aeem-gold/10 rounded-2xl flex items-center justify-center text-aeem-gold shrink-0">
                            <Mail size={24} />
                         </div>
                         <div>
-                           <h4 className="font-bold text-lg mb-1 text-aeem">Email</h4>
+                           <h4 className="font-bold text-lg mb-1 text-aeem-charcoal dark:text-white">Email</h4>
                            <p className="text-gray-500">info@aeem.org</p>
                            <p className="text-gray-500 text-sm">Our team typically responds within 24 hours.</p>
                         </div>
@@ -89,7 +97,7 @@ const Contact: React.FC = () => {
                            <Phone size={24} />
                         </div>
                         <div>
-                           <h4 className="font-bold text-lg mb-1 text-aeem">Phone</h4>
+                           <h4 className="font-bold text-lg mb-1 text-aeem-charcoal dark:text-white">Phone</h4>
                            <p className="text-gray-500">+232 76 406 281</p>
                            <p className="text-gray-500 text-sm">Mon - Fri, 9am - 5pm GMT.</p>
                         </div>
@@ -99,7 +107,7 @@ const Contact: React.FC = () => {
                            <MapPin size={24} />
                         </div>
                         <div>
-                           <h4 className="font-bold text-lg mb-1 text-aeem">Office</h4>
+                           <h4 className="font-bold text-lg mb-1 text-aeem-charcoal dark:text-white">Office</h4>
                            <p className="text-gray-500">Freetown, Sierra Leone</p>
                            <p className="text-gray-500 text-sm">The heart of our West African operations.</p>
                         </div>
@@ -108,7 +116,7 @@ const Contact: React.FC = () => {
                </div>
 
                <div className=" p-8 rounded-[2rem] border border-aeem-border">
-                  <h3 className="font-bold text-xl mb-4 flex items-center gap-3 text-aeem">
+                  <h3 className="font-bold text-xl mb-4 flex items-center gap-3 text-aeem-charcoal dark:text-white">
                      <Globe className="text-aeem-gold" size={24} /> Global Presence
                   </h3>
                   <p className="text-gray-500 text-sm leading-relaxed">
@@ -144,19 +152,19 @@ const Contact: React.FC = () => {
                      )}
                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div className="space-y-2">
-                           <label className="text-xs font-black uppercase tracking-widest text-aeem ml-1">Full Name</label>
+                           <label className="text-xs font-black text-aeem-charcoal dark:text-white  uppercase tracking-widest text-aeem ml-1">Full Name</label>
                            <input
                               required
                               name="full_name"
                               value={formData.full_name}
                               onChange={handleChange}
                               type="text"
-                              className="w-full bg-aeem-focus/20 border border-transparent rounded-2xl px-6 py-4 focus:outline-none focus:bg-white focus:border-aeem-gold focus:ring-1 focus:ring-aeem-gold transition-all"
+                              className="w-full text-aeem-charcoal dark:text-white bg-aeem-focus/20 border border-transparent rounded-2xl px-6 py-4 focus:outline-none focus:bg-white focus:border-aeem-gold focus:ring-1 focus:ring-aeem-gold transition-all"
                               placeholder="Your Name"
                            />
                         </div>
                         <div className="space-y-2">
-                           <label className="text-xs font-black uppercase tracking-widest text-aeem ml-1">Email Address</label>
+                           <label className="text-xs font-black text-aeem-charcoal dark:text-white  uppercase tracking-widest text-aeem ml-1">Email Address</label>
                            <input
                               required
                               name="email"
@@ -169,7 +177,7 @@ const Contact: React.FC = () => {
                         </div>
                      </div>
                      <div className="space-y-2">
-                        <label className="text-xs font-black uppercase tracking-widest text-aeem ml-1">Subject (Optional)</label>
+                        <label className="text-xs font-black text-aeem-charcoal dark:text-white  uppercase tracking-widest text-aeem ml-1">Subject (Optional)</label>
                         <input
                            name="phone"
                            value={formData.phone}
@@ -180,7 +188,7 @@ const Contact: React.FC = () => {
                         />
                      </div>
                      <div className="space-y-2">
-                        <label className="text-xs font-black uppercase tracking-widest text-aeem ml-1">Message</label>
+                        <label className="text-xs font-black text-aeem-charcoal dark:text-white  uppercase tracking-widest text-aeem ml-1">Message</label>
                         <textarea
                            required
                            name="message"

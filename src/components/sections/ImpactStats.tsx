@@ -94,14 +94,12 @@ function AnimatedStat({ stat, index }: { stat: Stat; index: number }) {
 export default function ImpactStats() {
   return (
     <section id="impact" className="py-24 bg-aeem relative overflow-hidden">
-      {/* Decorative background text */}
-      <div
-        className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
-        aria-hidden
-      >
-        <span className="text-[20vw] font-black text-gray-100 dark:text-gray-900 tracking-tighter leading-none">
-          IMPACT
-        </span>
+      <div className="absolute bottom-[1%] w-full h-full opacity-[0.1] dark:opacity-[0.08] pointer-events-none z-10 mix-blend-luminosity select-none transition-opacity duration-300">
+        <img 
+          src="/assets/Illustrate africa.png" 
+          alt="" 
+          className="w-full h-full center object-contain object-left-bottom"
+        />
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">

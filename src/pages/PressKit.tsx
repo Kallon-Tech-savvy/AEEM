@@ -61,7 +61,13 @@ const PressKit: React.FC = () => {
                 </div>
               </div>
             </div>
-
+            <div className="absolute right-0 bottom-0 w-full h-full opacity-[0.077] dark:opacity-[0.03] pointer-events-none z-1 mix-blend-luminosity select-none">
+              <img 
+                src="/assets/Illustrate africa.png" 
+                alt="" 
+                className="w-full h-full object-contain"
+              />
+            </div>
             <div>
               <h2 className="text-3xl font-black mb-8">Brand Assets</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">

@@ -3,8 +3,9 @@ import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, MapPin, Loader2 } from 'lucide-react';
-import MasonryGallery from '../components/Gallery/MasonryGallery';
+import MasonryGallery from '../../dist/Gallery/MasonryGallery';
 import { supabase } from '../services/supabase';
+import { AwardSlider } from '../components/sections/AwardSlider';
 
 interface ImpactStory {
   id: string;
@@ -84,7 +85,7 @@ const Impact: React.FC = () => {
           </motion.div>
         </div>
       </section>
-
+      
       <section className="py-24 bg-aeem-focus/5">
         <div className="max-w-7xl mx-auto px-6">
           {loading ? (
@@ -137,7 +138,7 @@ const Impact: React.FC = () => {
           )}
         </div>
       </section>
-
+      <AwardSlider />
       {/* Impact Gallery */}
       <section className="py-24 bg-aeem overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">

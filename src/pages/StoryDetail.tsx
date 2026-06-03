@@ -135,18 +135,24 @@ const StoryDetail: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20 p-10 bg-aeem rounded-3xl">
              <div>
                 <h4 className="text-xs font-bold uppercase tracking-widest text-aeem-gold mb-2">Participants</h4>
-                <p className="text-2xl font-black text-aeem">{story.stats.participants}</p>
+                <p className="text-2xl font-black text-aeem-charcoal dark:text-white ">{story.stats.participants}</p>
              </div>
              <div>
                 <h4 className="text-xs font-bold uppercase tracking-widest text-aeem-gold mb-2">Communities / Schools</h4>
-                <p className="text-2xl font-black text-aeem">{story.stats.schools}</p>
+                <p className="text-2xl font-black text-aeem-charcoal dark:text-white ">{story.stats.schools}</p>
              </div>
              <div>
                 <h4 className="text-xs font-bold uppercase tracking-widest text-aeem-gold mb-2">Duration</h4>
-                <p className="text-2xl font-black text-aeem">{story.stats.duration}</p>
+                <p className="text-2xl font-black text-aeem-charcoal dark:text-white ">{story.stats.duration}</p>
              </div>
           </div>
-
+            <div className="absolute right-0 bottom-0 w-full h-full opacity-[0.07] dark:opacity-[0.03] pointer-events-none z-1 mix-blend-luminosity select-none">
+          <img 
+            src="/assets/Illustrate africa.png" 
+            alt="" 
+            className="w-full h-full object-contain"
+          />
+        </div>
           <div className="prose prose-lg max-w-none text-gray-500 leading-relaxed space-y-8">
              <h2 className="text-3xl font-black text-aeem">Overview</h2>
              <p>{story.overview}</p>
