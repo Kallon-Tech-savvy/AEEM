@@ -10,7 +10,7 @@ const pillars = [
 
 export default function Pillars() {
   return (
-    <section id="initiatives" className="py-24 dark:bg-aeem-charcoal bg-aeem-bg text-white overflow-hidden">
+    <section id="initiatives" className="py-16 dark:bg-aeem-charcoal bg-aeem-bg text-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
           <div>

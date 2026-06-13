@@ -83,7 +83,7 @@ const Events: React.FC = () => {
         <title>Events | AEEM</title>
       </Helmet>
 
-      <section className="pt-40 pb-24 bg-aeem-focus/15 text-aeem-charcoal dark:text-white overflow-hidden">
+      <section className="pt-40 pb-16 bg-aeem-focus/15 text-aeem-charcoal dark:text-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <span className="text-aeem-gold font-bold uppercase tracking-[0.3em] text-xs mb-4 block">Participate</span>
@@ -95,7 +95,7 @@ const Events: React.FC = () => {
         </div>
       </section>
 
-      <section className="py-24 bg-aeem">
+      <section className="py-16 bg-aeem">
         <div className="max-w-7xl mx-auto px-6">
           {loading ? (
             <div className="flex justify-center items-center py-24">

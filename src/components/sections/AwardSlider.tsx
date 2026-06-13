@@ -24,17 +24,14 @@ export function AwardSlider() {
   }
 
   return (
-    <section className="py-24 bg-aeem-focus/5 dark:bg-black/20 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="py-16 bg-aeem-focus/5 dark:bg-black/20 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4">
         
         {/* Header Layout with Custom Navigation Targets */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
           <div>
-            <span className="text-aeem-gold font-bold uppercase tracking-[0.2em] text-xs mb-3 block">
-              Our Track Record
-            </span>
             <h2 className="text-4xl font-black text-aeem-charcoal dark:text-aeem-dark-text tracking-tight">
-              Honors & Institutional Recognitions
+              Honours & Institutional Recognitions
             </h2>
           </div>
           
@@ -56,14 +53,13 @@ export function AwardSlider() {
           </div>
         </div>
 
-        {/* Draggable Viewport Container */}
         <motion.div
           ref={carouselRef}
           className="flex overflow-x-auto gap-8 cursor-grab active:cursor-grabbing scrollbar-none snap-x snap-mandatory"
           style={{ scrollbarWidth: 'none' }}
         >
           <motion.div
-            className="flex gap-8 pr-12"
+            className="flex gap-8 pr-8"
             drag="x"
             dragConstraints={{ right: 0, left: -width }}
             whileTap={{ cursor: 'grabbing' }}
@@ -78,11 +74,11 @@ export function AwardSlider() {
                 <img
                   src={award.image}
                   alt={award.title}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-90"
                 />
 
                 {/* 2. Brand Gradient Mask to protect typography contrast limits */}
-                <div className="absolute inset-0 bg-gradient-to-t from-aeem-charcoal via-aeem-charcoal/80 to-black/20 mix-blend-multiply" />
+                <div className="absolute inset-0 bg-gradient-to-t from-aeem-charcoal via-aeem-charcoal/80 dark:to-black/20  mix-blend-multiply" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90" />
 
                 {/* 3. Text & Node Elements over Image Layout */}

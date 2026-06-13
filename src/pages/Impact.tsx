@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, MapPin, Loader2 } from 'lucide-react';
-import MasonryGallery from '../../dist/Gallery/MasonryGallery';
+import MasonryGallery from '../components/sections/MasonryGallery';
 import { supabase } from '../services/supabase';
 import { AwardSlider } from '../components/sections/AwardSlider';
 
@@ -68,7 +68,7 @@ const Impact: React.FC = () => {
         <meta name="description" content="Discover the real-world impact of AEEM's initiatives across Africa through case studies and participant stories." />
       </Helmet>
 
-      <section className="pt-40 pb-24 bg-aeem">
+      <section className="pt-40 pb-16 bg-aeem">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -86,7 +86,7 @@ const Impact: React.FC = () => {
         </div>
       </section>
       
-      <section className="py-24 bg-aeem-focus/5">
+      <section className="py-16 bg-aeem-focus/5">
         <div className="max-w-7xl mx-auto px-6">
           {loading ? (
             <div className="flex justify-center items-center py-24">
@@ -140,7 +140,7 @@ const Impact: React.FC = () => {
       </section>
       <AwardSlider />
       {/* Impact Gallery */}
-      <section className="py-24 bg-aeem overflow-hidden">
+      <section className="py-16 bg-aeem overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
             <div className="max-w-2xl">

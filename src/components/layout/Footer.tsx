@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Mail, Instagram, Twitter, Linkedin, Loader2, CheckCircle2, ArrowRight } from 'lucide-react'
+import { Mail, Twitter, Linkedin, Loader2, CheckCircle2, ArrowRight, Facebook } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { supabase } from '../../services/supabase'
 import {
@@ -104,12 +104,12 @@ export default function Footer() {
       {/* Background illustration — AVIF first for ~20% weight saving, PNG fallback */}
       <div
         aria-hidden="true"
-        className="absolute left-0 bottom-[1%] w-full h-full opacity-[0.1] dark:opacity-[0.08] pointer-events-none -z-10 mix-blend-luminosity select-none transition-opacity duration-300"
+        className="absolute left-0 bottom-[1%] w-full h-full opacity-[0.08] dark:opacity-[0.05] pointer-events-none -z-10 mix-blend-luminosity select-none transition-opacity duration-300"
       >
         <picture>
-          <source srcSet="/assets/illustrate_africa.avif" type="image/avif" />
+          <source srcSet="/assets/Illustrate africa.avif" type="image/avif" />
           <img
-            src="/assets/illustrate_africa.png"
+            src="/assets/Illustrate africa.png"
             alt=""
             className="w-full h-full object-contain object-left-bottom"
             loading="lazy"
@@ -133,14 +133,14 @@ export default function Footer() {
             </p>
             <div className="flex gap-4">
               {([
-                { Icon: Twitter,   label: 'Twitter'   },
-                { Icon: Instagram, label: 'Instagram' },
-                { Icon: Linkedin,  label: 'LinkedIn'  },
-                { Icon: Mail,      label: 'Email'     },
-              ] as const).map(({ Icon, label }, i) => (
+                { Icon: Twitter,   label: 'Twitter', src: '#'},
+                { Icon: Facebook, label: 'Facebook', src: '#' },
+                { Icon: Linkedin,  label: 'LinkedIn', src: '#'  },
+                { Icon: Mail,      label: 'Email' , src: '#'    },
+              ] as const).map(({ Icon, label, src }, i) => (
                 <a
                   key={i}
-                  href="#"
+                  href={src}
                   aria-label={label}
                   className="w-10 h-10 border border-black/90 dark:border-gray-600 rounded-full flex items-center justify-center text-aeem-charcoal dark:text-gray-400 hover:bg-aeem-gold hover:text-white hover:border-aeem-gold dark:hover:text-white dark:hover:border-aeem-gold transition-all duration-200"
                 >
@@ -152,8 +152,8 @@ export default function Footer() {
 
           {/* ── Navigation column ───────────────────────────────────────── */}
           <div>
-            <h4 className="font-bold mb-6 text-aeem-charcoal dark:text-aeem-gold uppercase tracking-widest text-xs">Navigation</h4>
-            <ul className="space-y-4 text-md">
+            <h4 className="font-bold mb-4 text-aeem-charcoal dark:text-aeem-gold uppercase tracking-widest text-xs">Navigation</h4>
+            <ul className="space-y-2 text-md md:grid md:grid-cols-2 md:gap-1">
               {[
                 { to: '/',                   label: 'Home'                },
                 { to: '/about',              label: 'About Us'            },
@@ -163,7 +163,7 @@ export default function Footer() {
                 { to: '/recognition-awards', label: 'Awards & Recognition'},
                 { to: '/Contact',            label: 'Contact'             },
                 { to: '/press-kit',          label: 'Press Kit'           },
-                { to: '/resources',          label: 'Knowledge Hub'       },
+                { to: '/resources',          label: 'Resource Hub'       },
               ].map(({ to, label }) => (
                 <li key={to}>
                   <Link
@@ -249,7 +249,7 @@ export default function Footer() {
         {/* ── Legal / copyright row ──────────────────────────────────────── */}
         <div className="pt-8 border-t border-aeem-charcoal/10 dark:border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="dark:text-gray-500 text-black/80 text-xs">
-            © 2026 Africa Education Empowerment Movement. All rights reserved.
+            © 2026 | Africa Education Empowerment Movement. | All rights reserved.
           </p>
           <div className="flex gap-6 text-xs text-black/80 dark:text-gray-400">
             <a href="#" className="hover:text-aeem-gold transition-colors">Privacy Policy</a>

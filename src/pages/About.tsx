@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { Target, Heart, Eye } from 'lucide-react';
-import MasonryGallery from '../../dist/Gallery/MasonryGallery';
+import MosaicGallery from '../components/sections/MasonryGallery';
 import { partners } from '../data/Partner';
 
 const About: React.FC = () => {
@@ -34,7 +34,7 @@ const About: React.FC = () => {
         <meta name="description" content="Learn about the Africa Education Empowerment Movement, our leadership, and our commitment to educational equity." />
       </Helmet>
 
-      <section className="pt-40 pb-24 bg-aeem-focus/15 dark:bg-aeem-dark-bg overflow-hidden">
+      <section className="pt-24 pb-16 bg-aeem-focus/15 dark:bg-aeem-dark-bg overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -45,16 +45,15 @@ const About: React.FC = () => {
               Driven by <span className="text-aeem-gold">Purpose</span>, <br/>Defined by Action.
             </h1>
             <p className="text-xl text-aeem-charcoal dark:text-white/70 max-w-3xl mx-auto leading-relaxed">
-              AEEM is a youth-led movement dedicated to dismantling the barriers that prevent quality education from reaching every child in Africa.
+              AEEM is a youth-led movement dedicated to bridging the barriers that prevent quality education from reaching every child in Africa.
             </p>
           </motion.div>
         </div>
-        
       </section>
 
-      <section className="py-24 bg-aeem-bg dark:bg-aeem-focus/5">
+      <section className="py-16 bg-aeem-bg dark:bg-aeem-focus/5">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               { icon: Target, title: "Our Mission", text: "To expand access to quality education across Africa through advocacy, community empowerment, and accountable action." },
               { icon: Eye, title: "Our Vision", text: "A continent where every child, regardless of their background, has the resources and support to achieve their educational dreams." },
@@ -73,7 +72,7 @@ const About: React.FC = () => {
       </section>
 
       {/* Leadership Section */}
-      <section className="py-24 bg-aeem">
+      <section className="py-16 bg-aeem">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-black mb-4 text-aeem-charcoal dark:text-white">Our Leadership</h2>
@@ -81,7 +80,7 @@ const About: React.FC = () => {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {leadershipTeam.map((member, i) => (
-              <div key={i} className="bg-aeem-dark-bg rounded-3xl overflow-hidden shadow-sm border border-gray-100 group hover:shadow-xl transition-all">
+              <div key={i} className=" dark:bg-aeem-dark-bg rounded-3xl overflow-hidden shadow-sm border border-gray-100 group hover:shadow-xl transition-all">
                 <div className="aspect-[4/5] relative overflow-hidden">
                    <img
                      src={member.image}
@@ -101,7 +100,7 @@ const About: React.FC = () => {
       </section>
 
       {/* Life at AEEM Gallery */}
-      <section className="py-24 bg-aeem-bg dark:bg-aeem-focus/5 overflow-hidden">
+      <section className="py-16 bg-aeem-bg dark:bg-aeem-focus/5 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
             <div className="max-w-2xl">
@@ -113,7 +112,7 @@ const About: React.FC = () => {
             </div>
           </div>
 
-          <MasonryGallery />
+          <MosaicGallery />
         </div>
       </section>
 

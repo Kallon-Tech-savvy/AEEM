@@ -19,8 +19,8 @@ const stats: Stat[] = [
     description: 'Across 8 African nations',
   },
   {
-    label: 'Scholarships Awarded',
-    numericValue: 2500,
+    label: 'People Empowered',
+    numericValue: 1500,
     suffix: '',
     prefix: '',
     color: 'text-aeem-charcoal dark:text-white/80',
@@ -28,7 +28,7 @@ const stats: Stat[] = [
   },
   {
     label: 'Active Mentors',
-    numericValue: 480,
+    numericValue: 80,
     suffix: '',
     color: 'text-aeem-charcoal dark:text-white/80',
     description: 'Professionals giving back',
@@ -93,7 +93,7 @@ function AnimatedStat({ stat, index }: { stat: Stat; index: number }) {
 
 export default function ImpactStats() {
   return (
-    <section id="impact" className="py-24 bg-aeem relative overflow-hidden">
+    <section id="impact" className="py-4 lg:py-16 bg-aeem relative overflow-hidden">
       <div className="absolute bottom-[1%] w-full h-full opacity-[0.1] dark:opacity-[0.08] pointer-events-none z-10 mix-blend-luminosity select-none transition-opacity duration-300">
         <img 
           src="/assets/Illustrate africa.png" 
@@ -102,12 +102,12 @@ export default function ImpactStats() {
         />
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-8"
         >
           <span className="text-aeem-gold font-bold uppercase tracking-[0.3em] text-xs mb-4 block">
             Our Numbers
@@ -117,7 +117,7 @@ export default function ImpactStats() {
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-0 md:divide-x divide-gray-200 dark:divide-zinc-800 transition-colors duration-300">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-0 md:divide-x divide-gray-200 dark:divide-zinc-800 transition-colors duration-300">
           {stats.map((stat, i) => (
             <AnimatedStat key={stat.label} stat={stat} index={i} />
           ))}
