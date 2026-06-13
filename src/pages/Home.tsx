@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import ImpactStats from '../components/sections/ImpactStats'
 import Pillars from '../components/sections/Pillars'
-import GlobalReach from '../components/sections/GlobalReach'
-import { WebGLGuard } from '../components/sections/WebGlGuard'
 import { AwardSlider } from '../components/sections/AwardSlider'
 import { PartnerTicker } from '../components/sections/PartnerSlide'
 
@@ -314,51 +312,6 @@ export default function Home() {
       <AwardSlider />
       <PartnerTicker />
       <Pillars />
-
-      <WebGLGuard
-        fallback={
-          <motion.div
-              animate={{ y: [0, -16, 0] }}
-              transition={{
-                duration: 6,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}
-              className="relative w-full max-w-[500px] mx-auto"
-            >
-              <picture>
-                {/*
-                  AVIF first — best compression (~20 % lighter than PNG here).
-                  Supported by Chrome 85+, Firefox 93+, Safari 16+.
-                */}
-                <source
-                  srcSet="/assets/Illustrate africa.avif"
-                  type="image/avif"
-                />
-                {/* PNG fallback for older browsers */}
-                <img
-                  src="/assets/Illustrate africa.png"
-                  alt="Africa rising from an open book — education igniting transformation across the continent"
-                  className="w-full object-contain mix-blend-screen dark:mix-blend-normal select-none"
-                  width={888}
-                  height={941}
-                  loading="eager"      /* LCP candidate — never lazy-load */
-                  decoding="async"     /* off-main-thread decode */
-                  fetchPriority="high" /* browser hint to preload early */
-                  draggable={false}
-                />
-              </picture>
-              <div
-                aria-hidden="true"
-                className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-3/5 h-8
-                           bg-aeem-gold/20 blur-2xl rounded-full pointer-events-none
-                           dark:bg-aeem-gold/10"
-              />
-            </motion.div>
-        }
-      >
-        <GlobalReach />
-      </WebGLGuard>
 
       {/* ── Get Involved CTA ───────────────────────────────────────────── */}
       <section className="py-16 bg-aeem-gold/10">
