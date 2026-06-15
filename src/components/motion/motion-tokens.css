@@ -1,0 +1,44 @@
+@layer utilities {
+  .motion-surface {
+    transition: transform 200ms ease-out, box-shadow 200ms ease-out, border-color 200ms ease-out;
+  }
+
+  .motion-card-hover {
+    will-change: transform, box-shadow;
+    transform: translateY(0);
+  }
+
+  .motion-card-hover:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 22px 40px rgba(0, 0, 0, 0.12);
+  }
+
+  .motion-ambient-glow {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .motion-ambient-glow::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(212, 175, 55, 0.2), transparent 55%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 200ms ease-out;
+  }
+
+  .motion-ambient-glow:hover::after {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-card-hover,
+  .motion-card-hover:hover,
+  .motion-ambient-glow::after {
+    transition: none !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}

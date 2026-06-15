@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
 import ThemeToggle from '../theme/ThemeToggle'
+import { Magnetic } from '../motion/Magnetic'
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -45,21 +46,28 @@ export default function Navbar() {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              to={link.path}
-              className={`text-sm font-semibold transition-colors hover:text-aeem-gold ${
-                location.pathname === link.path ? 'text-aeem-gold' : 'text-aeem-charcoal dark:text-white'
-              }`}
-            >
-              {link.name}
-            </Link>
-          ))}
+          {navLinks.map((link) => {
+            const active = location.pathname === link.path
+            return (
+              <motion.div key={link.name} whileHover={{ y: -2, scale: 1.01 }} transition={{ type: 'spring', stiffness: 220, damping: 20 }}>
+                <Link
+                  to={link.path}
+                  className={`relative text-sm font-semibold transition-colors hover:text-aeem-gold ${
+                    active ? 'text-aeem-gold' : 'text-aeem-charcoal dark:text-white'
+                  }`}
+                >
+                  {link.name}
+                  {active ? <span className="absolute -bottom-2 left-0 h-0.5 w-full rounded-full bg-aeem-gold" /> : null}
+                </Link>
+              </motion.div>
+            )
+          })}
           <ThemeToggle />
-          <Link to="/get-involved" className="bg-aeem-charcoal dark:bg-aeem-gold text-white dark:text-black px-8 py-3 rounded-full text-sm font-bold hover:bg-aeem-gold dark:hover:bg-aeem-white dark:hover:text-aeem-charcoal transition-all hover:scale-105 active:scale-95 shadow-xl">
-            Get Involved
-          </Link>
+          <Magnetic className="inline-flex">
+            <Link to="/get-involved" className="bg-aeem-charcoal dark:bg-aeem-gold text-white dark:text-black px-8 py-3 rounded-full text-sm font-bold hover:bg-aeem-gold dark:hover:bg-aeem-white dark:hover:text-aeem-charcoal transition-all hover:scale-105 active:scale-95 shadow-xl">
+              Get Involved
+            </Link>
+          </Magnetic>
         </div>
 
         {/* Mobile Menu Button */}
@@ -107,9 +115,11 @@ export default function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: navLinks.length * 0.1 }}
             >
-              <Link to="/get-involved" className="bg-aeem-charcoal dark:bg-aeem-gold text-white px-8 py-5 rounded-2xl text-center font-black text-lg shadow-xl block">
-                Get Involved
-              </Link>
+              <Magnetic className="inline-flex w-full">
+                <Link to="/get-involved" className="w-full bg-aeem-charcoal dark:bg-aeem-gold text-white px-8 py-5 rounded-2xl text-center font-black text-lg shadow-xl block">
+                  Get Involved
+                </Link>
+              </Magnetic>
             </motion.div>
           </motion.div>
         )}

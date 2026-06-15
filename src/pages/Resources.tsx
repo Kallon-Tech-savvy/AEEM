@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { motion } from 'framer-motion';
 import { Search, BookOpen, Newspaper, FileText, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../services/supabase';
+import { SpotlightCard } from '../components/motion/SpotlightCard';
 
 interface Resource {
   id: string;
@@ -100,9 +102,23 @@ const Resources: React.FC = () => {
       <Helmet>
         <title>Resources & Blog | AEEM</title>
       </Helmet>
+<section className="pt-40 pb-24 bg-gradient-to-b from-[#afb] dark:from-[#111] to-aeem-bg dark:to-aeem-charcoal text-white overflow-hidden relative">
+         <div className="absolute top-0 right-0 w-full md:w-[60%] h-full pointer-events-none opacity-[0.5] dark:opacity-[0.1] mix-blend-screen z-0">
+          <img 
+            src="/assets/Illustrate Africa 2.png" 
+            alt="" 
+            className="w-full h-full object-fill md:object-contain object-right-top drop-shadow-2xl"
+          />
+        </div>
+        <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-aeem-gold/10 rounded-full blur-[120px] pointer-events-none -translate-y-1/2" />
 
-      <section className="pt-40 pb-24 bg-aeem-focus/10">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="max-w-3xl"
+          >
+            <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
             <div className="max-w-2xl">
               <span className="text-aeem-gold font-bold uppercase tracking-[0.3em] text-xs mb-4 block">Knowledge Hub</span>
@@ -132,6 +148,8 @@ const Resources: React.FC = () => {
              ))}
           </div>
         </div>
+          </motion.div>
+        </div>
       </section>
 
       <section className="py-24 bg-aeem">
@@ -145,11 +163,11 @@ const Resources: React.FC = () => {
               {filteredResources.map((item) => {
                 const Icon = getIcon(item.type, item.category);
                 return (
-                  <Link
-                    to={`/resources/${item.slug}`}
-                    key={item.slug}
-                    className="group p-8 rounded-3xl border border-gray-100 bg-aeem-focus/20 hover:border-aeem-gold hover:shadow-2xl transition-all flex flex-col h-full"
-                  >
+                  <SpotlightCard key={item.slug} className="group p-8 rounded-3xl border border-gray-100 bg-aeem-focus/20 hover:border-aeem-gold hover:shadow-2xl transition-all flex flex-col h-full">
+                    <Link
+                      to={`/resources/${item.slug}`}
+                      className="flex flex-col h-full"
+                    >
                     <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center text-aeem-gold mb-8 group-hover:bg-aeem-gold group-hover:text-white transition-all">
                       <Icon size={28} />
                     </div>
@@ -160,7 +178,8 @@ const Resources: React.FC = () => {
                        {item.type === 'download' ? 'Download PDF' : 'Read Article'}
                        <div className="w-6 h-[2px] bg-aeem-gold group-hover:w-10 transition-all" />
                     </div>
-                  </Link>
+                    </Link>
+                  </SpotlightCard>
                 );
               })}
             </div>

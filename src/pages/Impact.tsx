@@ -6,6 +6,7 @@ import { ArrowRight, MapPin, Loader2 } from 'lucide-react';
 import MasonryGallery from '../components/sections/MasonryGallery';
 import { supabase } from '../services/supabase';
 import { AwardSlider } from '../components/sections/AwardSlider';
+import { SpotlightCard } from '../components/motion/SpotlightCard';
 
 interface ImpactStory {
   id: string;
@@ -67,10 +68,18 @@ const Impact: React.FC = () => {
         <title>Impact & Stories | AEEM</title>
         <meta name="description" content="Discover the real-world impact of AEEM's initiatives across Africa through case studies and participant stories." />
       </Helmet>
+<section className="pt-40 pb-24 bg-gradient-to-b from-[#afb] dark:from-[#111] to-aeem-bg dark:to-aeem-charcoal text-white overflow-hidden relative">
+         <div className="absolute top-0 right-0 w-full md:w-[60%] h-full pointer-events-none opacity-[0.5] dark:opacity-[0.1] mix-blend-screen z-0">
+          <img 
+            src="/assets/Illustrate Africa 2.png" 
+            alt="" 
+            className="w-full h-full object-fill md:object-contain object-right-top drop-shadow-2xl"
+          />
+        </div>
+        <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-aeem-gold/10 rounded-full blur-[120px] pointer-events-none -translate-y-1/2" />
 
-      <section className="pt-40 pb-16 bg-aeem">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="max-w-3xl"
@@ -85,7 +94,7 @@ const Impact: React.FC = () => {
           </motion.div>
         </div>
       </section>
-      
+  
       <section className="py-16 bg-aeem-focus/5">
         <div className="max-w-7xl mx-auto px-6">
           {loading ? (
@@ -103,6 +112,7 @@ const Impact: React.FC = () => {
                   transition={{ delay: i * 0.1 }}
                   className="group flex flex-col h-full bg-aeem rounded-[2.5rem] overflow-hidden border border-aeem-border shadow-sm hover:shadow-2xl transition-all"
                 >
+                  <SpotlightCard className="h-full">
                   <div className="aspect-[16/9] overflow-hidden">
                     <img
                       src={story.cover_image_url}
@@ -132,6 +142,7 @@ const Impact: React.FC = () => {
                       Read Case Study <ArrowRight size={20} className="group-hover/btn:translate-x-2 transition-transform text-aeem-gold" />
                     </Link>
                   </div>
+                  </SpotlightCard>
                 </motion.div>
               ))}
             </div>

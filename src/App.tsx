@@ -35,7 +35,6 @@ const GetInvolved   = lazy(() => import('./pages/GetInvolved'))
 const Resources     = lazy(() => import('./pages/Resources'))
 const ResourceDetail= lazy(() => import('./pages/ResourceDetail'))
 const PressKit      = lazy(() => import('./pages/PressKit'))
-const Awards        = lazy(() => import('./pages/Awards'))
 const Contact       = lazy(() => import('./pages/Contact'))
 const NotFound      = lazy(() => import('./pages/NotFound'))
 
@@ -70,7 +69,6 @@ function AnimatedRoutes() {
           <Route path="/resources"          element={<Resources />} />
           <Route path="/resources/:slug"    element={<ResourceDetail />} />
           <Route path="/press-kit"          element={<PressKit />} />
-          <Route path="/recognition-awards" element={<Awards />} />
           <Route path="/contact"            element={<Contact />} />
           <Route path="*"                   element={<NotFound />} />
         </Routes>

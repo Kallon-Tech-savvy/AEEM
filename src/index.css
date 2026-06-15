@@ -1,3 +1,5 @@
+@import './components/motion/motion-tokens.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

@@ -106,9 +106,6 @@ const PressKit: React.FC = () => {
             <p className="max-w-2xl mx-auto mb-8 text-aeem">
               For interviews, press access, or official statements, please reach out to our communications team.
             </p>
-            <a href="mailto:press@aeem.org" className="text-2xl text-white font-black border-b-2 border-aeem-focus hover:text-aeem-charcoal hover:border-aeem-charcoal transition-colors pb-2">
-              press@aeem.org
-            </a>
           </div>
         </div>
       </section>

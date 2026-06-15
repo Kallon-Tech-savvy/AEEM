@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Calendar, MapPin, ArrowRight, Clock, Loader2 } from 'lucide-react';
 import { supabase } from '../services/supabase';
+import { SpotlightCard } from '../components/motion/SpotlightCard';
 
 interface Event {
   id: string;
@@ -82,18 +83,30 @@ const Events: React.FC = () => {
       <Helmet>
         <title>Events | AEEM</title>
       </Helmet>
-
-      <section className="pt-40 pb-16 bg-aeem-focus/15 text-aeem-charcoal dark:text-white overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+      <section className="pt-40 pb-24 bg-gradient-to-b from-[#afb] dark:from-[#111] to-aeem-bg dark:to-aeem-charcoal text-white overflow-hidden relative">
+               <div className="absolute top-0 right-0 w-full md:w-[60%] h-full pointer-events-none opacity-[0.5] dark:opacity-[0.1] mix-blend-screen z-0">
+                <img 
+                  src="/assets/Illustrate Africa 2.png" 
+                  alt="" 
+                  className="w-full h-full object-fill md:object-contain object-right-top drop-shadow-2xl"
+                />
+              </div>
+              <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-aeem-gold/10 rounded-full blur-[120px] pointer-events-none -translate-y-1/2" />
+      
+              <div className="max-w-7xl mx-auto px-6 relative z-10">
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="max-w-3xl"
+                >
             <span className="text-aeem-gold font-bold uppercase tracking-[0.3em] text-xs mb-4 block">Participate</span>
             <h1 className="text-5xl md:text-7xl font-black mb-8 leading-tight">Events</h1>
             <p className="text-xl text-aeem-charcoal dark:text-white max-w-2xl">
               Join our workshops, summits, and community gatherings to be part of the change.
             </p>
-          </motion.div>
-        </div>
-      </section>
+                </motion.div>
+              </div>
+            </section>
 
       <section className="py-16 bg-aeem">
         <div className="max-w-7xl mx-auto px-6">
@@ -106,7 +119,7 @@ const Events: React.FC = () => {
               <h2 className="text-3xl font-black mb-12">Upcoming Events</h2>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-24">
                 {events.filter(e => e.status === 'upcoming').map((event) => (
-                  <div key={event.slug} className="group flex flex-col md:flex-row bg-aeem-focus/25 rounded-3xl overflow-hidden border border-aeem-border shadow-sm hover:shadow-xl transition-all">
+                  <SpotlightCard key={event.slug} className="group relative flex flex-col md:flex-row bg-aeem-focus/25 rounded-3xl overflow-hidden border border-aeem-border shadow-sm hover:shadow-xl transition-all">
                     <div className="w-full md:w-2/5 aspect-square md:aspect-auto overflow-hidden">
                        <img src={event.cover_image_url} alt={event.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                     </div>
@@ -126,20 +139,20 @@ const Events: React.FC = () => {
                           </Link>
                        </div>
                     </div>
-                  </div>
+                  </SpotlightCard>
                 ))}
               </div>
 
               <h2 className="text-3xl font-black mb-12">Past Highlights</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {events.filter(e => e.status === 'completed').map((event) => (
-                  <div key={event.slug} className="group transition-all">
+                  <SpotlightCard key={event.slug} className="group transition-all">
                      <div className="aspect-[4/3] rounded-2xl overflow-hidden mb-6">
                         <img src={event.cover_image_url} alt={event.title} className="w-full h-full object-cover" />
                      </div>
                      <h3 className="font-bold text-lg mb-2">{event.title}</h3>
                      <p className="text-sm text-aeem-charcoal dark:text-white">{formatDate(event.event_date)} • {event.location}</p>
-                  </div>
+                  </SpotlightCard>
                 ))}
               </div>
             </>
