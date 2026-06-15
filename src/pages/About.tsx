@@ -10,26 +10,22 @@ const About: React.FC = () => {
     {
       name: "Patrick P Williams",
       title: "Chief Executive Officer",
-      bio: "",
       image: "/assets/gallery/CEO.jpg"
     },
     {
       name: "Ann Ambrose",
       title: "Executive Director",
-      bio: "",
       image: "/assets/gallery/ED.jpg"
     },
     {
       name: "Alhaji C. M. Kallon",
       title: "Chief Operating Officer",
-      bio: "",
       image: "/assets/gallery/kallon1.png"
     },
     {
       name: "Chrispin Vandi",
       title: "Secretary General",
-      bio: "",
-      image: "/assets/gallery/"
+      image: "/assets/gallery/SG.jpg"
     },
   ];
 
@@ -109,6 +105,9 @@ const About: React.FC = () => {
                    <img
                      src={member.image}
                      alt={member.name}
+                     width={360}
+                     height={450}
+                     loading="lazy"
                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                    />
                 </div>
@@ -148,7 +147,15 @@ const About: React.FC = () => {
                   key={i} 
                   className="p-6 bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl hover:border-aeem-gold/50 hover:bg-gray-50 dark:hover:bg-white/10 hover:shadow-[0_8px_30px_rgba(212,175,55,0.15)] transition-all group flex flex-col items-center justify-center min-h-[120px]"
                 >
-                  <img className='h-20 object-contain mix-blend-multiply dark:mix-blend-normal opacity-80 group-hover:opacity-100 transition-opacity' src={p.url} alt={`${p.name} Logo`} />
+                  <img
+                    src={p.url}
+                    alt={`${p.name} Logo`}
+                    width={160}
+                    height={80}
+                    loading="lazy"
+                    decoding="async"
+                    className='h-20 object-contain mix-blend-multiply dark:mix-blend-normal opacity-80 group-hover:opacity-100 transition-opacity'
+                  />
                   <span className="font-extrabold text-sm text-gray-500 dark:text-gray-400 tracking-widest group-hover:text-aeem-gold transition-colors mt-3">{p.name}</span>
                   <span className="text-[9px] font-black uppercase tracking-wider text-gray-400 dark:text-gray-600 mt-1 text-center">{p.sub}</span>
                 </div>

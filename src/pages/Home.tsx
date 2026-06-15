@@ -1,12 +1,37 @@
+import { lazy, Suspense, useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowRight, Shield, Users, Lightbulb, TrendingUp } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
-import ImpactStats from '../components/sections/ImpactStats'
-import Pillars from '../components/sections/Pillars'
-import { AwardSlider } from '../components/sections/AwardSlider'
-import { PartnerTicker } from '../components/sections/PartnerSlide'
 import { Magnetic } from '../components/motion/Magnetic'
+
+// --- Lazy-loaded Components ---
+const ImpactStats = lazy(() => import('../components/sections/ImpactStats'))
+const Pillars = lazy(() => import('../components/sections/Pillars'))
+
+// Resolving named exports
+const AwardSlider = lazy(() => 
+  import('../components/sections/AwardSlider').then(m => ({ default: m.AwardSlider }))
+)
+const PartnerTicker = lazy(() => 
+  import('../components/sections/PartnerTicker').then(m => ({ default: m.PartnerTicker }))
+)
+
+// --- Mobile optimization hook ---
+function useIsDesktop() {
+  const [isDesktop, setIsDesktop] = useState(
+    typeof window !== 'undefined' ? window.innerWidth >= 1024 : true
+  )
+
+  useEffect(() => {
+    const mql = window.matchMedia('(min-width: 1024px)')
+    const onChange = (e: MediaQueryListEvent) => setIsDesktop(e.matches)
+    mql.addEventListener('change', onChange)
+    return () => mql.removeEventListener('change', onChange)
+  }, [])
+
+  return isDesktop
+}
 
 const MINI_STATS = [
   { val: '8',    label: 'Countries' },
@@ -15,6 +40,8 @@ const MINI_STATS = [
 ]
 
 export default function Home() {
+  const isDesktop = useIsDesktop()
+
   return (
     <>
       <Helmet>
@@ -30,8 +57,8 @@ export default function Home() {
         id="home"
         className="bg-gradient-to-b from-gray-50 to-gray-200 dark:from-[#111] dark:to-aeem-charcoal relative min-h-screen flex items-center pt-20 overflow-hidden"
       >
-        {/* Deep ambient glow behind content */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-aeem-gold/15 dark:bg-aeem-gold/10 rounded-full blur-[150px] pointer-events-none mix-blend-screen" />
+        {/* Deep ambient glow behind content (Converted from blur to radial gradient) */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-aeem-gold/15 dark:from-aeem-gold/10 to-transparent rounded-full pointer-events-none mix-blend-screen" />
 
         {/* Dot-grid texture */}
         <div
@@ -104,43 +131,46 @@ export default function Home() {
             </div>
           </motion.div>
 
-          {/* Image column */}
-          <motion.div
-            className="relative hidden lg:flex items-center justify-center perspective-[1000px]"
-            initial={{ opacity: 0, scale: 0.90, rotateY: 10 }}
-            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-            transition={{ duration: 1.4, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
-          >
-            {/* Deep back glow */}
-            <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
-              <div className="absolute top-[20%] left-[20%] w-64 h-64 bg-aeem-gold/20 rounded-full blur-[100px]" />
-              <div className="absolute bottom-[20%] right-[20%] w-48 h-48 bg-blue-500/10 rounded-full blur-[80px]" />
-            </div>
-
+          {/* Image column - Conditionally rendered via useIsDesktop */}
+          {isDesktop && (
             <motion.div
-              animate={{ y: [0, -20, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-              className="relative w-full max-w-[650px] mx-auto z-10"
+              className="relative flex items-center justify-center perspective-[1000px]"
+              initial={{ opacity: 0, scale: 0.90, rotateY: 10 }}
+              animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+              transition={{ duration: 1.4, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
             >
-              <picture>
-                <source srcSet="/assets/Illustrate africa.avif" type="image/avif" />
-                <img
-                  src="/assets/Illustrate africa.png"
-                  alt="Africa rising from an open book — education igniting transformation across the continent"
-                  className="w-full object-contain drop-shadow-[0_30px_50px_rgba(0,0,0,0.3)] select-none"
-                  width={888}
-                  height={941}
-                  loading="eager"
-                  decoding="async"
-                  fetchPriority="high"
-                  draggable={false}
-                />
-              </picture>
+              {/* Deep back glow (Converted to radial gradients) */}
+              <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
+                <div className="absolute top-[20%] left-[20%] w-64 h-64 bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-aeem-gold/20 to-transparent rounded-full" />
+                <div className="absolute bottom-[20%] right-[20%] w-48 h-48 bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-blue-500/10 to-transparent rounded-full" />
+              </div>
 
-              {/* Shadow reflection */}
-              <div aria-hidden="true" className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-[70%] h-12 bg-black/10 dark:bg-aeem-gold/5 blur-2xl rounded-[100%] pointer-events-none" />
+              {/* Added will-change-transform for hardware acceleration */}
+              <motion.div
+                animate={{ y: [0, -20, 0] }}
+                transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+                className="relative w-full max-w-[650px] mx-auto z-10 will-change-transform"
+              >
+                <picture>
+                  <source srcSet="/assets/Illustrate africa.avif" type="image/avif" />
+                  <img
+                    src="/assets/Illustrate africa.png"
+                    alt="Africa rising from an open book — education igniting transformation across the continent"
+                    className="w-full object-contain drop-shadow-[0_30px_50px_rgba(0,0,0,0.3)] select-none"
+                    width={888}
+                    height={941}
+                    loading="eager"
+                    decoding="async"
+                    fetchPriority="high"
+                    draggable={false}
+                  />
+                </picture>
+
+                {/* Shadow reflection (Converted to radial gradient) */}
+                <div aria-hidden="true" className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-[70%] h-12 bg-[radial-gradient(ellipse_at_center,var(--tw-gradient-stops))] from-black/10 dark:from-aeem-gold/5 to-transparent rounded-[100%] pointer-events-none" />
+              </motion.div>
             </motion.div>
-          </motion.div>
+          )}
         </div>
       </section>
 
@@ -200,6 +230,8 @@ export default function Home() {
               <img
                 src="/assets/gallery/Image.jpg"
                 alt="Students in a classroom"
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover rounded-[3rem] shadow-[0_30px_60px_rgba(0,0,0,0.15)] relative z-10"
               />
             </div>
@@ -207,7 +239,9 @@ export default function Home() {
         </div>
       </section>
 
-      <ImpactStats />
+      <Suspense fallback={<div className="h-[200px] w-full animate-pulse bg-gray-50 dark:bg-[#0f1115]" />}>
+        <ImpactStats />
+      </Suspense>
 
       {/* What AEEM Does (3D Cards) */}
       <section className="py-24 bg-white dark:bg-[#15181e] relative">
@@ -242,7 +276,8 @@ export default function Home() {
                 whileHover={{ y: -10, scale: 1.02 }}
                 className="bg-white dark:bg-[#1a1d24] p-10 rounded-[2.5rem] shadow-[0_10px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_20px_40px_rgba(0,0,0,0.4)] border border-gray-100 dark:border-white/5 hover:border-aeem-gold/30 transition-all group relative overflow-hidden"
               >
-                <div className="absolute top-0 right-0 w-32 h-32 bg-aeem-gold/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
+                {/* Converted to radial gradient */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-aeem-gold/5 to-transparent rounded-full -translate-y-1/2 translate-x-1/2" />
                 <div className="w-16 h-16 bg-gray-50 dark:bg-black/50 border border-gray-200 dark:border-white/10 rounded-2xl flex items-center justify-center text-aeem-gold mb-8 shadow-inner group-hover:bg-aeem-gold group-hover:text-white transition-colors duration-500">
                   <item.icon size={28} />
                 </div>
@@ -258,8 +293,8 @@ export default function Home() {
       <section className="py-24 bg-gray-50 dark:bg-[#0f1115]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="bg-gradient-to-br from-[#1a1d24] to-black rounded-[3rem] overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.2)] dark:shadow-[0_30px_80px_rgba(0,0,0,0.6)] relative border border-white/10">
-            {/* Ambient inner glow */}
-            <div className="absolute top-0 right-1/2 w-[600px] h-[600px] bg-aeem-gold/10 rounded-full blur-[120px] pointer-events-none" />
+            {/* Ambient inner glow (Converted to radial gradient) */}
+            <div className="absolute top-0 right-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-aeem-gold/10 to-transparent rounded-full pointer-events-none" />
             
             <div className="grid grid-cols-1 lg:grid-cols-2 relative z-10">
               <div className="p-12 md:p-20 flex flex-col justify-center">
@@ -301,6 +336,8 @@ export default function Home() {
                 <img
                   src="/assets/gallery/Participant_Group_Picture.jpg"
                   alt="Youth empowerment workshop"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -309,13 +346,17 @@ export default function Home() {
         </div>
       </section>
 
-      <AwardSlider />
-      <PartnerTicker />
-      <Pillars />
+      {/* Grouped Suspense blocks to avoid sequential flashes */}
+      <Suspense fallback={<div className="min-h-[400px] w-full animate-pulse bg-gray-50/50 dark:bg-[#0f1115]/50" />}>
+        <AwardSlider />
+        <PartnerTicker />
+        <Pillars />
+      </Suspense>
 
       {/* Global CTA */}
       <section className="py-32 bg-gradient-to-b from-white to-gray-50 dark:from-[#0f1115] dark:to-[#1a1d24] relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-aeem-gold/10 rounded-full blur-[150px] pointer-events-none" />
+        {/* Converted to radial gradient */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-aeem-gold/10 to-transparent rounded-full pointer-events-none" />
         <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
           <h2 className="text-5xl md:text-7xl font-black text-aeem-charcoal dark:text-white mb-10 drop-shadow-sm">
             Ready to make a <span className="text-transparent bg-clip-text bg-gradient-to-r from-aeem-gold to-yellow-500">difference?</span>

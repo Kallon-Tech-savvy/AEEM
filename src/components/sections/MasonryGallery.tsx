@@ -132,6 +132,8 @@ const GalleryItem = memo(({ photo, index, onClick }: GalleryItemProps) => {
       <img
         src={photo.src}
         alt={photo.alt}
+        width={photo.width}
+        height={photo.height}
         loading="lazy"
         decoding="async"
         className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"

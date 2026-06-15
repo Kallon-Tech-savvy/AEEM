@@ -41,7 +41,7 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
         <Link to="/" className="dark:bg-white/95">
-          <img src="/assets/AEEM_logo.png" alt="AEEM Logo" className="w-36 h-14 object-fill rounded-lg shadow-md" />
+          <img src="/assets/AEEM_logo.png" alt="AEEM Logo" width={144} height={56} className="w-36 h-14 object-fill rounded-lg shadow-md" />
         </Link>
 
         {/* Desktop Navigation */}

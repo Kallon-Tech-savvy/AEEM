@@ -98,6 +98,9 @@ export default function ImpactStats() {
         <img 
           src="/assets/Illustrate africa.png" 
           alt="" 
+          width={1600}
+          height={900}
+          loading="lazy"
           className="w-full h-full center object-contain object-left-bottom"
         />
       </div>

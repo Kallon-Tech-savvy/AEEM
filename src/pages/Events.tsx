@@ -121,7 +121,7 @@ const Events: React.FC = () => {
                 {events.filter(e => e.status === 'upcoming').map((event) => (
                   <SpotlightCard key={event.slug} className="group relative flex flex-col md:flex-row bg-aeem-focus/25 rounded-3xl overflow-hidden border border-aeem-border shadow-sm hover:shadow-xl transition-all">
                     <div className="w-full md:w-2/5 aspect-square md:aspect-auto overflow-hidden">
-                       <img src={event.cover_image_url} alt={event.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                       <img src={event.cover_image_url} alt={event.title} width={720} height={720} loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                     </div>
                     <div className="p-8 md:w-3/5 flex flex-col">
                        <div className="flex flex-wrap gap-4 text-[10px] font-black uppercase tracking-widest text-aeem-gold mb-4">
@@ -148,7 +148,7 @@ const Events: React.FC = () => {
                 {events.filter(e => e.status === 'completed').map((event) => (
                   <SpotlightCard key={event.slug} className="group transition-all">
                      <div className="aspect-[4/3] rounded-2xl overflow-hidden mb-6">
-                        <img src={event.cover_image_url} alt={event.title} className="w-full h-full object-cover" />
+                        <img src={event.cover_image_url} alt={event.title} width={640} height={480} loading="lazy" className="w-full h-full object-cover" />
                      </div>
                      <h3 className="font-bold text-lg mb-2">{event.title}</h3>
                      <p className="text-sm text-aeem-charcoal dark:text-white">{formatDate(event.event_date)} • {event.location}</p>

@@ -41,6 +41,9 @@ export function PartnerTicker() {
                 <img 
                   src={partner.url} 
                   alt={partner.name || "Partner Logo"} 
+                  width={120}
+                  height={48}
+                  loading="lazy"
                   className="h-9 w-auto object-contain pointer-events-none select-none"
                   onError={(e) => {
                     // Fallback to text string name if image source fails to resolve
