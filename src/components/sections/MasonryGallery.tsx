@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useCallback, memo } from 'react';
-import Lightbox from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
 import { motion } from 'framer-motion';
 import { supabase } from '../../services/supabase';
+
+const Lightbox = React.lazy(() => import('yet-another-react-lightbox'));
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -243,12 +244,16 @@ const MosaicGallery: React.FC<MosaicGalleryProps> = ({ category, limit }) => {
         ))}
       </div>
 
-      <Lightbox
-        index={lightboxIndex}
-        slides={photos}
-        open={lightboxIndex >= 0}
-        close={handleClose}
-      />
+      {lightboxIndex >= 0 && (
+        <React.Suspense fallback={null}>
+          <Lightbox
+            index={lightboxIndex}
+            slides={photos}
+            open
+            close={handleClose}
+          />
+        </React.Suspense>
+      )}
     </motion.div>
   );
 };

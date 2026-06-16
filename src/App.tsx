@@ -1,25 +1,12 @@
 import { lazy, Suspense } from 'react'
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { AnimatePresence } from 'framer-motion'
 
 import Layout from './components/layout/Layout'
 import ScrollToTopButton from './components/layout/ScrollToTopButton'
 import ScrollToTop from './components/layout/ScrollToTop'
 
 // ─── Query client ─────────────────────────────────────────────────────────────
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 1000 * 60 * 5,   // 5 min
-      gcTime:    1000 * 60 * 30,  // 30 min
-      retry: 1,
-      refetchOnWindowFocus: false,
-    },
-  },
-})
 
 // ─── Lazy pages ───────────────────────────────────────────────────────────────
 // Each page is its own JS chunk. Vite only loads the chunk for the
@@ -53,27 +40,23 @@ const PageLoader = () => (
 // disrupting AnimatePresence's exit animation tracking.
 
 function AnimatedRoutes() {
-  const location = useLocation()
-
   return (
-    <AnimatePresence mode="wait">
-      <Suspense fallback={<PageLoader />}>
-        <Routes location={location} key={location.pathname}>
-          <Route path="/"                   element={<Home />} />
-          <Route path="/about"              element={<About />} />
-          <Route path="/impact"             element={<Impact />} />
-          <Route path="/impact/:slug"       element={<StoryDetail />} />
-          <Route path="/events"             element={<Events />} />
-          <Route path="/events/:slug"       element={<EventDetail />} />
-          <Route path="/get-involved"       element={<GetInvolved />} />
-          <Route path="/resources"          element={<Resources />} />
-          <Route path="/resources/:slug"    element={<ResourceDetail />} />
-          <Route path="/press-kit"          element={<PressKit />} />
-          <Route path="/contact"            element={<Contact />} />
-          <Route path="*"                   element={<NotFound />} />
-        </Routes>
-      </Suspense>
-    </AnimatePresence>
+    <Suspense fallback={<PageLoader />}>
+      <Routes>
+        <Route path="/"                   element={<Home />} />
+        <Route path="/about"              element={<About />} />
+        <Route path="/impact"             element={<Impact />} />
+        <Route path="/impact/:slug"       element={<StoryDetail />} />
+        <Route path="/events"             element={<Events />} />
+        <Route path="/events/:slug"       element={<EventDetail />} />
+        <Route path="/get-involved"       element={<GetInvolved />} />
+        <Route path="/resources"          element={<Resources />} />
+        <Route path="/resources/:slug"    element={<ResourceDetail />} />
+        <Route path="/press-kit"          element={<PressKit />} />
+        <Route path="/contact"            element={<Contact />} />
+        <Route path="*"                   element={<NotFound />} />
+      </Routes>
+    </Suspense>
   )
 }
 
@@ -81,8 +64,7 @@ function AnimatedRoutes() {
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <HelmetProvider>
+    <HelmetProvider>
         <Router>
           {/*
             ScrollToTop: fires window.scrollTo on every pathname change.
@@ -99,7 +81,6 @@ function App() {
           </Layout>
         </Router>
       </HelmetProvider>
-    </QueryClientProvider>
   )
 }
 

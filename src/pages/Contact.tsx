@@ -54,7 +54,7 @@ const Contact: React.FC = () => {
       <section className="pt-40 pb-24 bg-gradient-to-b from-[#afb] dark:from-[#111] to-aeem-bg dark:to-aeem-charcoal text-white overflow-hidden relative">
          <div className="absolute top-0 right-0 w-full md:w-[60%] h-full pointer-events-none opacity-[0.5] dark:opacity-[0.1] mix-blend-screen z-0">
           <img 
-            src="/assets/Illustrate Africa 2.png" 
+            src="/assets/Illustrate Africa 2_converted.avif" 
             alt="" 
             className="w-full h-full object-fill md:object-contain object-right-top drop-shadow-2xl"
           />

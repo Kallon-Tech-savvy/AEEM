@@ -96,7 +96,7 @@ export default function ImpactStats() {
     <section id="impact" className="py-4 lg:py-16 bg-aeem relative overflow-hidden">
       <div className="absolute bottom-[1%] w-full h-full opacity-[0.1] dark:opacity-[0.08] pointer-events-none z-10 mix-blend-luminosity select-none transition-opacity duration-300">
         <img 
-          src="/assets/Illustrate africa.png" 
+          src="/assets/Illustrate africa.avif" 
           alt="" 
           width={1600}
           height={900}

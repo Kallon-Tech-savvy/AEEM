@@ -94,7 +94,7 @@ export default function Footer() {
         <picture>
           <source srcSet="/assets/Illustrate africa.avif" type="image/avif" />
           <img
-            src="/assets/Illustrate africa.png"
+            src="/assets/Illustrate africa.avif"
             alt=""
             className="w-full h-full object-contain object-left-bottom drop-shadow-2xl"
             loading="lazy"

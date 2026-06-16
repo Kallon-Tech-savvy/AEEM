@@ -154,7 +154,7 @@ export default function Home() {
                 <picture>
                   <source srcSet="/assets/Illustrate africa.avif" type="image/avif" />
                   <img
-                    src="/assets/Illustrate africa.png"
+                    src="/assets/Illustrate africa.avif"
                     alt="Africa rising from an open book — education igniting transformation across the continent"
                     className="w-full object-contain drop-shadow-[0_30px_50px_rgba(0,0,0,0.3)] select-none"
                     width={888}

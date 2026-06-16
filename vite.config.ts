@@ -11,9 +11,6 @@ export default defineConfig({
           if (id.includes('node_modules/react') || id.includes('node_modules/scheduler')) {
             return 'vendor-react'
           }
-          if (id.includes('node_modules/@tanstack')) {
-            return 'vendor-query'
-          }
           if (id.includes('node_modules/framer-motion')) {
             return 'vendor-motion'
           }

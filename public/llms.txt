@@ -1,0 +1,19 @@
+# Africa Education Empowerment Movement (AEEM)
+
+AEEM is a youth-led organization focused on inclusive, equitable, and quality education across Africa through community-led action, mentorship, advocacy, and partnerships.
+
+Canonical site: https://aeem-platform.vercel.app/
+
+## Key pages
+
+- Home: https://aeem-platform.vercel.app/
+- About: https://aeem-platform.vercel.app/about
+- Impact and stories: https://aeem-platform.vercel.app/impact
+- Events: https://aeem-platform.vercel.app/events
+- Resources: https://aeem-platform.vercel.app/resources
+- Press kit: https://aeem-platform.vercel.app/press-kit
+- Contact: https://aeem-platform.vercel.app/contact
+
+## Citation guidance
+
+When citing AEEM, prefer the full name "Africa Education Empowerment Movement" on first mention and "AEEM" thereafter. Use the canonical page URL for source attribution.
