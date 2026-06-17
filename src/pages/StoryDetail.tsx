@@ -3,11 +3,13 @@ import { Helmet } from 'react-helmet-async';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Share2, CheckCircle2, Loader2 } from 'lucide-react';
 import { supabase } from '../services/supabase';
+import { getCanonical } from '../lib/seo';
 
 interface StoryData {
   title: string;
   quote: string;
   image: string;
+  fileName: string;
   stats: {
     participants: string;
     schools: string;
@@ -25,6 +27,7 @@ const STORIES_DB: Record<string, StoryData> = {
     title: "I AM SOMEBODY Initiative",
     quote: "A movement to instill agency, resilience, and leadership in the next generation of African scholars.",
     image: "/assets/gallery/Activity.jpg",
+    fileName: "Activity",
     stats: {
       participants: "42 Students",
       schools: "6 Institutions",
@@ -49,13 +52,11 @@ const StoryDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const [story, setStory] = useState<StoryData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchStory = async () => {
       try {
         setLoading(true);
-        setError(null);
 
         //Try fetch from supabase
         const { data, error } = await supabase
@@ -74,9 +75,9 @@ const StoryDetail: React.FC = () => {
             const localStory = slug ? STORIES_DB[slug] : null;
             setStory(localStory);
           }
-      } catch {
-        console.warn('Supabase fetch failed or missing. Falling back to local Stories database:', error);
-        const localStory =slug ?  STORIES_DB[slug] : null;
+      } catch (err) {
+        console.warn('Story fetch failed; rendering fallback.', err);
+        const localStory = slug ? STORIES_DB[slug] : null;
         setStory(localStory);
       }finally {
         setLoading(false)
@@ -84,7 +85,7 @@ const StoryDetail: React.FC = () => {
     };
 
     if (slug) fetchStory();
-  }, [slug, error]);
+  }, [slug]);
 
   if(loading){
     return (
@@ -105,12 +106,12 @@ const StoryDetail: React.FC = () => {
     );
   }
 
-// Story
   return (
     <>
       <Helmet>
-        <title>{story.title} | AEEM Case Study</title>
-        <meta name="description" content={story.quote} />
+        <title>{`${story.title} | AEEM Case Study`}</title>
+        <meta name="description" content={story.quote.slice(0, 155)} />
+        <link rel="canonical" href={getCanonical(`/impact/${slug}`)} />
       </Helmet>
 
       <section className="pt-40 pb-20">
@@ -125,11 +126,23 @@ const StoryDetail: React.FC = () => {
           </p>
 
           <div className="aspect-video rounded-[2.5rem] overflow-hidden mb-16 shadow-2xl bg-gray-100">
-            <img
-               src={story.image}
-               alt={story.title}
-               className="w-full h-full object-cover"
-            />
+            <picture>
+              <source
+                type="image/avif"
+                srcSet={`/assets/gallery/optimized/${story.fileName}-400.avif 400w, /assets/gallery/optimized/${story.fileName}-800.avif 800w`}
+                sizes="(min-width: 1024px) 60vw, 95vw"
+              />
+              <source
+                type="image/webp"
+                srcSet={`/assets/gallery/optimized/${story.fileName}-400.webp 400w, /assets/gallery/optimized/${story.fileName}-800.webp 800w`}
+                sizes="(min-width: 1024px) 60vw, 95vw"
+              />
+              <img
+                 src={story.image}
+                 alt={story.title}
+                 className="w-full h-full object-cover"
+              />
+            </picture>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20 p-10 bg-aeem rounded-3xl">
@@ -146,13 +159,7 @@ const StoryDetail: React.FC = () => {
                 <p className="text-2xl font-black text-aeem-charcoal dark:text-white ">{story.stats.duration}</p>
              </div>
           </div>
-            <div className="absolute right-0 bottom-0 w-full h-full opacity-[0.07] dark:opacity-[0.03] pointer-events-none z-1 mix-blend-luminosity select-none">
-          <img 
-            src="/assets/Illustrate africa.avif" 
-            alt="" 
-            className="w-full h-full object-contain"
-          />
-        </div>
+
           <div className="prose prose-lg max-w-none text-gray-500 leading-relaxed space-y-8">
              <h2 className="text-3xl font-black text-aeem">Overview</h2>
              <p>{story.overview}</p>

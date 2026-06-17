@@ -1,24 +1,13 @@
-import React, { useState, useEffect, useCallback, memo } from 'react';
-import 'yet-another-react-lightbox/styles.css';
+import React, { useState, useCallback, memo } from 'react';
 import { motion } from 'framer-motion';
-import { supabase } from '../../services/supabase';
 
 const Lightbox = React.lazy(() => import('yet-another-react-lightbox'));
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-interface GalleryImage {
-  id: string;
-  image_url: string;
-  title: string;
-  caption: string;
-  width: number;
-  height: number;
-  category: string;
-}
-
 interface CustomPhoto {
   src: string;
+  fileName: string;
   width: number;
   height: number;
   title: string;
@@ -33,29 +22,29 @@ interface MosaicGalleryProps {
   limit?: number;
 }
 
-// ─── Fallback data (used when Supabase is unreachable) ───────────────────────
+// ─── Local optimized asset data ───────────────────────
 
-const FALLBACK_PHOTOS: Omit<CustomPhoto, 'colSpan' | 'rowSpan'>[] = [
-  { src: '/assets/gallery/AEEMTEAM_Photo.jpg',       width: 1080, height: 720,  title: 'Team AEEM',            alt: 'The core team behind the AEEM movement.',              key: '1'  },
-  { src: '/assets/gallery/Activity.jpg',              width: 720,  height: 1080, title: 'Interactive Sessions', alt: 'Engaging activities during the workshop.',              key: '2'  },
-  { src: '/assets/gallery/Award.jpg',                 width: 1080, height: 1440, title: 'Recognizing Excellence',alt: 'Award ceremony for outstanding participants.',          key: '3'  },
-  { src: '/assets/gallery/Boys_Fram.jpg',             width: 1080, height: 1080, title: 'Youth Leaders',        alt: 'Empowered students ready to lead.',                    key: '4'  },
-  { src: '/assets/gallery/Girls_Fram.jpg',            width: 1080, height: 720,  title: 'Future Leaders',       alt: 'Supporting the next generation of female leaders.',    key: '5'  },
-  { src: '/assets/gallery/Group_Discussion.jpg',      width: 1080, height: 540,  title: 'Group Discussions',    alt: 'Collaborative learning in action.',                    key: '6'  },
-  { src: '/assets/gallery/Mage_Award.jpg',            width: 1080, height: 1440, title: 'Celebrating Success',  alt: 'Moments of achievement.',                             key: '7'  },
-  { src: '/assets/gallery/Male_Participant.jpg',      width: 720,  height: 1080, title: 'Dedicated Participants',alt: 'Focused on growth and learning.',                     key: '8'  },
-  { src: '/assets/gallery/Participant_Group_Picture.jpg', width: 1080, height: 720, title: 'The AEEM Family',   alt: 'A collective effort for educational change.',          key: '9'  },
-  { src: '/assets/gallery/Teacher_and_Student.jpg',   width: 1080, height: 1080, title: 'Mentorship Matters',   alt: 'Building bridges between teachers and students.',      key: '10' },
-  { src: '/assets/gallery/AEEM boy.jpg',              width: 1080, height: 720,  title: 'Our Brand',            alt: 'Africa Education Empowerment Movement.',               key: '11' },
-  { src: '/assets/gallery/AEEMENGAGEMENTWITHMAGE.jpg',width: 720,  height: 1080, title: 'Community Engagement', alt: 'Engagement with MAGE-SL.',                            key: '12' },
-  { src: '/assets/gallery/Health.jpg',                width: 1080, height: 720,  title: 'Health Awareness',     alt: 'Health awareness programme.',                         key: '13' },
-  { src: '/assets/gallery/Group_Discussion3.jpg',     width: 1080, height: 1080, title: 'Group Discussion',     alt: 'Group discussion session.',                           key: '14' },
-  { src: '/assets/gallery/Group_Discussion2.jpg',     width: 1080, height: 720,  title: 'Group Discussion',     alt: 'Group discussion session.',                           key: '15' },
-  { src: '/assets/gallery/AEEM volunateer.jpg',       width: 720,  height: 1080, title: 'Volunteers',           alt: 'Africa Education Empowerment Movement volunteers.',   key: '16' },
-  { src: '/assets/gallery/Foods.jpg',                 width: 1080, height: 540,  title: 'Community Lunch',      alt: 'Sharing meals together.',                             key: '17' },
-  { src: '/assets/gallery/Mentorship.jpg',            width: 540,  height: 720,  title: 'Mentorship',           alt: 'One-on-one mentorship in action.',                    key: '18' },
-  { src: '/assets/gallery/Engadgement with RCBank.jpg',width: 1080,height: 1440, title: 'RC Bank Partnership',  alt: 'Engagement with RC Bank.',                            key: '19' },
-  { src: '/assets/gallery/AEEMTEAM.jpg',              width: 720,  height: 720,  title: 'Volunteers',           alt: 'Africa Education Empowerment Movement team.',         key: '20' },
+const LOCAL_PHOTOS: Omit<CustomPhoto, 'colSpan' | 'rowSpan'>[] = [
+  { src: '/assets/gallery/AEEMTEAM_Photo.jpg',       fileName: 'AEEMTEAM_Photo',       width: 1080, height: 720,  title: 'Team AEEM',            alt: 'The core team behind the AEEM movement.',              key: '1'  },
+  { src: '/assets/gallery/Activity.jpg',              fileName: 'Activity',              width: 720,  height: 1080, title: 'Interactive Sessions', alt: 'Engaging activities during the workshop.',              key: '2'  },
+  { src: '/assets/gallery/Award.jpg',                 fileName: 'Award',                 width: 1080, height: 1440, title: 'Recognizing Excellence',alt: 'Award ceremony for outstanding participants.',          key: '3'  },
+  { src: '/assets/gallery/Boys_Fram.jpg',             fileName: 'Boys_Fram',             width: 1080, height: 1080, title: 'Youth Leaders',        alt: 'Empowered students ready to lead.',                    key: '4'  },
+  { src: '/assets/gallery/Girls_Fram.jpg',            fileName: 'Girls_Fram',            width: 1080, height: 720,  title: 'Future Leaders',       alt: 'Supporting the next generation of female leaders.',    key: '5'  },
+  { src: '/assets/gallery/Group_Discussion.jpg',      fileName: 'Group_Discussion',      width: 1080, height: 540,  title: 'Group Discussions',    alt: 'Collaborative learning in action.',                    key: '6'  },
+  { src: '/assets/gallery/Mage_Award.jpg',            fileName: 'Mage_Award',            width: 1080, height: 1440, title: 'Celebrating Success',  alt: 'Moments of achievement.',                             key: '7'  },
+  { src: '/assets/gallery/Male_Participant.jpg',      fileName: 'Male_Participant',      width: 720,  height: 1080, title: 'Dedicated Participants',alt: 'Focused on growth and learning.',                     key: '8'  },
+  { src: '/assets/gallery/Participant_Group_Picture.jpg', fileName: 'Participant_Group_Picture', width: 1080, height: 720, title: 'The AEEM Family',   alt: 'A collective effort for educational change.',          key: '9'  },
+  { src: '/assets/gallery/Teacher_and_Student.jpg',   fileName: 'Teacher_and_Student',   width: 1080, height: 1080, title: 'Mentorship Matters',   alt: 'Building bridges between teachers and students.',      key: '10' },
+  { src: '/assets/gallery/AEEM boy.jpg',              fileName: 'AEEM boy',              width: 1080, height: 720,  title: 'Our Brand',            alt: 'Africa Education Empowerment Movement.',               key: '11' },
+  { src: '/assets/gallery/AEEMENGAGEMENTWITHMAGE.jpg',fileName: 'AEEMENGAGEMENTWITHMAGE',width: 720,  height: 1080, title: 'Community Engagement', alt: 'Engagement with MAGE-SL.',                            key: '12' },
+  { src: '/assets/gallery/Health.jpg',                fileName: 'Health',                width: 1080, height: 720,  title: 'Health Awareness',     alt: 'Health awareness programme.',                         key: '13' },
+  { src: '/assets/gallery/Group_Discussion3.jpg',     fileName: 'Group_Discussion3',     width: 1080, height: 1080, title: 'Group Discussion',     alt: 'Group discussion session.',                           key: '14' },
+  { src: '/assets/gallery/Group_Discussion2.jpg',     fileName: 'Group_Discussion2',     width: 1080, height: 720,  title: 'Group Discussion',     alt: 'Group discussion session.',                           key: '15' },
+  { src: '/assets/gallery/AEEM volunateer.jpg',       fileName: 'AEEM volunateer',       width: 720,  height: 1080, title: 'Volunteers',           alt: 'Africa Education Empowerment Movement volunteers.',   key: '16' },
+  { src: '/assets/gallery/Foods.jpg',                 fileName: 'Foods',                 width: 1080, height: 540,  title: 'Community Lunch',      alt: 'Sharing meals together.',                             key: '17' },
+  { src: '/assets/gallery/Mentorship.jpg',            fileName: 'Mentorship',            width: 540,  height: 720,  title: 'Mentorship',           alt: 'One-on-one mentorship in action.',                    key: '18' },
+  { src: '/assets/gallery/Engadgement with RCBank.jpg',fileName: 'Engadgement with RCBank',width: 1080,height: 1440, title: 'RC Bank Partnership',  alt: 'Engagement with RC Bank.',                            key: '19' },
+  { src: '/assets/gallery/AEEMTEAM.jpg',              fileName: 'AEEMTEAM',              width: 720,  height: 720,  title: 'Team Collaboration',   alt: 'Africa Education Empowerment Movement team.',         key: '20' },
 ];
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -69,24 +58,11 @@ const calculateSpans = (
 
   if (ratio > 1.5) return { colSpan: 2, rowSpan: 1 };   // wide landscape
   if (ratio < 0.8)  return { colSpan: 1, rowSpan: 2 };   // tall portrait
-  // Square-ish: every 5th gets a 2×2 hero cell for visual rhythm
   return index % 5 === 0
     ? { colSpan: 2, rowSpan: 2 }
     : { colSpan: 1, rowSpan: 1 };
 };
 
-/** Convert a raw DB row to CustomPhoto */
-const fromGalleryImage = (item: GalleryImage, index: number): CustomPhoto => ({
-  src: item.image_url,
-  width: item.width  || 1080,
-  height: item.height || 720,
-  title: item.title,
-  alt: item.caption || item.title,
-  key: item.id,
-  ...calculateSpans(item.width || 1080, item.height || 720, index),
-});
-
-/** Attach computed spans to a fallback photo */
 const withSpans = (
   item: Omit<CustomPhoto, 'colSpan' | 'rowSpan'>,
   index: number,
@@ -95,19 +71,7 @@ const withSpans = (
   ...calculateSpans(item.width, item.height, index),
 });
 
-/** Build the fallback list, honouring category + limit filters */
-const buildFallback = (category?: string, limit?: number): CustomPhoto[] => {
-  let items = category
-    ? FALLBACK_PHOTOS.filter(p =>
-        p.src.toLowerCase().includes(category.toLowerCase()),
-      )
-    : FALLBACK_PHOTOS;
-  if (limit) items = items.slice(0, limit);
-  return items.map(withSpans);
-};
-
 // ─── Memoised grid item ───────────────────────────────────────────────────────
-// Extracted so React.memo can skip re-renders when photo + onClick are stable.
 
 interface GalleryItemProps {
   photo: CustomPhoto;
@@ -130,15 +94,27 @@ const GalleryItem = memo(({ photo, index, onClick }: GalleryItemProps) => {
       onKeyDown={e => e.key === 'Enter' && onClick(index)}
       className={`group relative overflow-hidden rounded-2xl shadow-soft transition-all duration-500 hover:shadow-xl hover:-translate-y-1 bg-aeem-charcoal/5 cursor-pointer ${spanClass}`}
     >
-      <img
-        src={photo.src}
-        alt={photo.alt}
-        width={photo.width}
-        height={photo.height}
-        loading="lazy"
-        decoding="async"
-        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-      />
+      <picture>
+        <source
+          type="image/avif"
+          srcSet={`/assets/gallery/optimized/${photo.fileName}-400.avif 400w, /assets/gallery/optimized/${photo.fileName}-800.avif 800w`}
+          sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+        />
+        <source
+          type="image/webp"
+          srcSet={`/assets/gallery/optimized/${photo.fileName}-400.webp 400w, /assets/gallery/optimized/${photo.fileName}-800.webp 800w`}
+          sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+        />
+        <img
+          src={photo.src}
+          alt={photo.alt}
+          width={photo.width}
+          height={photo.height}
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+        />
+      </picture>
 
       {/* Hover overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 pointer-events-none">
@@ -157,74 +133,31 @@ const GalleryItem = memo(({ photo, index, onClick }: GalleryItemProps) => {
 
 GalleryItem.displayName = 'GalleryItem';
 
-// ─── Skeleton loader ──────────────────────────────────────────────────────────
-
-const GallerySkeleton = () => (
-  <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 grid-flow-dense auto-rows-[200px] gap-4 sm:gap-6">
-    {Array.from({ length: 8 }).map((_, i) => (
-      <div
-        key={i}
-        className="rounded-2xl bg-aeem-charcoal/10 animate-pulse col-span-1 row-span-1"
-      />
-    ))}
-  </div>
-);
-
 // ─── Main component ───────────────────────────────────────────────────────────
 
 const MosaicGallery: React.FC<MosaicGalleryProps> = ({ category, limit }) => {
-  const [photos, setPhotos]           = useState<CustomPhoto[]>([]);
   const [lightboxIndex, setLightboxIndex] = useState(-1);
-  const [loading, setLoading]         = useState(true);
 
-  useEffect(() => {
-    let cancelled = false;
+  let photos = category
+    ? LOCAL_PHOTOS.filter(p => p.src.toLowerCase().includes(category.toLowerCase()))
+    : LOCAL_PHOTOS;
 
-    const fetchGallery = async () => {
-      try {
-        let query = supabase
-          .from('gallery')
-          .select('*')
-          .order('display_order', { ascending: true });
+  if (limit) photos = photos.slice(0, limit);
+  const processedPhotos = photos.map(withSpans);
 
-        if (category) query = query.eq('category', category);
-        if (limit)    query = query.limit(limit);
-
-        const { data, error } = await query;
-
-        // Throw so the catch block handles both DB errors and empty results
-        if (error) throw error;
-
-        if (cancelled) return;
-
-        const processed =
-          data && data.length > 0
-            ? (data as GalleryImage[]).map(fromGalleryImage)
-            : buildFallback(category, limit);
-
-        setPhotos(processed);
-      } catch (err) {
-        // ✅ FIX: was previously just console.error — photos stayed [] → returned null.
-        // Now we always populate with fallback data on any network/DB failure.
-        console.warn('Gallery fetch failed; rendering offline fallback.', err);
-        if (!cancelled) setPhotos(buildFallback(category, limit));
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    };
-
-    fetchGallery();
-
-    // Cleanup: ignore stale async results if props change mid-flight
-    return () => { cancelled = true; };
-  }, [category, limit]);
-
-  // Stable callbacks — GalleryItem memo stays effective
-  const handleOpen  = useCallback((index: number) => setLightboxIndex(index), []);
+  const handleOpen  = useCallback((index: number) => {
+    if (!document.getElementById('yalr-styles')) {
+      const link = document.createElement('link')
+      link.id = 'yalr-styles'
+      link.rel = 'stylesheet'
+      link.href = 'https://cdn.jsdelivr.net/npm/yet-another-react-lightbox@3.32.0/dist/styles.css'
+      document.head.appendChild(link)
+    }
+    setLightboxIndex(index)
+  }, []);
   const handleClose = useCallback(() => setLightboxIndex(-1), []);
 
-  if (loading) return <GallerySkeleton />;
-  if (photos.length === 0) return null;
+  if (processedPhotos.length === 0) return null;
 
   return (
     <motion.div
@@ -234,7 +167,7 @@ const MosaicGallery: React.FC<MosaicGalleryProps> = ({ category, limit }) => {
       className="w-full"
     >
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 grid-flow-dense auto-rows-[200px] gap-4 sm:gap-6">
-        {photos.map((photo, index) => (
+        {processedPhotos.map((photo, index) => (
           <GalleryItem
             key={photo.key}
             photo={photo}
@@ -248,8 +181,8 @@ const MosaicGallery: React.FC<MosaicGalleryProps> = ({ category, limit }) => {
         <React.Suspense fallback={null}>
           <Lightbox
             index={lightboxIndex}
-            slides={photos}
-            open
+            slides={processedPhotos.map(p => ({ src: p.src, alt: p.alt, title: p.title }))}
+            open={lightboxIndex >= 0}
             close={handleClose}
           />
         </React.Suspense>
