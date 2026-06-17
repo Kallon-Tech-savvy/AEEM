@@ -29,15 +29,25 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed w-full z-[100] transition-all duration-200 ${
+      className={`fixed w-full z-[100] py-4 transition-colors duration-200 ${
         isScrolled || isMobileMenuOpen
-          ? 'bg-white/95 dark:bg-aeem-charcoal/95 border-b border-gray-100 dark:border-zinc-800 py-4 shadow-sm backdrop-blur-xl'
-          : 'bg-transparent py-8'
+          ? 'bg-white/95 dark:bg-aeem-charcoal/95 border-b border-gray-100 dark:border-zinc-800 shadow-sm backdrop-blur-xl'
+          : 'bg-transparent'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
-        <Link to="/" className="dark:bg-white/95">
-          <img src="/assets/AEEM_logo_converted.avif" alt="AEEM Logo" width={144} height={56} className="w-36 h-14 object-fill rounded-lg shadow-md" />
+        <Link to="/" >
+          <picture className="dark:bg-white/95">
+            <source srcSet="/assets/AEEM_logo.avif" type="image/avif" />
+            <source srcSet="/assets/AEEM_logo.webp" type="image/webp"/>
+            <img
+              src="/assets/AEEM_logo.png"
+              alt="AEEM Logo"
+              width={144}
+              height={36}
+              className="w-[144px] h-auto rounded-lg"
+            />
+          </picture>
         </Link>
 
         {/* Desktop Navigation */}

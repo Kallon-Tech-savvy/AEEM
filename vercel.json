@@ -1,4 +1,7 @@
 {
+  "rewrites": [
+    { "source": "/((?!robots.txt|sitemap.xml|assets/|llms.txt).*)", "destination": "/" }
+  ],
   "headers": [
     {
       "source": "/assets/(.*)",
@@ -47,12 +50,6 @@
           "value": "text/plain; charset=utf-8"
         }
       ]
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/"
     }
   ]
 }
