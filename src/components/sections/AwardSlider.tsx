@@ -117,4 +117,4 @@ export function AwardSlider() {
       </div>
     </section>
   )
-}
+}export default AwardSlider;

@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react'
 
 type ThemeMode = 'light' | 'dark' | 'system'
 
-interface ThemeContextValue {
+export interface ThemeContextValue {
   theme: ThemeMode
   setTheme: (theme: ThemeMode) => void
   isDark: boolean

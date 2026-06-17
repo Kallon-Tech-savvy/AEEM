@@ -64,4 +64,4 @@ export function PartnerTicker() {
       </div>
     </div>
   )
-}
+}export default PartnerTicker;
