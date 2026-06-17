@@ -34,10 +34,10 @@ export default function Home() {
             <span className="inline-block py-2 px-6 rounded-full bg-aeem-gold/10 text-aeem-gold font-bold uppercase tracking-[0.4em] text-xs mb-8 border border-aeem-gold/20 shadow-[0_0_20px_rgba(212,175,55,0.1)]">
               Welcome to the Movement
             </span>
-            <h1 className="text-6xl md:text-8xl font-black mb-8 leading-[1.05] tracking-tight text-aeem-charcoal dark:text-white drop-shadow-sm">
+            <h1 className="text-5xl md:text-6xl md:text-8xl font-black mb-8 leading-[1.05] tracking-tight text-aeem-charcoal dark:text-white drop-shadow-sm">
               Empowering <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-aeem-gold via-yellow-400 to-aeem-gold bg-[length:200%_auto] animate-shimmer drop-shadow-md">Africa's</span> <br />
-              Scholars.
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-aeem-gold via-yellow-400 to-aeem-gold bg-[length:200%_auto] animate-shimmer drop-shadow-md">African</span> <br />
+              Child
             </h1>
             <p className="text-xl text-gray-500 dark:text-gray-400 mb-12 max-w-xl leading-relaxed font-medium">
               We are a youth-led movement dedicated to expanding access to quality education
