@@ -112,7 +112,7 @@ export default function Footer() {
             <div className="flex items-center gap-3 mb-6">
                 <picture className="p-1 bg-white dark:bg-white/10 rounded-xl shadow-[0_8px_16px_rgba(0,0,0,0.1)] dark:shadow-[0_8px_16px_rgba(0,0,0,0.4)] ring-1 ring-black/5 dark:ring-white/10">
                   <source src="/assets/logo.webp" type='image/webp' width={44} height={36} />
-                  <img src="/assets/logo.jpg" alt="AEEM Logo" width={44} height={36} className="w-11 h-9 object-fill rounded-lg" />
+                  <img src="/assets/logo_converted.avif" alt="AEEM Logo" width={44} height={36} className="w-11 h-9 object-cover rounded-lg" />
                 </picture>
               <h3 className="font-extrabold text-3xl tracking-tight drop-shadow-sm">AEEM</h3>
             </div>

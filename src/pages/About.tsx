@@ -3,29 +3,36 @@ import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { Target, Heart, Eye } from 'lucide-react';
 import MosaicGallery from '../components/sections/MasonryGallery';
+import { useReducedMotion } from '../ThemeProvider';
+import { getCanonical, SITE_URL } from '../lib/seo';
 import { partners } from '../data/Partner';
 
 const About: React.FC = () => {
+  const reduced = useReducedMotion();
   const leadershipTeam = [
     {
       name: "Patrick P Williams",
       title: "Chief Executive Officer",
-      image: "/assets/gallery/CEO.jpg"
+      image: "/assets/gallery/CEO.jpg",
+      fileName: "CEO"
     },
     {
       name: "Ann Ambrose",
       title: "Executive Director",
-      image: "/assets/gallery/ED.jpg"
+      image: "/assets/gallery/ED.jpg",
+      fileName: "ED"
     },
     {
       name: "Alhaji C. M. Kallon",
       title: "Chief Operating Officer",
-      image: "/assets/gallery/kallon1.png"
+      image: "/assets/gallery/kallon1.png",
+      fileName: "kallon1"
     },
     {
       name: "Chrispin Vandi",
       title: "Secretary General",
-      image: "/assets/gallery/SG.jpg"
+      image: "/assets/gallery/SG.jpg",
+      fileName: "SG"
     },
   ];
 
@@ -34,27 +41,31 @@ const About: React.FC = () => {
       <Helmet>
         <title>About AEEM | Our Mission & Team</title>
         <meta name="description" content="Learn about the Africa Education Empowerment Movement, our leadership, and our commitment to educational equity." />
+        <link rel="canonical" href={getCanonical('/about')} />
+        <meta property="og:title" content="About AEEM | Our Mission & Team" />
+        <meta property="og:description" content="Learn about the Africa Education Empowerment Movement." />
+        <meta property="og:url" content={getCanonical('/about')} />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content={`${SITE_URL}/assets/AEEM_logo_converted.avif`} />
+        {/* Preload the decorative blur which affects first paint */}
+        <link rel="preload" as="image" href="/assets/AEEM_logo_converted.avif" />
       </Helmet>
 
       {/* Hero Section */}
       <section className="pt-32 pb-20 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-aeem-charcoal dark:to-[#0f1115] overflow-hidden relative">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-aeem-gold/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
         <div className="max-w-7xl mx-auto px-6 text-center relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
+          <div className="hero-animate">
             <span className="inline-block py-1.5 px-4 rounded-full bg-aeem-gold/10 text-aeem-gold border border-aeem-gold/20 font-bold uppercase tracking-[0.3em] text-xs mb-6 shadow-[0_0_15px_rgba(212,175,55,0.15)]">
               Who We Are
             </span>
-            <h1 className="text-5xl md:text-7xl font-black mb-8 leading-tight text-aeem-charcoal dark:text-white drop-shadow-sm">
-              Driven by <span className="text-transparent bg-clip-text bg-gradient-to-r from-aeem-gold to-yellow-400 drop-shadow-md">Purpose</span>, <br/>Defined by Action.
-            </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed font-medium">
-              AEEM is a youth-led movement dedicated to bridging the barriers that prevent quality education from reaching every child in Africa.
-            </p>
-          </motion.div>
+          </div>
+          <h1 className="hero-animate hero-animate-delay-1 text-5xl md:text-7xl font-black mb-8 leading-tight text-aeem-charcoal dark:text-white drop-shadow-sm">
+            Driven by <span className="text-transparent bg-clip-text bg-gradient-to-r from-aeem-gold to-yellow-400 drop-shadow-md">Purpose</span>, <br/>Defined by Action.
+          </h1>
+          <p className="hero-animate hero-animate-delay-2 text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed font-medium">
+            AEEM is a youth-led movement dedicated to bridging the barriers that prevent quality education from reaching every child in Africa.
+          </p>
         </div>
       </section>
 
@@ -97,22 +108,35 @@ const About: React.FC = () => {
             {leadershipTeam.map((member, i) => (
               <motion.div 
                 key={i} 
-                whileHover={{ y: -8 }}
+                whileHover={reduced ? {} : { y: -8 }}
                 className="bg-white dark:bg-[#1a1d24] rounded-[2rem] overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_10px_40px_rgba(0,0,0,0.4)] border border-gray-100 dark:border-white/5 group"
               >
                 <div className="aspect-[4/5] relative overflow-hidden bg-gray-200 dark:bg-gray-800">
                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
-                   <img
-                     src={member.image}
-                     alt={member.name}
-                     width={360}
-                     height={450}
-                     loading="lazy"
-                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                   />
+                   <picture>
+                      <source
+                        type="image/avif"
+                        srcSet={`/assets/gallery/optimized/${member.fileName}-400.avif 400w, /assets/gallery/optimized/${member.fileName}-800.avif 800w`}
+                        sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                      />
+                      <source
+                        type="image/webp"
+                        srcSet={`/assets/gallery/optimized/${member.fileName}-400.webp 400w, /assets/gallery/optimized/${member.fileName}-800.webp 800w`}
+                        sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                      />
+                      <img
+                        src={member.image}
+                        alt={member.name}
+                        width={360}
+                        height={450}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      />
+                   </picture>
                 </div>
                 <div className="p-8 text-center relative z-20 bg-white dark:bg-[#1a1d24]">
-                   <h4 className="font-black text-xl mb-1 text-aeem-charcoal dark:text-white">{member.name}</h4>
+                   <h3 className="font-black text-xl mb-1 text-aeem-charcoal dark:text-white">{member.name}</h3>
                    <p className="text-aeem-gold text-xs font-bold uppercase tracking-widest">{member.title}</p>
                 </div>
               </motion.div>
