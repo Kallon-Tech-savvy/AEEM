@@ -121,11 +121,6 @@ const Impact: React.FC = () => {
                   <div className="aspect-[16/9] overflow-hidden bg-gray-100 dark:bg-gray-800">
                     {story.fileName ? (
                       <picture>
-                        <source
-                          type="image/avif"
-                          srcSet={`/assets/gallery/optimized/${story.fileName}-400.avif 400w, /assets/gallery/optimized/${story.fileName}-800.avif 800w`}
-                          sizes="(min-width: 1024px) 40vw, 90vw"
-                        />
                         <img
                           src={story.cover_image_url}
                           alt={story.title}

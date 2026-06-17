@@ -160,16 +160,6 @@ const Events: React.FC = () => {
                     <div className="w-full md:w-2/5 aspect-square md:aspect-auto overflow-hidden">
                        {event.fileName ? (
                          <picture>
-                            <source
-                              type="image/avif"
-                              srcSet={`/assets/gallery/optimized/${event.fileName}-400.avif 400w, /assets/gallery/optimized/${event.fileName}-800.avif 800w`}
-                              sizes="(min-width: 1024px) 20vw, 90vw"
-                            />
-                            <source
-                              type="image/webp"
-                              srcSet={`/assets/gallery/optimized/${event.fileName}-400.webp 400w, /assets/gallery/optimized/${event.fileName}-800.webp 800w`}
-                              sizes="(min-width: 1024px) 20vw, 90vw"
-                            />
                             <img src={event.cover_image_url} alt={event.title} width={720} height={720} loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                          </picture>
                        ) : (

@@ -24,7 +24,7 @@ export default function Home() {
       </Helmet>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center pt-24 overflow-hidden bg-white dark:bg-aeem-charcoal">
+      <section className="relative min-h-screen flex items-center pt-24 pb-4 overflow-hidden bg-white dark:bg-aeem-charcoal">
         {/* Background glow effects */}
         <div className="absolute top-1/4 right-0 w-[600px] h-[600px] bg-aeem-gold/10 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-aeem-gold/5 rounded-full blur-[120px] pointer-events-none" />
@@ -46,45 +46,41 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row gap-5">
               <Link
                 to="/about"
-                className="group px-10 py-5 bg-aeem-charcoal dark:bg-aeem-gold text-white dark:text-aeem-charcoal rounded-full font-black hover:bg-aeem-gold dark:hover:bg-white transition-all shadow-2xl hover:scale-105 active:scale-95 flex items-center justify-center gap-3 text-lg"
+                className="group px-8 py-4 bg-aeem-charcoal dark:bg-aeem-gold text-white dark:text-aeem-charcoal rounded-full font-black hover:bg-aeem-gold dark:hover:bg-white transition-all shadow-2xl hover:scale-105 active:scale-95 flex items-center justify-center gap-3 text-lg"
               >
                 Our Mission <ArrowRight className="group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
                 to="/get-involved"
-                className="px-10 py-5 bg-white dark:bg-white/5 backdrop-blur-md border-2 border-gray-200 dark:border-white/10 text-aeem-charcoal dark:text-white rounded-full font-bold hover:bg-gray-50 dark:hover:bg-white/10 transition-all hover:scale-105 active:scale-95 text-lg"
+                className="px-8 py-4 bg-white dark:bg-white/5 backdrop-blur-md border-2 border-gray-200 dark:border-white/10 text-aeem-charcoal dark:text-white rounded-full font-bold hover:bg-gray-50 dark:hover:bg-white/10 transition-all hover:scale-105 active:scale-95 text-lg"
               >
                 Get Involved
               </Link>
             </div>
           </div>
 
-          <div className="relative hidden lg:block hero-animate hero-animate-delay-1">
-             <div className="absolute inset-0 bg-gradient-to-br from-aeem-gold/20 to-transparent rounded-[3rem] -rotate-6 scale-105" />
-             <div className="relative rounded-[3rem] overflow-hidden shadow-2xl border-2 border-white/20">
+             <div className="relative ">
                <picture>
                   <source
                     type="image/avif"
-                    srcSet={`/assets/gallery/optimized/AEEMTEAM_Photo-400.avif 400w, /assets/gallery/optimized/AEEMTEAM_Photo-800.avif 800w`}
+                    srcSet={`/assets/Illustrate-africa.avif `}
                     sizes="(min-width: 1024px) 40vw, 90vw"
                   />
                   <source
                     type="image/webp"
-                    srcSet={`/assets/gallery/optimized/AEEMTEAM_Photo-400.webp 400w, /assets/gallery/optimized/AEEMTEAM_Photo-800.webp 800w`}
+                    srcSet={`/assets/Illustrate-africa.webp`}
                     sizes="(min-width: 1024px) 40vw, 90vw"
                   />
                   <img
-                    src="/assets/gallery/AEEMTEAM_Photo.jpg"
-                    alt="AEEM Team"
+                    src="/assets/Illustrate-africa.jpg"
+                    alt="AEEM Award Illustration"
                     className="w-full h-full object-cover"
                   />
                </picture>
              </div>
           </div>
-        </div>
       </section>
 
-      {/* Mission Summary */}
       <section className="py-24 bg-gray-50 dark:bg-[#0f1115] relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
@@ -118,13 +114,8 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-tr from-aeem-gold/20 to-transparent rounded-[3rem] -rotate-3 scale-105 z-0" />
               <picture>
                 <source
-                  type="image/avif"
-                  srcSet={`/assets/gallery/optimized/Image-400.avif 400w, /assets/gallery/optimized/Image-800.avif 800w`}
-                  sizes="(min-width: 1024px) 40vw, 90vw"
-                />
-                <source
                   type="image/webp"
-                  srcSet={`/assets/gallery/optimized/Image-400.webp 400w, /assets/gallery/optimized/Image-800.webp 800w`}
+                  srcSet={`/assets/gallery/Image.webp `}
                   sizes="(min-width: 1024px) 40vw, 90vw"
                 />
                 <img
@@ -144,7 +135,6 @@ export default function Home() {
         <ImpactStats />
       </Suspense>
 
-      {/* What AEEM Does (3D Cards) */}
       <section className="py-24 bg-white dark:bg-[#15181e] relative">
         <div className="absolute top-0 left-0 w-full h-[300px] bg-gradient-to-b from-gray-50 dark:from-[#0f1115] to-transparent pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -189,7 +179,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Impact */}
       <section className="py-24 bg-gray-50 dark:bg-[#0f1115]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="bg-gradient-to-br from-[#1a1d24] to-black rounded-[3rem] overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.2)] dark:shadow-[0_30px_80px_rgba(0,0,0,0.6)] relative border border-white/10">
@@ -235,12 +224,12 @@ export default function Home() {
                 <picture>
                   <source
                     type="image/avif"
-                    srcSet={`/assets/gallery/optimized/Participant_Group_Picture-400.avif 400w, /assets/gallery/optimized/Participant_Group_Picture-800.avif 800w`}
+                    srcSet={`/assets/gallery/Participant_Group_Picture.avif`}
                     sizes="(min-width: 1024px) 50vw, 100vw"
                   />
                   <source
                     type="image/webp"
-                    srcSet={`/assets/gallery/optimized/Participant_Group_Picture-400.webp 400w, /assets/gallery/optimized/Participant_Group_Picture-800.webp 800w`}
+                    srcSet={`/assets/gallery/Participant_Group_Picture.webp`}
                     sizes="(min-width: 1024px) 50vw, 100vw"
                   />
                   <img

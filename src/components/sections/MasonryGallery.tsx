@@ -28,7 +28,7 @@ const LOCAL_PHOTOS: Omit<CustomPhoto, 'colSpan' | 'rowSpan'>[] = [
   { src: '/assets/gallery/AEEMTEAM_Photo.jpg',       fileName: 'AEEMTEAM_Photo',       width: 1080, height: 720,  title: 'Team AEEM',            alt: 'The core team behind the AEEM movement.',              key: '1'  },
   { src: '/assets/gallery/Activity.jpg',              fileName: 'Activity',              width: 720,  height: 1080, title: 'Interactive Sessions', alt: 'Engaging activities during the workshop.',              key: '2'  },
   { src: '/assets/gallery/Award.jpg',                 fileName: 'Award',                 width: 1080, height: 1440, title: 'Recognizing Excellence',alt: 'Award ceremony for outstanding participants.',          key: '3'  },
-  { src: '/assets/gallery/Boys_Fram.jpg',             fileName: 'Boys_Fram',             width: 1080, height: 1080, title: 'Youth Leaders',        alt: 'Empowered students ready to lead.',                    key: '4'  },
+  { src: '/assets/gallery/Boys_Fram.jpg',             fileName: 'Boys_Fram',             width: 720, height: 1080, title: 'Youth Leaders',        alt: 'Empowered students ready to lead.',                    key: '4'  },
   { src: '/assets/gallery/Girls_Fram.jpg',            fileName: 'Girls_Fram',            width: 1080, height: 720,  title: 'Future Leaders',       alt: 'Supporting the next generation of female leaders.',    key: '5'  },
   { src: '/assets/gallery/Group_Discussion.jpg',      fileName: 'Group_Discussion',      width: 1080, height: 540,  title: 'Group Discussions',    alt: 'Collaborative learning in action.',                    key: '6'  },
   { src: '/assets/gallery/Mage_Award.jpg',            fileName: 'Mage_Award',            width: 1080, height: 1440, title: 'Celebrating Success',  alt: 'Moments of achievement.',                             key: '7'  },
@@ -43,7 +43,7 @@ const LOCAL_PHOTOS: Omit<CustomPhoto, 'colSpan' | 'rowSpan'>[] = [
   { src: '/assets/gallery/AEEM volunateer.jpg',       fileName: 'AEEM volunateer',       width: 720,  height: 1080, title: 'Volunteers',           alt: 'Africa Education Empowerment Movement volunteers.',   key: '16' },
   { src: '/assets/gallery/Foods.jpg',                 fileName: 'Foods',                 width: 1080, height: 540,  title: 'Community Lunch',      alt: 'Sharing meals together.',                             key: '17' },
   { src: '/assets/gallery/Mentorship.jpg',            fileName: 'Mentorship',            width: 540,  height: 720,  title: 'Mentorship',           alt: 'One-on-one mentorship in action.',                    key: '18' },
-  { src: '/assets/gallery/Engadgement with RCBank.jpg',fileName: 'Engadgement with RCBank',width: 1080,height: 1440, title: 'RC Bank Partnership',  alt: 'Engagement with RC Bank.',                            key: '19' },
+  { src: '/assets/gallery/Engadgement with RCBank.jpg',fileName: 'Engadgement with RCBank',width: 720,height: 720, title: 'RC Bank Partnership',  alt: 'Engagement with RC Bank.',                            key: '19' },
   { src: '/assets/gallery/AEEMTEAM.jpg',              fileName: 'AEEMTEAM',              width: 720,  height: 720,  title: 'Team Collaboration',   alt: 'Africa Education Empowerment Movement team.',         key: '20' },
 ];
 
@@ -95,16 +95,6 @@ const GalleryItem = memo(({ photo, index, onClick }: GalleryItemProps) => {
       className={`group relative overflow-hidden rounded-2xl shadow-soft transition-all duration-500 hover:shadow-xl hover:-translate-y-1 bg-aeem-charcoal/5 cursor-pointer ${spanClass}`}
     >
       <picture>
-        <source
-          type="image/avif"
-          srcSet={`/assets/gallery/optimized/${photo.fileName}-400.avif 400w, /assets/gallery/optimized/${photo.fileName}-800.avif 800w`}
-          sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-        />
-        <source
-          type="image/webp"
-          srcSet={`/assets/gallery/optimized/${photo.fileName}-400.webp 400w, /assets/gallery/optimized/${photo.fileName}-800.webp 800w`}
-          sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-        />
         <img
           src={photo.src}
           alt={photo.alt}

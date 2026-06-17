@@ -127,16 +127,6 @@ const StoryDetail: React.FC = () => {
 
           <div className="aspect-video rounded-[2.5rem] overflow-hidden mb-16 shadow-2xl bg-gray-100">
             <picture>
-              <source
-                type="image/avif"
-                srcSet={`/assets/gallery/optimized/${story.fileName}-400.avif 400w, /assets/gallery/optimized/${story.fileName}-800.avif 800w`}
-                sizes="(min-width: 1024px) 60vw, 95vw"
-              />
-              <source
-                type="image/webp"
-                srcSet={`/assets/gallery/optimized/${story.fileName}-400.webp 400w, /assets/gallery/optimized/${story.fileName}-800.webp 800w`}
-                sizes="(min-width: 1024px) 60vw, 95vw"
-              />
               <img
                  src={story.image}
                  alt={story.title}

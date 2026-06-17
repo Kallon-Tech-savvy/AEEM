@@ -25,8 +25,8 @@ const About: React.FC = () => {
     {
       name: "Alhaji C. M. Kallon",
       title: "Chief Operating Officer",
-      image: "/assets/gallery/kallon1.png",
-      fileName: "kallon1"
+      image: "/assets/gallery/COO.jpg",
+      fileName: "COO"
     },
     {
       name: "Chrispin Vandi",
@@ -69,7 +69,6 @@ const About: React.FC = () => {
         </div>
       </section>
 
-      {/* Mission / Vision / Values */}
       <section className="py-20 relative bg-white dark:bg-[#0f1115]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -115,13 +114,8 @@ const About: React.FC = () => {
                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
                    <picture>
                       <source
-                        type="image/avif"
-                        srcSet={`/assets/gallery/optimized/${member.fileName}-400.avif 400w, /assets/gallery/optimized/${member.fileName}-800.avif 800w`}
-                        sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                      />
-                      <source
                         type="image/webp"
-                        srcSet={`/assets/gallery/optimized/${member.fileName}-400.webp 400w, /assets/gallery/optimized/${member.fileName}-800.webp 800w`}
+                        srcSet={`/assets/gallery/${member.fileName}.webp `}
                         sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                       />
                       <img
