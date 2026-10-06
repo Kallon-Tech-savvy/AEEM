@@ -1,10 +1,9 @@
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { Container } from '../ui'
 
 // Approximate geographic projection: viewBox 0 0 440 530
-// x = (lon + 18) / 70 * 440
-// y = (37 - lat) / 72 * 530
 const AFRICA_PATH =
   'M 75,7 L 110,3 L 150,0 L 176,0 ' +
   'C 185,10 190,20 194,29 ' +
@@ -36,223 +35,147 @@ const AFRICA_PATH =
 
 const FREETOWN = { x: 30, y: 206 }
 
-// 23 impacted nations — staggered by geographic distance from Freetown
 const CITIES = [
-  { name: 'Conakry',       x: 24,  y: 192, delay: 0.4 },
-  { name: 'Monrovia',      x: 46,  y: 223, delay: 0.6 },
-  { name: 'Dakar',         x: 5,   y: 160, delay: 0.8 },
-  { name: 'Accra',         x: 107, y: 226, delay: 1.4 },
-  { name: 'Lagos',         x: 133, y: 220, delay: 1.8 },
-  { name: 'Kampala',       x: 314, y: 266, delay: 3.6 },
-  { name: 'Nairobi',       x: 348, y: 276, delay: 3.8 },
+  { name: 'Conakry', x: 24, y: 192, delay: 0.4 },
+  { name: 'Monrovia', x: 46, y: 223, delay: 0.6 },
+  { name: 'Dakar', x: 5, y: 160, delay: 0.8 },
+  { name: 'Accra', x: 107, y: 226, delay: 1.4 },
+  { name: 'Lagos', x: 133, y: 220, delay: 1.8 },
+  { name: 'Kampala', x: 314, y: 266, delay: 3.6 },
+  { name: 'Nairobi', x: 348, y: 276, delay: 3.8 },
 ]
 
 function lineLen(x2: number, y2: number) {
   return Math.ceil(Math.hypot(x2 - FREETOWN.x, y2 - FREETOWN.y)) + 20
 }
 
-const MINI_STATS = [
-  { val: '8',   label: 'Countries' },
-  { val: '150+', label: 'Communities' },
-  { val: '1.5k', label: 'People Empowered' },
-]
+const actionLink =
+  'inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border px-6 text-base font-semibold transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus focus-visible:ring-offset-2'
 
 export default function Hero() {
   return (
     <section
       id="home"
-      className="bg-aeem-bg dark:bg-aeem-charcoal relative min-h-screen flex items-center pt-20 overflow-hidden "
+      className="relative overflow-hidden bg-aeem-cream pt-24 dark:bg-aeem-charcoal"
     >
-      {/* Subtle dot-grid texture */}
-      <div
-        className="absolute inset-0 opacity-[0.04] pointer-events-none"
-        style={{
-          backgroundImage: 'radial-gradient(circle, #D4AF37 1px, transparent 0)',
-          backgroundSize: '36px 36px',
-        }}
-      />
-      {/* Gold ambient bloom */}
-      <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[600px] h-[600px] bg-aeem-gold/10 rounded-full blur-[120px] pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto px-6 w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10 py-16">
-
-        {/* ── Left: copy ───────────────────────────────────────────────── */}
+      <Container className="grid min-h-[calc(100vh-1rem)] grid-cols-1 items-center gap-12 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:py-20">
         <motion.div
-          initial={{ opacity: 0, x: -40 }}
+          initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.55 }}
         >
-          <motion.span
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="inline-block px-4 py-1.5 bg-aeem-focus/50 dark:bg-aeem-gold/15 text-white dark:text-aeem-gold rounded-full text-xs font-bold uppercase tracking-widest mb-6"
-          >
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-aeem-gold">
             Fair access to education for all
-          </motion.span>
-
-          <h1 className="text-aeem-charcoal dark:text-aeem-dark-text text-6xl md:text-7xl font-black leading-[0.9] mb-8 tracking-tighter">
-            Empowering the{' '}
-            <span className="text-aeem-gold">Future</span> of Africa
-          </h1>
-
-          <p className="text-xl text-aeem-charcoal dark:text-gray-400 max-w-lg mb-10 leading-relaxed">
-            Pioneering inclusive, equitable, and quality education across the
-            continent through community-led action and innovative mentorship.
           </p>
 
-          <div className="flex flex-wrap gap-4">
+          <h1 className="mt-5 max-w-3xl text-5xl font-extrabold leading-[1.02] tracking-tight text-aeem-ink dark:text-white sm:text-6xl lg:text-7xl">
+            Empowering the <span className="text-aeem-gold">Future</span> of Africa
+          </h1>
+
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-aeem-ink/70 dark:text-gray-300 sm:text-xl">
+            Pioneering inclusive, equitable, and quality education across the continent through
+            community-led action and innovative mentorship.
+          </p>
+
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               to="/impact"
-              className="inline-flex items-center gap-2 px-10 py-4 bg-aeem-gold text-aeem-charcoal rounded-full font-black hover:bg-white transition-all shadow-xl shadow-aeem-gold/20"
+              className={`${actionLink} border-aeem-forest bg-aeem-forest text-white hover:border-aeem-forest-dark hover:bg-aeem-forest-dark`}
             >
-              Explore our Impact <ArrowRight size={18} />
+              Explore our Impact <ArrowRight size={18} aria-hidden="true" />
             </Link>
             <Link
               to="/events"
-              className="px-10 py-4 border-2 border-aeem-focus/70 text-aeem-charcoal dark:text-aeem-bg rounded-full font-bold hover:border-aeem-gold hover:text-aeem-gold transition-all"
+              className={`${actionLink} border-aeem-forest bg-transparent text-aeem-forest hover:bg-aeem-forest/5 dark:border-aeem-gold dark:text-aeem-gold dark:hover:bg-aeem-gold/10`}
             >
               Upcoming Events
             </Link>
           </div>
-
-          {/* Mini stats */}
-          <div className="flex gap-10  mt-14 pt-10 border-t dark:border-white/10 border-aeem-focus/50">
-            {MINI_STATS.map((s, i) => (
-              <motion.div
-                key={s.label}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 + i * 0.15 }}
-              >
-                <p className="text-3xl font-black text-aeem-gold">{s.val}</p>
-                <p className="text-xs dark:text-gray-500 text-aeem-charcoal font-bold uppercase tracking-wider mt-1">
-                  {s.label}
-                </p>
-              </motion.div>
-            ))}
-          </div>
         </motion.div>
 
-        {/* ── Right: Africa map ─────────────────────────────────────────── */}
         <motion.div
-          className="relative hidden lg:block"
+          className="relative mx-auto w-full max-w-[520px]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1.4, delay: 0.3 }}
+          transition={{ duration: 0.8, delay: 0.15 }}
         >
           <svg
             viewBox="0 0 440 530"
             xmlns="http://www.w3.org/2000/svg"
-            className="w-full max-w-[520px] mx-auto"
-            aria-label="Map of Africa showing AEEM's reach from Freetown"
+            role="img"
+            aria-labelledby="africa-map-title"
+            className="mx-auto w-full"
           >
-            <defs>
-              <radialGradient id="mapFill" cx="40%" cy="45%" r="60%">
-                <stop offset="0%" stopColor="#2a2a2a" />
-                <stop offset="100%" stopColor="#181818" />
-              </radialGradient>
-              {/* Glow for city dots */}
-              <filter id="dotGlow" x="-80%" y="-80%" width="260%" height="260%">
-                <feGaussianBlur stdDeviation="2.5" result="blur" />
-                <feMerge>
-                  <feMergeNode in="blur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-              {/* Glow for hub */}
-              <filter id="hubGlow" x="-100%" y="-100%" width="300%" height="300%">
-                <feGaussianBlur stdDeviation="4" result="blur" />
-                <feMerge>
-                  <feMergeNode in="blur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-            </defs>
+            <title id="africa-map-title">AEEM network across Africa, originating from Freetown</title>
 
-            {/* Continent fill + border */}
             <path
               d={AFRICA_PATH}
-              fill="url(#mapFill)"
-              stroke="#D4AF37"
+              fill="#173D28"
+              stroke="#B8941A"
               strokeWidth="1.2"
-              strokeOpacity="0.35"
+              strokeOpacity="0.55"
             />
 
-            {/* Progressive connection lines from Freetown */}
             {CITIES.map((city) => {
               const len = lineLen(city.x, city.y)
+
               return (
                 <motion.line
                   key={`ln-${city.name}`}
-                  x1={FREETOWN.x} y1={FREETOWN.y}
-                  x2={city.x}     y2={city.y}
+                  x1={FREETOWN.x}
+                  y1={FREETOWN.y}
+                  x2={city.x}
+                  y2={city.y}
                   stroke="#D4AF37"
-                  strokeWidth="0.7"
-                  strokeOpacity="0.4"
+                  strokeWidth="0.8"
+                  strokeOpacity="0.65"
                   strokeDasharray={len}
                   initial={{ strokeDashoffset: len }}
                   animate={{ strokeDashoffset: 0 }}
-                  transition={{ duration: 1.1, delay: city.delay, ease: 'easeOut' }}
+                  transition={{ duration: 0.8, delay: city.delay, ease: 'easeOut' }}
                 />
               )
             })}
 
-            {/* City endpoint dots */}
             {CITIES.map((city) => (
               <motion.circle
                 key={`dot-${city.name}`}
-                cx={city.x} cy={city.y}
+                cx={city.x}
+                cy={city.y}
                 r={2.5}
                 fill="#D4AF37"
-                filter="url(#dotGlow)"
                 initial={{ opacity: 0, r: 0 }}
-                animate={{ opacity: 0.85, r: 2.5 }}
-                transition={{ delay: city.delay + 0.85, duration: 0.35 }}
+                animate={{ opacity: 0.9, r: 2.5 }}
+                transition={{ delay: city.delay + 0.65, duration: 0.25 }}
               />
             ))}
 
-            {/* Freetown — ripple rings */}
-            {[0, 0.75, 1.5].map((d, i) => (
-              <motion.circle
-                key={`ring-${i}`}
-                cx={FREETOWN.x} cy={FREETOWN.y}
-                r={5}
-                fill="none"
-                stroke="#D4AF37"
-                strokeWidth="1.2"
-                animate={{ r: [5, 20], opacity: [0.8, 0] }}
-                transition={{
-                  duration: 2.2,
-                  repeat: Infinity,
-                  delay: d,
-                  ease: 'easeOut',
-                }}
-              />
-            ))}
-
-            {/* Freetown — solid hub dot */}
-            <circle
-              cx={FREETOWN.x} cy={FREETOWN.y}
+            <motion.circle
+              cx={FREETOWN.x}
+              cy={FREETOWN.y}
               r={5}
               fill="#D4AF37"
-              filter="url(#hubGlow)"
+              animate={{ opacity: [1, 0.55, 1] }}
+              transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
             />
 
-            {/* Freetown label */}
-            <motion.text
-              x={FREETOWN.x + 10} y={FREETOWN.y - 7}
+            <text
+              x={FREETOWN.x + 10}
+              y={FREETOWN.y - 7}
               fill="#D4AF37"
-              fontSize="8" fontWeight="bold" fontFamily="sans-serif"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
+              fontSize="8"
+              fontWeight="600"
+              fontFamily="sans-serif"
             >
               Freetown
-            </motion.text>
+            </text>
           </svg>
+
+          <p className="mt-2 text-center text-xs text-aeem-ink/55 dark:text-white/50">
+            A growing network of communities, educators, and young people.
+          </p>
         </motion.div>
-      </div>
+      </Container>
     </section>
   )
 }
