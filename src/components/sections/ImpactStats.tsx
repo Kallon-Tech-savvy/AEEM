@@ -1,131 +1,48 @@
-import { useEffect, useRef, useState } from 'react'
-import { motion, useInView } from 'framer-motion'
+import { Section, Stat } from '../ui'
 
-interface Stat {
-  label: string
-  numericValue: number
-  suffix: string
-  prefix?: string
-  color: string
-  description: string
-}
-
-const stats: Stat[] = [
+const stats = [
   {
-    label: 'Communities Reached',
-    numericValue: 120,
-    suffix: '+',
-    color: 'text-aeem-gold',
-    description: 'Across 8 African nations',
+    value: '120+',
+    label: 'Communities reached',
+    detail: 'Across 8 African nations',
   },
   {
-    label: 'People Empowered',
-    numericValue: 1500,
-    suffix: '',
-    prefix: '',
-    color: 'text-aeem-charcoal dark:text-white/80',
-    description: 'Life-changing opportunities created',
+    value: '1,500',
+    label: 'People empowered',
+    detail: 'Life-changing opportunities created',
   },
   {
-    label: 'Active Mentors',
-    numericValue: 80,
-    suffix: '',
-    color: 'text-aeem-charcoal dark:text-white/80',
-    description: 'Professionals giving back',
+    value: '80',
+    label: 'Active mentors',
+    detail: 'Professionals giving back',
   },
 ]
 
-function formatNumber(n: number): string {
-  if (n >= 1000) return (n / 1000).toFixed(1).replace('.0', '') + 'k'
-  return String(n)
-}
-
-function AnimatedStat({ stat, index }: { stat: Stat; index: number }) {
-  const ref = useRef<HTMLDivElement>(null)
-  const inView = useInView(ref, { once: true, margin: '-60px' })
-  const [count, setCount] = useState(0)
-
-  useEffect(() => {
-    if (!inView) return
-    const duration = 2000
-    const startTime = performance.now()
-
-    const tick = (now: number) => {
-      const progress = Math.min((now - startTime) / duration, 1)
-      // Ease-out cubic
-      const eased = 1 - Math.pow(1 - progress, 3)
-      setCount(Math.round(eased * stat.numericValue))
-      if (progress < 1) requestAnimationFrame(tick)
-    }
-
-    requestAnimationFrame(tick)
-  }, [inView, stat.numericValue])
-
-  const displayValue = formatNumber(count)
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.12, duration: 0.6 }}
-      viewport={{ once: true }}
-      className="group text-center relative"
-    >
-      {/* Hover glow */}
-      <div className="absolute inset-0 rounded-3xl bg-aeem-gold/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 scale-105" />
-
-      <div className="relative py-8 px-4">
-        <h3 className={`text-6xl md:text-7xl font-black mb-1 tabular-nums leading-none ${stat.color}`}>
-          {stat.prefix}{displayValue}{stat.suffix}
-        </h3>
-
-        <div className="w-8 h-0.5 bg-aeem-gold/30 mx-auto my-4 group-hover:w-16 transition-all duration-500" />
-
-        <p className="text-sm font-black uppercase tracking-widest text-gray-600 mb-2">
-          {stat.label}
-        </p>
-        <p className="text-xs text-gray-400 leading-relaxed">{stat.description}</p>
-      </div>
-    </motion.div>
-  )
-}
-
 export default function ImpactStats() {
   return (
-    <section id="impact" className="py-4 lg:py-16 bg-aeem relative overflow-hidden">
-      <div className="absolute bottom-[1%] w-full h-full opacity-[0.1] dark:opacity-[0.08] pointer-events-none z-10 mix-blend-luminosity select-none transition-opacity duration-300">
-        <img 
-          src="/assets/Illustrate africa.avif" 
-          alt="" 
-          width={1600}
-          height={900}
-          loading="lazy"
-          className="w-full h-full center object-contain object-left-bottom"
-        />
+    <Section id="impact" className="bg-white dark:bg-aeem-charcoal">
+      <div className="text-center">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-aeem-gold">Our Numbers</p>
+        <h2 className="mt-3 text-4xl font-bold tracking-tight text-aeem-ink dark:text-white sm:text-5xl">
+          Impacting <span className="text-aeem-gold">Real</span> Lives
+        </h2>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-8"
-        >
-          <span className="text-aeem-gold font-bold uppercase tracking-[0.3em] text-xs mb-4 block">
-            Our Numbers
-          </span>
-          <h2 className="text-4xl md:text-5xl font-black text-aeem-charcoal dark:text-white">
-            Impacting <span className="text-aeem-gold">Real</span> Lives
-          </h2>
-        </motion.div>
-
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-0 md:divide-x divide-gray-200 dark:divide-zinc-800 transition-colors duration-300">
-          {stats.map((stat, i) => (
-            <AnimatedStat key={stat.label} stat={stat} index={i} />
-          ))}
-        </div>
+      <div className="mt-12 grid grid-cols-1 gap-10 sm:grid-cols-3 sm:divide-x sm:divide-black/10 dark:sm:divide-white/10">
+        {stats.map((stat) => (
+          <Stat
+            key={stat.label}
+            value={stat.value}
+            label={stat.label}
+            detail={stat.detail}
+            className="px-0 text-center sm:px-8 first:sm:pl-0 last:sm:pr-0"
+          />
+        ))}
       </div>
-    </section>
+
+      <p className="mt-10 text-center text-xs text-gray-500 dark:text-gray-400">
+        Program data — verify against the current AEEM reporting period before publication.
+      </p>
+    </Section>
   )
 }
