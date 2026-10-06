@@ -39,10 +39,6 @@ export default function ImpactStats() {
           />
         ))}
       </div>
-
-      <p className="mt-10 text-center text-xs text-gray-500 dark:text-gray-400">
-        Program data — verify against the current AEEM reporting period before publication.
-      </p>
     </Section>
   )
 }
