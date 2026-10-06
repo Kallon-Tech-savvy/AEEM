@@ -23,9 +23,9 @@ export default function HomeFeaturedImpact() {
             </p>
 
             <div className="mt-10 grid max-w-xl grid-cols-3 gap-6 border-y border-white/15 py-6">
-              <Stat value="42" label="Youth" className="text-white" />
-              <Stat value="6" label="Schools" className="text-white" />
-              <Stat value="2" label="Days" className="text-white" />
+              <Stat value="42" label="Youth" tone="inverse" />
+              <Stat value="6" label="Schools" tone="inverse" />
+              <Stat value="2" label="Days" tone="inverse" />
             </div>
 
             <div className="mt-8">
