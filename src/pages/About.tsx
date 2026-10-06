@@ -1,188 +1,132 @@
-import React from 'react';
-import { Helmet } from 'react-helmet-async';
-import { motion } from 'framer-motion';
-import { Target, Heart, Eye } from 'lucide-react';
-import MosaicGallery from '../components/sections/MasonryGallery';
-import { useReducedMotion } from '../ThemeProvider';
-import { getCanonical, SITE_URL } from '../lib/seo';
-import { partners } from '../data/Partner';
+import React from 'react'
+import { Helmet } from 'react-helmet-async'
+import { Target, Heart, Eye } from 'lucide-react'
+import MosaicGallery from '../components/sections/MasonryGallery'
+import { getCanonical, SITE_URL } from '../lib/seo'
+import { partners } from '../data/Partner'
+import { Section, Container, Card } from '../components/ui'
 
-const About: React.FC = () => {
-  const reduced = useReducedMotion();
-  const leadershipTeam = [
-    {
-      name: "Patrick P Williams",
-      title: "Chief Executive Officer",
-      image: "/assets/gallery/CEO.jpg",
-      fileName: "CEO"
-    },
-    {
-      name: "Ann Ambrose",
-      title: "Executive Director",
-      image: "/assets/gallery/ED.jpg",
-      fileName: "ED"
-    },
-    {
-      name: "Alhaji C. M. Kallon",
-      title: "Chief Operating Officer",
-      image: "/assets/gallery/COO.jpg",
-      fileName: "COO"
-    },
-    {
-      name: "Chrispin Vandi",
-      title: "Secretary General",
-      image: "/assets/gallery/SG.jpg",
-      fileName: "SG"
-    },
-  ];
+const leadershipTeam = [
+  { name: 'Patrick P Williams', title: 'Chief Executive Officer', image: '/assets/gallery/CEO.jpg', fileName: 'CEO' },
+  { name: 'Ann Ambrose', title: 'Executive Director', image: '/assets/gallery/ED.jpg', fileName: 'ED' },
+  { name: 'Alhaji C. M. Kallon', title: 'Chief Operating Officer', image: '/assets/gallery/COO.jpg', fileName: 'COO' },
+  { name: 'Chrispin Vandi', title: 'Secretary General', image: '/assets/gallery/SG.jpg', fileName: 'SG' },
+]
 
-  return (
-    <>
-      <Helmet>
-        <title>About AEEM | Our Mission & Team</title>
-        <meta name="description" content="Learn about the Africa Education Empowerment Movement, our leadership, and our commitment to educational equity." />
-        <link rel="canonical" href={getCanonical('/about')} />
-        <meta property="og:title" content="About AEEM | Our Mission & Team" />
-        <meta property="og:description" content="Learn about the Africa Education Empowerment Movement." />
-        <meta property="og:url" content={getCanonical('/about')} />
-        <meta property="og:type" content="website" />
-        <meta property="og:image" content={`${SITE_URL}/assets/logo_converted.avif`} />
-        {/* Preload the decorative blur which affects first paint */}
-        <link rel="preload" as="image" href="/assets/logo_converted.avif" />
-      </Helmet>
+const purpose = [
+  { icon: Target, title: 'Our Mission', text: 'To expand access to quality education across Africa through advocacy, community empowerment, and accountable action.' },
+  { icon: Eye, title: 'Our Vision', text: 'A continent where every child, regardless of their background, has the resources and support to achieve their educational dreams.' },
+  { icon: Heart, title: 'Our Values', text: 'Integrity, inclusivity, community-led change, and radical transparency in everything we do.' },
+]
 
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-aeem-charcoal dark:to-[#0f1115] overflow-hidden relative">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-aeem-gold/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
-        <div className="max-w-7xl mx-auto px-6 text-center relative z-10">
-          <div className="hero-animate">
-            <span className="inline-block py-1.5 px-4 rounded-full bg-aeem-gold/10 text-aeem-gold border border-aeem-gold/20 font-bold uppercase tracking-[0.3em] text-xs mb-6 shadow-[0_0_15px_rgba(212,175,55,0.15)]">
-              Who We Are
-            </span>
-          </div>
-          <h1 className="hero-animate hero-animate-delay-1 text-5xl md:text-7xl font-black mb-8 leading-tight text-aeem-charcoal dark:text-white drop-shadow-sm">
-            Driven by <span className="text-transparent bg-clip-text bg-gradient-to-r from-aeem-gold to-yellow-400 drop-shadow-md">Purpose</span>, <br/>Defined by Action.
-          </h1>
-          <p className="hero-animate hero-animate-delay-2 text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed font-medium">
-            AEEM is a youth-led movement dedicated to bridging the barriers that prevent quality education from reaching every child in Africa.
-          </p>
-        </div>
-      </section>
+const About: React.FC = () => (
+  <>
+    <Helmet>
+      <title>About AEEM | Our Mission, Values & Leadership</title>
+      <meta name="description" content="Learn about the Africa Education Empowerment Movement, our mission, values, leadership, and work to advance educational equity." />
+      <link rel="canonical" href={getCanonical('/about')} />
+      <meta property="og:title" content="About AEEM | Our Mission, Values & Leadership" />
+      <meta property="og:description" content="Learn about the Africa Education Empowerment Movement, our mission, values, leadership, and work." />
+      <meta property="og:url" content={getCanonical('/about')} />
+      <meta property="og:type" content="website" />
+      <meta property="og:image" content={`${SITE_URL}/assets/logo_converted.avif`} />
+    </Helmet>
 
-      <section className="py-20 relative bg-white dark:bg-[#0f1115]">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { icon: Target, title: "Our Mission", text: "To expand access to quality education across Africa through advocacy, community empowerment, and accountable action." },
-              { icon: Eye, title: "Our Vision", text: "A continent where every child, regardless of their background, has the resources and support to achieve their educational dreams." },
-              { icon: Heart, title: "Our Values", text: "Integrity, inclusivity, community-led change, and radical transparency in everything we do." }
-            ].map((item, i) => (
-              <motion.div 
-                key={i} 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.15 }}
-                className="text-center group bg-gray-50/50 dark:bg-white/5 backdrop-blur-xl border border-gray-100 dark:border-white/10 p-10 rounded-[2.5rem] shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(212,175,55,0.1)] hover:-translate-y-2 transition-all duration-300"
-              >
-                <div className="w-20 h-20 bg-gradient-to-br from-aeem-gold/20 to-aeem-gold/5 border border-aeem-gold/20 rounded-2xl flex items-center justify-center text-aeem-gold mx-auto mb-8 group-hover:from-aeem-gold group-hover:to-yellow-500 group-hover:text-white transition-all shadow-sm">
-                   <item.icon size={36} className="drop-shadow-sm" />
-                </div>
-                <h3 className="text-2xl font-black mb-4 text-aeem-charcoal dark:text-white tracking-tight">{item.title}</h3>
-                <p className="text-gray-600 dark:text-gray-400 leading-relaxed font-medium">{item.text}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+    <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
+      <div className="max-w-4xl">
+        <p className="mb-5 text-sm font-semibold uppercase tracking-[0.2em] text-aeem-gold">Who we are</p>
+        <h1 className="text-4xl font-extrabold leading-tight text-aeem-ink dark:text-white sm:text-5xl lg:text-6xl">
+          A youth-led movement working toward educational equity across Africa.
+        </h1>
+        <p className="mt-7 max-w-3xl text-lg leading-relaxed text-gray-700 dark:text-gray-300 sm:text-xl">
+          AEEM is a youth-led movement dedicated to bridging the barriers that prevent quality education from reaching every child in Africa.
+        </p>
+      </div>
+    </Section>
 
-      {/* Leadership Section */}
-      <section className="py-24 bg-gray-50 dark:bg-[#15181e] relative">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black mb-4 text-aeem-charcoal dark:text-white drop-shadow-sm">Our Leadership</h2>
-            <p className="text-lg text-gray-500 dark:text-gray-400 font-medium">The passionate team behind the movement.</p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-            {leadershipTeam.map((member, i) => (
-              <motion.div 
-                key={i} 
-                whileHover={reduced ? {} : { y: -8 }}
-                className="bg-white dark:bg-[#1a1d24] rounded-[2rem] overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_10px_40px_rgba(0,0,0,0.4)] border border-gray-100 dark:border-white/5 group"
-              >
-                <div className="aspect-[4/5] relative overflow-hidden bg-gray-200 dark:bg-gray-800">
-                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
-                   <picture>
-                      <source
-                        type="image/webp"
-                        srcSet={`/assets/gallery/${member.fileName}.webp `}
-                        sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                      />
-                      <img
-                        src={member.image}
-                        alt={member.name}
-                        width={360}
-                        height={450}
-                        loading="lazy"
-                        decoding="async"
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                      />
-                   </picture>
-                </div>
-                <div className="p-8 text-center relative z-20 bg-white dark:bg-[#1a1d24]">
-                   <h3 className="font-black text-xl mb-1 text-aeem-charcoal dark:text-white">{member.name}</h3>
-                   <p className="text-aeem-gold text-xs font-bold uppercase tracking-widest">{member.title}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Life at AEEM Gallery */}
-      <section className="py-24 bg-white dark:bg-[#0f1115] overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-            <div className="max-w-2xl">
-              <span className="text-aeem-gold font-bold uppercase tracking-[0.3em] text-xs mb-4 block drop-shadow-sm">Visual Journey</span>
-              <h2 className="text-4xl md:text-5xl font-black mb-6 text-aeem-charcoal dark:text-white">Life at <span className="text-aeem-gold">AEEM</span></h2>
-              <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed font-medium">
-                Moments from our workshops, community gatherings, and team sessions that define who we are.
-              </p>
+    <Section aria-labelledby="purpose-heading">
+      <div className="mb-12 max-w-3xl">
+        <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-aeem-gold">Our purpose</p>
+        <h2 id="purpose-heading" className="text-3xl font-bold text-aeem-ink dark:text-white sm:text-4xl">What guides the work</h2>
+      </div>
+      <div className="grid gap-6 md:grid-cols-3">
+        {purpose.map(({ icon: Icon, title, text }) => (
+          <Card key={title} className="p-7 sm:p-8">
+            <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-aeem-forest/10 text-aeem-forest dark:bg-aeem-gold/10 dark:text-aeem-gold">
+              <Icon size={24} aria-hidden="true" />
             </div>
+            <h3 className="text-xl font-semibold text-aeem-ink dark:text-white">{title}</h3>
+            <p className="mt-3 leading-relaxed text-gray-600 dark:text-gray-400">{text}</p>
+          </Card>
+        ))}
+      </div>
+    </Section>
+
+    <Section aria-labelledby="approach-heading" className="bg-aeem-forest text-white">
+      <Container>
+        <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+          <div>
+            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-aeem-gold-light">How we work</p>
+            <h2 id="approach-heading" className="text-3xl font-bold sm:text-4xl">Community-led action, advocacy, and empowerment.</h2>
           </div>
-          <MosaicGallery />
+          <div className="max-w-2xl space-y-6 text-base leading-relaxed text-white/85 sm:text-lg">
+            <p>AEEM describes its work through advocacy, community empowerment, and accountable action. These are the practical expressions of its mission to expand access to quality education.</p>
+            <p>The work is grounded in the people and communities AEEM serves, with education and mentorship positioned as tools for participation, leadership, and opportunity.</p>
+          </div>
         </div>
-      </section>
+      </Container>
+    </Section>
 
-      {/* Partners Section */}
-      <section className="py-20 bg-gray-50 dark:bg-[#15181e] border-t border-gray-200 dark:border-white/5 shadow-inner">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-           <h2 className="text-sm font-black mb-12 text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em]">Trusted by Forward-Thinking Partners</h2>
-           <div className="grid grid-cols-2 md:grid-cols-5 gap-6 items-stretch justify-center">
-              {partners.map((p, i) => (
-                <div 
-                  key={i} 
-                  className="p-6 bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl hover:border-aeem-gold/50 hover:bg-gray-50 dark:hover:bg-white/10 hover:shadow-[0_8px_30px_rgba(212,175,55,0.15)] transition-all group flex flex-col items-center justify-center min-h-[120px]"
-                >
-                  <img
-                    src={p.url}
-                    alt={`${p.name} Logo`}
-                    width={160}
-                    height={80}
-                    loading="lazy"
-                    decoding="async"
-                    className='h-20 object-contain mix-blend-multiply dark:mix-blend-normal opacity-80 group-hover:opacity-100 transition-opacity'
-                  />
-                  <span className="font-extrabold text-sm text-gray-500 dark:text-gray-400 tracking-widest group-hover:text-aeem-gold transition-colors mt-3">{p.name}</span>
-                  <span className="text-[9px] font-black uppercase tracking-wider text-gray-400 dark:text-gray-600 mt-1 text-center">{p.sub}</span>
-                </div>
-              ))}
-           </div>
-        </div>
-      </section>
-    </>
-  );
-};
+    <Section aria-labelledby="leadership-heading" className="bg-gray-50 dark:bg-[#15181e]">
+      <div className="mb-12 max-w-3xl">
+        <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-aeem-gold">Leadership</p>
+        <h2 id="leadership-heading" className="text-3xl font-bold text-aeem-ink dark:text-white sm:text-4xl">The people responsible for the movement.</h2>
+        <p className="mt-4 text-lg leading-relaxed text-gray-600 dark:text-gray-400">AEEM's leadership team provides the organizational direction behind its work.</p>
+      </div>
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {leadershipTeam.map((member) => (
+          <article key={member.name} className="overflow-hidden rounded-2xl border border-gray-200 bg-white dark:border-white/10 dark:bg-white/[0.03]">
+            <div className="aspect-[4/5] overflow-hidden bg-gray-200 dark:bg-gray-800">
+              <picture>
+                <source type="image/webp" srcSet={`/assets/gallery/${member.fileName}.webp`} sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" />
+                <img src={member.image} alt={member.name} width={360} height={450} loading="lazy" decoding="async" className="h-full w-full object-cover" />
+              </picture>
+            </div>
+            <div className="p-6">
+              <h3 className="text-lg font-semibold text-aeem-ink dark:text-white">{member.name}</h3>
+              <p className="mt-1 text-sm font-medium text-aeem-forest dark:text-aeem-gold-light">{member.title}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </Section>
 
-export default About;
+    <Section aria-labelledby="life-heading">
+      <div className="mb-10 max-w-2xl">
+        <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-aeem-gold">Life at AEEM</p>
+        <h2 id="life-heading" className="text-3xl font-bold text-aeem-ink dark:text-white sm:text-4xl">The work is carried by people.</h2>
+        <p className="mt-4 text-lg leading-relaxed text-gray-600 dark:text-gray-400">Moments from workshops, community gatherings, mentorship, and team sessions show the human side of the movement.</p>
+      </div>
+      <MosaicGallery />
+    </Section>
+
+    <Section aria-labelledby="partners-heading" className="bg-gray-50 dark:bg-[#15181e]">
+      <div className="mb-10 max-w-2xl">
+        <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-aeem-gold">Relationships</p>
+        <h2 id="partners-heading" className="text-3xl font-bold text-aeem-ink dark:text-white sm:text-4xl">Partners and institutional relationships</h2>
+        <p className="mt-4 text-lg leading-relaxed text-gray-600 dark:text-gray-400">Organizations represented in AEEM's current partner data.</p>
+      </div>
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+        {partners.map((partner) => (
+          <div key={partner.name} className="flex min-h-[128px] flex-col items-center justify-center rounded-2xl border border-gray-200 bg-white p-5 text-center dark:border-white/10 dark:bg-white/[0.03]">
+            <img src={partner.url} alt={`${partner.name} logo`} width={160} height={80} loading="lazy" decoding="async" className="h-16 w-full object-contain opacity-80" />
+            <span className="mt-3 text-sm font-semibold text-aeem-ink dark:text-white">{partner.name}</span>
+            <span className="mt-1 text-[10px] leading-tight text-gray-500">{partner.sub}</span>
+          </div>
+        ))}
+      </div>
+    </Section>
+  </>
+)
+
+export default About
