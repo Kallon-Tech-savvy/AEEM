@@ -46,9 +46,9 @@ const About: React.FC = () => {
         <meta property="og:description" content="Learn about the Africa Education Empowerment Movement." />
         <meta property="og:url" content={getCanonical('/about')} />
         <meta property="og:type" content="website" />
-        <meta property="og:image" content={`${SITE_URL}/assets/AEEM_logo_converted.avif`} />
+        <meta property="og:image" content={`${SITE_URL}/assets/logo_converted.avif`} />
         {/* Preload the decorative blur which affects first paint */}
-        <link rel="preload" as="image" href="/assets/AEEM_logo_converted.avif" />
+        <link rel="preload" as="image" href="/assets/logo_converted.avif" />
       </Helmet>
 
       {/* Hero Section */}
