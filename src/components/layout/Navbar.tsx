@@ -1,12 +1,18 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
 import ThemeToggle from '../theme/ThemeToggle'
+import { Container } from '../ui'
+
+const actionLinkClasses =
+  'inline-flex min-h-11 items-center justify-center rounded-xl border border-aeem-forest bg-aeem-forest px-5 text-sm font-semibold text-white transition-colors duration-150 hover:border-aeem-forest-dark hover:bg-aeem-forest-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus focus-visible:ring-offset-2'
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const location = useLocation()
+  const menuButtonRef = useRef<HTMLButtonElement>(null)
+  const firstMobileLinkRef = useRef<HTMLAnchorElement>(null)
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50)
@@ -14,10 +20,25 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Close mobile menu when route changes
   useEffect(() => {
     setIsMobileMenuOpen(false)
   }, [location])
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) return
+
+    firstMobileLinkRef.current?.focus()
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsMobileMenuOpen(false)
+        menuButtonRef.current?.focus()
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [isMobileMenuOpen])
 
   const navLinks = [
     { name: 'About', path: '/about' },
@@ -27,96 +48,120 @@ export default function Navbar() {
     { name: 'Press Kit', path: '/press-kit' },
   ]
 
+  const closeMobileMenu = () => setIsMobileMenuOpen(false)
+
   return (
     <nav
-      className={`fixed w-full z-[100] py-4 transition-colors duration-200 ${
+      aria-label="Primary navigation"
+      className={`fixed inset-x-0 top-0 z-[100] py-4 transition-colors duration-200 ${
         isScrolled || isMobileMenuOpen
-          ? 'bg-white/95 dark:bg-aeem-charcoal/95 border-b border-gray-100 dark:border-zinc-800 shadow-sm backdrop-blur-xl'
+          ? 'border-b border-black/10 bg-white/95 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-aeem-charcoal/95'
           : 'bg-transparent'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
-        <Link to="/" >
-          <picture className="dark:bg-white/95">
+      <Container className="flex items-center justify-between">
+        <Link
+          to="/"
+          aria-label="AEEM home"
+          className="rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus focus-visible:ring-offset-2"
+        >
+          <picture>
             <source srcSet="/assets/AEEM_logo.avif" type="image/avif" />
-            <source srcSet="/assets/AEEM_logo.webp" type="image/webp"/>
+            <source srcSet="/assets/AEEM_logo.webp" type="image/webp" />
             <img
               src="/assets/AEEM_logo.png"
-              alt="AEEM Logo"
+              alt="AEEM"
               width={144}
               height={36}
-              className="w-[144px] h-auto rounded-lg"
+              className="h-auto w-[144px]"
             />
           </picture>
         </Link>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden items-center gap-7 md:flex">
           {navLinks.map((link) => {
             const active = location.pathname === link.path
+
             return (
-              <div key={link.name} className="transition-transform duration-200 hover:-translate-y-0.5">
-                <Link
-                  to={link.path}
-                  className={`relative text-sm font-semibold transition-colors hover:text-aeem-gold ${
-                    active ? 'text-aeem-gold' : 'text-aeem-charcoal dark:text-white'
-                  }`}
-                >
-                  {link.name}
-                  {active ? <span className="absolute -bottom-2 left-0 h-0.5 w-full rounded-full bg-aeem-gold" /> : null}
-                </Link>
-              </div>
+              <Link
+                key={link.name}
+                to={link.path}
+                aria-current={active ? 'page' : undefined}
+                className={`relative rounded-sm py-2 text-sm font-semibold transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus focus-visible:ring-offset-2 hover:text-aeem-gold ${
+                  active ? 'text-aeem-gold' : 'text-aeem-charcoal dark:text-white'
+                }`}
+              >
+                {link.name}
+                {active ? (
+                  <span
+                    aria-hidden="true"
+                    className="absolute inset-x-0 -bottom-0.5 h-0.5 bg-aeem-gold"
+                  />
+                ) : null}
+              </Link>
             )
           })}
+
           <ThemeToggle />
-          <Link to="/get-involved" className="inline-flex bg-aeem-charcoal dark:bg-aeem-gold text-white dark:text-black px-8 py-3 rounded-full text-sm font-bold hover:bg-aeem-gold dark:hover:bg-aeem-white dark:hover:text-aeem-charcoal transition-all hover:scale-105 active:scale-95 shadow-xl">
+
+          <Link to="/get-involved" className={actionLinkClasses}>
             Get Involved
           </Link>
         </div>
 
-        {/* Mobile Menu Button */}
-        <div className="md:hidden flex items-center gap-4">
+        <div className="flex items-center gap-3 md:hidden">
           <ThemeToggle />
           <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="text-aeem-charcoal dark:text-aeem-gold"
-            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            ref={menuButtonRef}
+            type="button"
+            onClick={() => setIsMobileMenuOpen((open) => !open)}
+            className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-xl text-aeem-charcoal transition-colors duration-150 hover:bg-black/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus focus-visible:ring-offset-2 dark:text-aeem-gold dark:hover:bg-white/10"
+            aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-primary-navigation"
           >
-            {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            {isMobileMenuOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
           </button>
         </div>
-      </div>
+      </Container>
 
-      {/* Mobile Navigation */}
-      {isMobileMenuOpen && (
-          <div className="absolute top-full left-0 w-full md:hidden bg-white/95 dark:bg-aeem-charcoal/95 backdrop-blur-xl border-t border-gray-100 dark:border-white/10 px-6 py-12 flex flex-col gap-8 shadow-2xl overflow-hidden rounded-b-[2rem] motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-top-2 motion-safe:duration-150">
-            {navLinks.map((link, i) => (
-              <div
-                key={link.name}
-                style={{ transitionDelay: `${i * 30}ms` }}
-                className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-left-2"
-              >
+      {isMobileMenuOpen ? (
+        <div
+          id="mobile-primary-navigation"
+          className="absolute inset-x-0 top-full border-t border-black/10 bg-white dark:border-white/10 dark:bg-aeem-charcoal md:hidden"
+        >
+          <Container className="flex flex-col gap-1 py-6">
+            {navLinks.map((link, index) => {
+              const active = location.pathname === link.path
+
+              return (
                 <Link
+                  key={link.name}
+                  ref={index === 0 ? firstMobileLinkRef : undefined}
                   to={link.path}
-                  className={`text-2xl font-black ${
-                    location.pathname === link.path ? 'text-aeem-gold' : 'text-aeem-charcoal dark:text-white'
+                  onClick={closeMobileMenu}
+                  aria-current={active ? 'page' : undefined}
+                  className={`rounded-lg px-3 py-3 text-lg font-semibold transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus focus-visible:ring-offset-2 ${
+                    active
+                      ? 'bg-aeem-gold/10 text-aeem-gold'
+                      : 'text-aeem-charcoal hover:bg-black/5 dark:text-white dark:hover:bg-white/10'
                   }`}
                 >
                   {link.name}
                 </Link>
-              </div>
-            ))}
-            <div
-              style={{ transitionDelay: `${navLinks.length * 30}ms` }}
-              className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2"
+              )
+            })}
+
+            <Link
+              to="/get-involved"
+              onClick={closeMobileMenu}
+              className={`${actionLinkClasses} mt-4 w-full text-base`}
             >
-              <Link to="/get-involved" className="w-full bg-aeem-charcoal dark:bg-aeem-gold text-white px-8 py-5 rounded-2xl text-center font-black text-lg shadow-xl block">
-                Get Involved
-              </Link>
-            </div>
-          </div>
-        )}
+              Get Involved
+            </Link>
+          </Container>
+        </div>
+      ) : null}
     </nav>
   )
 }
