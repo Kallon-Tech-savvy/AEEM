@@ -194,8 +194,9 @@ const Impact: React.FC = () => {
         </div>
       </Section>
 
-      <Section spacing="large" className="bg-aeem-ink text-white" aria-labelledby="work-gallery-heading">
+      <section className="bg-aeem-ink text-white" aria-labelledby="work-gallery-heading">
         <Container>
+          <div className="py-20 sm:py-24 lg:py-32">
           <div className="max-w-3xl">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-aeem-gold-light">
               Work in context
@@ -210,8 +211,9 @@ const Impact: React.FC = () => {
           <div className="mt-10">
             <MasonryGallery />
           </div>
+          </div>
         </Container>
-      </Section>
+      </section>
     </>
   );
 };
