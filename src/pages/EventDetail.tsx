@@ -17,7 +17,7 @@ const formatDate = (value: string) =>
 
 export default function EventDetail() {
   const { slug } = useParams<{ slug: string }>()
-  const [event, setEvent] = useState<Event | null>(null)
+  const [event, setEvent] = useState<EventListItem | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
