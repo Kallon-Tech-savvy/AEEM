@@ -123,6 +123,13 @@ const Impact: React.FC = () => {
             <Loader2 className="h-8 w-8 animate-spin text-aeem-gold" aria-hidden="true" />
             <span className="sr-only">Loading impact stories</span>
           </div>
+        ) : error ? (
+          <Card className="p-8">
+            <h3 className="text-xl font-semibold text-aeem-ink">Impact stories are temporarily unavailable.</h3>
+            <p className="mt-3 leading-7 text-aeem-ink/70">
+              We could not load the published story archive right now. Please try again later.
+            </p>
+          </Card>
         ) : stories.length > 0 ? (
           <div className="grid gap-8 lg:grid-cols-2">
             {stories.map((story) => (
