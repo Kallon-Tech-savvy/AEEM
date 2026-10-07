@@ -52,6 +52,9 @@ const STORIES_DB: Record<string, StoryData> = {
   },
 };
 
+const linkButtonClass =
+  'inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-aeem-forest bg-aeem-forest px-5 text-sm font-semibold text-white transition-colors duration-150 hover:border-aeem-forest-dark hover:bg-aeem-forest-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus focus-visible:ring-offset-2';
+
 const StoryDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const [story, setStory] = useState<StoryData | null>(null);
@@ -142,12 +145,10 @@ const StoryDetail: React.FC = () => {
             <p className="mx-auto mt-4 max-w-md text-gray-600 dark:text-gray-300">
               The requested story is not currently available.
             </p>
-            <Button asChild className="mt-8">
-              <Link to="/impact">
-                <ArrowLeft size={16} />
-                Back to Impact
-              </Link>
-            </Button>
+            <Link to="/impact" className={linkButtonClass + ' mt-8'}>
+              <ArrowLeft size={16} aria-hidden="true" />
+              Back to Impact
+            </Link>
           </div>
         </Section>
       </main>
@@ -297,30 +298,28 @@ const StoryDetail: React.FC = () => {
         </Section>
 
         <Section spacing="compact" className="border-t border-black/10 dark:border-white/10">
-          <Container>
-            <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <p className="text-sm font-semibold text-aeem-ink dark:text-white">
-                  Share this story
-                </p>
-                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400" aria-live="polite">
-                  {shareStatus === 'copied' && 'Link copied to your clipboard.'}
-                  {shareStatus === 'shared' && 'Share dialog opened.'}
-                  {shareStatus === 'error' && 'Sharing was not completed.'}
-                </p>
-              </div>
-
-              <div className="flex flex-wrap gap-3">
-                <Button variant="secondary" onClick={handleShare}>
-                  <Link2 size={16} aria-hidden="true" />
-                  Share story
-                </Button>
-                <Button asChild>
-                  <Link to="/get-involved">Support similar programs</Link>
-                </Button>
-              </div>
+          <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-sm font-semibold text-aeem-ink dark:text-white">
+                Share this story
+              </p>
+              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400" aria-live="polite">
+                {shareStatus === 'copied' && 'Link copied to your clipboard.'}
+                {shareStatus === 'shared' && 'Share dialog opened.'}
+                {shareStatus === 'error' && 'Sharing was not completed.'}
+              </p>
             </div>
-          </Container>
+
+            <div className="flex flex-wrap gap-3">
+              <Button variant="secondary" onClick={handleShare}>
+                <Link2 size={16} aria-hidden="true" />
+                Share story
+              </Button>
+              <Link to="/get-involved" className={linkButtonClass}>
+                Support similar programs
+              </Link>
+            </div>
+          </div>
         </Section>
       </main>
     </>
