@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 /**
  * Database contract consumed by the typed Supabase client.
  *

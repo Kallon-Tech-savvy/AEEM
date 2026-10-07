@@ -3,24 +3,19 @@ import { Helmet } from 'react-helmet-async'
 import { Mail, Phone, MapPin, Send, CheckCircle2 } from 'lucide-react'
 import { Badge, Button, Card, Section } from '../components/ui'
 import { getCanonical } from '../lib/seo'
-import { normalizeEmail, normalizePhone, generateSubmissionKey, checkClientRateLimit, isAlreadySubmittedLocally, markSubmittedLocally, isHoneypotTriggered } from '../services/formUtils'
+import {
+  normalizeEmail,
+  normalizePhone,
+  generateSubmissionKey,
+  checkClientRateLimit,
+  isAlreadySubmittedLocally,
+  markSubmittedLocally,
+  isHoneypotTriggered,
+  submitInquiryApi,
+} from '../services/formUtils'
 
 const CONTACT_EMAIL = 'africaseducationempowermentmov@gmail.com'
 const CONTACT_PHONE = '+232 76 406 281'
-const SUPABASE_FUNCTION_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/submit-inquiry`
-
-async function submitInquiry(payload: Record<string, unknown>): Promise<Response> {
-  const anonKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY
-  return fetch(SUPABASE_FUNCTION_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${anonKey}`,
-      'apikey': anonKey
-    },
-    body: JSON.stringify(payload),
-  })
-}
 
 const Contact: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -32,7 +27,10 @@ const Contact: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError(null)
-    if (isHoneypotTriggered(honeypot)) { setSubmitted(true); return }
+    if (isHoneypotTriggered(honeypot)) {
+      setSubmitted(true)
+      return
+    }
 
     const fullName = formData.full_name.trim()
     const message = formData.message.trim()
@@ -43,7 +41,10 @@ const Contact: React.FC = () => {
 
     const email = normalizeEmail(formData.email)
     const phone = formData.phone ? normalizePhone(formData.phone) : null
-    if (!checkClientRateLimit(`contact:${email}`, 5, 60 * 60_000)) { setError('Too many attempts. Please wait before trying again.'); return }
+    if (!checkClientRateLimit(`contact:${email}`, 5, 60 * 60_000)) {
+      setError('Too many attempts. Please wait before trying again.')
+      return
+    }
 
     const submissionKey = await generateSubmissionKey('inquiry', email, 'contact')
     if (isAlreadySubmittedLocally(submissionKey)) {
@@ -53,7 +54,7 @@ const Contact: React.FC = () => {
 
     setIsSubmitting(true)
     try {
-      const response = await submitInquiry({
+      const response = await submitInquiryApi({
         inquiry_type: 'contact',
         full_name: fullName,
         email,
@@ -90,7 +91,9 @@ const Contact: React.FC = () => {
           ? 'The inquiry service took too long to respond. Please check your connection and try again.'
           : 'We could not send your message. Please try again.',
       )
-    } finally { setIsSubmitting(false) }
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -119,7 +122,7 @@ const Contact: React.FC = () => {
               <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-gold">Contact details</p>
               <h2 className="mt-3 text-2xl font-bold text-aeem-ink dark:text-white">Reach us directly</h2>
             </div>
-            <Card className="space-y-6">
+            <Card className="space-y-6 p-6">
               <a href={`mailto:${CONTACT_EMAIL}`} className="flex gap-4 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus">
                 <Mail className="mt-1 shrink-0 text-aeem-forest dark:text-aeem-gold-light" size={20} aria-hidden="true" />
                 <span><span className="block font-semibold text-aeem-ink dark:text-white">Email</span><span className="mt-1 block break-all text-sm text-aeem-ink/70 dark:text-white/70">{CONTACT_EMAIL}</span></span>
@@ -136,7 +139,7 @@ const Contact: React.FC = () => {
             <p className="text-sm leading-6 text-aeem-ink/60 dark:text-white/60">For sensitive matters, do not include identity documents, financial information, passwords, or other confidential credentials in this form.</p>
           </div>
 
-          <Card className="lg:col-span-3">
+          <Card className="px-3 py-6 sm:px-8 lg:col-span-3">
             {submitted ? (
               <div className="py-10 text-center">
                 <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-aeem-forest/10 text-aeem-forest dark:bg-aeem-gold/10 dark:text-aeem-gold-light"><CheckCircle2 size={28} aria-hidden="true" /></div>
@@ -145,7 +148,7 @@ const Contact: React.FC = () => {
                 <Button type="button" variant="secondary" className="mt-7" onClick={() => setSubmitted(false)}>Send another message</Button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6 px-3">
                 <input type="text" name="hp_contact" value={honeypot} onChange={e => setHoneypot(e.target.value)} className="hidden" tabIndex={-1} autoComplete="off" />
                 <div>
                   <h2 className="text-2xl font-bold text-aeem-ink dark:text-white">Send a message</h2>

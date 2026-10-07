@@ -107,3 +107,23 @@ export function markSubmittedLocally(key: string): void {
 export function isHoneypotTriggered(value: string): boolean {
   return value.trim().length > 0
 }
+// ── Inquiry Edge Function API ──────────────────────────────────────────────
+
+export async function submitInquiryApi(payload: Record<string, unknown>): Promise<Response> {
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL ?? ''
+  const functionUrl = `${supabaseUrl}/functions/v1/submit-inquiry`
+  const anonKey =
+    import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ||
+    import.meta.env.VITE_SUPABASE_ANON_KEY ||
+    ''
+
+  return fetch(functionUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${anonKey}`,
+      apikey: anonKey,
+    },
+    body: JSON.stringify(payload),
+  })
+}

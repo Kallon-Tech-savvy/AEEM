@@ -75,7 +75,7 @@ const About: React.FC = () => (
         </div>
     </Section>
 
-    <Section aria-labelledby="leadership-heading className="bg-gray-50 dark:bg-[#15181e]">
+    <Section aria-labelledby="leadership-heading" className="bg-gray-50 dark:bg-[#15181e]">
       <div className="mb-12 max-w-3xl">
         <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-aeem-gold">Leadership</p>
         <h2 id="leadership-heading" className="text-3xl font-bold text-aeem-ink dark:text-white sm:text-4xl">The people responsible for the movement.</h2>

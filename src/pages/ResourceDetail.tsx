@@ -5,7 +5,6 @@ import { ArrowLeft, Clock, Download, Loader2, Share2 } from 'lucide-react'
 import { supabase } from '../services/supabase'
 import { Badge, Button, Card, Section } from '../components/ui'
 import { getCanonical } from '../lib/seo'
-import { RESOURCE_DETAIL_FIELDS } from '../services/contentFields'
 import type { ResourceDetailItem } from '../types/content'
 import { sanitizeHtml } from '../lib/sanitizeHtml'
 
