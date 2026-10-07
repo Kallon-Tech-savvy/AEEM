@@ -6,12 +6,12 @@ import { supabase } from '../services/supabase'
 import { Badge, Button, Card, Container, Section } from '../components/ui'
 import { getCanonical } from '../lib/seo'
 import { RESOURCE_DETAIL_FIELDS } from '../services/contentFields'
-import type { ResourceRow } from '../types/content'
+import type { ResourceDetailItem } from '../types/content'
 import { sanitizeHtml } from '../lib/sanitizeHtml'
 
 export default function ResourceDetail() {
   const { slug } = useParams<{ slug: string }>()
-  const [resource, setResource] = useState<ResourceRow | null>(null)
+  const [resource, setResource] = useState<ResourceDetailItem | null>(null)
   const [loading, setLoading] = useState(true)
   const [shareStatus, setShareStatus] = useState('')
 
@@ -22,7 +22,7 @@ export default function ResourceDetail() {
       .then(({ data, error }) => {
         if (!active) return
         if (error) console.error('Error fetching resource:', error)
-        setResource(error ? null : data as ResourceRow)
+        setResource(error ? null : data as unknown as ResourceDetailItem)
         setLoading(false)
       })
     return () => { active = false }
@@ -93,7 +93,7 @@ export default function ResourceDetail() {
 
       {resource.file_url && <Card className="mt-12 flex flex-col gap-5 p-6 sm:flex-row sm:items-center sm:justify-between">
         <div><h2 className="text-xl font-semibold text-aeem-ink dark:text-white">Download this resource</h2><p className="mt-1 text-sm text-aeem-ink/65 dark:text-white/65">Open the published file in a new tab.</p></div>
-        <Button type="button" onClick={() => window.open(resource.file_url, '_blank', 'noopener,noreferrer')}><Download size={17} aria-hidden="true" />Download</Button>
+        <Button type="button" onClick={() => { const url = resource.file_url; if (url) window.open(url, '_blank', 'noopener,noreferrer') }}><Download size={17} aria-hidden="true" />Download</Button>
       </Card>}
 
       <div className="mt-12 flex flex-col gap-6 border-t border-black/10 pt-6 dark:border-white/10 sm:flex-row sm:items-center sm:justify-between">
