@@ -41,6 +41,7 @@ export default function EventDetail() {
       .from('events')
       .select('id, title, slug, description, event_date, location, status, cover_image_url')
       .eq('slug', slug)
+      .eq('published', true)
       .single()
       .then(({ data, error }) => {
         if (!active) return
