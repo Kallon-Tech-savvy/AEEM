@@ -32,9 +32,7 @@ export function normalizePhone(phone: string): string {
 //  • The DB unique constraint rejects concurrent duplicates atomically
 //
 // Pattern: SHA-256( "formType:v1:scope:normalised_email" )
-//   newsletter    → scope = "global"
-//   inquiry       → scope = "volunteer" | "partner" | "donor"
-//   event_reg     → scope = event.id
+//   inquiry       → scope = "contact" | "volunteer" | "partner" | "donor"
 
 export async function generateSubmissionKey(
   formType: string,
@@ -58,8 +56,8 @@ export async function generateSubmissionKey(
 // Real rate limiting must live on the server / Supabase Edge Function.
 //
 // Usage:
-//   checkClientRateLimit('newsletter:user@example.com', 3, 10 * 60_000)
-//   → false if >3 calls in the last 10 minutes from this session
+//   checkClientRateLimit('inquiry:user@example.com', 5, 60 * 60_000)
+//   → false if >5 calls in the last hour from this session
 
 const _rateLimitMap = new Map<string, number[]>()
 

@@ -5,17 +5,8 @@ import { ArrowLeft, Calendar, MapPin, Loader2 } from 'lucide-react'
 import { supabase } from '../services/supabase'
 import { Badge, Card, Container, Section } from '../components/ui'
 import { getCanonical } from '../lib/seo'
-
-interface Event {
-  id: string
-  title: string
-  slug: string
-  description: string
-  event_date: string
-  location: string
-  status: 'upcoming' | 'completed'
-  cover_image_url: string
-}
+import { EVENT_DETAIL_FIELDS } from '../services/contentFields'
+import type { EventListItem } from '../types/content'
 
 const formatDate = (value: string) =>
   new Date(value).toLocaleDateString('en-US', {
@@ -26,7 +17,7 @@ const formatDate = (value: string) =>
 
 export default function EventDetail() {
   const { slug } = useParams<{ slug: string }>()
-  const [event, setEvent] = useState<Event | null>(null)
+  const [event, setEvent] = useState<EventListItem | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -39,7 +30,7 @@ export default function EventDetail() {
 
     supabase
       .from('events')
-      .select('id, title, slug, description, event_date, location, status, cover_image_url')
+      .select(EVENT_DETAIL_FIELDS)
       .eq('slug', slug)
       .eq('published', true)
       .single()
@@ -49,7 +40,7 @@ export default function EventDetail() {
           console.error('Error fetching event:', error)
           setEvent(null)
         } else {
-          setEvent(data as Event)
+          setEvent(data as EventListItem)
         }
         setLoading(false)
       })

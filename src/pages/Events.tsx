@@ -5,19 +5,10 @@ import { Link } from 'react-router-dom'
 import { supabase } from '../services/supabase'
 import { Badge, Card, Section } from '../components/ui'
 import { getCanonical } from '../lib/seo'
+import { EVENT_LIST_FIELDS } from '../services/contentFields'
+import type { EventListItem } from '../types/content'
 
-interface Event {
-  id: string
-  title: string
-  slug: string
-  description: string
-  event_date: string
-  location: string
-  status: 'upcoming' | 'completed'
-  cover_image_url: string
-}
-
-const isUpcoming = (event: Event) =>
+const isUpcoming = (event: EventListItem) =>
   event.status === 'upcoming' && new Date(event.event_date).getTime() >= Date.now()
 
 const formatDate = (value: string) =>
@@ -28,7 +19,7 @@ const formatDate = (value: string) =>
   })
 
 export default function Events() {
-  const [events, setEvents] = useState<Event[]>([])
+  const [events, setEvents] = useState<EventListItem[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
 
@@ -37,7 +28,7 @@ export default function Events() {
 
     supabase
       .from('events')
-      .select('id, title, slug, description, event_date, location, status, cover_image_url')
+      .select(EVENT_LIST_FIELDS)
       .eq('published', true)
       .order('event_date', { ascending: false })
       .then(({ data, error }) => {
@@ -46,7 +37,7 @@ export default function Events() {
           console.error('Error fetching events:', error)
           setError(true)
         } else {
-          setEvents((data ?? []) as Event[])
+          setEvents((data ?? []) as EventListItem[])
         }
         setLoading(false)
       })

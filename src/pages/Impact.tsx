@@ -7,34 +7,13 @@ import { AwardSlider } from '../components/sections/AwardSlider';
 import MasonryGallery from '../components/sections/MasonryGallery';
 import { Container, Section, Stat, Card } from '../components/ui';
 import { getCanonical } from '../lib/seo';
-
-interface ImpactStory {
-  id: string;
-  title: string;
-  slug: string;
-  summary: string;
-  location: string;
-  participants_count: number;
-  schools_count: number;
-  cover_image_url: string;
-}
-
-const FALLBACK_STORIES = [
-  {
-    title: 'I AM SOMEBODY Initiative',
-    slug: 'i-am-somebody',
-    summary:
-      'Our flagship 2-day empowerment workshop trained 42 participants from six schools, addressing leadership, civic awareness, and resilience.',
-    cover_image_url: '/assets/gallery/Activity.jpg',
-    participants_count: 42,
-    schools_count: 6,
-    location: 'Freetown, Sierra Leone',
-  },
-];
+import { IMPACT_STORY_LIST_FIELDS } from '../services/contentFields';
+import type { ImpactStoryListItem } from '../types/content';
 
 const Impact: React.FC = () => {
-  const [stories, setStories] = useState<ImpactStory[]>([]);
+  const [stories, setStories] = useState<ImpactStoryListItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchStories = async () => {
@@ -42,16 +21,17 @@ const Impact: React.FC = () => {
         const { data, error } = await supabase
           .from('impact_stories')
           .select(
-            'id, title, slug, summary, location, participants_count, schools_count, cover_image_url',
+            IMPACT_STORY_LIST_FIELDS,
           )
           .eq('published', true)
           .order('created_at', { ascending: false });
 
         if (error) throw error;
-        setStories(data && data.length > 0 ? data : (FALLBACK_STORIES as ImpactStory[]));
+        setStories((data ?? []) as ImpactStoryListItem[]);
       } catch (error) {
         console.error('Error fetching impact stories:', error);
-        setStories(FALLBACK_STORIES as ImpactStory[]);
+        setError(true);
+        setStories([]);
       } finally {
         setLoading(false);
       }
@@ -133,6 +113,13 @@ const Impact: React.FC = () => {
             <Loader2 className="h-8 w-8 animate-spin text-aeem-gold" aria-hidden="true" />
             <span className="sr-only">Loading impact stories</span>
           </div>
+        ) : error ? (
+          <Card className="p-8">
+            <h3 className="text-xl font-semibold text-aeem-ink">Impact stories are temporarily unavailable.</h3>
+            <p className="mt-3 leading-7 text-aeem-ink/70">
+              We could not load the published story archive right now. Please try again later.
+            </p>
+          </Card>
         ) : stories.length > 0 ? (
           <div className="grid gap-8 lg:grid-cols-2">
             {stories.map((story) => (

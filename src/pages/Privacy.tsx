@@ -28,9 +28,9 @@ const Privacy: React.FC = () => (
     <Section>
       <article className="prose prose-lg max-w-3xl text-aeem-ink dark:prose-invert">
         <h2>Information you choose to submit</h2>
-        <p>The website may collect your name, email address, phone number, organization or institution, and the message you provide when you submit a contact or involvement inquiry. Newsletter subscriptions collect your email address.</p>
+        <p>The website may collect your name, email address, phone number, organization or institution, and the message you provide when you submit a contact or involvement inquiry.</p>
         <h2>Why we collect it</h2>
-        <p>These details are used to respond to inquiries, understand requests to work with AEEM, and manage newsletter subscriptions.</p>
+        <p>These details are used to respond to inquiries and understand requests to work with AEEM.</p>
         <h2>Service provider</h2>
         <p>The current application sends form submissions to Supabase, which provides the application's database service. AEEM should maintain its production database access controls, retention rules, and any required legal documentation separately from this page.</p>
         <h2>What not to submit</h2>

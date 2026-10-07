@@ -4,31 +4,20 @@ import { Search, BookOpen, FileText, Newspaper, ArrowRight, Loader2 } from 'luci
 import { Link } from 'react-router-dom'
 import { supabase } from '../services/supabase'
 import { Badge, Card, Section } from '../components/ui'
+import { RESOURCE_LIST_FIELDS } from '../services/contentFields'
+import type { ResourceListItem } from '../types/content'
 
-interface Resource {
-  id: string
-  title: string
-  slug: string
-  type?: string
-  description?: string
-  summary?: string
-  category?: string
-  created_at?: string
-  tags?: string[]
-  image?: string
-}
-
-const iconFor = (r: Resource) => {
+const iconFor = (r: ResourceListItem) => {
   const v = `${r.type ?? ''} ${r.category ?? ''}`.toLowerCase()
   if (v.includes('policy') || v.includes('report')) return FileText
   if (v.includes('news') || v.includes('press')) return Newspaper
   return BookOpen
 }
 
-const labelFor = (r: Resource) => r.category ?? r.type ?? 'Resource'
+const labelFor = (r: ResourceListItem) => r.category ?? r.type ?? 'Resource'
 
 export default function Resources() {
-  const [resources, setResources] = useState<Resource[]>([])
+  const [resources, setResources] = useState<ResourceListItem[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
   const [query, setQuery] = useState('')
@@ -36,13 +25,13 @@ export default function Resources() {
 
   useEffect(() => {
     let active = true
-    supabase.from('resources').select('id, title, slug, type, description, summary, category, created_at, tags, image:image_url').eq('published', true).order('created_at', { ascending: false })
+    supabase.from('resources').select(RESOURCE_LIST_FIELDS).eq('published', true).order('created_at', { ascending: false })
       .then(({ data, error }) => {
         if (!active) return
         if (error) {
           console.error('Error fetching resources:', error)
           setError(true)
-        } else setResources((data ?? []) as Resource[])
+        } else setResources((data ?? []) as ResourceListItem[])
         setLoading(false)
       })
     return () => { active = false }
@@ -114,7 +103,7 @@ export default function Resources() {
       : filtered.length === 0 ? <Card className="mt-10 p-8"><h3 className="text-xl font-semibold text-aeem-ink dark:text-white">No resources match your search.</h3><p className="mt-3 leading-7 text-aeem-ink/70 dark:text-white/70">Try a different search term or category.</p></Card>
       : <>
         {featured && <Card className="mt-10 overflow-hidden"><div className="grid lg:grid-cols-2">
-          {featured.image ? <img src={featured.image} alt="" className="h-full min-h-64 w-full object-cover" loading="lazy" /> : <div className="flex min-h-64 items-end bg-aeem-forest p-8"><span className="text-6xl font-bold text-white/15" aria-hidden="true">AEEM</span></div>}
+          {featured.image_url ? <img src={featured.image_url} alt="" className="h-full min-h-64 w-full object-cover" loading="lazy" /> : <div className="flex min-h-64 items-end bg-aeem-forest p-8"><span className="text-6xl font-bold text-white/15" aria-hidden="true">AEEM</span></div>}
           <div className="flex flex-col justify-center p-8 sm:p-10">
             <div className="flex flex-wrap items-center gap-3"><Badge>{labelFor(featured)}</Badge>{featured.created_at && <span className="text-sm text-aeem-ink/60 dark:text-white/60">{new Date(featured.created_at).getFullYear()}</span>}</div>
             <h3 className="mt-5 text-2xl font-bold leading-tight text-aeem-ink dark:text-white sm:text-3xl">{featured.title}</h3>

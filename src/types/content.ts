@@ -1,0 +1,20 @@
+import type { Database } from './database'
+
+export type EventRow = Database['public']['Tables']['events']['Row']
+export type ImpactStoryRow = Database['public']['Tables']['impact_stories']['Row']
+export type ResourceRow = Database['public']['Tables']['resources']['Row']
+
+export type EventListItem = Pick<
+  EventRow,
+  'id' | 'title' | 'slug' | 'description' | 'event_date' | 'location' | 'status' | 'cover_image_url'
+>
+
+export type ImpactStoryListItem = Pick<
+  ImpactStoryRow,
+  'id' | 'title' | 'slug' | 'summary' | 'location' | 'participants_count' | 'schools_count' | 'cover_image_url'
+>
+
+export type ResourceListItem = Pick<
+  ResourceRow,
+  'id' | 'title' | 'slug' | 'type' | 'description' | 'summary' | 'category' | 'created_at' | 'tags' | 'image_url'
+>
