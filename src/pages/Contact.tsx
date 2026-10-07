@@ -1,13 +1,21 @@
 import React, { useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Mail, Phone, MapPin, Send, CheckCircle2 } from 'lucide-react'
-import { supabase } from '../services/supabase'
 import { Badge, Button, Card, Section } from '../components/ui'
 import { getCanonical } from '../lib/seo'
 import { normalizeEmail, normalizePhone, generateSubmissionKey, checkClientRateLimit, isAlreadySubmittedLocally, markSubmittedLocally, isHoneypotTriggered } from '../services/formUtils'
 
 const CONTACT_EMAIL = 'africaseducationempowermentmov@gmail.com'
 const CONTACT_PHONE = '+232 76 406 281'
+const SUPABASE_FUNCTION_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/submit-inquiry`
+
+async function submitInquiry(payload: Record<string, unknown>): Promise<Response> {
+  return fetch(SUPABASE_FUNCTION_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  })
+}
 
 const Contact: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -40,30 +48,38 @@ const Contact: React.FC = () => {
 
     setIsSubmitting(true)
     try {
-      const { error: insertError } = await supabase.from('inquiries').insert([{
+      const response = await submitInquiry({
         inquiry_type: 'contact',
         full_name: fullName,
         email,
-        email_normalized: email,
         phone,
-        phone_normalized: phone,
         message,
-        submission_key: submissionKey,
-      }])
-      if (insertError) {
-        if (insertError.code === '23505') {
-          markSubmittedLocally(submissionKey)
-          setError('We already have a recent request from this email. Please wait for a response before sending another.')
-          return
-        }
-        throw insertError
+        honeypot,
+      })
+
+      const result = await response.json().catch(() => null)
+
+      if (response.status === 409 || result?.code === 'duplicate_submission') {
+        markSubmittedLocally(submissionKey)
+        setError('We already have a recent request from this email. Please wait for a response before sending another.')
+        return
       }
+
+      if (response.status === 429 || result?.code === 'rate_limited') {
+        setError('Too many requests. Please wait a few minutes before trying again.')
+        return
+      }
+
+      if (!response.ok) {
+        throw new Error(typeof result?.code === 'string' ? result.code : `HTTP ${response.status}`)
+      }
+
       markSubmittedLocally(submissionKey)
       setSubmitted(true)
       setFormData({ full_name: '', email: '', phone: '', message: '' })
       setHoneypot('')
     } catch (err) {
-      console.warn('Supabase contact insert failed:', err)
+      console.warn('Inquiry submission failed:', err)
       setError('We could not send your message. Please try again.')
     } finally { setIsSubmitting(false) }
   }
@@ -129,7 +145,7 @@ const Contact: React.FC = () => {
                 <div className="grid gap-5 sm:grid-cols-2">
                   <label className="space-y-2"><span className="text-sm font-semibold text-aeem-ink dark:text-white">Full name</span><input required name="full_name" autoComplete="name" value={formData.full_name} onChange={e => setFormData({...formData, full_name: e.target.value})} className="min-h-11 w-full rounded-xl border border-gray-300 bg-white px-4 text-sm outline-none focus:border-aeem-focus focus:ring-2 focus:ring-aeem-focus/20 dark:border-white/15 dark:bg-white/[0.03] dark:text-white" /></label>
                   <label className="space-y-2"><span className="text-sm font-semibold text-aeem-ink dark:text-white">Email address</span><input required type="email" name="email" autoComplete="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="min-h-11 w-full rounded-xl border border-gray-300 bg-white px-4 text-sm outline-none focus:border-aeem-focus focus:ring-2 focus:ring-aeem-focus/20 dark:border-white/15 dark:bg-white/[0.03] dark:text-white" /></label>
-                  <label className="space-y-2"><span className="text-sm font-semibold text-aeem-ink dark:text-white">Phone <span className="font-normal text-aeem-ink/50">(optional)</span></span><input name="phone" type="tel" autoComplete="tel" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className="min-h-11 w-full rounded-xl border border-gray-300 bg-white px-4 text-sm outline-none focus:border-aeem-focus focus:ring-2 focus:ring-aeem-focus/20 dark:border-white/15 dark:bg-white/[0.03] dark:text-white" /></label>
+                  <label className="space-y-2"><span className="text-sm font-semibold text-aeem-ink dark:text-white">Phone <span className="font-normal text-aeem-ink/50">(optional)</span></span><input name="phone" type="tel" autoComplete="tel" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className="min-h-11 w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm outline-none focus:border-aeem-focus focus:ring-2 focus:ring-aeem-focus/20 dark:border-white/15 dark:bg-white/[0.03] dark:text-white" /></label>
                 </div>
                 <label className="block space-y-2"><span className="text-sm font-semibold text-aeem-ink dark:text-white">Message</span><textarea required name="message" rows={7} maxLength={3000} value={formData.message} onChange={e => setFormData({...formData, message: e.target.value})} className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm outline-none focus:border-aeem-focus focus:ring-2 focus:ring-aeem-focus/20 dark:border-white/15 dark:bg-white/[0.03] dark:text-white" placeholder="How can we help?" /></label>
                 {error && <div role="alert" className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-700 dark:border-red-900/50 dark:bg-red-950/20 dark:text-red-300">{error}</div>}
