@@ -1,43 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://aeem-platform.vercel.app/</loc>
+    <loc>https://www.aeemmovement.org/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://aeem-platform.vercel.app/about</loc>
+    <loc>https://www.aeemmovement.org/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://aeem-platform.vercel.app/impact</loc>
+    <loc>https://www.aeemmovement.org/impact</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://aeem-platform.vercel.app/events</loc>
+    <loc>https://www.aeemmovement.org/events</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://aeem-platform.vercel.app/get-involved</loc>
+    <loc>https://www.aeemmovement.org/get-involved</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://aeem-platform.vercel.app/resources</loc>
+    <loc>https://www.aeemmovement.org/resources</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://aeem-platform.vercel.app/press-kit</loc>
+    <loc>https://www.aeemmovement.org/press-kit</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://aeem-platform.vercel.app/contact</loc>
+    <loc>https://www.aeemmovement.org/contact</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.aeemmovement.org/privacy</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
 </urlset>

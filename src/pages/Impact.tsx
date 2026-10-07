@@ -1,208 +1,131 @@
-import React, { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
-import { ArrowRight, Loader2, MapPin } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { supabase } from '../services/supabase';
-import { AwardSlider } from '../components/sections/AwardSlider';
-import MasonryGallery from '../components/sections/MasonryGallery';
-import { Container, Section, Stat, Card } from '../components/ui';
-import { getCanonical } from '../lib/seo';
-import { IMPACT_STORY_LIST_FIELDS } from '../services/contentFields';
-import type { ImpactStoryListItem } from '../types/content';
+import React, { useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet-async'
+import { Link } from 'react-router-dom'
+import { ArrowRight, Loader2, Users, School } from 'lucide-react'
+import { supabase } from '../services/supabase'
+import { Button, Card, Container, Section } from '../components/ui'
+import { getCanonical } from '../lib/seo'
+import type { ImpactStoryListItem } from '../types/content'
 
-const Impact: React.FC = () => {
-  const [stories, setStories] = useState<ImpactStoryListItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+export default function Impact() {
+  const [stories, setStories] = useState<ImpactStoryListItem[]>([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const fetchStories = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('impact_stories')
-          .select(
-            IMPACT_STORY_LIST_FIELDS,
-          )
-          .eq('published', true)
-          .order('created_at', { ascending: false });
+    let active = true
 
-        if (error) throw error;
-        setStories((data ?? []) as ImpactStoryListItem[]);
-      } catch (error) {
-        console.error('Error fetching impact stories:', error);
-        setError(true);
-        setStories([]);
-      } finally {
-        setLoading(false);
-      }
-    };
+    supabase
+      .from('impact_stories')
+      .select('id, title, slug, summary, location, participants_count, schools_count, cover_image_url')
+      .eq('published', true)
+      .order('created_at', { ascending: false })
+      .then(({ data, error }) => {
+        if (!active) return
+        if (error) {
+          console.error('Error fetching impact stories:', error)
+          setStories([])
+        } else {
+          setStories((data as ImpactStoryListItem[]) ?? [])
+        }
+        setLoading(false)
+      })
 
-    fetchStories();
-  }, []);
+    return () => {
+      active = false
+    }
+  }, [])
+
+  const canonicalUrl = getCanonical('/impact')
 
   return (
     <>
       <Helmet>
-        <title>Impact & Stories | AEEM</title>
+        <title>Our Impact & Evidence | AEEM</title>
         <meta
           name="description"
-          content="Explore AEEM programs, impact stories, evidence, and recognition from our work in education and youth empowerment."
+          content="Evidence-based impact stories and verified outcomes from AEEM educational initiatives across Africa."
         />
-        <link rel="canonical" href={getCanonical('/impact')} />
+        <link rel="canonical" href={canonicalUrl} />
       </Helmet>
 
-      <header className="bg-aeem-forest text-white">
+      <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
         <Container>
-          <div className="max-w-4xl py-24 sm:py-28 lg:py-32">
-            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-aeem-gold-light">
-              Evidence & stories
-            </p>
-            <h1 className="max-w-3xl text-4xl font-extrabold leading-tight sm:text-5xl lg:text-6xl">
-              Impact that can be seen, measured, and understood.
-            </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/80 sm:text-xl">
-              Explore the programs, people, and outcomes behind AEEM&apos;s work.
-              Where evidence is available, we show it alongside the story.
-            </p>
-          </div>
+          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-forest dark:text-aeem-gold-light">
+            Verified Outcomes & Field Work
+          </p>
+          <h1 className="mt-4 text-4xl font-bold tracking-tight text-aeem-ink dark:text-white sm:text-5xl lg:text-6xl">
+            Our Impact
+          </h1>
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-aeem-ink/75 dark:text-white/75">
+            Transparent reporting on educational programs, community reach, and institutional partnerships.
+          </p>
         </Container>
-      </header>
-
-      <Section aria-labelledby="impact-at-a-glance-heading">
-        <div className="mb-10 max-w-3xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-aeem-gold">
-            At a glance
-          </p>
-          <h2
-            id="impact-at-a-glance-heading"
-            className="mt-3 text-3xl font-bold text-aeem-ink sm:text-4xl"
-          >
-            What we are able to report
-          </h2>
-          <p className="mt-4 max-w-2xl text-base leading-relaxed text-aeem-ink/70">
-            These figures are presented as program-level records, not as a
-            substitute for a full organizational impact report.
-          </p>
-        </div>
-
-        <div className="grid gap-8 sm:grid-cols-3">
-          <Stat value="42" label="Participants" detail="I AM SOMEBODY · 2025" />
-          <Stat value="6" label="Schools represented" detail="I AM SOMEBODY · 2025" />
-          <Stat value="2 days" label="Workshop duration" detail="I AM SOMEBODY · 2025" />
-        </div>
       </Section>
 
-      <Section spacing="large" className="bg-aeem-cream" aria-labelledby="stories-heading">
-        <div className="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <div className="max-w-3xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-aeem-gold">
-              Impact stories
-            </p>
-            <h2 id="stories-heading" className="mt-3 text-3xl font-bold text-aeem-ink sm:text-4xl">
-              From program activity to human outcomes
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-aeem-ink/70">
-              Each story should connect an identified need to an intervention and,
-              where evidence exists, a measurable or documented outcome.
-            </p>
-          </div>
-        </div>
-
-        {loading ? (
-          <div className="flex items-center justify-center py-24" role="status" aria-live="polite">
-            <Loader2 className="h-8 w-8 animate-spin text-aeem-gold" aria-hidden="true" />
-            <span className="sr-only">Loading impact stories</span>
-          </div>
-        ) : error ? (
-          <Card className="p-8">
-            <h3 className="text-xl font-semibold text-aeem-ink">Impact stories are temporarily unavailable.</h3>
-            <p className="mt-3 leading-7 text-aeem-ink/70">
-              We could not load the published story archive right now. Please try again later.
-            </p>
-          </Card>
-        ) : stories.length > 0 ? (
-          <div className="grid gap-8 lg:grid-cols-2">
-            {stories.map((story) => (
-              <Card key={story.slug} className="overflow-hidden p-0">
-                <div className="aspect-[16/9] bg-aeem-ink/5">
-                  <img
-                    src={story.cover_image_url}
-                    alt={story.title}
-                    width={1280}
-                    height={720}
-                    loading="lazy"
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-                <div className="p-6 sm:p-8">
-                  <div className="flex items-center gap-2 text-sm text-aeem-ink/65">
-                    <MapPin size={16} className="text-aeem-gold" aria-hidden="true" />
-                    <span>{story.location}</span>
-                  </div>
-                  <h3 className="mt-4 text-2xl font-bold text-aeem-ink">{story.title}</h3>
-                  <p className="mt-3 leading-relaxed text-aeem-ink/70">{story.summary}</p>
-
-                  <div className="my-6 grid grid-cols-2 gap-4 border-y border-aeem-ink/10 py-5">
-                    <Stat value={String(story.participants_count)} label="Participants" />
-                    <Stat value={String(story.schools_count)} label="Schools" />
+      <Section>
+        <Container>
+          {loading ? (
+            <div className="flex min-h-[300px] items-center justify-center">
+              <Loader2 className="animate-spin text-aeem-gold" size={32} aria-label="Loading impact stories" />
+            </div>
+          ) : stories.length === 0 ? (
+            <Card className="p-12 text-center">
+              <h2 className="text-2xl font-bold text-aeem-ink dark:text-white">No impact stories published yet</h2>
+              <p className="mt-2 text-aeem-ink/70 dark:text-white/70">
+                Check back soon as we publish field reports and verified outcome metrics.
+              </p>
+            </Card>
+          ) : (
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {stories.map((story) => (
+                <Card key={story.id} className="flex flex-col justify-between overflow-hidden p-6">
+                  <div>
+                    {story.cover_image_url && (
+                      <img
+                        src={story.cover_image_url}
+                        alt={story.title}
+                        className="-mx-6 -mt-6 mb-6 aspect-[16/9] w-[calc(100%+3rem)] object-cover"
+                      />
+                    )}
+                    <p className="text-xs font-semibold uppercase tracking-[0.12em] text-aeem-gold">
+                      {story.location}
+                    </p>
+                    <h2 className="mt-2 text-xl font-bold text-aeem-ink dark:text-white">
+                      {story.title}
+                    </h2>
+                    <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-aeem-ink/75 dark:text-white/75">
+                      {story.summary}
+                    </p>
                   </div>
 
-                  <Link
-                    to={`/impact/${story.slug}`}
-                    className="inline-flex items-center gap-2 font-semibold text-aeem-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus focus-visible:ring-offset-2"
-                  >
-                    Read the case study
-                    <ArrowRight size={18} aria-hidden="true" />
-                  </Link>
-                </div>
-              </Card>
-            ))}
-          </div>
-        ) : (
-          <p className="py-12 text-aeem-ink/70">No published impact stories are available yet.</p>
-        )}
-      </Section>
-
-      <Section aria-labelledby="recognition-heading">
-        <div className="max-w-3xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-aeem-gold">
-            Recognition
-          </p>
-          <h2 id="recognition-heading" className="mt-3 text-3xl font-bold text-aeem-ink sm:text-4xl">
-            Recognition and institutional relationships
-          </h2>
-          <p className="mt-4 leading-relaxed text-aeem-ink/70">
-            Recognition is useful context, but it is not the same as evidence of
-            program outcomes. We keep the distinction explicit.
-          </p>
-        </div>
-        <div className="mt-10">
-          <AwardSlider />
-        </div>
-      </Section>
-
-      <section className="bg-aeem-ink text-white" aria-labelledby="work-gallery-heading">
-        <Container>
-          <div className="py-20 sm:py-24 lg:py-32">
-          <div className="max-w-3xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-aeem-gold-light">
-              Work in context
-            </p>
-            <h2 id="work-gallery-heading" className="mt-3 text-3xl font-bold sm:text-4xl">
-              People, programs, and activity
-            </h2>
-            <p className="mt-4 leading-relaxed text-white/70">
-              A visual record of AEEM&apos;s activities and the communities around them.
-            </p>
-          </div>
-          <div className="mt-10">
-            <MasonryGallery />
-          </div>
-          </div>
+                  <div className="mt-6 border-t border-black/10 pt-4 dark:border-white/10">
+                    <div className="mb-4 flex flex-wrap items-center gap-4 text-xs text-aeem-ink/60 dark:text-white/60">
+                      {story.participants_count != null && (
+                        <span className="inline-flex items-center gap-1">
+                          <Users size={13} aria-hidden="true" />
+                          {story.participants_count} Participants
+                        </span>
+                      )}
+                      {story.schools_count != null && (
+                        <span className="inline-flex items-center gap-1">
+                          <School size={13} aria-hidden="true" />
+                          {story.schools_count} Institutions
+                        </span>
+                      )}
+                    </div>
+                    <Link to={`/impact/${story.slug}`}>
+                      <Button variant="secondary" className="w-full justify-between">
+                        <span>Read report</span>
+                        <ArrowRight size={16} aria-hidden="true" />
+                      </Button>
+                    </Link>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          )}
         </Container>
-      </section>
+      </Section>
     </>
-  );
-};
-
-export default Impact;
+  )
+}
