@@ -98,7 +98,13 @@ export default function EventDetail() {
         <meta property="og:title" content={event.title} />
         <meta property="og:description" content={event.description.slice(0, 155)} />
         <meta property="og:type" content="article" />
-        {event.cover_image_url && <meta property="og:image" content={event.cover_image_url} />}
+        <meta property="og:url" content={getCanonical(`/events/${event.slug}`)} />
+        {event.cover_image_url && (
+          <meta
+            property="og:image"
+            content={event.cover_image_url.startsWith('http') ? event.cover_image_url : getCanonical(event.cover_image_url)}
+          />
+        )}
       </Helmet>
 
       <Section spacing="large" className="bg-aeem-forest text-white">
@@ -154,9 +160,22 @@ export default function EventDetail() {
       <Section>
         <Container narrow>
           <article>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-aeem-gold">Event</p>
-            <h2 className="mt-3 text-3xl font-bold text-aeem-ink">About this event</h2>
-            <p className="mt-6 text-lg leading-8 text-aeem-ink/75">{event.description}</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-aeem-gold">Event record</p>
+            <h2 className="mt-3 text-3xl font-bold text-aeem-ink">Event information</h2>
+            <dl className="mt-8 divide-y divide-black/10 border-y border-black/10">
+              <div className="grid gap-2 py-5 sm:grid-cols-[10rem_1fr] sm:gap-6">
+                <dt className="text-sm font-semibold text-aeem-ink/60">Date</dt>
+                <dd className="text-aeem-ink">{formatDate(event.event_date)}</dd>
+              </div>
+              <div className="grid gap-2 py-5 sm:grid-cols-[10rem_1fr] sm:gap-6">
+                <dt className="text-sm font-semibold text-aeem-ink/60">Location</dt>
+                <dd className="text-aeem-ink">{event.location}</dd>
+              </div>
+              <div className="grid gap-2 py-5 sm:grid-cols-[10rem_1fr] sm:gap-6">
+                <dt className="text-sm font-semibold text-aeem-ink/60">Status</dt>
+                <dd className="text-aeem-ink">{upcoming ? 'Upcoming' : 'Completed'}</dd>
+              </div>
+            </dl>
           </article>
         </Container>
       </Section>
