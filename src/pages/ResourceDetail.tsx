@@ -5,6 +5,7 @@ import { ArrowLeft, Clock, Download, Loader2, Share2 } from 'lucide-react'
 import { supabase } from '../services/supabase'
 import { Badge, Button, Card, Container, Section } from '../components/ui'
 import { getCanonical } from '../lib/seo'
+import { RESOURCE_DETAIL_FIELDS } from '../services/contentFields'
 import { sanitizeHtml } from '../lib/sanitizeHtml'
 
 interface Resource {
@@ -33,7 +34,7 @@ export default function ResourceDetail() {
   useEffect(() => {
     let active = true
     if (!slug) { setLoading(false); return }
-    supabase.from('resources').select('title, slug, type, description, summary, body, fullBody:full_body, file_url, category, created_at, readingTime:reading_time, tags, image:image_url, bulletPoints:bullet_points').eq('slug', slug).eq('published', true).single()
+    supabase.from('resources').select(RESOURCE_DETAIL_FIELDS).eq('slug', slug).eq('published', true).single()
       .then(({ data, error }) => {
         if (!active) return
         if (error) console.error('Error fetching resource:', error)
