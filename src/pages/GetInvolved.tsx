@@ -80,7 +80,7 @@ export const GetInvolved: React.FC = () => {
     const submissionKey = await generateSubmissionKey('inquiry', normEmail, activeTab)
 
     if (isAlreadySubmittedLocally(submissionKey)) {
-      setError('We already have a request on file for this email and inquiry type. Our team will be in touch within 48 hours.')
+      setError('We already have a request on file for this email and inquiry type. Please wait for our team to follow up.')
       return
     }
 
@@ -101,7 +101,7 @@ export const GetInvolved: React.FC = () => {
 
       if (response.status === 409 || result?.code === 'duplicate_submission') {
         markSubmittedLocally(submissionKey)
-        setError('We already have a request on file for this email and inquiry type. Our team will be in touch within 48 hours.')
+        setError('We already have a request on file for this email and inquiry type. Please wait for our team to follow up.')
         return
       }
 
