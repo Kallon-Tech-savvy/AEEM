@@ -69,8 +69,8 @@ const StoryDetail: React.FC = () => {
 
       try {
         const { data, error } = await supabase
-          .from('stories')
-          .select('title, quote, image:image_url, file_name, participants, schools, duration, overview, focusAreas:focus_areas, impact, quoteText:quote_text, quoteAuthor:quote_author')
+          .from('impact_stories')
+          .select('title, summary, coverImage:cover_image_url, file_name, participantsCount:participants_count, schoolsCount:schools_count, duration, overview, focusAreas:focus_areas, impact, quoteText:quote_text, quoteAuthor:quote_author')
           .eq('slug', slug)
           .eq('published', true)
           .single();
@@ -80,12 +80,12 @@ const StoryDetail: React.FC = () => {
         if (active) {
           setStory({
             title: data.title,
-            quote: data.quote,
-            image: data.image,
+            quote: data.summary,
+            image: data.coverImage ?? '',
             fileName: data.file_name ?? '',
             stats: {
-              participants: data.participants ?? '',
-              schools: data.schools ?? '',
+              participants: data.participantsCount != null ? `${data.participantsCount} Participants` : '',
+              schools: data.schoolsCount != null ? `${data.schoolsCount} Institutions` : '',
               duration: data.duration ?? '',
             },
             overview: data.overview ?? '',
