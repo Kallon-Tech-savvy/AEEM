@@ -10,11 +10,19 @@ const CONTACT_PHONE = '+232 76 406 281'
 const SUPABASE_FUNCTION_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/submit-inquiry`
 
 async function submitInquiry(payload: Record<string, unknown>): Promise<Response> {
-  return fetch(SUPABASE_FUNCTION_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-  })
+  const controller = new AbortController()
+  const timeout = window.setTimeout(() => controller.abort(), 12_000)
+
+  try {
+    return await fetch(SUPABASE_FUNCTION_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      signal: controller.signal,
+    })
+  } finally {
+    window.clearTimeout(timeout)
+  }
 }
 
 const Contact: React.FC = () => {
@@ -80,7 +88,11 @@ const Contact: React.FC = () => {
       setHoneypot('')
     } catch (err) {
       console.warn('Inquiry submission failed:', err)
-      setError('We could not send your message. Please try again.')
+      setError(
+        err instanceof DOMException && err.name === 'AbortError'
+          ? 'The inquiry service took too long to respond. Please check your connection and try again.'
+          : 'We could not send your message. Please try again.',
+      )
     } finally { setIsSubmitting(false) }
   }
 
