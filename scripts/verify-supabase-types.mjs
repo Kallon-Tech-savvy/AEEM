@@ -17,7 +17,7 @@ function extractTables(source) {
   if (!tablesMatch) throw new Error('Could not locate Database.public.Tables')
 
   const tables = {}
-  const tablePattern = /^\s{6}([A-Za-z_][A-Za-z0-9_]*): \{\n\s{8}Row: \{([\s\S]*?)\n\s{8}\}\n\s{8}Insert:/gm
+  const tablePattern = /\n\s+([A-Za-z_][A-Za-z0-9_]*): \{\s*\n\s+Row: \{([\s\S]*?)\n\s+\}\s*\n\s+Insert:/g
 
   for (const match of tablesMatch[1].matchAll(tablePattern)) {
     const [, name, rowBlock] = match
