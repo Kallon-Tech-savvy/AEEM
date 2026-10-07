@@ -1,3 +1,13 @@
+/**
+ * Database contract consumed by the typed Supabase client.
+ *
+ * The public Row surface is verified in CI against:
+ *   supabase gen types typescript --local --schema public
+ *
+ * Keep this file aligned with the migration history. Do not add frontend-only
+ * view models here; define those in src/types/content.ts or at the feature
+ * boundary that consumes them.
+ */
 export type Json =
   | string
   | number
