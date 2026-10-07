@@ -25,11 +25,19 @@ const LABEL_CLASS = 'text-sm font-semibold text-aeem-ink dark:text-white'
 const SUPABASE_FUNCTION_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/submit-inquiry`
 
 async function submitInquiry(payload: Record<string, unknown>): Promise<Response> {
-  return fetch(SUPABASE_FUNCTION_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-  })
+  const controller = new AbortController()
+  const timeout = window.setTimeout(() => controller.abort(), 12_000)
+
+  try {
+    return await fetch(SUPABASE_FUNCTION_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      signal: controller.signal,
+    })
+  } finally {
+    window.clearTimeout(timeout)
+  }
 }
 
 export const GetInvolved: React.FC = () => {
@@ -118,7 +126,11 @@ export const GetInvolved: React.FC = () => {
       setSubmitted(true)
     } catch (err) {
       console.warn('Inquiry submission failed:', err)
-      setError('We could not submit your inquiry. Please try again.')
+      setError(
+        err instanceof DOMException && err.name === 'AbortError'
+          ? 'The inquiry service took too long to respond. Please check your connection and try again.'
+          : 'We could not submit your inquiry. Please try again.',
+      )
     } finally {
       setIsSubmitting(false)
     }
