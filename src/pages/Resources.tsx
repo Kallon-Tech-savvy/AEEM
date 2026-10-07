@@ -1,193 +1,136 @@
-import React, { useState, useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
-import { motion } from 'framer-motion';
-import { Search, BookOpen, Newspaper, FileText, Loader2 } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { supabase } from '../services/supabase';
-import { SpotlightCard } from '../components/motion/SpotlightCard';
+import React, { useEffect, useMemo, useState } from 'react'
+import { Helmet } from 'react-helmet-async'
+import { Search, BookOpen, FileText, Newspaper, ArrowRight, Loader2 } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { supabase } from '../services/supabase'
+import { Badge, Card, Section } from '../components/ui'
 
 interface Resource {
-  id: string;
-  title: string;
-  slug: string;
-  type: 'blog' | 'download' | 'policy' | 'guide';
-  description: string;
-  category?: string;
+  id: string
+  title: string
+  slug: string
+  type?: string
+  description?: string
+  summary?: string
+  category?: string
+  created_at?: string
+  tags?: string[]
+  image?: string
 }
 
-const FALLBACK_RESOURCES: Resource[] = [
-  {
-    id: 'r1',
-    title: "Educational Equity Report 2025",
-    type: "download",
-    slug: "equity-report-2025",
-    description: "An in-depth analysis of educational barriers in West Africa.",
-    category: "Policy"
-  },
-  {
-    id: 'r2',
-    title: "The Power of Youth Mentorship",
-    type: "blog",
-    slug: "youth-mentorship-power",
-    description: "How mentorship programs are changing the academic landscape.",
-    category: "Education"
-  },
-  {
-    id: 'r3',
-    title: "Press Release: AEEM Expansion",
-    type: "blog",
-    slug: "aeem-expansion-2026",
-    description: "AEEM announces new chapters in three additional regions.",
-    category: "News"
-  },
-  {
-    id: 'r4',
-    title: "Advocacy Toolkit for Schools",
-    type: "download",
-    slug: "advocacy-toolkit",
-    description: "A comprehensive guide for student-led advocacy.",
-    category: "Guide"
-  }
-];
+const iconFor = (r: Resource) => {
+  const v = `${r.type ?? ''} ${r.category ?? ''}`.toLowerCase()
+  if (v.includes('policy') || v.includes('report')) return FileText
+  if (v.includes('news') || v.includes('press')) return Newspaper
+  return BookOpen
+}
 
-const getIcon = (type: string, category?: string) => {
-  if (type === 'download') return FileText;
-  if (category === 'News') return Newspaper;
-  if (category === 'Education') return BookOpen;
-  return BookOpen;
-};
+const labelFor = (r: Resource) => r.category ?? r.type ?? 'Resource'
 
-const Resources: React.FC = () => {
-  const [resources, setResources] = useState<Resource[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [activeCategory, setActiveCategory] = useState('All');
+export default function Resources() {
+  const [resources, setResources] = useState<Resource[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
+  const [query, setQuery] = useState('')
+  const [category, setCategory] = useState('All')
 
   useEffect(() => {
-    const fetchResources = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('resources')
-          .select('*')
-          .eq('published', true)
-          .order('created_at', { ascending: false });
+    let active = true
+    supabase.from('resources').select('*').eq('published', true).order('created_at', { ascending: false })
+      .then(({ data, error }) => {
+        if (!active) return
+        if (error) {
+          console.error('Error fetching resources:', error)
+          setError(true)
+        } else setResources((data ?? []) as Resource[])
+        setLoading(false)
+      })
+    return () => { active = false }
+  }, [])
 
-        if (error) throw error;
+  const categories = useMemo(() => [
+    'All', ...Array.from(new Set(resources.map(r => r.category).filter(Boolean) as string[]))
+  ], [resources])
 
-        if (data && data.length > 0) {
-          setResources(data);
-        } else {
-          setResources(FALLBACK_RESOURCES);
-        }
-      } catch (err) {
-        console.error('Error fetching resources:', err);
-        setResources(FALLBACK_RESOURCES);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase()
+    return resources.filter(r => {
+      const text = [r.title, r.description, r.summary, r.category, r.type, ...(r.tags ?? [])]
+        .filter(Boolean).join(' ').toLowerCase()
+      return (!q || text.includes(q)) && (category === 'All' || r.category === category)
+    })
+  }, [resources, query, category])
 
-    fetchResources();
-  }, []);
+  const featured = filtered[0]
 
-  const filteredResources = resources.filter(res => {
-    const matchesSearch = res.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          res.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = activeCategory === 'All' || res.category === activeCategory;
-    return matchesSearch && matchesCategory;
-  });
+  return <>
+    <Helmet>
+      <title>Knowledge Hub | AEEM</title>
+      <meta name="description" content="Reports, guides, policy resources, research and stories from the Africa Education Empowerment Movement." />
+      <link rel="canonical" href="/resources" />
+      <meta property="og:title" content="Knowledge Hub | AEEM" />
+      <meta property="og:description" content="Explore AEEM's published resources, reports, guides and knowledge." />
+      <meta property="og:type" content="website" />
+    </Helmet>
 
-  return (
-    <>
-      <Helmet>
-        <title>Resources & Blog | AEEM</title>
-      </Helmet>
-<section className="pt-40 pb-24 bg-gradient-to-b from-[#afb] dark:from-[#111] to-aeem-bg dark:to-aeem-charcoal text-white overflow-hidden relative">
-         <div className="absolute top-0 right-0 w-full md:w-[60%] h-full pointer-events-none opacity-[0.5] dark:opacity-[0.1] mix-blend-screen z-0">
-          <img 
-            src="/assets/Illustrate Africa 2_converted.avif" 
-            alt="" 
-            className="w-full h-full object-fill md:object-contain object-right-top drop-shadow-2xl"
-          />
+    <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
+      <div className="max-w-3xl">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-aeem-gold">Knowledge Hub</p>
+        <h1 className="mt-4 text-4xl font-bold leading-tight text-aeem-ink dark:text-white sm:text-5xl lg:text-6xl">Knowledge for action.</h1>
+        <p className="mt-6 max-w-2xl text-lg leading-8 text-aeem-ink/70 dark:text-white/70">
+          Explore AEEM's published materials, from research and policy resources to practical guides and stories from our work.
+        </p>
+      </div>
+    </Section>
+
+    <Section spacing="compact" className="border-y border-black/10 bg-white dark:border-white/10 dark:bg-aeem-charcoal">
+      <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+        <div className="relative w-full lg:max-w-md">
+          <Search aria-hidden="true" className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-aeem-ink/50 dark:text-white/50" size={18} />
+          <label htmlFor="resource-search" className="sr-only">Search resources</label>
+          <input id="resource-search" type="search" value={query} onChange={e => setQuery(e.target.value)}
+            placeholder="Search the knowledge hub"
+            className="min-h-11 w-full rounded-xl border border-gray-300 bg-white pl-11 pr-4 text-sm text-aeem-ink outline-none focus:border-aeem-focus focus:ring-2 focus:ring-aeem-focus/20 dark:border-white/15 dark:bg-white/[0.03] dark:text-white" />
         </div>
-        <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-aeem-gold/10 rounded-full blur-[120px] pointer-events-none -translate-y-1/2" />
+        <div className="flex gap-2 overflow-x-auto pb-1" aria-label="Filter resources by category">
+          {categories.map(item => (
+            <button key={item} type="button" onClick={() => setCategory(item)} aria-pressed={category === item}
+              className={`min-h-10 shrink-0 rounded-full border px-4 text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus ${category === item ? 'border-aeem-forest bg-aeem-forest text-white' : 'border-gray-300 bg-white text-aeem-ink hover:border-aeem-forest dark:border-white/15 dark:bg-transparent dark:text-white'}`}>
+              {item}
+            </button>
+          ))}
+        </div>
+      </div>
+    </Section>
 
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-3xl"
-          >
-            <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
-            <div className="max-w-2xl">
-              <span className="text-aeem-gold font-bold uppercase tracking-[0.3em] text-xs mb-4 block">Knowledge Hub</span>
-              <h1 className="text-5xl md:text-7xl font-black mb-0 leading-tight">Resources</h1>
-            </div>
-            <div className="relative w-full md:w-96">
-               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-aeem-focus" size={20} />
-               <input
-                 type="text"
-                 value={searchTerm}
-                 onChange={(e) => setSearchTerm(e.target.value)}
-                 placeholder="Search articles & downloads..."
-                 className="w-full pl-12 pr-6 py-4 rounded-2xl bg-aeem-focus/30 border border-gray-200 focus:outline-none focus:border-aeem-gold transition-colors shadow-sm"
-               />
-            </div>
+    <Section aria-labelledby="resource-results-heading">
+      <div className="flex items-end justify-between gap-6">
+        <div><p className="text-sm font-semibold text-aeem-gold">Published resources</p><h2 id="resource-results-heading" className="mt-2 text-2xl font-bold text-aeem-ink dark:text-white sm:text-3xl">Browse the archive</h2></div>
+        {!loading && !error && <p className="text-sm text-aeem-ink/60 dark:text-white/60">{filtered.length} {filtered.length === 1 ? 'resource' : 'resources'}</p>}
+      </div>
+
+      {loading ? <div className="flex min-h-64 items-center justify-center"><Loader2 className="animate-spin text-aeem-gold" size={32} aria-label="Loading resources" /></div>
+      : error ? <Card className="mt-10 p-8"><h3 className="text-xl font-semibold text-aeem-ink dark:text-white">The knowledge hub is temporarily unavailable.</h3><p className="mt-3 leading-7 text-aeem-ink/70 dark:text-white/70">We could not load published resources right now. Please try again later.</p></Card>
+      : filtered.length === 0 ? <Card className="mt-10 p-8"><h3 className="text-xl font-semibold text-aeem-ink dark:text-white">No resources match your search.</h3><p className="mt-3 leading-7 text-aeem-ink/70 dark:text-white/70">Try a different search term or category.</p></Card>
+      : <>
+        {featured && <Card className="mt-10 overflow-hidden"><div className="grid lg:grid-cols-2">
+          {featured.image ? <img src={featured.image} alt="" className="h-full min-h-64 w-full object-cover" loading="lazy" /> : <div className="flex min-h-64 items-end bg-aeem-forest p-8"><span className="text-6xl font-bold text-white/15" aria-hidden="true">AEEM</span></div>}
+          <div className="flex flex-col justify-center p-8 sm:p-10">
+            <div className="flex flex-wrap items-center gap-3"><Badge>{labelFor(featured)}</Badge>{featured.created_at && <span className="text-sm text-aeem-ink/60 dark:text-white/60">{new Date(featured.created_at).getFullYear()}</span>}</div>
+            <h3 className="mt-5 text-2xl font-bold leading-tight text-aeem-ink dark:text-white sm:text-3xl">{featured.title}</h3>
+            <p className="mt-4 leading-7 text-aeem-ink/70 dark:text-white/70">{featured.summary ?? featured.description}</p>
+            <Link to={`/resources/${featured.slug}`} className="mt-7 inline-flex min-h-11 w-fit items-center gap-2 rounded-xl border border-aeem-forest bg-aeem-forest px-5 text-sm font-semibold text-white hover:bg-aeem-forest-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus">Read resource <ArrowRight size={16} aria-hidden="true" /></Link>
           </div>
-
-          <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
-             {['All', 'Policy', 'Education', 'News', 'Guide'].map((cat) => (
-               <button
-                 key={cat}
-                 onClick={() => setActiveCategory(cat)}
-                 className={`px-8 py-2.5 rounded-full text-sm font-bold whitespace-nowrap transition-all ${activeCategory === cat ? 'bg-aeem-gold/50 text-aeem-focus' : 'bg-aeem-focus/30 text-aeem-gold border border-gray-100 hover:border-aeem-gold'}`}
-               >
-                 {cat}
-               </button>
-             ))}
-          </div>
-        </div>
-          </motion.div>
-        </div>
-      </section>
-
-      <section className="py-24 bg-aeem">
-        <div className="max-w-7xl mx-auto px-6">
-          {loading ? (
-            <div className="flex justify-center items-center py-24">
-              <Loader2 className="animate-spin text-aeem-gold" size={48} />
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {filteredResources.map((item) => {
-                const Icon = getIcon(item.type, item.category);
-                return (
-                  <SpotlightCard key={item.slug} className="group p-8 rounded-3xl border border-gray-100 bg-aeem-focus/20 hover:border-aeem-gold hover:shadow-2xl transition-all flex flex-col h-full">
-                    <Link
-                      to={`/resources/${item.slug}`}
-                      className="flex flex-col h-full"
-                    >
-                    <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center text-aeem-gold mb-8 group-hover:bg-aeem-gold group-hover:text-white transition-all">
-                      <Icon size={28} />
-                    </div>
-                    <div className="text-[10px] font-black uppercase tracking-widest text-aeem-gold mb-4">{item.category}</div>
-                    <h3 className="text-xl font-bold mb-4 group-hover:text-aeem-gold transition-colors">{item.title}</h3>
-                    <p className="text-sm text-aeem leading-relaxed mb-8 line-clamp-3">{item.description}</p>
-                    <div className="mt-auto flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-aeem">
-                       {item.type === 'download' ? 'Download PDF' : 'Read Article'}
-                       <div className="w-6 h-[2px] bg-aeem-gold group-hover:w-10 transition-all" />
-                    </div>
-                    </Link>
-                  </SpotlightCard>
-                );
-              })}
-            </div>
-          )}
-        </div>
-      </section>
-    </>
-  );
-};
-
-export default Resources;
+        </div></Card>}
+        {filtered.length > 1 && <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">{filtered.slice(1).map(resource => {
+          const Icon = iconFor(resource)
+          return <Card key={resource.slug} interactive className="flex h-full flex-col p-6">
+            <div className="flex items-start justify-between"><div className="flex h-11 w-11 items-center justify-center rounded-xl bg-aeem-forest/5 text-aeem-forest dark:bg-white/5 dark:text-aeem-gold-light"><Icon size={21} aria-hidden="true" /></div>{resource.created_at && <span className="text-sm text-aeem-ink/50 dark:text-white/50">{new Date(resource.created_at).getFullYear()}</span>}</div>
+            <div className="mt-6"><Badge>{labelFor(resource)}</Badge><h3 className="mt-4 text-xl font-semibold leading-snug text-aeem-ink dark:text-white">{resource.title}</h3><p className="mt-3 line-clamp-3 text-sm leading-6 text-aeem-ink/70 dark:text-white/70">{resource.summary ?? resource.description}</p></div>
+            <Link to={`/resources/${resource.slug}`} className="mt-auto flex items-center gap-2 pt-6 text-sm font-semibold text-aeem-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:text-aeem-gold-light">View resource <ArrowRight size={15} aria-hidden="true" /></Link>
+          </Card>
+        })}</div>}
+      </>}
+    </Section>
+  </>
+}
