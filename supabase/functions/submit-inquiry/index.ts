@@ -9,14 +9,19 @@ const ALLOWED_INQUIRY_TYPES = new Set(['contact', 'volunteer', 'partner', 'donor
 const MAX_BODY_BYTES = 12_000
 
 function corsHeaders(origin: string | null): Record<string, string> {
-  const allowedOrigin = origin && ALLOWED_ORIGINS.has(origin) ? origin : 'https://www.aeemmovement.org'
-  return {
-    'Access-Control-Allow-Origin': allowedOrigin,
+  const headers: Record<string, string> = {
     'Access-Control-Allow-Headers': 'content-type',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Vary': 'Origin',
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json; charset=utf-8',
+    'Cache-Control': 'no-store',
   }
+
+  if (origin && ALLOWED_ORIGINS.has(origin)) {
+    headers['Access-Control-Allow-Origin'] = origin
+  }
+
+  return headers
 }
 
 function json(body: Record<string, unknown>, status: number, origin: string | null) {
@@ -74,7 +79,14 @@ Deno.serve(async (request) => {
   const origin = request.headers.get('origin')
 
   if (request.method === 'OPTIONS') {
+    if (origin && !ALLOWED_ORIGINS.has(origin)) {
+      return new Response(null, { status: 403, headers: corsHeaders(origin) })
+    }
     return new Response(null, { status: 204, headers: corsHeaders(origin) })
+  }
+
+  if (origin && !ALLOWED_ORIGINS.has(origin)) {
+    return json({ ok: false, code: 'origin_not_allowed' }, 403, origin)
   }
 
   if (request.method !== 'POST') {
