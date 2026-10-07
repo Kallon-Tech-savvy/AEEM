@@ -6,17 +6,7 @@ import { supabase } from '../services/supabase'
 import { Badge, Card, Section } from '../components/ui'
 import { getCanonical } from '../lib/seo'
 import { EVENT_LIST_FIELDS } from '../services/contentFields'
-
-interface Event {
-  id: string
-  title: string
-  slug: string
-  description: string
-  event_date: string
-  location: string
-  status: 'upcoming' | 'completed'
-  cover_image_url: string
-}
+import type { EventListItem } from '../types/content'
 
 const isUpcoming = (event: Event) =>
   event.status === 'upcoming' && new Date(event.event_date).getTime() >= Date.now()
@@ -29,7 +19,7 @@ const formatDate = (value: string) =>
   })
 
 export default function Events() {
-  const [events, setEvents] = useState<Event[]>([])
+  const [events, setEvents] = useState<EventListItem[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
 
@@ -47,7 +37,7 @@ export default function Events() {
           console.error('Error fetching events:', error)
           setError(true)
         } else {
-          setEvents((data ?? []) as Event[])
+          setEvents((data ?? []) as EventListItem[])
         }
         setLoading(false)
       })
