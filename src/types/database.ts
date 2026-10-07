@@ -240,10 +240,7 @@ export type Database = {
     }
     Views: {}
     Functions: {}
-    Enums: {
-      event_status: 'upcoming' | 'completed'
-      inquiry_type: 'contact' | 'volunteer' | 'partner' | 'donor'
-    }
+    Enums: {}
     CompositeTypes: {}
   }
 }
