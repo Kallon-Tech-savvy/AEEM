@@ -7,6 +7,7 @@ import { AwardSlider } from '../components/sections/AwardSlider';
 import MasonryGallery from '../components/sections/MasonryGallery';
 import { Container, Section, Stat, Card } from '../components/ui';
 import { getCanonical } from '../lib/seo';
+import { IMPACT_STORY_LIST_FIELDS } from '../services/contentFields';
 
 interface ImpactStory {
   id: string;
@@ -42,7 +43,7 @@ const Impact: React.FC = () => {
         const { data, error } = await supabase
           .from('impact_stories')
           .select(
-            'id, title, slug, summary, location, participants_count, schools_count, cover_image_url',
+            IMPACT_STORY_LIST_FIELDS,
           )
           .eq('published', true)
           .order('created_at', { ascending: false });
