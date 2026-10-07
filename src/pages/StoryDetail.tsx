@@ -6,6 +6,7 @@ import { supabase } from '../services/supabase';
 import { getCanonical } from '../lib/seo';
 import { Badge, Button, Card, Container, Section, Stat } from '../components/ui';
 import { IMPACT_STORY_DETAIL_FIELDS } from '../services/contentFields';
+import type { ImpactStoryDetailItem } from '../types/content';
 
 interface StoryData {
   title: string;
