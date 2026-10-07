@@ -14,7 +14,7 @@ const iconFor = (r: ResourceListItem) => {
   return BookOpen
 }
 
-const labelFor = (r: Resource) => r.category ?? r.type ?? 'Resource'
+const labelFor = (r: ResourceListItem) => r.category ?? r.type ?? 'Resource'
 
 export default function Resources() {
   const [resources, setResources] = useState<ResourceListItem[]>([])
