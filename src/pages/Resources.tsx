@@ -31,7 +31,7 @@ export default function Resources() {
         if (error) {
           console.error('Error fetching resources:', error)
           setError(true)
-        } else setResources((data ?? []) as ResourceListItem[])
+        } else setResources((data ?? []) as unknown as ResourceListItem[])
         setLoading(false)
       })
     return () => { active = false }
