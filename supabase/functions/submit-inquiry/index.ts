@@ -7,6 +7,8 @@ const ALLOWED_ORIGINS = new Set([
 
 const ALLOWED_INQUIRY_TYPES = new Set(['contact', 'volunteer', 'partner', 'donor'])
 const MAX_BODY_BYTES = 12_000
+const RATE_LIMIT_WINDOW_SECONDS = 600
+const RATE_LIMIT_MAX_REQUESTS = 5
 
 function corsHeaders(origin: string | null): Record<string, string> {
   const headers: Record<string, string> = {
@@ -24,10 +26,15 @@ function corsHeaders(origin: string | null): Record<string, string> {
   return headers
 }
 
-function json(body: Record<string, unknown>, status: number, origin: string | null) {
+function json(
+  body: Record<string, unknown>,
+  status: number,
+  origin: string | null,
+  extraHeaders: Record<string, string> = {},
+) {
   return new Response(JSON.stringify(body), {
     status,
-    headers: corsHeaders(origin),
+    headers: { ...corsHeaders(origin), ...extraHeaders },
   })
 }
 
@@ -37,6 +44,43 @@ function normalizeEmail(value: string): string {
 
 function normalizePhone(value: string): string {
   return value.replace(/[^\d+]/g, '')
+}
+
+function getClientAddress(request: Request): string | null {
+  const direct = request.headers.get('cf-connecting-ip')
+    ?? request.headers.get('x-real-ip')
+
+  if (direct?.trim()) {
+    return direct.trim()
+  }
+
+  const forwarded = request.headers.get('x-forwarded-for')
+  if (forwarded) {
+    const first = forwarded.split(',')[0]?.trim()
+    if (first) return first
+  }
+
+  return null
+}
+
+async function hashRateLimitKey(value: string, secret: string): Promise<string> {
+  const keyMaterial = await crypto.subtle.importKey(
+    'raw',
+    new TextEncoder().encode(secret),
+    { name: 'HMAC', hash: 'SHA-256' },
+    false,
+    ['sign'],
+  )
+
+  const signature = await crypto.subtle.sign(
+    'HMAC',
+    keyMaterial,
+    new TextEncoder().encode(value),
+  )
+
+  return Array.from(new Uint8Array(signature))
+    .map((byte) => byte.toString(16).padStart(2, '0'))
+    .join('')
 }
 
 async function generateSubmissionKey(
@@ -120,7 +164,6 @@ Deno.serve(async (request) => {
 
   const honeypot = typeof body.honeypot === 'string' ? body.honeypot.trim() : ''
   if (honeypot) {
-    // Return the same success contract as a real submission without writing anything.
     return json({ ok: true }, 201, origin)
   }
 
@@ -155,8 +198,10 @@ Deno.serve(async (request) => {
 
   const supabaseUrl = Deno.env.get('SUPABASE_URL')
   const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
+  const rateLimitSecret =
+    Deno.env.get('INQUIRY_RATE_LIMIT_SECRET') ?? serviceRoleKey
 
-  if (!supabaseUrl || !serviceRoleKey) {
+  if (!supabaseUrl || !serviceRoleKey || !rateLimitSecret) {
     console.error('Missing required Supabase function environment variables')
     return json({ ok: false, code: 'service_unavailable' }, 503, origin)
   }
@@ -164,6 +209,39 @@ Deno.serve(async (request) => {
   const supabase = createClient(supabaseUrl, serviceRoleKey, {
     auth: { persistSession: false, autoRefreshToken: false },
   })
+
+  const clientAddress = getClientAddress(request)
+  const rateLimitSubject = clientAddress
+    ? `ip:${clientAddress}`
+    : `email:${email}`
+
+  const rateLimitKey = await hashRateLimitKey(rateLimitSubject, rateLimitSecret)
+
+  const { data: allowed, error: rateLimitError } = await supabase.rpc(
+    'consume_inquiry_rate_limit',
+    {
+      p_key_hash: rateLimitKey,
+      p_window_seconds: RATE_LIMIT_WINDOW_SECONDS,
+      p_limit: RATE_LIMIT_MAX_REQUESTS,
+    },
+  )
+
+  if (rateLimitError || allowed !== true) {
+    if (rateLimitError) {
+      console.error(
+        'Inquiry rate limiter failed:',
+        rateLimitError.code ?? 'unknown',
+      )
+      return json({ ok: false, code: 'service_unavailable' }, 503, origin)
+    }
+
+    return json(
+      { ok: false, code: 'rate_limited' },
+      429,
+      origin,
+      { 'Retry-After': String(RATE_LIMIT_WINDOW_SECONDS) },
+    )
+  }
 
   const { error } = await supabase.from('inquiries').insert({
     inquiry_type: inquiryType,
