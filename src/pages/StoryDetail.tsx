@@ -5,6 +5,7 @@ import { ArrowLeft, CheckCircle2, Link2, Loader2 } from 'lucide-react';
 import { supabase } from '../services/supabase';
 import { getCanonical } from '../lib/seo';
 import { Badge, Button, Card, Container, Section, Stat } from '../components/ui';
+import { IMPACT_STORY_DETAIL_FIELDS } from '../services/contentFields';
 
 interface StoryData {
   title: string;
@@ -70,7 +71,7 @@ const StoryDetail: React.FC = () => {
       try {
         const { data, error } = await supabase
           .from('impact_stories')
-          .select('title, summary, coverImage:cover_image_url, file_name, participantsCount:participants_count, schoolsCount:schools_count, duration, overview, focusAreas:focus_areas, impact, quoteText:quote_text, quoteAuthor:quote_author')
+          .select(IMPACT_STORY_DETAIL_FIELDS)
           .eq('slug', slug)
           .eq('published', true)
           .single();
