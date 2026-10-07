@@ -24,6 +24,13 @@ create table if not exists public.events (
   status text not null default 'upcoming'
     check (status in ('upcoming', 'completed')),
   cover_image_url text,
+  file_name text,
+  duration text,
+  overview text,
+  focus_areas text[] not null default '{}',
+  impact text,
+  quote_text text,
+  quote_author text,
   published boolean not null default false,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
@@ -85,36 +92,6 @@ create index if not exists impact_stories_published_date_idx
   on public.impact_stories (published, created_at desc);
 
 -- ---------------------------------------------------------------------------
--- Content: detailed stories
---
--- Kept separate for compatibility with the current /impact/:slug route.
--- The frontend currently expects a richer case-study record than the archive.
--- ---------------------------------------------------------------------------
-
-create table if not exists public.stories (
-  id uuid primary key default gen_random_uuid(),
-  title text not null check (char_length(trim(title)) between 1 and 250),
-  slug text not null unique check (slug ~ '^[a-z0-9]+(?:-[a-z0-9]+)*$'),
-  quote text not null,
-  image_url text,
-  file_name text,
-  participants text,
-  schools text,
-  duration text,
-  overview text,
-  focus_areas text[] not null default '{}',
-  impact text,
-  quote_text text,
-  quote_author text,
-  published boolean not null default false,
-  created_at timestamptz not null default now(),
-  updated_at timestamptz not null default now()
-);
-
-create index if not exists stories_published_idx
-  on public.stories (published, created_at desc);
-
--- ---------------------------------------------------------------------------
 -- Engagement: inquiries
 -- ---------------------------------------------------------------------------
 
@@ -172,11 +149,6 @@ create trigger impact_stories_set_updated_at
 before update on public.impact_stories
 for each row execute function public.set_updated_at();
 
-drop trigger if exists stories_set_updated_at on public.stories;
-create trigger stories_set_updated_at
-before update on public.stories
-for each row execute function public.set_updated_at();
-
 -- ---------------------------------------------------------------------------
 -- Row Level Security
 -- ---------------------------------------------------------------------------
@@ -184,7 +156,6 @@ for each row execute function public.set_updated_at();
 alter table public.events enable row level security;
 alter table public.resources enable row level security;
 alter table public.impact_stories enable row level security;
-alter table public.stories enable row level security;
 alter table public.inquiries enable row level security;
 
 -- Public website: published content only.
@@ -205,13 +176,6 @@ using (published = true);
 drop policy if exists "public_read_published_impact_stories" on public.impact_stories;
 create policy "public_read_published_impact_stories"
 on public.impact_stories
-for select
-to anon, authenticated
-using (published = true);
-
-drop policy if exists "public_read_published_stories" on public.stories;
-create policy "public_read_published_stories"
-on public.stories
 for select
 to anon, authenticated
 using (published = true);
