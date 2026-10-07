@@ -6,17 +6,7 @@ import { supabase } from '../services/supabase'
 import { Badge, Card, Container, Section } from '../components/ui'
 import { getCanonical } from '../lib/seo'
 import { EVENT_DETAIL_FIELDS } from '../services/contentFields'
-
-interface Event {
-  id: string
-  title: string
-  slug: string
-  description: string
-  event_date: string
-  location: string
-  status: 'upcoming' | 'completed'
-  cover_image_url: string
-}
+import type { EventListItem } from '../types/content'
 
 const formatDate = (value: string) =>
   new Date(value).toLocaleDateString('en-US', {
@@ -50,7 +40,7 @@ export default function EventDetail() {
           console.error('Error fetching event:', error)
           setEvent(null)
         } else {
-          setEvent(data as Event)
+          setEvent(data as EventListItem)
         }
         setLoading(false)
       })
