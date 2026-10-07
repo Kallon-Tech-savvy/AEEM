@@ -6,5 +6,3 @@
 drop policy if exists "public_submit_inquiries" on public.inquiries;
 
 revoke all privileges on table public.inquiries from anon, authenticated;
-
-revoke all on sequence public.inquiries_id_seq from anon, authenticated;
