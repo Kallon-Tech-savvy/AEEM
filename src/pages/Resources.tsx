@@ -103,7 +103,7 @@ export default function Resources() {
       : filtered.length === 0 ? <Card className="mt-10 p-8"><h3 className="text-xl font-semibold text-aeem-ink dark:text-white">No resources match your search.</h3><p className="mt-3 leading-7 text-aeem-ink/70 dark:text-white/70">Try a different search term or category.</p></Card>
       : <>
         {featured && <Card className="mt-10 overflow-hidden"><div className="grid lg:grid-cols-2">
-          {featured.image ? <img src={featured.image} alt="" className="h-full min-h-64 w-full object-cover" loading="lazy" /> : <div className="flex min-h-64 items-end bg-aeem-forest p-8"><span className="text-6xl font-bold text-white/15" aria-hidden="true">AEEM</span></div>}
+          {featured.image_url ? <img src={featured.image_url} alt="" className="h-full min-h-64 w-full object-cover" loading="lazy" /> : <div className="flex min-h-64 items-end bg-aeem-forest p-8"><span className="text-6xl font-bold text-white/15" aria-hidden="true">AEEM</span></div>}
           <div className="flex flex-col justify-center p-8 sm:p-10">
             <div className="flex flex-wrap items-center gap-3"><Badge>{labelFor(featured)}</Badge>{featured.created_at && <span className="text-sm text-aeem-ink/60 dark:text-white/60">{new Date(featured.created_at).getFullYear()}</span>}</div>
             <h3 className="mt-5 text-2xl font-bold leading-tight text-aeem-ink dark:text-white sm:text-3xl">{featured.title}</h3>
