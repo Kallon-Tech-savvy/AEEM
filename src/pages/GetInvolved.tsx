@@ -25,9 +25,14 @@ const LABEL_CLASS = 'text-sm font-semibold text-aeem-ink dark:text-white'
 const SUPABASE_FUNCTION_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/submit-inquiry`
 
 async function submitInquiry(payload: Record<string, unknown>): Promise<Response> {
+  const anonKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY
   return fetch(SUPABASE_FUNCTION_URL, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${anonKey}`,
+      'apikey': anonKey
+    },
     body: JSON.stringify(payload),
   })
 }
