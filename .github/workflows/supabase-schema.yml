@@ -9,7 +9,7 @@ on:
       - aeem-v2-foundation
 
 concurrency:
-  group: supabase-${{ github.workflow }}-${{ github.ref }}
+  group: aeem-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:

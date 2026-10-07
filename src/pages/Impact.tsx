@@ -14,21 +14,16 @@ export default function Impact() {
   useEffect(() => {
     let active = true
 
-    supabase
-      .from('impact_stories')
-      .select('id, title, slug, summary, location, participants_count, schools_count, cover_image_url')
-      .eq('published', true)
-      .order('created_at', { ascending: false })
-      .then(({ data, error }) => {
-        if (!active) return
-        if (error) {
-          console.error('Error fetching impact stories:', error)
-          setStories([])
-        } else {
-          setStories((data as ImpactStoryListItem[]) ?? [])
-        }
-        setLoading(false)
-      })
+        if (error) throw error;
+        setStories((data ?? []) as unknown as ImpactStoryListItem[]);
+      } catch (error) {
+        console.error('Error fetching impact stories:', error);
+        setError(true);
+        setStories([]);
+      } finally {
+        setLoading(false);
+      }
+    };
 
     return () => {
       active = false
@@ -60,39 +55,56 @@ export default function Impact() {
           </p>
       </Section>
 
-      <Section>
-          {loading ? (
-            <div className="flex min-h-[300px] items-center justify-center">
-              <Loader2 className="animate-spin text-aeem-gold" size={32} aria-label="Loading impact stories" />
-            </div>
-          ) : stories.length === 0 ? (
-            <Card className="p-12 text-center">
-              <h2 className="text-2xl font-bold text-aeem-ink dark:text-white">No impact stories published yet</h2>
-              <p className="mt-2 text-aeem-ink/70 dark:text-white/70">
-                Check back soon as we publish field reports and verified outcome metrics.
-              </p>
-            </Card>
-          ) : (
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {stories.map((story) => (
-                <Card key={story.id} className="flex flex-col justify-between overflow-hidden p-6">
-                  <div>
-                    {story.cover_image_url && (
-                      <img
-                        src={story.cover_image_url}
-                        alt={story.title}
-                        className="-mx-6 -mt-6 mb-6 aspect-[16/9] w-[calc(100%+3rem)] object-cover"
-                      />
-                    )}
-                    <p className="text-xs font-semibold uppercase tracking-[0.12em] text-aeem-gold">
-                      {story.location}
-                    </p>
-                    <h2 className="mt-2 text-xl font-bold text-aeem-ink dark:text-white">
-                      {story.title}
-                    </h2>
-                    <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-aeem-ink/75 dark:text-white/75">
-                      {story.summary}
-                    </p>
+      <Section spacing="large" className="bg-aeem-cream" aria-labelledby="stories-heading">
+        <div className="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div className="max-w-3xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-aeem-gold">
+              Impact stories
+            </p>
+            <h2 id="stories-heading" className="mt-3 text-3xl font-bold text-aeem-ink sm:text-4xl">
+              From program activity to human outcomes
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-aeem-ink/70">
+              Each story should connect an identified need to an intervention and,
+              where evidence exists, a measurable or documented outcome.
+            </p>
+          </div>
+        </div>
+
+        {loading ? (
+          <div className="flex items-center justify-center py-24" role="status" aria-live="polite">
+            <Loader2 className="h-8 w-8 animate-spin text-aeem-gold" aria-hidden="true" />
+            <span className="sr-only">Loading impact stories</span>
+          </div>
+        ) : error ? (
+          <Card className="p-8">
+            <h3 className="text-xl font-semibold text-aeem-ink">Impact stories are temporarily unavailable.</h3>
+            <p className="mt-3 leading-7 text-aeem-ink/70">
+              We could not load the published story archive right now. Please try again later.
+            </p>
+          </Card>
+        ) : stories.length > 0 ? (
+          <div className="grid gap-8 lg:grid-cols-2">
+            {stories.map((story) => (
+              <Card key={story.slug} className="overflow-hidden p-0">
+                <div className="aspect-[16/9] bg-aeem-ink/5">
+                  {story.cover_image_url ? (
+                    <img
+                      src={story.cover_image_url}
+                      alt={story.title}
+                      width={1280}
+                      height={720}
+                      loading="lazy"
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <div className="h-full w-full bg-aeem-forest" aria-hidden="true" />
+                  )}
+                </div>
+                <div className="p-6 sm:p-8">
+                  <div className="flex items-center gap-2 text-sm text-aeem-ink/65">
+                    <MapPin size={16} className="text-aeem-gold" aria-hidden="true" />
+                    <span>{story.location}</span>
                   </div>
 
                   <div className="mt-6 border-t border-black/10 pt-4 dark:border-white/10">

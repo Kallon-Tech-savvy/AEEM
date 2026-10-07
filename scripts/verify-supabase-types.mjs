@@ -13,11 +13,11 @@ const generated = fs.readFileSync(generatedPath, 'utf8')
 const checkedIn = fs.readFileSync(checkedInPath, 'utf8')
 
 function extractTables(source) {
-  const tablesMatch = source.match(/Tables:\s*\{([\\s\\S]*?)\n\s*\}\n\s*Views:/)
+  const tablesMatch = source.match(/Tables:\s*\{([\s\S]*?)\n\s*\}\n\s*Views:/)
   if (!tablesMatch) throw new Error('Could not locate Database.public.Tables')
 
   const tables = {}
-  const tablePattern = /^\s{6}([A-Za-z_][A-Za-z0-9_]*): \{\n\s{8}Row: \{([\\s\\S]*?)\n\s{8}\}\n\s{8}Insert:/gm
+  const tablePattern = /\n\s+([A-Za-z_][A-Za-z0-9_]*): \{\s*\n\s+Row: \{([\s\S]*?)\n\s+\}\s*\n\s+Insert:/g
 
   for (const match of tablesMatch[1].matchAll(tablePattern)) {
     const [, name, rowBlock] = match

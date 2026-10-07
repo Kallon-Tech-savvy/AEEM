@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 /**
  * Database contract consumed by the typed Supabase client.
  *
@@ -27,7 +28,7 @@ export type Database = {
           description: string
           event_date: string
           location: string
-          status: 'upcoming' | 'completed'
+          status: string
           cover_image_url: string | null
           file_name: string | null
           duration: string | null
@@ -47,7 +48,7 @@ export type Database = {
           description: string
           event_date: string
           location: string
-          status?: 'upcoming' | 'completed'
+          status?: string
           cover_image_url?: string | null
           file_name?: string | null
           duration?: string | null
@@ -226,7 +227,7 @@ export type Database = {
       inquiries: {
         Row: {
           id: string
-          inquiry_type: 'contact' | 'volunteer' | 'partner' | 'donor'
+          inquiry_type: string
           full_name: string
           email: string
           email_normalized: string
@@ -252,7 +253,7 @@ export type Database = {
         }
         Update: {
           id?: string
-          inquiry_type?: 'contact' | 'volunteer' | 'partner' | 'donor'
+          inquiry_type?: string
           full_name?: string
           email?: string
           email_normalized?: string

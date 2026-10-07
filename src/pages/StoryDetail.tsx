@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import { Helmet } from 'react-helmet-async'
-import { Link, useParams } from 'react-router-dom'
-import { ArrowLeft, Share2, Loader2, Users, School, Calendar } from 'lucide-react'
-import { supabase } from '../services/supabase'
-import { Button, Card, Section } from '../components/ui'
-import { getCanonical } from '../lib/seo'
+import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { useParams, Link } from 'react-router-dom';
+import { ArrowLeft, CheckCircle2, Link2, Loader2 } from 'lucide-react';
+import { supabase } from '../services/supabase';
+import { getCanonical } from '../lib/seo';
+import { Badge, Button, Card, Container, Section, Stat } from '../components/ui';
+import { IMPACT_STORY_DETAIL_FIELDS } from '../services/contentFields';
+import type { ImpactStoryDetailItem } from '../types/content';
 
 interface StoryData {
   title: string
@@ -30,41 +32,50 @@ export default function StoryDetail() {
   const [shareStatus, setShareStatus] = useState('')
 
   useEffect(() => {
-    let active = true
+    let active = true;
+
+    const fetchStory = async () => {
+      if (!slug) return;
+      setLoading(true);
+
+      try {
+        const { data, error } = await supabase
+          .from('impact_stories')
+          .select(IMPACT_STORY_DETAIL_FIELDS)
+          .eq('slug', slug)
+          .eq('published', true)
+          .single();
 
     if (!slug) {
       setLoading(false)
       return
     }
 
-    supabase
-      .from('impact_stories')
-      .select('title, summary, cover_image_url, file_name, participants_count, schools_count, duration, overview, focus_areas, impact, quote_text, quote_author')
-      .eq('slug', slug)
-      .eq('published', true)
-      .single()
-      .then(({ data, error }) => {
-        if (!active) return
-        if (error || !data) {
-          console.error('Error fetching impact story:', error)
-          setStory(null)
-        } else {
+        const storyRow = data as unknown as ImpactStoryDetailItem;
+
+        if (active) {
           setStory({
-            title: data.title,
-            quote: data.summary ?? '',
-            image: data.cover_image_url ?? '',
-            fileName: data.file_name ?? '',
+            title: storyRow.title,
+            quote: storyRow.summary,
+            image: storyRow.cover_image_url ?? '',
+            fileName: storyRow.file_name ?? '',
             stats: {
-              participants: data.participants_count != null ? `${data.participants_count} Participants` : '',
-              schools: data.schools_count != null ? `${data.schools_count} Institutions` : '',
-              duration: data.duration ?? '',
+              participants: storyRow.participants_count != null ? `${storyRow.participants_count} Participants` : '',
+              schools: storyRow.schools_count != null ? `${storyRow.schools_count} Institutions` : '',
+              duration: storyRow.duration ?? '',
             },
-            overview: data.overview ?? '',
-            focusAreas: data.focus_areas ?? [],
-            impact: data.impact ?? '',
-            quoteText: data.quote_text ?? '',
-            quoteAuthor: data.quote_author ?? '',
-          })
+            overview: storyRow.overview ?? '',
+            focusAreas: storyRow.focus_areas ?? [],
+            impact: storyRow.impact ?? '',
+            quoteText: storyRow.quote_text ?? '',
+            quoteAuthor: storyRow.quote_author ?? '',
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching impact story:', error);
+
+        if (active) {
+          setStory(null);
         }
         setLoading(false)
       })
