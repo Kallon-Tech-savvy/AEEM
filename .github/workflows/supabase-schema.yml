@@ -1,0 +1,33 @@
+name: Supabase Schema Contract
+
+on:
+  push:
+    branches:
+      - aeem-v2-foundation
+  pull_request:
+    branches:
+      - aeem-v2-foundation
+
+permissions:
+  contents: read
+
+jobs:
+  schema:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Start local database
+        run: supabase db start
+
+      - name: Generate schema types
+        run: supabase gen types typescript --local --schema public > /tmp/database.generated.ts
+
+      - name: Verify checked-in database contract
+        run: node scripts/verify-supabase-types.mjs /tmp/database.generated.ts src/types/database.ts
