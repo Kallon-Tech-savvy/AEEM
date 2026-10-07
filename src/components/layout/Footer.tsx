@@ -84,12 +84,12 @@ export default function Footer() {
   }
 
   return (
-    <footer className="relative overflow-hidden bg-gradient-to-b from-gray-50 to-gray-200 dark:from-aeem-charcoal dark:to-[#0f1115] text-aeem-charcoal dark:text-white py-20 z-10 shadow-[0_-20px_50px_rgba(0,0,0,0.05)] dark:shadow-[0_-20px_50px_rgba(0,0,0,0.4)] border-t border-white/50 dark:border-white/5 backdrop-blur-3xl">
+    <footer className="relative overflow-hidden border-t border-black/10 bg-aeem-cream py-16 text-aeem-ink dark:border-white/10 dark:bg-aeem-charcoal dark:text-white">
 
       {/* Background illustration */}
       <div
         aria-hidden="true"
-        className="absolute left-0 bottom-[1%] w-full h-full opacity-[0.08] dark:opacity-[0.05] pointer-events-none -z-10 mix-blend-luminosity select-none transition-opacity duration-300"
+        className="pointer-events-none absolute bottom-0 left-0 -z-10 h-full w-full select-none opacity-[0.04] dark:opacity-[0.03]"
       >
         <picture>
           <source srcSet="/assets/Illustrate africa.avif" type="image/avif" />
@@ -97,7 +97,7 @@ export default function Footer() {
           <img
             src="/assets/Illustrate africa.webp"
             alt=""
-            className="w-full h-full object-contain object-left-bottom drop-shadow-2xl"
+            className="h-full w-full object-contain object-left-bottom"
             loading="lazy"
             decoding="async"
           />
@@ -110,13 +110,13 @@ export default function Footer() {
           {/* Brand */}
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center gap-3 mb-6">
-                <picture className="p-1 bg-white dark:bg-white/10 rounded-xl shadow-[0_8px_16px_rgba(0,0,0,0.1)] dark:shadow-[0_8px_16px_rgba(0,0,0,0.4)] ring-1 ring-black/5 dark:ring-white/10">
+                <picture className="rounded-xl bg-white p-1 ring-1 ring-black/5 dark:bg-white/10 dark:ring-white/10">
                   <source src="/assets/logo.webp" type='image/webp' width={44} height={36} />
-                  <img src="/assets/logo_converted.avif" alt="AEEM Logo" width={44} height={36} className="w-11 h-9 object-cover rounded-lg" />
+                  <img src="/assets/logo_converted.avif" alt="AEEM Logo" width={44} height={36} className="h-9 w-11 rounded-lg object-cover" />
                 </picture>
-              <h3 className="font-extrabold text-3xl tracking-tight drop-shadow-sm">AEEM</h3>
+              <h3 className="text-2xl font-bold tracking-tight">AEEM</h3>
             </div>
-            <p className="max-w-sm mb-8 leading-relaxed italic opacity-90 text-gray-700 dark:text-gray-300 font-medium">
+            <p className="mb-8 max-w-sm leading-relaxed text-aeem-ink/70 dark:text-white/70">
               "Fair access to quality education for every child through community-led action, clarity, and care."
             </p>
             <div className="flex gap-4">
@@ -132,7 +132,7 @@ export default function Footer() {
                   aria-label={label}
                   target={src.startsWith('http') ? '_blank' : undefined}
                   rel={src.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className="w-11 h-11 bg-white/50 dark:bg-black/30 backdrop-blur-md border border-gray-200 dark:border-white/10 rounded-full flex items-center justify-center text-aeem-charcoal dark:text-gray-300 shadow-sm hover:shadow-[0_10px_20px_rgba(212,175,55,0.3)] hover:-translate-y-1 hover:bg-aeem-gold hover:text-white hover:border-aeem-gold dark:hover:text-white transition-all duration-300"
+                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-black/10 bg-white text-aeem-ink transition-colors hover:border-aeem-forest hover:text-aeem-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:border-aeem-gold dark:hover:text-aeem-gold-light"
                 >
                   <Icon size={18} />
                 </a>
@@ -157,7 +157,7 @@ export default function Footer() {
                 <li key={to}>
                   <Link
                     to={to}
-                    className="text-gray-600 dark:text-gray-400 hover:text-aeem-gold dark:hover:text-white transition-all font-semibold hover:translate-x-1 inline-block"
+                    className="inline-block font-medium text-aeem-ink/65 transition-colors hover:text-aeem-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:text-white/60 dark:hover:text-aeem-gold-light"
                   >
                     {label}
                   </Link>
@@ -169,12 +169,12 @@ export default function Footer() {
           {/* Newsletter */}
           <div className="relative">
              <div className="absolute -inset-4 bg-gradient-to-br from-aeem-gold/10 to-transparent dark:from-aeem-gold/5 blur-2xl -z-10 rounded-full"></div>
-            <h4 className="font-extrabold mb-6 text-aeem-focus dark:text-aeem-gold uppercase tracking-widest text-xs drop-shadow-sm">Stay Updated</h4>
-            <p className="text-gray-600 dark:text-gray-300 font-medium text-sm mb-5 leading-relaxed">
+            <h4 className="mb-4 text-xs font-semibold uppercase tracking-[0.16em] text-aeem-forest dark:text-aeem-gold-light">Stay Updated</h4>
+            <p className="mb-5 text-sm leading-relaxed text-aeem-ink/65 dark:text-white/65">
               Join our newsletter for the latest impact stories and events.
             </p>
 
-            <form onSubmit={handleSubscribe} className="relative mb-3 group" noValidate>
+            <form onSubmit={handleSubscribe} className="relative mb-3" noValidate>
               <div aria-hidden="true" className="absolute opacity-0 top-0 left-0 w-px h-px overflow-hidden pointer-events-none" tabIndex={-1}>
                 <input name="company_website" type="text" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
               </div>
@@ -194,7 +194,7 @@ export default function Footer() {
                 type="submit"
                 disabled={loading || status === 'success'}
                 aria-label="Subscribe to newsletter"
-                className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-aeem-focus dark:bg-aeem-gold text-white rounded-lg shadow-md hover:shadow-lg hover:scale-105 transition-all disabled:opacity-50 disabled:scale-100"
+                className="absolute right-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-lg bg-aeem-forest text-white transition-colors hover:bg-aeem-forest-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus disabled:opacity-50 dark:bg-aeem-gold dark:text-aeem-forest-dark"
               >
                 {loading
                   ? <Loader2 className="animate-spin" size={18} />
@@ -215,10 +215,10 @@ export default function Footer() {
         </div>
 
         <div className="pt-8 border-t border-gray-200 dark:border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-gray-500 dark:text-gray-400 font-medium text-xs">
+          <p className="text-xs font-medium text-aeem-ink/55 dark:text-white/50">
             © 2026 | Africa Education Empowerment Movement. | All rights reserved.
           </p>
-          <div className="flex gap-6 text-xs font-bold text-gray-500 dark:text-gray-400">
+          <div className="flex gap-6 text-xs font-medium text-aeem-ink/55 dark:text-white/50">
             <a href="#" className="hover:text-aeem-gold transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-aeem-gold transition-colors">Terms of Service</a>
           </div>

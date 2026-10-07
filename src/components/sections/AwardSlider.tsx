@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import { AWARDS } from '../../data/Awards'
+import { Container, Section } from '../ui'
 
 export function AwardSlider() {
   const [width, setWidth] = useState(0)
@@ -9,112 +10,106 @@ export function AwardSlider() {
 
   useEffect(() => {
     if (carouselRef.current) {
-      setWidth(carouselRef.current.scrollWidth - carouselRef.current.offsetWidth)
+      setWidth(Math.max(0, carouselRef.current.scrollWidth - carouselRef.current.offsetWidth))
     }
   }, [])
 
   const handleScroll = (direction: 'left' | 'right') => {
-    if (carouselRef.current) {
-      const scrollAmount = 380 // Adjusted to match new card size + gap structure
-      carouselRef.current.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth',
-      })
-    }
+    carouselRef.current?.scrollBy({
+      left: direction === 'left' ? -380 : 380,
+      behavior: 'smooth',
+    })
   }
 
   return (
-    <section className="py-16 bg-aeem-focus/5 dark:bg-black/20 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4">
-        
-        {/* Header Layout with Custom Navigation Targets */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
-          <div>
-            <h2 className="text-4xl font-black text-aeem-charcoal dark:text-aeem-dark-text tracking-tight">
+    <Section spacing="default" className="overflow-hidden bg-aeem-cream dark:bg-aeem-charcoal">
+      <Container>
+        <div className="mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-2xl">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-aeem-gold">
+              Institutional recognition
+            </p>
+            <h2 className="text-3xl font-bold tracking-tight text-aeem-ink dark:text-white md:text-4xl">
               Honours & Institutional Recognitions
             </h2>
           </div>
-          
-          <div className="flex gap-3 self-start">
+
+          <div className="flex gap-2 self-start md:self-auto">
             <button
+              type="button"
               onClick={() => handleScroll('left')}
-              className="p-3 border-2 border-gray-300 dark:border-white/10 text-aeem-charcoal dark:text-aeem-dark-text rounded-full hover:border-aeem-gold hover:text-aeem-gold transition-colors"
-              aria-label="Scroll left"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-aeem-ink/20 text-aeem-ink transition-colors hover:border-aeem-forest hover:text-aeem-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:border-white/20 dark:text-white dark:hover:border-aeem-gold dark:hover:text-aeem-gold"
+              aria-label="Scroll recognitions left"
             >
-              <ArrowLeft size={18} />
+              <ArrowLeft size={18} aria-hidden="true" />
             </button>
             <button
+              type="button"
               onClick={() => handleScroll('right')}
-              className="p-3 border-2 border-gray-300 dark:border-white/10 text-aeem-charcoal dark:text-aeem-dark-text rounded-full hover:border-aeem-gold hover:text-aeem-gold transition-colors"
-              aria-label="Scroll right"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-aeem-ink/20 text-aeem-ink transition-colors hover:border-aeem-forest hover:text-aeem-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:border-white/20 dark:text-white dark:hover:border-aeem-gold dark:hover:text-aeem-gold"
+              aria-label="Scroll recognitions right"
             >
-              <ArrowRight size={18} />
+              <ArrowRight size={18} aria-hidden="true" />
             </button>
           </div>
         </div>
 
-        <motion.div
+        <div
           ref={carouselRef}
-          className="flex overflow-x-auto gap-8 cursor-grab active:cursor-grabbing scrollbar-none snap-x snap-mandatory"
+          className="flex overflow-x-auto snap-x snap-mandatory gap-5 scrollbar-none"
           style={{ scrollbarWidth: 'none' }}
+          aria-label="AEEM institutional recognitions"
         >
           <motion.div
-            className="flex gap-8 pr-8"
+            className="flex shrink-0 gap-5 pr-5"
             drag="x"
             dragConstraints={{ right: 0, left: -width }}
             whileTap={{ cursor: 'grabbing' }}
           >
             {AWARDS.map((award, i) => (
-              <motion.div
+              <article
                 key={`award-${i}`}
-                /* Added group utility, h-[460px] configuration, and relative clip targets */
-                className="group relative w-[320px] md:w-[380px] h-[460px] rounded-[2.5rem] overflow-hidden border border-gray-200/10 shadow-2xl snap-start flex-shrink-0 pointer-events-none select-none"
+                className="relative flex h-[420px] w-[300px] shrink-0 snap-start flex-col justify-end overflow-hidden rounded-2xl border border-white/10 bg-aeem-forest shadow-sm md:w-[340px]"
               >
-                {/* 1. Background Image Layer with smooth scaling effect */}
                 <img
                   src={award.image}
-                  alt={award.title}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-90"
+                  alt=""
+                  className="absolute inset-0 h-full w-full object-cover"
+                  loading="lazy"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-aeem-ink via-aeem-ink/65 to-transparent" aria-hidden="true" />
 
-                {/* 2. Brand Gradient Mask to protect typography contrast limits */}
-                <div className="absolute inset-0 bg-gradient-to-t from-aeem-charcoal via-aeem-charcoal/80 dark:to-black/20  mix-blend-multiply" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90" />
-
-                {/* 3. Text & Node Elements over Image Layout */}
-                <div className="relative z-10 h-full p-8 flex flex-col justify-between items-stretch">
-                  
-                  {/* Top Badges */}
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-black tracking-widest text-white px-3 py-1 bg-aeem-gold rounded-full shadow-md">
+                <div className="relative z-10 p-7 text-white">
+                  <div className="mb-5 flex items-center justify-between">
+                    <span className="rounded-lg bg-aeem-gold px-3 py-1 text-xs font-semibold tracking-wide text-aeem-ink">
                       {award.year}
                     </span>
-                    {award.icon && (
-                      <div className="text-aeem-gold p-2.5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/10">
+                    {award.icon ? (
+                      <div className="text-aeem-gold" aria-hidden="true">
                         <award.icon size={20} />
                       </div>
-                    )}
+                    ) : null}
                   </div>
 
-                  {/* Bottom Text Stack */}
-                  <div className="space-y-2.5">
-                    <p className="text-xs font-black text-aeem-gold uppercase tracking-widest drop-shadow">
-                      {award.issuer}
-                    </p>
-                    <h3 className="text-2xl font-black text-white leading-tight drop-shadow-md">
-                      {award.title}
-                    </h3>
-                    <p className="text-sm text-gray-200/90 leading-relaxed font-medium line-clamp-3 opacity-90 group-hover:opacity-100 transition-opacity">
+                  <p className="text-xs font-semibold uppercase tracking-[0.15em] text-aeem-gold-light">
+                    {award.issuer}
+                  </p>
+                  <h3 className="mt-2 text-2xl font-bold leading-tight">
+                    {award.title}
+                  </h3>
+                  {award.desc ? (
+                    <p className="mt-3 line-clamp-3 text-sm leading-6 text-white/75">
                       {award.desc}
                     </p>
-                  </div>
-
+                  ) : null}
                 </div>
-              </motion.div>
+              </article>
             ))}
           </motion.div>
-        </motion.div>
-      </div>
-    </section>
+        </div>
+      </Container>
+    </Section>
   )
-}export default AwardSlider;
+}
+
+export default AwardSlider

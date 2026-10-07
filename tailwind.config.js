@@ -8,20 +8,27 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Institutional brand tokens
+        'aeem-forest':       '#2C5F2D',
+        'aeem-forest-dark':  '#173D28',
+        'aeem-ink':          '#17201A',
+        'aeem-cream':        '#F7F5EF',
+        'aeem-white':        '#FFFFFF',
+
         // ── Light Mode Tokens ──────────────────────────────────────────────
         // Gold: bumped from #D4AF37 to #B8941A for 4.5:1+ contrast on white
         'aeem-gold':         '#B8941A',   // AA on #F8F7F4 (≈5.2:1)
-        'aeem-gold-light':   '#D4AF37',   // Decorative only, large text / icons
+        'aeem-gold-light':   '#D4AF37',   // Decorative only
         'aeem-gold-dark':    '#8A6E12',   // Hover/active deepened gold (≈8.1:1)
 
         // Charcoal
-        'aeem-charcoal':     '#1A1A1A',   // Body text on light bg (≈18:1)
+        'aeem-charcoal':     '#17201A',   // Body text on light bg (≈18:1)
         'aeem-charcoal-mid': '#3D3D3D',   // Secondary text (≈11:1)
         'aeem-charcoal-soft':'#6B6B6B',   // Tertiary text — meets AA large (≈4.6:1)
 
         // Backgrounds
-        'aeem-bg':           '#F8F7F4',   // Global warm white
-        'aeem-surface':      '#EFEDE8',   // Card surface (slightly deeper)
+        'aeem-bg':           '#F7F5EF',   // Global warm white
+        'aeem-surface':      '#FFFFFF',   // Card surface (slightly deeper)
         'aeem-border':       '#D6D3CC',   // Borders on light bg
 
         // ── Dark Mode Tokens ───────────────────────────────────────────────
@@ -43,10 +50,10 @@ export default {
         // Light mode
         'soft':       '0 20px 50px rgba(0,0,0,0.06)',
         'card':       '0 4px 24px rgba(0,0,0,0.08)',
-        'gold-glow':  '0 10px 30px rgba(184,148,26,0.25)',
+        'gold-glow':  'none',
         // Dark mode
         'dark-card':  '0 4px 24px rgba(0,0,0,0.4)',
-        'dark-gold':  '0 10px 30px rgba(212,175,55,0.15)',
+        'dark-gold':  'none',
         // Focus ring
         'focus-ring': '0 0 0 3px rgba(26,107,204,0.5)',
         'focus-gold': '0 0 0 3px rgba(184,148,26,0.5)',
