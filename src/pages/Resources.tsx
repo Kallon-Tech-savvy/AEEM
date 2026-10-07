@@ -36,7 +36,7 @@ export default function Resources() {
 
   useEffect(() => {
     let active = true
-    supabase.from('resources').select('*').eq('published', true).order('created_at', { ascending: false })
+    supabase.from('resources').select('id, title, slug, type, description, summary, category, created_at, tags, image:image_url').eq('published', true).order('created_at', { ascending: false })
       .then(({ data, error }) => {
         if (!active) return
         if (error) {
