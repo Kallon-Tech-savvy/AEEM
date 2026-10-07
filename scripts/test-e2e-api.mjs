@@ -118,6 +118,55 @@ async function testInquiryHoneypot() {
   console.log('✓ submit-inquiry accepted the honeypot smoke path without a write')
 }
 
+async function testDeployedSiteBundle() {
+  const siteUrl = process.env.AEEM_SITE_URL || 'https://www.aeemmovement.org'
+  console.log(`Testing deployed site bundle at ${siteUrl}...`)
+
+  const page = await fetch(`${siteUrl.replace(/\/$/, '')}/contact`, {
+    redirect: 'follow',
+    headers: { Accept: 'text/html' },
+  })
+
+  assert.strictEqual(
+    page.status,
+    200,
+    `Expected /contact to return 200, got ${page.status}`,
+  )
+
+  const html = await page.text()
+  const scriptSources = [...html.matchAll(/<script[^>]+src=["']([^"']+)["']/gi)]
+    .map((match) => match[1])
+    .filter((src) => src.includes('/assets/'))
+
+  assert.ok(scriptSources.length > 0, 'No application JavaScript bundle was found on /contact')
+
+  const absoluteSources = scriptSources.map((src) =>
+    new URL(src, page.url).toString(),
+  )
+
+  const bundles = await Promise.all(
+    absoluteSources.map(async (src) => {
+      const response = await fetch(src)
+      assert.strictEqual(response.status, 200, `Failed to fetch application bundle: ${src}`)
+      return response.text()
+    }),
+  )
+
+  const appCode = bundles.join('\n')
+  assert.doesNotMatch(
+    appCode,
+    /\/rest\/v1\/subscriptions/,
+    'Deployed site still contains the obsolete subscriptions REST call',
+  )
+  assert.match(
+    appCode,
+    /\/functions\/v1\/submit-inquiry/,
+    'Deployed site does not contain the current inquiry Edge Function endpoint',
+  )
+
+  console.log('✓ /contact is serving the current inquiry client code')
+}
+
 async function testPublicContentEndpoint(table) {
   const publishableKey = process.env.VITE_SUPABASE_PUBLISHABLE_KEY
 
@@ -146,6 +195,7 @@ async function testPublicContentEndpoint(table) {
 
 async function run() {
   try {
+    await testDeployedSiteBundle()
     await testInquiryFunctionReachability()
     await testInquiryValidation()
     await testInquiryHoneypot()
