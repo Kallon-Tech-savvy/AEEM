@@ -1,116 +1,77 @@
-import React from 'react';
-import { Helmet } from 'react-helmet-async';
-import { Download, FileText, Image as ImageIcon, Briefcase } from 'lucide-react';
+import React from 'react'
+import { Helmet } from 'react-helmet-async'
+import { ArrowRight, Briefcase, FileText, Image as ImageIcon } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { Badge, Card, Section } from '../components/ui'
+import { getCanonical } from '../lib/seo'
 
-const PressKit: React.FC = () => {
-  return (
-    <>
-      <Helmet>
-        <title>Press Kit | AEEM</title>
-        <meta name="description" content="Official AEEM media assets, logos, and organizational profiles for media and partnerships." />
-      </Helmet>
+const PressKit: React.FC = () => (
+  <>
+    <Helmet>
+      <title>Press Kit | AEEM</title>
+      <meta name="description" content="AEEM media resources, organizational information, brand assets, and contact information for journalists and partners." />
+      <link rel="canonical" href={getCanonical('/press-kit')} />
+      <meta property="og:title" content="Press Kit | AEEM" />
+      <meta property="og:description" content="Media resources, organizational information, brand assets, and contact information for AEEM." />
+      <meta property="og:url" content={getCanonical('/press-kit')} />
+    </Helmet>
 
-      <section className="pt-40 pb-24 bg-aeem text-aeem">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="max-w-3xl">
-            <span className="text-aeem-gold font-bold uppercase tracking-[0.3em] text-xs mb-4 block">Media Resources</span>
-            <h1 className="text-5xl md:text-7xl font-black mb-8 leading-tight">
-              Press <span className="text-aeem-gold">Kit</span>
-            </h1>
-            <p className="text-xl text-gray-500 leading-relaxed">
-              Official resources and assets for media inquiries and partnership collaborations. All materials are available for download and use in accordance with our brand guidelines.
-            </p>
+    <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
+      <div className="max-w-3xl">
+        <Badge>Media resources</Badge>
+        <h1 className="mt-5 text-4xl font-bold leading-tight text-aeem-ink dark:text-white sm:text-5xl lg:text-6xl">Press resources for understanding AEEM.</h1>
+        <p className="mt-6 max-w-2xl text-lg leading-8 text-aeem-ink/70 dark:text-white/70">
+          Use this page as a starting point for organizational context, approved visual identity assets, and media inquiries.
+        </p>
+      </div>
+    </Section>
+
+    <Section>
+      <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-gold">Organization</p>
+          <h2 className="mt-3 text-2xl font-bold text-aeem-ink dark:text-white sm:text-3xl">Start with the facts.</h2>
+          <p className="mt-4 max-w-xl leading-7 text-aeem-ink/70 dark:text-white/70">
+            For current organizational information, programs, impact evidence, and leadership context, use the primary pages on this site. Downloadable briefing and fact-sheet files are not currently published in the repository, so this page does not present placeholder download buttons.
+          </p>
+          <div className="mt-7 space-y-3">
+            <Link to="/about" className="flex items-center justify-between rounded-2xl border border-black/10 p-5 text-aeem-ink transition-colors hover:border-aeem-forest dark:border-white/10 dark:text-white dark:hover:border-aeem-gold">
+              <span className="flex items-center gap-4"><Briefcase size={20} aria-hidden="true" /><span><span className="block font-semibold">About AEEM</span><span className="text-sm text-aeem-ink/60 dark:text-white/60">Mission, values, leadership, and relationships.</span></span></span>
+              <ArrowRight size={18} aria-hidden="true" />
+            </Link>
+            <Link to="/impact" className="flex items-center justify-between rounded-2xl border border-black/10 p-5 text-aeem-ink transition-colors hover:border-aeem-forest dark:border-white/10 dark:text-white dark:hover:border-aeem-gold">
+              <span className="flex items-center gap-4"><FileText size={20} aria-hidden="true" /><span><span className="block font-semibold">Impact and evidence</span><span className="text-sm text-aeem-ink/60 dark:text-white/60">Programs, stories, and reported outcomes.</span></span></span>
+              <ArrowRight size={18} aria-hidden="true" />
+            </Link>
           </div>
         </div>
-      </section>
 
-      <section className="py-24 bg-aeem-focus/10">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <Card>
+          <div className="flex items-start gap-4">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-aeem-forest/5 text-aeem-forest dark:bg-aeem-gold/10 dark:text-aeem-gold-light"><ImageIcon size={21} aria-hidden="true" /></div>
             <div>
-              <h2 className="text-3xl font-black mb-8">Organizational Profile</h2>
-              <div className="space-y-6">
-                <div className="bg-aeem p-8 rounded-2xl border border-aeem flex items-center justify-between group hover:border-aeem-gold transition-colors">
-                  <div className="flex items-center gap-6">
-                    <div className="w-12 h-12 bg-white/80 rounded-xl shadow-sm flex items-center justify-center text-aeem-gold">
-                      <Briefcase size={24} />
-                    </div>
-                    <div>
-                      <h3 className="font-bold">AEEM Briefing Document</h3>
-                      <p className="text-sm text-gray-500">PDF, 2.4 MB</p>
-                    </div>
-                  </div>
-                  <button className="p-3 rounded-full hover:bg-aeem-gold hover:text-white transition-all">
-                    <Download size={20} />
-                  </button>
-                </div>
-
-                <div className="bg-aeem p-8 rounded-2xl border border-gray-100 flex items-center justify-between group hover:border-aeem-gold transition-colors">
-                  <div className="flex items-center gap-6">
-                    <div className="w-12 h-12 bg-white/80 rounded-xl shadow-sm flex items-center justify-center text-aeem-gold">
-                      <FileText size={24} />
-                    </div>
-                    <div>
-                      <h3 className="font-bold">Fact Sheet 2026</h3>
-                      <p className="text-sm text-gray-500">PDF, 1.1 MB</p>
-                    </div>
-                  </div>
-                  <button className="p-3 rounded-full hover:bg-aeem-gold hover:text-white transition-all">
-                    <Download size={20} />
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div className="absolute right-0 bottom-0 w-full h-full opacity-[0.077] dark:opacity-[0.03] pointer-events-none z-1 mix-blend-luminosity select-none">
-              <img 
-                src="/assets/Illustrate africa.avif" 
-                alt="" 
-                className="w-full h-full object-contain"
-              />
-            </div>
-            <div>
-              <h2 className="text-3xl font-black mb-8">Brand Assets</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="bg-aeem-focus/30 p-8 rounded-2xl border border-gray-100 flex flex-col items-center text-center group hover:border-aeem-gold transition-colors">
-                  <div className="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center text-aeem-gold mb-6">
-                    <ImageIcon size={32} />
-                  </div>
-                  <h3 className="font-bold mb-2">Logo Pack</h3>
-                  <p className="text-sm text-gray-500 mb-6">SVG, PNG, EPS</p>
-                  <button className="mt-auto px-6 py-2 bg-aeem-gold/70 text-white rounded-full text-xs font-bold hover:bg-aeem-gold transition-colors">
-                    Download
-                  </button>
-                </div>
-
-                <div className="bg-aeem-focus/30 p-8 rounded-2xl border border-gray-100 flex flex-col items-center text-center group hover:border-aeem-gold transition-colors">
-                  <div className="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center text-aeem-gold mb-6">
-                    <ImageIcon size={32} />
-                  </div>
-                  <h3 className="font-bold mb-2">Impact Photos</h3>
-                  <p className="text-sm text-gray-500 mb-6">High Res JPG</p>
-                  <button className="mt-auto px-6 py-2 bg-aeem-gold/70 text-white rounded-full text-xs font-bold hover:bg-aeem-gold transition-colors">
-                    Download
-                  </button>
-                </div>
-              </div>
+              <h2 className="text-xl font-bold text-aeem-ink dark:text-white">Brand assets</h2>
+              <p className="mt-2 text-sm leading-6 text-aeem-ink/65 dark:text-white/65">The current AEEM logo is available directly from the site. Additional packaged logo formats should be published here only when an authoritative asset pack exists.</p>
+              <a href="/assets/AEEM_logo.png" download className="mt-5 inline-flex items-center rounded-xl bg-aeem-forest px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-aeem-forest-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus">
+                Download current logo
+              </a>
             </div>
           </div>
-        </div>
-      </section>
+        </Card>
+      </div>
+    </Section>
 
-      {/* Media Contact */}
-      <section className="py-24 bg-aeem">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="bg-aeem-gold rounded-3xl p-12 text-center text-white">
-            <h2 className="text-3xl font-black mb-6">Media Inquiries</h2>
-            <p className="max-w-2xl mx-auto mb-8 text-aeem">
-              For interviews, press access, or official statements, please reach out to our communications team.
-            </p>
-          </div>
+    <Section className="bg-aeem-forest text-white">
+      <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-center">
+        <div className="max-w-2xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-gold-light">Media inquiries</p>
+          <h2 className="mt-3 text-3xl font-bold">Need an interview, statement, or additional material?</h2>
+          <p className="mt-4 leading-7 text-white/75">Contact AEEM directly and explain what you need, your deadline, and the context in which the material will be used.</p>
         </div>
-      </section>
-    </>
-  );
-};
+        <Link to="/contact" className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 font-semibold text-aeem-forest hover:bg-aeem-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70">Contact AEEM <ArrowRight size={18} aria-hidden="true" /></Link>
+      </div>
+    </Section>
+  </>
+)
 
-export default PressKit;
+export default PressKit

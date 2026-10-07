@@ -1,7 +1,7 @@
 /**
  * AEEM Shared Form Utilities — idempotent submission system
  *
- * Security layers (client side — see schema.sql for server-side enforcement):
+ * Security layers (client side — see supabase/migrations/001_initial_schema.sql for server-side enforcement):
  *  1. Email / phone normalisation      → consistent identity before hashing
  *  2. SHA-256 scoped submission key    → deterministic, forgery-resistant key
  *  3. In-memory rate limiter           → UX guard, resets on page reload
@@ -9,7 +9,7 @@
  *  5. Honeypot check                   → silent bot rejection
  *
  * The REAL duplicate guard lives in the database:
- *   UNIQUE (form_type, submission_key)   ← see schema.sql
+ *   UNIQUE (inquiry_type, submission_key)   ← see schema.sql
  *   PostgreSQL error 23505              ← catch this in every form handler
  */
 

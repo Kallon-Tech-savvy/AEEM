@@ -23,6 +23,7 @@ const Resources     = lazy(() => import('./pages/Resources'))
 const ResourceDetail= lazy(() => import('./pages/ResourceDetail'))
 const PressKit      = lazy(() => import('./pages/PressKit'))
 const Contact       = lazy(() => import('./pages/Contact'))
+const Privacy       = lazy(() => import('./pages/Privacy'))
 const NotFound      = lazy(() => import('./pages/NotFound'))
 
 // ─── Page loading fallback ────────────────────────────────────────────────────
@@ -54,6 +55,7 @@ function AnimatedRoutes() {
         <Route path="/resources/:slug"    element={<ResourceDetail />} />
         <Route path="/press-kit"          element={<PressKit />} />
         <Route path="/contact"            element={<Contact />} />
+        <Route path="/privacy"          element={<Privacy />} />
         <Route path="*"                   element={<NotFound />} />
       </Routes>
     </Suspense>

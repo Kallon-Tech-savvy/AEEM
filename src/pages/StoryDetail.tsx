@@ -69,15 +69,31 @@ const StoryDetail: React.FC = () => {
 
       try {
         const { data, error } = await supabase
-          .from('stories')
-          .select('*')
+          .from('impact_stories')
+          .select('title, summary, coverImage:cover_image_url, file_name, participantsCount:participants_count, schoolsCount:schools_count, duration, overview, focusAreas:focus_areas, impact, quoteText:quote_text, quoteAuthor:quote_author')
           .eq('slug', slug)
+          .eq('published', true)
           .single();
 
         if (error) throw error;
 
         if (active) {
-          setStory(data as StoryData);
+          setStory({
+            title: data.title,
+            quote: data.summary,
+            image: data.coverImage ?? '',
+            fileName: data.file_name ?? '',
+            stats: {
+              participants: data.participantsCount != null ? `${data.participantsCount} Participants` : '',
+              schools: data.schoolsCount != null ? `${data.schoolsCount} Institutions` : '',
+              duration: data.duration ?? '',
+            },
+            overview: data.overview ?? '',
+            focusAreas: data.focusAreas ?? [],
+            impact: data.impact ?? '',
+            quoteText: data.quoteText ?? '',
+            quoteAuthor: data.quoteAuthor ?? '',
+          });
         }
       } catch (error) {
         console.warn('Story fetch failed; rendering fallback.', error);
@@ -116,7 +132,11 @@ const StoryDetail: React.FC = () => {
 
       await navigator.clipboard.writeText(url);
       setShareStatus('copied');
-    } catch {
+    } catch (error) {
+      if (error instanceof DOMException && error.name === 'AbortError') {
+        return;
+      }
+
       setShareStatus('error');
     }
   };
@@ -162,8 +182,9 @@ const StoryDetail: React.FC = () => {
         <meta name="description" content={story.quote.slice(0, 155)} />
         <meta property="og:title" content={story.title} />
         <meta property="og:description" content={story.quote.slice(0, 155)} />
-        <meta property="og:image" content={story.image} />
+        <meta property="og:image" content={story.image.startsWith('http') ? story.image : getCanonical(story.image)} />
         <meta property="og:type" content="article" />
+        <meta property="og:url" content={getCanonical(`/impact/${slug}`)} />
         <link rel="canonical" href={getCanonical(`/impact/${slug}`)} />
       </Helmet>
 

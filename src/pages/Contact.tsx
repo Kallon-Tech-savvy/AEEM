@@ -1,210 +1,162 @@
-import React, { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
-import { Mail, Phone, MapPin, Send, CheckCircle2, Globe } from 'lucide-react';
-import { supabase } from '../services/supabase';
-import { motion } from 'framer-motion';
-import { FloatingInput, FloatingTextarea, SubmitButton } from '../components/motion/FormField';
-import { SpotlightCard } from '../components/motion/SpotlightCard';
+import React, { useState } from 'react'
+import { Helmet } from 'react-helmet-async'
+import { Mail, Phone, MapPin, Send, CheckCircle2 } from 'lucide-react'
+import { Badge, Button, Card, Section } from '../components/ui'
+import { getCanonical } from '../lib/seo'
+import { normalizeEmail, normalizePhone, generateSubmissionKey, checkClientRateLimit, isAlreadySubmittedLocally, markSubmittedLocally, isHoneypotTriggered } from '../services/formUtils'
+
+const CONTACT_EMAIL = 'africaseducationempowermentmov@gmail.com'
+const CONTACT_PHONE = '+232 76 406 281'
+const SUPABASE_FUNCTION_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/submit-inquiry`
+
+async function submitInquiry(payload: Record<string, unknown>): Promise<Response> {
+  return fetch(SUPABASE_FUNCTION_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  })
+}
 
 const Contact: React.FC = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const [formData, setFormData] = useState({
-    full_name: '',
-    email: '',
-    phone: '',
-    message: ''
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [honeypot, setHoneypot] = useState('')
+  const [formData, setFormData] = useState({ full_name: '', email: '', phone: '', message: '' })
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setError(null);
+    e.preventDefault()
+    setError(null)
+    if (isHoneypotTriggered(honeypot)) { setSubmitted(true); return }
 
-    try {
-      const { error } = await supabase
-        .from('inquiries')
-        .insert([{ inquiry_type: 'contact', ...formData }]);
-
-      if (error) throw error;
-      setSubmitted(true);
-      setFormData({ full_name: '', email: '', phone: '', message: '' });
-    } catch (err) {
-      const errorMsg = err instanceof Error ? err.message : 'Failed to send message. Please try again.';
-      console.error('Submission error:', err);
-      setError(errorMsg);
-    } finally {
-      setIsSubmitting(false);
+    const fullName = formData.full_name.trim()
+    const message = formData.message.trim()
+    if (fullName.length < 2 || fullName.length > 120 || message.length < 10 || message.length > 3000) {
+      setError('Please provide a valid name and a message between 10 and 3,000 characters.')
+      return
     }
-  };
+
+    const email = normalizeEmail(formData.email)
+    const phone = formData.phone ? normalizePhone(formData.phone) : null
+    if (!checkClientRateLimit(`contact:${email}`, 5, 60 * 60_000)) { setError('Too many attempts. Please wait before trying again.'); return }
+
+    const submissionKey = await generateSubmissionKey('inquiry', email, 'contact')
+    if (isAlreadySubmittedLocally(submissionKey)) {
+      setError('We already have a recent request from this email. Please wait for a response before sending another.')
+      return
+    }
+
+    setIsSubmitting(true)
+    try {
+      const response = await submitInquiry({
+        inquiry_type: 'contact',
+        full_name: fullName,
+        email,
+        phone,
+        message,
+        honeypot,
+      })
+
+      const result = await response.json().catch(() => null)
+
+      if (response.status === 409 || result?.code === 'duplicate_submission') {
+        markSubmittedLocally(submissionKey)
+        setError('We already have a recent request from this email. Please wait for a response before sending another.')
+        return
+      }
+
+      if (response.status === 429 || result?.code === 'rate_limited') {
+        setError('Too many requests. Please wait a few minutes before trying again.')
+        return
+      }
+
+      if (!response.ok) {
+        throw new Error(typeof result?.code === 'string' ? result.code : `HTTP ${response.status}`)
+      }
+
+      markSubmittedLocally(submissionKey)
+      setSubmitted(true)
+      setFormData({ full_name: '', email: '', phone: '', message: '' })
+      setHoneypot('')
+    } catch (err) {
+      console.warn('Inquiry submission failed:', err)
+      setError('We could not send your message. Please try again.')
+    } finally { setIsSubmitting(false) }
+  }
 
   return (
     <>
       <Helmet>
         <title>Contact AEEM | Get in Touch</title>
+        <meta name="description" content="Contact the Africa Education Empowerment Movement about programs, partnerships, media, and general inquiries." />
+        <link rel="canonical" href={getCanonical('/contact')} />
+        <meta property="og:title" content="Contact AEEM | Get in Touch" />
+        <meta property="og:description" content="Contact AEEM about programs, partnerships, media, and general inquiries." />
+        <meta property="og:url" content={getCanonical('/contact')} />
       </Helmet>
 
-      {/* Hero Section */}
-      <section className="pt-40 pb-24 bg-gradient-to-b from-[#afb] dark:from-[#111] to-aeem-bg dark:to-aeem-charcoal text-white overflow-hidden relative">
-         <div className="absolute top-0 right-0 w-full md:w-[60%] h-full pointer-events-none opacity-[0.5] dark:opacity-[0.1] mix-blend-screen z-0">
-          <img 
-            src="/assets/Illustrate Africa 2_converted.avif" 
-            alt="" 
-            className="w-full h-full object-fill md:object-contain object-right-top drop-shadow-2xl"
-          />
+      <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
+        <div className="max-w-3xl">
+          <Badge>Get in touch</Badge>
+          <h1 className="mt-5 text-4xl font-bold leading-tight text-aeem-ink dark:text-white sm:text-5xl lg:text-6xl">A direct line to AEEM.</h1>
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-aeem-ink/70 dark:text-white/70">For general questions, program inquiries, partnerships, or media requests, send a message or use the contact details below.</p>
         </div>
-        <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-aeem-gold/10 rounded-full blur-[120px] pointer-events-none -translate-y-1/2" />
+      </Section>
 
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-3xl"
-          >
-            <span className="inline-block py-1.5 px-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-aeem-gold font-bold uppercase tracking-[0.3em] text-xs mb-6">
-              Get in Touch
-            </span>
-            <h1 className="text-5xl md:text-7xl font-black mb-8 leading-tight drop-shadow-lg">
-              Contact <span className="text-transparent bg-clip-text bg-gradient-to-r from-aeem-gold to-yellow-300">AEEM</span>
-            </h1>
-            <p className="text-xl text-zinc-800 dark:text-gray-300 mb-12 leading-relaxed font-medium">
-              Have questions or want to learn more about our initiatives? We're here to help. Reach out to our team directly.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Contact Content */}
-      <section className="py-24 bg-gray-50 dark:bg-[#0f1115] relative">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
-            
-            {/* Contact Info Sidebar */}
-            <div className="lg:col-span-5 space-y-8">
-               <div>
-                  <h2 className="text-3xl font-black mb-10 text-aeem-charcoal dark:text-white drop-shadow-sm">Reach Us Directly</h2>
-                  <div className="space-y-6">
-                     {[
-                       { icon: Mail, title: "Email", value: "africaseducationempowermentmov@gmail.com", sub: "We reply within 24 hours." },
-                       { icon: Phone, title: "Phone", value: "+232 76 406 281", sub: "Mon - Fri, 9am - 5pm GMT." },
-                       { icon: MapPin, title: "Office", value: "Freetown, Sierra Leone", sub: "The heart of our operations." }
-                     ].map((item, i) => (
-                       <div key={i} className="flex gap-6 p-6 bg-white dark:bg-white/5 rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-md transition-shadow">
-                          <div className="w-14 h-14 bg-gradient-to-br from-aeem-gold/20 to-aeem-gold/5 border border-aeem-gold/20 rounded-2xl flex items-center justify-center text-aeem-gold shrink-0 shadow-inner">
-                             <item.icon size={24} />
-                          </div>
-                          <div>
-                             <h4 className="font-black text-lg mb-1 text-aeem-charcoal dark:text-white">{item.title}</h4>
-                             <p className="text-gray-800 dark:text-gray-200 font-bold">{item.value}</p>
-                             <p className="text-gray-500 text-sm font-medium mt-1">{item.sub}</p>
-                          </div>
-                       </div>
-                     ))}
-                  </div>
-               </div>
-
-               <div className="p-8 rounded-[2rem] bg-gradient-to-br from-aeem-charcoal to-[#1a1d24] text-white shadow-xl relative overflow-hidden">
-                  <div className="absolute -right-10 -bottom-10 opacity-10">
-                    <Globe size={150} />
-                  </div>
-                  <h3 className="font-black text-xl mb-4 flex items-center gap-3 relative z-10">
-                     <Globe className="text-aeem-gold" size={24} /> Global Presence
-                  </h3>
-                  <p className="text-gray-300 text-sm leading-relaxed font-medium relative z-10">
-                     AEEM is expanding across the continent. If you're interested in starting a chapter in your region, please mention <span className="text-aeem-gold font-bold">"New Chapter"</span> in your message.
-                  </p>
-               </div>
+      <Section>
+        <div className="grid gap-10 lg:grid-cols-5 lg:gap-16">
+          <div className="space-y-6 lg:col-span-2">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-gold">Contact details</p>
+              <h2 className="mt-3 text-2xl font-bold text-aeem-ink dark:text-white">Reach us directly</h2>
             </div>
-
-            {/* Glassmorphic Form Card */}
-            <div className="lg:col-span-7">
-               <SpotlightCard className="relative bg-white/80 dark:bg-white/5 backdrop-blur-2xl rounded-[2.5rem] p-8 md:p-14 border border-gray-200 dark:border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.08)] dark:shadow-[0_30px_100px_rgba(0,0,0,0.5)] overflow-hidden">
-                 {submitted ? (
-                    <motion.div 
-                      initial={{ opacity: 0, scale: 0.9 }} 
-                      animate={{ opacity: 1, scale: 1 }} 
-                      className="text-center py-16"
-                    >
-                       <div className="w-24 h-24 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-full flex items-center justify-center mx-auto mb-8 ring-8 ring-green-50 dark:ring-green-900/10 shadow-inner">
-                          <CheckCircle2 size={48} />
-                       </div>
-                       <h2 className="text-3xl font-black mb-4 text-aeem-charcoal dark:text-white">Message Sent!</h2>
-                       <p className="text-gray-600 dark:text-gray-300 mb-10 font-medium">
-                          Thank you for reaching out. We've received your message and will get back to you shortly.
-                       </p>
-                       <button
-                          onClick={() => setSubmitted(false)}
-                          className="px-10 py-4 bg-aeem-charcoal dark:bg-white text-white dark:text-aeem-charcoal rounded-full font-bold hover:bg-aeem-gold dark:hover:bg-aeem-gold dark:hover:text-white transition-all shadow-[0_10px_20px_rgba(0,0,0,0.1)] active:scale-95"
-                       >
-                          Send Another Message
-                       </button>
-                    </motion.div>
-                 ) : (
-                    <form onSubmit={handleSubmit} className="space-y-8">
-                       {error && (
-                          <div className="p-4 bg-red-50 dark:bg-red-900/20 border-l-4 border-red-500 text-red-700 dark:text-red-400 text-sm font-bold rounded-r-xl">
-                             {error}
-                          </div>
-                       )}
-                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                          <FloatingInput
-                             required
-                             id="full_name"
-                             label="Full Name"
-                             name="full_name"
-                             value={formData.full_name}
-                             onChange={handleChange}
-                             type="text"
-                             placeholder="Your Name"
-                          />
-                          <FloatingInput
-                             required
-                             id="email"
-                             label="Email Address"
-                             name="email"
-                             value={formData.email}
-                             onChange={handleChange}
-                             type="email"
-                             placeholder="email@example.com"
-                          />
-                       </div>
-                       <FloatingInput
-                          id="phone"
-                          label="Phone / Subject"
-                          name="phone"
-                          value={formData.phone}
-                          onChange={handleChange}
-                          type="text"
-                          placeholder="How can we help?"
-                       />
-                       <FloatingTextarea
-                          required
-                          id="message"
-                          label="Message"
-                          name="message"
-                          value={formData.message}
-                          onChange={handleChange}
-                          rows={6}
-                          placeholder="Tell us more about your inquiry..."
-                       />
-                       <SubmitButton isSubmitting={isSubmitting} submitted={submitted}>
-                          {isSubmitting ? 'Sending...' : <><Send size={20} /> Send Message</>}
-                       </SubmitButton>
-                    </form>
-                 )}
-               </SpotlightCard>
-            </div>
+            <Card className="space-y-6">
+              <a href={`mailto:${CONTACT_EMAIL}`} className="flex gap-4 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus">
+                <Mail className="mt-1 shrink-0 text-aeem-forest dark:text-aeem-gold-light" size={20} aria-hidden="true" />
+                <span><span className="block font-semibold text-aeem-ink dark:text-white">Email</span><span className="mt-1 block break-all text-sm text-aeem-ink/70 dark:text-white/70">{CONTACT_EMAIL}</span></span>
+              </a>
+              <a href={`tel:${CONTACT_PHONE.replace(/\s/g, '')}`} className="flex gap-4 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus">
+                <Phone className="mt-1 shrink-0 text-aeem-forest dark:text-aeem-gold-light" size={20} aria-hidden="true" />
+                <span><span className="block font-semibold text-aeem-ink dark:text-white">Phone</span><span className="mt-1 block text-sm text-aeem-ink/70 dark:text-white/70">{CONTACT_PHONE}</span></span>
+              </a>
+              <div className="flex gap-4">
+                <MapPin className="mt-1 shrink-0 text-aeem-forest dark:text-aeem-gold-light" size={20} aria-hidden="true" />
+                <span><span className="block font-semibold text-aeem-ink dark:text-white">Office</span><span className="mt-1 block text-sm text-aeem-ink/70 dark:text-white/70">Freetown, Sierra Leone</span></span>
+              </div>
+            </Card>
+            <p className="text-sm leading-6 text-aeem-ink/60 dark:text-white/60">For sensitive matters, do not include identity documents, financial information, passwords, or other confidential credentials in this form.</p>
           </div>
-        </div>
-      </section>
-    </>
-  );
-};
 
-export default Contact;
+          <Card className="lg:col-span-3">
+            {submitted ? (
+              <div className="py-10 text-center">
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-aeem-forest/10 text-aeem-forest dark:bg-aeem-gold/10 dark:text-aeem-gold-light"><CheckCircle2 size={28} aria-hidden="true" /></div>
+                <h2 className="mt-6 text-2xl font-bold text-aeem-ink dark:text-white">Message received</h2>
+                <p className="mx-auto mt-3 max-w-md leading-7 text-aeem-ink/70 dark:text-white/70">Thank you. Your message has been submitted. We will follow up using the contact details you provided.</p>
+                <Button type="button" variant="secondary" className="mt-7" onClick={() => setSubmitted(false)}>Send another message</Button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <input type="text" name="hp_contact" value={honeypot} onChange={e => setHoneypot(e.target.value)} className="hidden" tabIndex={-1} autoComplete="off" />
+                <div>
+                  <h2 className="text-2xl font-bold text-aeem-ink dark:text-white">Send a message</h2>
+                  <p className="mt-2 text-sm text-aeem-ink/65 dark:text-white/65">Tell us what you need and include any relevant deadline or context.</p>
+                </div>
+                <div className="grid gap-5 sm:grid-cols-2">
+                  <label className="space-y-2"><span className="text-sm font-semibold text-aeem-ink dark:text-white">Full name</span><input required name="full_name" autoComplete="name" value={formData.full_name} onChange={e => setFormData({...formData, full_name: e.target.value})} className="min-h-11 w-full rounded-xl border border-gray-300 bg-white px-4 text-sm outline-none focus:border-aeem-focus focus:ring-2 focus:ring-aeem-focus/20 dark:border-white/15 dark:bg-white/[0.03] dark:text-white" /></label>
+                  <label className="space-y-2"><span className="text-sm font-semibold text-aeem-ink dark:text-white">Email address</span><input required type="email" name="email" autoComplete="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="min-h-11 w-full rounded-xl border border-gray-300 bg-white px-4 text-sm outline-none focus:border-aeem-focus focus:ring-2 focus:ring-aeem-focus/20 dark:border-white/15 dark:bg-white/[0.03] dark:text-white" /></label>
+                  <label className="space-y-2"><span className="text-sm font-semibold text-aeem-ink dark:text-white">Phone <span className="font-normal text-aeem-ink/50">(optional)</span></span><input name="phone" type="tel" autoComplete="tel" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className="min-h-11 w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm outline-none focus:border-aeem-focus focus:ring-2 focus:ring-aeem-focus/20 dark:border-white/15 dark:bg-white/[0.03] dark:text-white" /></label>
+                </div>
+                <label className="block space-y-2"><span className="text-sm font-semibold text-aeem-ink dark:text-white">Message</span><textarea required name="message" rows={7} maxLength={3000} value={formData.message} onChange={e => setFormData({...formData, message: e.target.value})} className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm outline-none focus:border-aeem-focus focus:ring-2 focus:ring-aeem-focus/20 dark:border-white/15 dark:bg-white/[0.03] dark:text-white" placeholder="How can we help?" /></label>
+                {error && <div role="alert" className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-700 dark:border-red-900/50 dark:bg-red-950/20 dark:text-red-300">{error}</div>}
+                <Button type="submit" disabled={isSubmitting} className="w-full">{isSubmitting ? 'Sending…' : <><Send size={18} aria-hidden="true" /> Send message</>}</Button>
+              </form>
+            )}
+          </Card>
+        </div>
+      </Section>
+    </>
+  )
+}
+
+export default Contact
