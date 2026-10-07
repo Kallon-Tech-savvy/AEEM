@@ -24,35 +24,6 @@ interface StoryData {
   quoteAuthor: string;
 }
 
-const STORIES_DB: Record<string, StoryData> = {
-  'i-am-somebody': {
-    title: 'I AM SOMEBODY Initiative',
-    quote: 'A movement to instill agency, resilience, and leadership in the next generation of African scholars.',
-    image: '/assets/gallery/Activity.jpg',
-    fileName: 'Activity',
-    stats: {
-      participants: '42 Students',
-      schools: '6 Institutions',
-      duration: '2-Day Workshop',
-    },
-    overview:
-      'The “I AM SOMEBODY” initiative was designed as an empowerment program focused on leadership, civic awareness, personal resilience, and public health beyond the traditional classroom.',
-    focusAreas: [
-      'Leadership Development',
-      'Civic Awareness & Action',
-      'Mental Resilience & Grit',
-      'Public Health & Wellness',
-      'Adolescent Risk Prevention',
-      'Mentorship Networking',
-    ],
-    impact:
-      'Participants reported a significant increase in their confidence to lead school initiatives and a deeper understanding of their roles as active citizens in Sierra Leone. By training 42 participants from six different schools, AEEM created a cross-institutional network of youth leaders ready to advocate for educational equity.',
-    quoteText:
-      'This workshop changed how I view my future. I realized that my voice matters and that I have the power to create change in my community.',
-    quoteAuthor: 'Participant from Prince of Wales School',
-  },
-};
-
 const linkButtonClass =
   'inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-aeem-forest bg-aeem-forest px-5 text-sm font-semibold text-white transition-colors duration-150 hover:border-aeem-forest-dark hover:bg-aeem-forest-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus focus-visible:ring-offset-2';
 
@@ -97,10 +68,10 @@ const StoryDetail: React.FC = () => {
           });
         }
       } catch (error) {
-        console.warn('Story fetch failed; rendering fallback.', error);
+        console.error('Error fetching impact story:', error);
 
         if (active) {
-          setStory(slug ? STORIES_DB[slug] ?? null : null);
+          setStory(null);
         }
       } finally {
         if (active) setLoading(false);
