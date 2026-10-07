@@ -8,7 +8,7 @@ import { getCanonical } from '../lib/seo'
 import { EVENT_LIST_FIELDS } from '../services/contentFields'
 import type { EventListItem } from '../types/content'
 
-const isUpcoming = (event: Event) =>
+const isUpcoming = (event: EventListItem) =>
   event.status === 'upcoming' && new Date(event.event_date).getTime() >= Date.now()
 
 const formatDate = (value: string) =>
