@@ -7,7 +7,7 @@ import { Badge, Card, Section } from '../components/ui'
 import { RESOURCE_LIST_FIELDS } from '../services/contentFields'
 import type { ResourceListItem } from '../types/content'
 
-const iconFor = (r: Resource) => {
+const iconFor = (r: ResourceListItem) => {
   const v = `${r.type ?? ''} ${r.category ?? ''}`.toLowerCase()
   if (v.includes('policy') || v.includes('report')) return FileText
   if (v.includes('news') || v.includes('press')) return Newspaper
