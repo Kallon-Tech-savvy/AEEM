@@ -6,28 +6,12 @@ import { supabase } from '../services/supabase'
 import { Badge, Button, Card, Container, Section } from '../components/ui'
 import { getCanonical } from '../lib/seo'
 import { RESOURCE_DETAIL_FIELDS } from '../services/contentFields'
+import type { ResourceRow } from '../types/content'
 import { sanitizeHtml } from '../lib/sanitizeHtml'
-
-interface Resource {
-  title: string
-  slug: string
-  type?: string
-  description?: string
-  summary?: string
-  body?: string
-  fullBody?: string
-  file_url?: string
-  category?: string
-  created_at?: string
-  readingTime?: string
-  tags?: string[]
-  image?: string
-  bulletPoints?: string[]
-}
 
 export default function ResourceDetail() {
   const { slug } = useParams<{ slug: string }>()
-  const [resource, setResource] = useState<Resource | null>(null)
+  const [resource, setResource] = useState<ResourceRow | null>(null)
   const [loading, setLoading] = useState(true)
   const [shareStatus, setShareStatus] = useState('')
 
@@ -38,7 +22,7 @@ export default function ResourceDetail() {
       .then(({ data, error }) => {
         if (!active) return
         if (error) console.error('Error fetching resource:', error)
-        setResource(error ? null : data as Resource)
+        setResource(error ? null : data as ResourceRow)
         setLoading(false)
       })
     return () => { active = false }
@@ -83,23 +67,23 @@ export default function ResourceDetail() {
       <meta property="og:description" content={description} />
       <meta property="og:type" content="article" />
       <meta property="og:url" content={canonicalUrl} />
-      {resource.image && <meta property="og:image" content={resource.image.startsWith('http') ? resource.image : `${getCanonical(resource.image)}`} />
+      {resource.image_url && <meta property="og:image" content={resource.image_url.startsWith('http') ? resource.image_url : `${getCanonical(resource.image_url)}`} />
     </Helmet>
 
     <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
       <Container narrow>
         <Link to="/resources" className="inline-flex items-center gap-2 text-sm font-semibold text-aeem-ink/60 hover:text-aeem-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:text-white/60 dark:hover:text-aeem-gold-light"><ArrowLeft size={16} aria-hidden="true" />Back to Knowledge Hub</Link>
-        <div className="mt-10 flex flex-wrap items-center gap-3"><Badge>{type}</Badge>{year && <span className="text-sm text-aeem-ink/60 dark:text-white/60">{year}</span>}{resource.readingTime && <span className="inline-flex items-center gap-1.5 text-sm text-aeem-ink/60 dark:text-white/60"><Clock size={14} aria-hidden="true" />{resource.readingTime}</span>}</div>
+        <div className="mt-10 flex flex-wrap items-center gap-3"><Badge>{type}</Badge>{year && <span className="text-sm text-aeem-ink/60 dark:text-white/60">{year}</span>}{resource.reading_time && <span className="inline-flex items-center gap-1.5 text-sm text-aeem-ink/60 dark:text-white/60"><Clock size={14} aria-hidden="true" />{resource.reading_time}</span>}</div>
         <h1 className="mt-6 text-4xl font-bold leading-tight text-aeem-ink dark:text-white sm:text-5xl lg:text-6xl">{resource.title}</h1>
         {resource.summary && <p className="mt-6 text-xl leading-8 text-aeem-ink/70 dark:text-white/70">{resource.summary}</p>}
-        {resource.image && <figure className="mt-10 overflow-hidden rounded-2xl border border-black/10 dark:border-white/10"><img src={resource.image} alt="" className="aspect-[16/8] w-full object-cover" /></figure>}
+        {resource.image_url && <figure className="mt-10 overflow-hidden rounded-2xl border border-black/10 dark:border-white/10"><img src={resource.image_url} alt="" className="aspect-[16/8] w-full object-cover" /></figure>}
       </Container>
     </Section>
 
     <Section><Container narrow>
       <article className="prose prose-lg max-w-none text-aeem-ink dark:prose-invert">
-        {safeBody ? <div dangerouslySetInnerHTML={{ __html: safeBody }} /> : resource.fullBody ? <p className="whitespace-pre-line leading-8">{resource.fullBody}</p> : resource.description ? <p className="leading-8">{resource.description}</p> : null}
-        {resource.bulletPoints?.length ? <ul>{resource.bulletPoints.map((point, i) => <li key={i}>{point}</li>)}</ul> : null}
+        {safeBody ? <div dangerouslySetInnerHTML={{ __html: safeBody }} /> : resource.full_body ? <p className="whitespace-pre-line leading-8">{resource.full_body}</p> : resource.description ? <p className="leading-8">{resource.description}</p> : null}
+        {resource.bullet_points?.length ? <ul>{resource.bullet_points.map((point, i) => <li key={i}>{point}</li>)}</ul> : null}
       </article>
 
       {resource.file_url && <Card className="mt-12 flex flex-col gap-5 p-6 sm:flex-row sm:items-center sm:justify-between">
