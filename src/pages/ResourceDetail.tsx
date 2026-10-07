@@ -4,6 +4,8 @@ import { useParams, Link } from 'react-router-dom'
 import { ArrowLeft, Clock, Download, Loader2, Share2 } from 'lucide-react'
 import { supabase } from '../services/supabase'
 import { Badge, Button, Card, Container, Section } from '../components/ui'
+import { getCanonical } from '../lib/seo'
+import { sanitizeHtml } from '../lib/sanitizeHtml'
 
 interface Resource {
   title: string
@@ -50,7 +52,8 @@ export default function ResourceDetail() {
         await navigator.clipboard.writeText(window.location.href)
         setShareStatus('Link copied to clipboard.')
       }
-    } catch {
+    } catch (error) {
+      if (error instanceof DOMException && error.name === 'AbortError') return
       setShareStatus('Sharing was cancelled or unavailable.')
     }
   }
@@ -67,16 +70,19 @@ export default function ResourceDetail() {
   const description = resource.description ?? resource.summary ?? ''
   const year = resource.created_at ? new Date(resource.created_at).getFullYear() : null
   const type = resource.category ?? resource.type ?? 'Resource'
+  const canonicalUrl = getCanonical(`/resources/${resource.slug}`)
+  const safeBody = resource.body ? sanitizeHtml(resource.body) : ''
 
   return <>
     <Helmet>
       <title>{resource.title} | AEEM Knowledge Hub</title>
       <meta name="description" content={description} />
-      <link rel="canonical" href={`/resources/${resource.slug}`} />
+      <link rel="canonical" href={canonicalUrl} />
       <meta property="og:title" content={resource.title} />
       <meta property="og:description" content={description} />
       <meta property="og:type" content="article" />
-      {resource.image && <meta property="og:image" content={resource.image} />}
+      <meta property="og:url" content={canonicalUrl} />
+      {resource.image && <meta property="og:image" content={resource.image.startsWith('http') ? resource.image : `${getCanonical(resource.image)}`} />
     </Helmet>
 
     <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
@@ -91,7 +97,7 @@ export default function ResourceDetail() {
 
     <Section><Container narrow>
       <article className="prose prose-lg max-w-none text-aeem-ink dark:prose-invert">
-        {resource.body ? <div dangerouslySetInnerHTML={{ __html: resource.body }} /> : resource.fullBody ? <p className="whitespace-pre-line leading-8">{resource.fullBody}</p> : resource.description ? <p className="leading-8">{resource.description}</p> : null}
+        {safeBody ? <div dangerouslySetInnerHTML={{ __html: safeBody }} /> : resource.fullBody ? <p className="whitespace-pre-line leading-8">{resource.fullBody}</p> : resource.description ? <p className="leading-8">{resource.description}</p> : null}
         {resource.bulletPoints?.length ? <ul>{resource.bulletPoints.map((point, i) => <li key={i}>{point}</li>)}</ul> : null}
       </article>
 
