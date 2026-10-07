@@ -8,20 +8,10 @@ import MasonryGallery from '../components/sections/MasonryGallery';
 import { Container, Section, Stat, Card } from '../components/ui';
 import { getCanonical } from '../lib/seo';
 import { IMPACT_STORY_LIST_FIELDS } from '../services/contentFields';
-
-interface ImpactStory {
-  id: string;
-  title: string;
-  slug: string;
-  summary: string;
-  location: string;
-  participants_count: number;
-  schools_count: number;
-  cover_image_url: string;
-}
+import type { ImpactStoryListItem } from '../types/content';
 
 const Impact: React.FC = () => {
-  const [stories, setStories] = useState<ImpactStory[]>([]);
+  const [stories, setStories] = useState<ImpactStoryListItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
@@ -37,7 +27,7 @@ const Impact: React.FC = () => {
           .order('created_at', { ascending: false });
 
         if (error) throw error;
-        setStories((data ?? []) as ImpactStory[]);
+        setStories((data ?? []) as ImpactStoryListItem[]);
       } catch (error) {
         console.error('Error fetching impact stories:', error);
         setError(true);
