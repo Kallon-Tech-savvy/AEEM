@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { supabase } from '../services/supabase'
 import { Badge, Card, Section } from '../components/ui'
 import { getCanonical } from '../lib/seo'
+import { EVENT_LIST_FIELDS } from '../services/contentFields'
 
 interface Event {
   id: string
@@ -37,7 +38,7 @@ export default function Events() {
 
     supabase
       .from('events')
-      .select('id, title, slug, description, event_date, location, status, cover_image_url')
+      .select(EVENT_LIST_FIELDS)
       .eq('published', true)
       .order('event_date', { ascending: false })
       .then(({ data, error }) => {
