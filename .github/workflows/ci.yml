@@ -8,6 +8,10 @@ on:
     branches:
       - aeem-v2-foundation
 
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
@@ -26,6 +30,9 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Test Edge Function logic
+        run: node scripts/test-edge-functions.mjs
 
       - name: Lint
         run: npm run lint

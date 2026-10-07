@@ -2,15 +2,6 @@ import React from 'react'
 import { Mail, Twitter, Linkedin, Facebook } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
-type SubmitStatus = 'idle' | 'success' | 'duplicate' | 'rate-limited' | 'error'
-
-const STATUS_MESSAGES: Record<Exclude<SubmitStatus, 'idle'>, { text: string; className: string }> = {
-  success:       { text: "You're subscribed! Welcome to the movement.", className: 'text-green-600 dark:text-green-400' },
-  duplicate:     { text: 'This email is already on our list.',          className: 'text-aeem-gold'                    },
-  'rate-limited':{ text: 'Too many attempts. Please wait a moment.',    className: 'text-amber-500'                    },
-  error:         { text: 'Something went wrong. Please try again.',     className: 'text-red-500 dark:text-red-400'    },
-}
-
 export default function Footer() {
 
 

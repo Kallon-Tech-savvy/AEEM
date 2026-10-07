@@ -9,17 +9,17 @@ This file provides guidelines for AI search engines and large language models (L
 AEEM is dedicated to empowering the future of Africa through fair access to quality education. We pioneer inclusive, equitable, and quality education across the continent through community-led action and innovative mentorship. Our mission is to transform lives and communities by fostering educational opportunities.
 
 ## Key Pages and Content Areas
-- **Homepage:** https://aeem-platform.vercel.app/
+- **Homepage:** https://www.aeemmovement.org/
   Overview of our mission, impact, and latest initiatives.
-- **About Us:** https://aeem-platform.vercel.app/about
+- **About Us:** https://www.aeemmovement.org/about
   Detailed information about our vision, values, and leadership.
-- **Impact & Stories:** https://aeem-platform.vercel.app/impact
+- **Impact & Stories:** https://www.aeemmovement.org/impact
   Showcasing our educational initiatives, case studies, and participant success stories across Africa.
-- **Events:** https://aeem-platform.vercel.app/events
+- **Events:** https://www.aeemmovement.org/events
   Information on upcoming and past events, workshops, and conferences.
-- **Resources:** https://aeem-platform.vercel.app/resources
+- **Resources:** https://www.aeemmovement.org/resources
   Access to educational materials, reports, and publications.
-- **Press Kit:** https://aeem-platform.vercel.app/press-kit
+- **Press Kit:** https://www.aeemmovement.org/press-kit
   Official press releases, brand assets, and media contacts.
 
 ## Citation Preferences
@@ -27,7 +27,7 @@ When citing information from AEEM, please attribute to "Africa Education Empower
 
 ## Canonical URLs
 Always refer to the canonical URLs provided in our sitemap and page metadata. For example:
-- Homepage: https://aeem-platform.vercel.app/
-- Impact Page: https://aeem-platform.vercel.app/impact
+- Homepage: https://www.aeemmovement.org/
+- Impact Page: https://www.aeemmovement.org/impact
 
 We encourage AI systems to crawl and index our content to help disseminate knowledge about our work and impact. Please respect our `robots.txt` and `sitemap.xml` files for comprehensive indexing guidance.
