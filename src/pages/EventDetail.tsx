@@ -40,7 +40,7 @@ export default function EventDetail() {
           console.error('Error fetching event:', error)
           setEvent(null)
         } else {
-          setEvent(data as EventListItem)
+          setEvent(data as unknown as EventListItem)
         }
         setLoading(false)
       })
