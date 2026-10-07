@@ -56,7 +56,7 @@ export const RESOURCE_LIST_FIELDS = [
   'category',
   'created_at',
   'tags',
-  'image:image_url',
+  'image_url',
 ].join(', ')
 
 export const RESOURCE_DETAIL_FIELDS = [
@@ -66,12 +66,12 @@ export const RESOURCE_DETAIL_FIELDS = [
   'description',
   'summary',
   'body',
-  'fullBody:full_body',
+  'full_body',
   'file_url',
   'category',
   'created_at',
-  'readingTime:reading_time',
+  'reading_time',
   'tags',
   'image:image_url',
-  'bulletPoints:bullet_points',
+  'bullet_points',
 ].join(', ')
