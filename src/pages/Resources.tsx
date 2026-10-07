@@ -5,19 +5,7 @@ import { Link } from 'react-router-dom'
 import { supabase } from '../services/supabase'
 import { Badge, Card, Section } from '../components/ui'
 import { RESOURCE_LIST_FIELDS } from '../services/contentFields'
-
-interface Resource {
-  id: string
-  title: string
-  slug: string
-  type?: string
-  description?: string
-  summary?: string
-  category?: string
-  created_at?: string
-  tags?: string[]
-  image?: string
-}
+import type { ResourceListItem } from '../types/content'
 
 const iconFor = (r: Resource) => {
   const v = `${r.type ?? ''} ${r.category ?? ''}`.toLowerCase()
@@ -29,7 +17,7 @@ const iconFor = (r: Resource) => {
 const labelFor = (r: Resource) => r.category ?? r.type ?? 'Resource'
 
 export default function Resources() {
-  const [resources, setResources] = useState<Resource[]>([])
+  const [resources, setResources] = useState<ResourceListItem[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
   const [query, setQuery] = useState('')
@@ -43,7 +31,7 @@ export default function Resources() {
         if (error) {
           console.error('Error fetching resources:', error)
           setError(true)
-        } else setResources((data ?? []) as Resource[])
+        } else setResources((data ?? []) as ResourceListItem[])
         setLoading(false)
       })
     return () => { active = false }
