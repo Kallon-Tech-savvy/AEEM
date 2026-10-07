@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Users, Heart, Briefcase, CheckCircle2, Loader2 } from 'lucide-react'
-import { supabase } from '../services/supabase'
 import {
   normalizeEmail,
   normalizePhone,
@@ -23,6 +22,15 @@ const TABS = [
 
 const FIELD_CLASS = 'min-h-11 w-full rounded-xl border border-gray-300 bg-white px-4 text-sm text-aeem-ink outline-none focus:border-aeem-focus focus:ring-2 focus:ring-aeem-focus/20 dark:border-white/15 dark:bg-white/[0.03] dark:text-white'
 const LABEL_CLASS = 'text-sm font-semibold text-aeem-ink dark:text-white'
+const SUPABASE_FUNCTION_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/submit-inquiry`
+
+async function submitInquiry(payload: Record<string, unknown>): Promise<Response> {
+  return fetch(SUPABASE_FUNCTION_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  })
+}
 
 export const GetInvolved: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabId>('volunteer')
@@ -79,31 +87,37 @@ export const GetInvolved: React.FC = () => {
     setIsSubmitting(true)
 
     try {
-      const { error: insertError } = await supabase.from('inquiries').insert([{
+      const response = await submitInquiry({
         inquiry_type: activeTab,
         full_name: fullName,
         email: normEmail,
-        email_normalized: normEmail,
         phone: normPhone,
-        phone_normalized: normPhone,
         organization: organization || null,
         message,
-        submission_key: submissionKey,
-      }])
+        honeypot,
+      })
 
-      if (insertError) {
-        if (insertError.code === '23505') {
-          markSubmittedLocally(submissionKey)
-          setError('We already have a request on file for this email and inquiry type. Our team will be in touch within 48 hours.')
-          return
-        }
-        throw insertError
+      const result = await response.json().catch(() => null)
+
+      if (response.status === 409 || result?.code === 'duplicate_submission') {
+        markSubmittedLocally(submissionKey)
+        setError('We already have a request on file for this email and inquiry type. Our team will be in touch within 48 hours.')
+        return
+      }
+
+      if (response.status === 429 || result?.code === 'rate_limited') {
+        setError('Too many requests. Please wait a few minutes before trying again.')
+        return
+      }
+
+      if (!response.ok) {
+        throw new Error(typeof result?.code === 'string' ? result.code : `HTTP ${response.status}`)
       }
 
       markSubmittedLocally(submissionKey)
       setSubmitted(true)
     } catch (err) {
-      console.warn('Supabase inquiries insert failed:', err)
+      console.warn('Inquiry submission failed:', err)
       setError('We could not submit your inquiry. Please try again.')
     } finally {
       setIsSubmitting(false)
