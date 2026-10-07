@@ -3,6 +3,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.108.1'
 const ALLOWED_ORIGINS = new Set([
   'https://www.aeemmovement.org',
   'https://aeem-w.vercel.app',
+  'http://localhost:5173',
 ])
 
 const ALLOWED_INQUIRY_TYPES = new Set(['contact', 'volunteer', 'partner', 'donor'])
