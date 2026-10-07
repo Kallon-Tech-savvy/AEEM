@@ -83,6 +83,13 @@ create table if not exists public.impact_stories (
   participants_count integer not null default 0 check (participants_count >= 0),
   schools_count integer not null default 0 check (schools_count >= 0),
   cover_image_url text,
+  file_name text,
+  duration text,
+  overview text,
+  focus_areas text[] not null default '{}',
+  impact text,
+  quote_text text,
+  quote_author text,
   published boolean not null default false,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
