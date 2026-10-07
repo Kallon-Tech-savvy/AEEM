@@ -38,6 +38,7 @@ export default function Events() {
     supabase
       .from('events')
       .select('id, title, slug, description, event_date, location, status, cover_image_url')
+      .eq('published', true)
       .order('event_date', { ascending: false })
       .then(({ data, error }) => {
         if (!active) return
