@@ -72,6 +72,6 @@ export const RESOURCE_DETAIL_FIELDS = [
   'created_at',
   'reading_time',
   'tags',
-  'image:image_url',
+  'image_url',
   'bullet_points',
 ].join(', ')
