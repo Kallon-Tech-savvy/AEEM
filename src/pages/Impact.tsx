@@ -61,7 +61,6 @@ export default function Impact() {
       </Section>
 
       <Section>
-        <Container>
           {loading ? (
             <div className="flex min-h-[300px] items-center justify-center">
               <Loader2 className="animate-spin text-aeem-gold" size={32} aria-label="Loading impact stories" />
@@ -122,7 +121,6 @@ export default function Impact() {
               ))}
             </div>
           )}
-        </Container>
       </Section>
     </>
   )
