@@ -20,22 +20,10 @@ interface ImpactStory {
   cover_image_url: string;
 }
 
-const FALLBACK_STORIES = [
-  {
-    title: 'I AM SOMEBODY Initiative',
-    slug: 'i-am-somebody',
-    summary:
-      'Our flagship 2-day empowerment workshop trained 42 participants from six schools, addressing leadership, civic awareness, and resilience.',
-    cover_image_url: '/assets/gallery/Activity.jpg',
-    participants_count: 42,
-    schools_count: 6,
-    location: 'Freetown, Sierra Leone',
-  },
-];
-
 const Impact: React.FC = () => {
   const [stories, setStories] = useState<ImpactStory[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchStories = async () => {
@@ -49,10 +37,11 @@ const Impact: React.FC = () => {
           .order('created_at', { ascending: false });
 
         if (error) throw error;
-        setStories(data && data.length > 0 ? data : (FALLBACK_STORIES as ImpactStory[]));
+        setStories((data ?? []) as ImpactStory[]);
       } catch (error) {
         console.error('Error fetching impact stories:', error);
-        setStories(FALLBACK_STORIES as ImpactStory[]);
+        setError(true);
+        setStories([]);
       } finally {
         setLoading(false);
       }
