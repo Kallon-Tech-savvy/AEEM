@@ -37,7 +37,7 @@ export default function Events() {
           console.error('Error fetching events:', error)
           setError(true)
         } else {
-          setEvents((data ?? []) as EventListItem[])
+          setEvents((data ?? []) as unknown as EventListItem[])
         }
         setLoading(false)
       })
