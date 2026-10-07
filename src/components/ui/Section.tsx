@@ -19,9 +19,9 @@ export function Section({
   return (
     <section
       className={cn(
-        spacing === 'compact' && 'py-12 sm:py-16',
-        spacing === 'default' && 'py-16 sm:py-20 lg:py-24',
-        spacing === 'large' && 'py-20 sm:py-24 lg:py-32',
+        spacing === 'compact' && 'py-14 sm:py-20',
+        spacing === 'default' && 'py-20 sm:py-24 lg:py-28',
+        spacing === 'large' && 'py-24 sm:py-28 lg:py-32',
         className,
       )}
       {...props}
