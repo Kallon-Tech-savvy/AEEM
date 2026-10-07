@@ -67,7 +67,12 @@ export default function ResourceDetail() {
       <meta property="og:description" content={description} />
       <meta property="og:type" content="article" />
       <meta property="og:url" content={canonicalUrl} />
-      {resource.image_url && <meta property="og:image" content={resource.image_url.startsWith('http') ? resource.image_url : `${getCanonical(resource.image_url)}`} />
+      {resource.image_url && (
+        <meta
+          property="og:image"
+          content={resource.image_url.startsWith('http') ? resource.image_url : getCanonical(resource.image_url)}
+        />
+      )}
     </Helmet>
 
     <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
