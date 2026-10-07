@@ -34,16 +34,16 @@ export const IMPACT_STORY_LIST_FIELDS = [
 export const IMPACT_STORY_DETAIL_FIELDS = [
   'title',
   'summary',
-  'coverImage:cover_image_url',
+  'cover_image_url',
   'file_name',
-  'participantsCount:participants_count',
-  'schoolsCount:schools_count',
+  'participants_count',
+  'schools_count',
   'duration',
   'overview',
-  'focusAreas:focus_areas',
+  'focus_areas',
   'impact',
-  'quoteText:quote_text',
-  'quoteAuthor:quote_author',
+  'quote_text',
+  'quote_author',
 ].join(', ')
 
 export const RESOURCE_LIST_FIELDS = [
