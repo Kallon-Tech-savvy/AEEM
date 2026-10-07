@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Loader2, Users, School } from 'lucide-react'
 import { supabase } from '../services/supabase'
-import { Button, Card, Container, Section } from '../components/ui'
+import { Button, Card, Section } from '../components/ui'
 import { getCanonical } from '../lib/seo'
 import type { ImpactStoryListItem } from '../types/content'
 
@@ -49,7 +49,6 @@ export default function Impact() {
       </Helmet>
 
       <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
-        <Container>
           <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-forest dark:text-aeem-gold-light">
             Verified Outcomes & Field Work
           </p>
@@ -59,7 +58,6 @@ export default function Impact() {
           <p className="mt-6 max-w-2xl text-lg leading-8 text-aeem-ink/75 dark:text-white/75">
             Transparent reporting on educational programs, community reach, and institutional partnerships.
           </p>
-        </Container>
       </Section>
 
       <Section>
