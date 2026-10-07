@@ -27,7 +27,7 @@ const Impact: React.FC = () => {
           .order('created_at', { ascending: false });
 
         if (error) throw error;
-        setStories((data ?? []) as ImpactStoryListItem[]);
+        setStories((data ?? []) as unknown as ImpactStoryListItem[]);
       } catch (error) {
         console.error('Error fetching impact stories:', error);
         setError(true);
