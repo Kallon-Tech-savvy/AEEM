@@ -116,7 +116,11 @@ const StoryDetail: React.FC = () => {
 
       await navigator.clipboard.writeText(url);
       setShareStatus('copied');
-    } catch {
+    } catch (error) {
+      if (error instanceof DOMException && error.name === 'AbortError') {
+        return;
+      }
+
       setShareStatus('error');
     }
   };
@@ -162,8 +166,9 @@ const StoryDetail: React.FC = () => {
         <meta name="description" content={story.quote.slice(0, 155)} />
         <meta property="og:title" content={story.title} />
         <meta property="og:description" content={story.quote.slice(0, 155)} />
-        <meta property="og:image" content={story.image} />
+        <meta property="og:image" content={story.image.startsWith('http') ? story.image : getCanonical(story.image)} />
         <meta property="og:type" content="article" />
+        <meta property="og:url" content={getCanonical(`/impact/${slug}`)} />
         <link rel="canonical" href={getCanonical(`/impact/${slug}`)} />
       </Helmet>
 
