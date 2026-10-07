@@ -9,7 +9,6 @@ import HomeProblem from '../components/sections/HomeProblem'
 import HomeApproach from '../components/sections/HomeApproach'
 import HomeFeaturedImpact from '../components/sections/HomeFeaturedImpact'
 
-const ImpactStats = lazy(() => import('../components/sections/ImpactStats'))
 const PartnerTicker = lazy(() => import('../components/sections/PartnerTicker'))
 const Pillars = lazy(() => import('../components/sections/Pillars'))
 const AwardSlider = lazy(() => import('../components/sections/AwardSlider'))
@@ -31,11 +30,6 @@ export default function Home() {
 
       <Hero />
       <HomeProblem />
-
-      <Suspense fallback={<div className="h-56 w-full bg-white dark:bg-aeem-charcoal" />}>
-        <ImpactStats />
-      </Suspense>
-
       <HomeApproach />
       <HomeFeaturedImpact />
 

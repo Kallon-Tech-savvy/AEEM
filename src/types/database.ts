@@ -267,7 +267,7 @@ export type Database = {
         Relationships: []
       }
     }
-    Views: {}
+    Views: Record<string, never>
     Functions: {
       cleanup_inquiry_rate_limits: {
         Args: {
@@ -284,7 +284,7 @@ export type Database = {
         Returns: boolean
       }
     }
-    Enums: {}
-    CompositeTypes: {}
+    Enums: Record<string, never>
+    CompositeTypes: Record<string, never>
   }
 }

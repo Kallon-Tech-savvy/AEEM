@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import { AWARDS } from '../../data/Awards'
-import { Container, Section } from '../ui'
+import { Section } from '../ui'
 
 export function AwardSlider() {
   const [width, setWidth] = useState(0)
@@ -23,8 +23,7 @@ export function AwardSlider() {
 
   return (
     <Section spacing="default" className="overflow-hidden bg-aeem-cream dark:bg-aeem-charcoal">
-      <Container>
-        <div className="mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+        <div className="mb-10 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
             <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-aeem-gold">
               Institutional recognition
@@ -107,7 +106,6 @@ export function AwardSlider() {
             ))}
           </motion.div>
         </div>
-      </Container>
     </Section>
   )
 }

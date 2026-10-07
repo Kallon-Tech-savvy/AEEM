@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async'
 import { useParams, Link } from 'react-router-dom'
 import { ArrowLeft, Clock, Download, Loader2, Share2 } from 'lucide-react'
 import { supabase } from '../services/supabase'
-import { Badge, Button, Card, Container, Section } from '../components/ui'
+import { Badge, Button, Card, Section } from '../components/ui'
 import { getCanonical } from '../lib/seo'
 import { RESOURCE_DETAIL_FIELDS } from '../services/contentFields'
 import type { ResourceDetailItem } from '../types/content'
@@ -18,7 +18,7 @@ export default function ResourceDetail() {
   useEffect(() => {
     let active = true
     if (!slug) { setLoading(false); return }
-    supabase.from('resources').select(RESOURCE_DETAIL_FIELDS).eq('slug', slug).eq('published', true).single()
+    supabase.from('resources').select('title, slug, type, description, summary, body, full_body, file_url, category, created_at, reading_time, tags, image_url, bullet_points').eq('slug', slug).eq('published', true).single()
       .then(({ data, error }) => {
         if (!active) return
         if (error) console.error('Error fetching resource:', error)
@@ -45,12 +45,12 @@ export default function ResourceDetail() {
 
   if (loading) return <div className="flex min-h-[60vh] items-center justify-center"><Loader2 className="animate-spin text-aeem-gold" size={32} aria-label="Loading resource" /></div>
 
-  if (!resource) return <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal"><Container narrow className="text-center">
+  if (!resource) return <Section spacing="large" containerNarrow className="bg-aeem-cream dark:bg-aeem-charcoal"><div className="text-center">
     <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-gold">Knowledge Hub</p>
     <h1 className="mt-4 text-3xl font-bold text-aeem-ink dark:text-white sm:text-4xl">Resource not found.</h1>
     <p className="mx-auto mt-4 max-w-xl leading-7 text-aeem-ink/70 dark:text-white/70">This resource does not exist, is unpublished, or is temporarily unavailable.</p>
     <Link to="/resources" className="mt-8 inline-flex min-h-11 items-center gap-2 rounded-xl border border-aeem-forest bg-aeem-forest px-5 text-sm font-semibold text-white hover:bg-aeem-forest-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus"><ArrowLeft size={16} aria-hidden="true" />Back to Knowledge Hub</Link>
-  </Container></Section>
+  </div></Section>
 
   const description = resource.description ?? resource.summary ?? ''
   const year = resource.created_at ? new Date(resource.created_at).getFullYear() : null
@@ -75,17 +75,15 @@ export default function ResourceDetail() {
       )}
     </Helmet>
 
-    <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
-      <Container narrow>
+    <Section spacing="large" containerNarrow className="bg-aeem-cream dark:bg-aeem-charcoal">
         <Link to="/resources" className="inline-flex items-center gap-2 text-sm font-semibold text-aeem-ink/60 hover:text-aeem-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:text-white/60 dark:hover:text-aeem-gold-light"><ArrowLeft size={16} aria-hidden="true" />Back to Knowledge Hub</Link>
         <div className="mt-10 flex flex-wrap items-center gap-3"><Badge>{type}</Badge>{year && <span className="text-sm text-aeem-ink/60 dark:text-white/60">{year}</span>}{resource.reading_time && <span className="inline-flex items-center gap-1.5 text-sm text-aeem-ink/60 dark:text-white/60"><Clock size={14} aria-hidden="true" />{resource.reading_time}</span>}</div>
         <h1 className="mt-6 text-4xl font-bold leading-tight text-aeem-ink dark:text-white sm:text-5xl lg:text-6xl">{resource.title}</h1>
         {resource.summary && <p className="mt-6 text-xl leading-8 text-aeem-ink/70 dark:text-white/70">{resource.summary}</p>}
-        {resource.image_url && <figure className="mt-10 overflow-hidden rounded-2xl border border-black/10 dark:border-white/10"><img src={resource.image_url} alt="" className="aspect-[16/8] w-full object-cover" /></figure>}
-      </Container>
+        {resource.image_url && <figure className="mt-10 overflow-hidden rounded-2xl border border-black/10 dark:border-white/10"><img src={resource.image_url} alt={resource.title} className="aspect-[16/8] w-full object-cover" /></figure>}
     </Section>
 
-    <Section><Container narrow>
+    <Section containerNarrow>
       <article className="prose prose-lg max-w-none text-aeem-ink dark:prose-invert">
         {safeBody ? <div dangerouslySetInnerHTML={{ __html: safeBody }} /> : resource.full_body ? <p className="whitespace-pre-line leading-8">{resource.full_body}</p> : resource.description ? <p className="leading-8">{resource.description}</p> : null}
         {resource.bullet_points?.length ? <ul>{resource.bullet_points.map((point, i) => <li key={i}>{point}</li>)}</ul> : null}
@@ -100,6 +98,6 @@ export default function ResourceDetail() {
         <div className="flex flex-wrap items-center gap-2">{resource.tags?.length ? <><span className="mr-1 text-xs font-semibold uppercase tracking-[0.12em] text-aeem-ink/50 dark:text-white/50">Topics</span>{resource.tags.map(tag => <Badge key={tag}>{tag}</Badge>)}</> : null}</div>
         <div><Button type="button" variant="secondary" onClick={share}><Share2 size={17} aria-hidden="true" />Share</Button><p className="sr-only" aria-live="polite">{shareStatus}</p></div>
       </div>
-    </Container></Section>
+    </Section>
   </>
 }

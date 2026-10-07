@@ -10,9 +10,14 @@ const CONTACT_PHONE = '+232 76 406 281'
 const SUPABASE_FUNCTION_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/submit-inquiry`
 
 async function submitInquiry(payload: Record<string, unknown>): Promise<Response> {
+  const anonKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY
   return fetch(SUPABASE_FUNCTION_URL, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${anonKey}`,
+      'apikey': anonKey
+    },
     body: JSON.stringify(payload),
   })
 }
@@ -80,7 +85,11 @@ const Contact: React.FC = () => {
       setHoneypot('')
     } catch (err) {
       console.warn('Inquiry submission failed:', err)
-      setError('We could not send your message. Please try again.')
+      setError(
+        err instanceof DOMException && err.name === 'AbortError'
+          ? 'The inquiry service took too long to respond. Please check your connection and try again.'
+          : 'We could not send your message. Please try again.',
+      )
     } finally { setIsSubmitting(false) }
   }
 
@@ -105,7 +114,7 @@ const Contact: React.FC = () => {
 
       <Section>
         <div className="grid gap-10 lg:grid-cols-5 lg:gap-16">
-          <div className="space-y-6 lg:col-span-2">
+          <div className="space-y-7 lg:col-span-2">
             <div>
               <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-gold">Contact details</p>
               <h2 className="mt-3 text-2xl font-bold text-aeem-ink dark:text-white">Reach us directly</h2>
@@ -142,7 +151,7 @@ const Contact: React.FC = () => {
                   <h2 className="text-2xl font-bold text-aeem-ink dark:text-white">Send a message</h2>
                   <p className="mt-2 text-sm text-aeem-ink/65 dark:text-white/65">Tell us what you need and include any relevant deadline or context.</p>
                 </div>
-                <div className="grid gap-5 sm:grid-cols-2">
+                <div className="grid gap-6 sm:grid-cols-2">
                   <label className="space-y-2"><span className="text-sm font-semibold text-aeem-ink dark:text-white">Full name</span><input required name="full_name" autoComplete="name" value={formData.full_name} onChange={e => setFormData({...formData, full_name: e.target.value})} className="min-h-11 w-full rounded-xl border border-gray-300 bg-white px-4 text-sm outline-none focus:border-aeem-focus focus:ring-2 focus:ring-aeem-focus/20 dark:border-white/15 dark:bg-white/[0.03] dark:text-white" /></label>
                   <label className="space-y-2"><span className="text-sm font-semibold text-aeem-ink dark:text-white">Email address</span><input required type="email" name="email" autoComplete="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="min-h-11 w-full rounded-xl border border-gray-300 bg-white px-4 text-sm outline-none focus:border-aeem-focus focus:ring-2 focus:ring-aeem-focus/20 dark:border-white/15 dark:bg-white/[0.03] dark:text-white" /></label>
                   <label className="space-y-2"><span className="text-sm font-semibold text-aeem-ink dark:text-white">Phone <span className="font-normal text-aeem-ink/50">(optional)</span></span><input name="phone" type="tel" autoComplete="tel" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className="min-h-11 w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm outline-none focus:border-aeem-focus focus:ring-2 focus:ring-aeem-focus/20 dark:border-white/15 dark:bg-white/[0.03] dark:text-white" /></label>

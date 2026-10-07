@@ -1,15 +1,11 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
-import { Calendar, MapPin, ArrowRight, Loader2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { Calendar, MapPin, ArrowRight, Loader2 } from 'lucide-react'
 import { supabase } from '../services/supabase'
-import { Badge, Card, Section } from '../components/ui'
+import { Badge, Button, Card, Section } from '../components/ui'
 import { getCanonical } from '../lib/seo'
-import { EVENT_LIST_FIELDS } from '../services/contentFields'
 import type { EventListItem } from '../types/content'
-
-const isUpcoming = (event: EventListItem) =>
-  event.status === 'upcoming' && new Date(event.event_date).getTime() >= Date.now()
 
 const formatDate = (value: string) =>
   new Date(value).toLocaleDateString('en-US', {
@@ -21,21 +17,20 @@ const formatDate = (value: string) =>
 export default function Events() {
   const [events, setEvents] = useState<EventListItem[]>([])
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(false)
 
   useEffect(() => {
     let active = true
 
     supabase
       .from('events')
-      .select(EVENT_LIST_FIELDS)
+      .select('id, title, slug, description, event_date, location, status, cover_image_url')
       .eq('published', true)
       .order('event_date', { ascending: false })
       .then(({ data, error }) => {
         if (!active) return
         if (error) {
           console.error('Error fetching events:', error)
-          setError(true)
+          setEvents([])
         } else {
           setEvents((data ?? []) as unknown as EventListItem[])
         }
@@ -47,161 +42,79 @@ export default function Events() {
     }
   }, [])
 
-  const upcoming = useMemo(
-    () => events.filter(isUpcoming).sort((a, b) => +new Date(a.event_date) - +new Date(b.event_date)),
-    [events],
-  )
-
-  const past = useMemo(
-    () => events.filter(event => !isUpcoming(event)),
-    [events],
-  )
+  const canonicalUrl = getCanonical('/events')
 
   return (
     <>
       <Helmet>
-        <title>Events | AEEM</title>
+        <title>Events & Gatherings | AEEM</title>
         <meta
           name="description"
-          content="Explore AEEM workshops, summits, and community gatherings."
+          content="Explore AEEM convening dates, workshops, and gatherings across African education networks."
         />
-        <link rel="canonical" href={getCanonical('/events')} />
-        <meta property="og:title" content="Events | AEEM" />
-        <meta property="og:description" content="Upcoming and past events from AEEM." />
-        <meta property="og:type" content="website" />
+        <link rel="canonical" href={canonicalUrl} />
       </Helmet>
 
-      <Section spacing="large" className="bg-aeem-forest text-white">
-        <div className="max-w-4xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-aeem-gold-light">
-            Participate
+      <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
+          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-forest dark:text-aeem-gold-light">
+            Convenings & Gatherings
           </p>
-          <h1 className="mt-4 text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
-            Events and gatherings.
+          <h1 className="mt-4 text-4xl font-bold tracking-tight text-aeem-ink dark:text-white sm:text-5xl lg:text-6xl">
+            AEEM Events
           </h1>
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-white/75">
-            Workshops, summits, and community activities connected to AEEM&apos;s work.
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-aeem-ink/75 dark:text-white/75">
+            Bringing together educators, community leaders, researchers, and advocates to shape equitable education access.
           </p>
-        </div>
       </Section>
 
-      <Section aria-labelledby="upcoming-events-heading">
-        <div className="mb-10">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-aeem-gold">
-            Participate
-          </p>
-          <h2 id="upcoming-events-heading" className="mt-3 text-3xl font-bold text-aeem-ink sm:text-4xl">
-            Upcoming events
-          </h2>
-        </div>
-
-        {loading ? (
-          <div className="flex min-h-48 items-center justify-center" role="status">
-            <Loader2 className="animate-spin text-aeem-gold" size={30} aria-hidden="true" />
-            <span className="sr-only">Loading events</span>
-          </div>
-        ) : error ? (
-          <Card className="p-8">
-            <h3 className="text-xl font-semibold text-aeem-ink">Events are temporarily unavailable.</h3>
-            <p className="mt-3 leading-7 text-aeem-ink/70">
-              We could not load the event archive right now. Please try again later.
-            </p>
-          </Card>
-        ) : upcoming.length === 0 ? (
-          <p className="border-y border-black/10 py-8 text-aeem-ink/70">
-            There are no upcoming events currently published.
-          </p>
-        ) : (
-          <div className="grid gap-8 lg:grid-cols-2">
-            {upcoming.map(event => (
-              <Card key={event.slug} className="overflow-hidden p-0">
-                {event.cover_image_url && (
-                  <img
-                    src={event.cover_image_url}
-                    alt=""
-                    width={1280}
-                    height={720}
-                    loading="lazy"
-                    className="aspect-[16/9] w-full object-cover"
-                  />
-                )}
-                <div className="p-6 sm:p-8">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <Badge variant="success">Upcoming</Badge>
-                    <span className="inline-flex items-center gap-1.5 text-sm text-aeem-ink/60">
-                      <Calendar size={15} aria-hidden="true" />
-                      {formatDate(event.event_date)}
-                    </span>
+      <Section>
+          {loading ? (
+            <div className="flex min-h-[300px] items-center justify-center">
+              <Loader2 className="animate-spin text-aeem-gold" size={32} aria-label="Loading events" />
+            </div>
+          ) : events.length === 0 ? (
+            <Card className="p-12 text-center">
+              <h2 className="text-2xl font-bold text-aeem-ink dark:text-white">No upcoming events scheduled</h2>
+              <p className="mt-2 text-aeem-ink/70 dark:text-white/70">
+                Check back soon or sign up to receive announcements about upcoming convenings and workshops.
+              </p>
+            </Card>
+          ) : (
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {events.map((event) => (
+                <Card key={event.id} className="flex flex-col justify-between p-6">
+                  <div>
+                    <div className="flex items-center justify-between gap-2">
+                      <Badge>{event.status === 'upcoming' ? 'Upcoming' : 'Past Event'}</Badge>
+                      <span className="inline-flex items-center gap-1 text-xs text-aeem-ink/60 dark:text-white/60">
+                        <Calendar size={13} aria-hidden="true" />
+                        {formatDate(event.event_date)}
+                      </span>
+                    </div>
+                    <h2 className="mt-4 text-xl font-bold text-aeem-ink dark:text-white">
+                      {event.title}
+                    </h2>
+                    <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-aeem-ink/75 dark:text-white/75">
+                      {event.description}
+                    </p>
                   </div>
-                  <h3 className="mt-5 text-2xl font-bold text-aeem-ink">{event.title}</h3>
-                  <p className="mt-3 line-clamp-3 leading-7 text-aeem-ink/70">{event.description}</p>
-                  <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-black/10 pt-5">
-                    <span className="inline-flex items-center gap-1.5 text-sm text-aeem-ink/65">
-                      <MapPin size={15} className="text-aeem-gold" aria-hidden="true" />
-                      {event.location}
-                    </span>
-                    <Link
-                      to={`/events/${event.slug}`}
-                      className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-aeem-forest px-5 text-sm font-semibold text-white transition-colors hover:bg-aeem-forest-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus"
-                    >
-                      Event details <ArrowRight size={16} aria-hidden="true" />
+
+                  <div className="mt-6 border-t border-black/10 pt-4 dark:border-white/10">
+                    <div className="mb-4 flex items-center gap-1.5 text-xs text-aeem-ink/60 dark:text-white/60">
+                      <MapPin size={13} aria-hidden="true" />
+                      <span>{event.location}</span>
+                    </div>
+                    <Link to={`/events/${event.slug}`}>
+                      <Button variant="secondary" className="w-full justify-between">
+                        <span>Event details</span>
+                        <ArrowRight size={16} aria-hidden="true" />
+                      </Button>
                     </Link>
                   </div>
-                </div>
-              </Card>
-            ))}
-          </div>
-        )}
-      </Section>
-
-      <Section spacing="large" className="bg-aeem-cream" aria-labelledby="past-events-heading">
-        <div className="mb-10">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-aeem-gold">
-            Archive
-          </p>
-          <h2 id="past-events-heading" className="mt-3 text-3xl font-bold text-aeem-ink sm:text-4xl">
-            Past events
-          </h2>
-        </div>
-
-        {!loading && !error && past.length === 0 ? (
-          <p className="border-y border-black/10 py-8 text-aeem-ink/70">
-            No completed events are currently published.
-          </p>
-        ) : (
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {past.map(event => (
-              <Card key={event.slug} interactive className="flex h-full flex-col overflow-hidden p-0">
-                {event.cover_image_url && (
-                  <img
-                    src={event.cover_image_url}
-                    alt=""
-                    width={960}
-                    height={640}
-                    loading="lazy"
-                    className="aspect-[4/3] w-full object-cover"
-                  />
-                )}
-                <div className="flex flex-1 flex-col p-6">
-                  <div className="flex items-center justify-between gap-3">
-                    <Badge>Completed</Badge>
-                    <span className="text-sm text-aeem-ink/55">{formatDate(event.event_date)}</span>
-                  </div>
-                  <h3 className="mt-4 text-xl font-semibold text-aeem-ink">{event.title}</h3>
-                  <p className="mt-3 line-clamp-3 text-sm leading-6 text-aeem-ink/70">{event.description}</p>
-                  <div className="mt-auto pt-6">
-                    <Link
-                      to={`/events/${event.slug}`}
-                      className="inline-flex items-center gap-2 text-sm font-semibold text-aeem-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus"
-                    >
-                      View event <ArrowRight size={15} aria-hidden="true" />
-                    </Link>
-                  </div>
-                </div>
-              </Card>
-            ))}
-          </div>
-        )}
+                </Card>
+              ))}
+            </div>
+          )}
       </Section>
     </>
   )
