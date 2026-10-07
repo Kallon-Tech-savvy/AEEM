@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { Calendar, MapPin, ArrowRight, Clock } from 'lucide-react';
+import { Calendar, MapPin, ArrowRight } from 'lucide-react';
 import { supabase } from '../services/supabase';
-import { SpotlightCard } from '../components/motion/SpotlightCard';
 import { getCanonical } from '../lib/seo';
+import { Badge, Card, Container, Section } from '../components/ui';
 
 interface Event {
   id: string;
@@ -17,81 +17,91 @@ interface Event {
   cover_image_url: string;
 }
 
-const EventSkeleton = () => (
-  <div className="flex flex-col md:flex-row bg-aeem-focus/10 rounded-3xl overflow-hidden border border-aeem-border animate-pulse">
-    <div className="w-full md:w-2/5 aspect-square md:aspect-auto bg-gray-200 dark:bg-gray-700 min-h-[240px]" />
-    <div className="p-8 md:w-3/5 flex flex-col gap-4">
-      <div className="h-3 w-24 bg-gray-200 dark:bg-gray-700 rounded" />
-      <div className="h-6 w-3/4 bg-gray-200 dark:bg-gray-700 rounded" />
-      <div className="h-4 w-full bg-gray-200 dark:bg-gray-700 rounded" />
-      <div className="h-4 w-5/6 bg-gray-200 dark:bg-gray-700 rounded" />
-      <div className="mt-auto h-10 w-10 bg-gray-200 dark:bg-gray-700 rounded-full ml-auto" />
-    </div>
-  </div>
-)
-
-const FALLBACK_EVENTS: (Event & { fileName?: string })[] = [
+const FALLBACK_EVENTS: Event[] = [
   {
     id: 'f-1',
-    title: "AEEM Education Summit 2026",
-    slug: "summit-2026",
-    event_date: "2026-08-15",
-    location: "HQ, Fort Street",
-    status: "upcoming",
-    cover_image_url: "/assets/gallery/Activity.jpg",
-    fileName: "Activity",
-    description: "Bringing together policy makers, educators, and youth leaders to discuss the future of inclusive education in West Africa."
+    title: 'AEEM Education Summit 2026',
+    slug: 'summit-2026',
+    event_date: '2026-08-15',
+    location: 'HQ, Fort Street',
+    status: 'completed',
+    cover_image_url: '/assets/gallery/Activity.jpg',
+    description:
+      'A gathering for policymakers, educators, and youth leaders focused on the future of inclusive education in West Africa.',
   },
   {
     id: 'f-3',
-    title: "I AM SOMEBODY - Session 1",
-    slug: "i-am-somebody-1",
-    event_date: "2025-01-29",
-    location: "HQ Fort Street",
-    status: "completed",
-    cover_image_url: "/assets/gallery/Activity.jpg",
-    fileName: "Activity",
-    description: "Our inaugural empowerment workshop for 42 participants from six schools."
-  }
+    title: 'I AM SOMEBODY - Session 1',
+    slug: 'i-am-somebody-1',
+    event_date: '2025-01-29',
+    location: 'HQ, Fort Street',
+    status: 'completed',
+    cover_image_url: '/assets/gallery/Activity.jpg',
+    description: 'An empowerment workshop for 42 participants from six schools.',
+  },
 ];
 
+const EventSkeleton = () => (
+  <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white dark:border-white/10 dark:bg-white/[0.03]">
+    <div className="aspect-[16/9] animate-pulse bg-gray-200 dark:bg-gray-800" />
+    <div className="space-y-4 p-6">
+      <div className="h-3 w-24 animate-pulse rounded bg-gray-200 dark:bg-gray-800" />
+      <div className="h-6 w-3/4 animate-pulse rounded bg-gray-200 dark:bg-gray-800" />
+      <div className="h-4 w-full animate-pulse rounded bg-gray-200 dark:bg-gray-800" />
+      <div className="h-4 w-5/6 animate-pulse rounded bg-gray-200 dark:bg-gray-800" />
+    </div>
+  </div>
+);
+
+const formatDate = (dateString: string) =>
+  new Date(dateString).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
+const isUpcoming = (event: Event) => {
+  const eventDate = new Date(`${event.event_date}T23:59:59`);
+  return event.status === 'upcoming' && eventDate.getTime() >= Date.now();
+};
+
 const Events: React.FC = () => {
-  const [events, setEvents] = useState<(Event & { fileName?: string })[]>([]);
+  const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let active = true;
+
     const fetchEvents = async () => {
       try {
         const { data, error } = await supabase
           .from('events')
           .select('*')
-          .order('event_date', { ascending: true });
+          .order('event_date', { ascending: false });
 
         if (error) throw error;
 
-        if (data && data.length > 0) {
-          setEvents(data);
-        } else {
-          setEvents(FALLBACK_EVENTS);
+        if (active) {
+          setEvents(data && data.length > 0 ? (data as Event[]) : FALLBACK_EVENTS);
         }
-      } catch (err) {
-        console.error('Error fetching events:', err);
-        setEvents(FALLBACK_EVENTS);
+      } catch (error) {
+        console.warn('Events fetch failed; rendering fallback.', error);
+
+        if (active) setEvents(FALLBACK_EVENTS);
       } finally {
-        setLoading(false);
+        if (active) setLoading(false);
       }
     };
 
-    fetchEvents();
+    void fetchEvents();
+
+    return () => {
+      active = false;
+    };
   }, []);
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
+  const upcomingEvents = useMemo(() => events.filter(isUpcoming), [events]);
+  const pastEvents = useMemo(() => events.filter((event) => !isUpcoming(event)), [events]);
 
   return (
     <>
@@ -99,124 +109,182 @@ const Events: React.FC = () => {
         <title>Events | AEEM</title>
         <meta
           name="description"
-          content="Join AEEM workshops, summits, and community gatherings across Africa. Upcoming and past events that support educational access and youth empowerment in Sierra Leone and beyond."
+          content="Explore AEEM workshops, summits, and community gatherings supporting educational access and youth empowerment."
         />
         <meta property="og:title" content="Events | Africa Education Empowerment Movement" />
-        <meta property="og:description" content="Upcoming and past educational events from AEEM, based in Freetown, Sierra Leone." />
+        <meta
+          property="og:description"
+          content="Upcoming and past educational events from AEEM."
+        />
         <link rel="canonical" href={getCanonical('/events')} />
       </Helmet>
-      <section className="pt-40 pb-24 min-h-[520px] bg-gradient-to-b from-[#8db89b] dark:from-[#111] to-aeem-bg dark:to-aeem-charcoal text-white overflow-hidden relative">
-               <div className="absolute top-0 right-0 w-full md:w-[60%] h-full pointer-events-none opacity-[0.5] dark:opacity-[0.1] mix-blend-screen z-0">
-                <img 
-                  src="/assets/Illustrate Africa 2_converted.avif" 
-                  alt="" 
-                  width={960}
-                  height={800}
-                  fetchPriority="high"
-                  loading="eager"
-                  decoding="async"
-                  className="w-full h-full object-fill md:object-contain object-right-top drop-shadow-2xl"
-                />
-              </div>
-              <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-aeem-gold/10 rounded-full blur-[120px] pointer-events-none -translate-y-1/2" />
-      
-              <div className="max-w-7xl mx-auto px-6 relative z-10">
-                <div className="hero-animate">
-                  <span className="text-aeem-gold font-bold uppercase tracking-[0.3em] text-xs mb-4 block">Participate</span>
-                </div>
-                <h1 className="hero-animate hero-animate-delay-1 text-5xl md:text-7xl font-black mb-8 leading-tight">Events</h1>
-                <p className="hero-animate hero-animate-delay-2 text-xl text-aeem-charcoal dark:text-white max-w-2xl font-medium">
-                  Join our workshops, summits, and community gatherings to be part of the change.
+
+      <main>
+        <section className="border-b border-black/10 bg-aeem-forest text-white dark:border-white/10">
+          <Container>
+            <div className="grid min-h-[440px] items-center gap-10 py-20 lg:grid-cols-[1.1fr_0.9fr] lg:py-28">
+              <div className="max-w-2xl">
+                <Badge variant="default" className="border-white/20 bg-white/10 text-white">
+                  Participate
+                </Badge>
+                <h1 className="mt-6 text-5xl font-bold leading-tight tracking-tight sm:text-6xl">
+                  Events
+                </h1>
+                <p className="mt-6 max-w-xl text-lg leading-8 text-white/80 sm:text-xl">
+                  Workshops, summits, and community gatherings where people come together to learn,
+                  exchange ideas, and act.
                 </p>
               </div>
-            </section>
 
-      <section aria-label="Upcoming Events" className="py-16 bg-aeem">
-        <div className="max-w-7xl mx-auto px-6">
+              <div className="hidden lg:flex lg:justify-end" aria-hidden="true">
+                <div className="max-w-md border-l border-aeem-gold/60 pl-8">
+                  <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-gold">
+                    From activity to impact
+                  </p>
+                  <p className="mt-4 text-2xl font-semibold leading-9 text-white">
+                    Events are part of the work, not the evidence of the work.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </Container>
+        </section>
+
+        <Section aria-labelledby="upcoming-heading">
+          <div className="flex items-end justify-between gap-6">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-aeem-gold">
+                Participate
+              </p>
+              <h2
+                id="upcoming-heading"
+                className="mt-2 text-3xl font-bold tracking-tight text-aeem-ink dark:text-white"
+              >
+                Upcoming events
+              </h2>
+            </div>
+          </div>
+
           {loading ? (
-            <>
-              <h2 className="text-3xl font-black mb-12 text-aeem-charcoal dark:text-white">Upcoming Events</h2>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-24">
-                <EventSkeleton />
-                <EventSkeleton />
-              </div>
-              <h2 className="text-3xl font-black mb-12 text-aeem-charcoal dark:text-white">Past Highlights</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {[1, 2, 3].map(i => (
-                  <div key={i} className="animate-pulse">
-                    <div className="aspect-[4/3] rounded-2xl bg-gray-200 dark:bg-gray-700 mb-6" />
-                    <div className="h-5 w-2/3 bg-gray-200 dark:bg-gray-700 rounded mb-2" />
-                    <div className="h-4 w-1/2 bg-gray-200 dark:bg-gray-700 rounded" />
-                  </div>
-                ))}
-              </div>
-            </>
-          ) : (
-            <>
-              <h2 className="text-3xl font-black mb-12 text-aeem-charcoal dark:text-white">Upcoming Events</h2>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-24">
-                {events.filter(e => e.status === 'upcoming').map((event) => (
-                  <SpotlightCard key={event.slug} className="group relative flex flex-col md:flex-row bg-aeem-focus/25 rounded-3xl overflow-hidden border border-aeem-border shadow-sm hover:shadow-xl transition-all">
-                    <div className="w-full md:w-2/5 aspect-square md:aspect-auto overflow-hidden">
-                       {event.fileName ? (
-                         <picture>
-                            <img src={event.cover_image_url} alt={event.title} width={720} height={720} loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                         </picture>
-                       ) : (
-                         <img src={event.cover_image_url} alt={event.title} width={720} height={720} loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                       )}
-                    </div>
-                    <div className="p-8 md:w-3/5 flex flex-col">
-                       <div className="flex flex-wrap gap-4 text-[10px] font-black uppercase tracking-widest text-aeem-gold mb-4">
-                          <span className="flex items-center gap-1"><Calendar size={12} /> {formatDate(event.event_date)}</span>
-                          <span className="flex items-center gap-1 text-aeem-charcoal dark:text-white"><Clock size={12} /> 09:00 AM</span>
-                       </div>
-                       <h3 className="text-2xl font-black mb-4 group-hover:text-aeem-gold transition-colors text-aeem-charcoal dark:text-white">{event.title}</h3>
-                       <p className="text-sm text-aeem-charcoal dark:text-white mb-8 leading-relaxed line-clamp-3">{event.description}</p>
-                       <div className="mt-auto flex items-center justify-between">
-                          <div className="flex items-center gap-1.5 text-xs font-bold text-aeem-charcoal dark:text-white">
-                             <MapPin size={14} className="text-aeem-gold" /> {event.location}
-                          </div>
-                          <Link
-                            to={`/events/${event.slug}`}
-                            aria-label={`View details for ${event.title}`}
-                            className="p-3 bg-aeem-charcoal dark:bg-white text-aeem-focus rounded-full hover:bg-aeem-gold transition-colors"
-                          >
-                            <ArrowRight size={20} aria-hidden="true" />
-                          </Link>
-                       </div>
-                    </div>
-                  </SpotlightCard>
-                ))}
-              </div>
+            <div className="mt-10 grid gap-6 lg:grid-cols-2">
+              <EventSkeleton />
+              <EventSkeleton />
+            </div>
+          ) : upcomingEvents.length > 0 ? (
+            <div className="mt-10 grid gap-6 lg:grid-cols-2">
+              {upcomingEvents.map((event) => (
+                <Card key={event.slug} className="overflow-hidden">
+                  <div className="grid md:grid-cols-[0.85fr_1.15fr]">
+                    <img
+                      src={event.cover_image_url}
+                      alt=""
+                      width={720}
+                      height={480}
+                      loading="lazy"
+                      className="aspect-[4/3] h-full w-full object-cover"
+                    />
+                    <div className="flex flex-col p-6 sm:p-8">
+                      <div className="flex flex-wrap gap-x-5 gap-y-2 text-xs font-semibold text-gray-600 dark:text-gray-300">
+                        <span className="inline-flex items-center gap-2">
+                          <Calendar size={14} aria-hidden="true" />
+                          {formatDate(event.event_date)}
+                        </span>
+                        <span className="inline-flex items-center gap-2">
+                          <MapPin size={14} aria-hidden="true" />
+                          {event.location}
+                        </span>
+                      </div>
 
-              <h2 className="text-3xl font-black mb-12 text-aeem-charcoal dark:text-white">Past Highlights</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {events.filter(e => e.status === 'completed').map((event) => (
-                  <SpotlightCard key={event.slug} className="group transition-all">
-                     <div className="aspect-[4/3] rounded-2xl overflow-hidden mb-6">
-                        {event.fileName ? (
-                           <picture>
-                              <source
-                                type="image/avif"
-                                srcSet={`/assets/gallery/optimized/${event.fileName}-400.avif 400w`}
-                                sizes="(min-width: 1024px) 25vw, 90vw"
-                              />
-                              <img src={event.cover_image_url} alt={event.title} width={640} height={480} loading="lazy" className="w-full h-full object-cover" />
-                           </picture>
-                        ) : (
-                           <img src={event.cover_image_url} alt={event.title} width={640} height={480} loading="lazy" className="w-full h-full object-cover" />
-                        )}
-                     </div>
-                     <h3 className="font-bold text-lg mb-2 text-aeem-charcoal dark:text-white">{event.title}</h3>
-                     <p className="text-sm text-aeem-charcoal dark:text-white">{formatDate(event.event_date)} • {event.location}</p>
-                  </SpotlightCard>
-                ))}
-              </div>
-            </>
+                      <h3 className="mt-5 text-2xl font-bold tracking-tight text-aeem-ink dark:text-white">
+                        {event.title}
+                      </h3>
+                      <p className="mt-4 leading-7 text-gray-600 dark:text-gray-300">
+                        {event.description}
+                      </p>
+
+                      <Link
+                        to={`/events/${event.slug}`}
+                        className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-aeem-forest hover:text-aeem-forest-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus focus-visible:ring-offset-2 dark:text-aeem-gold"
+                      >
+                        View event details
+                        <ArrowRight size={16} aria-hidden="true" />
+                      </Link>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <Card className="mt-10 p-8 sm:p-10">
+              <p className="text-lg font-semibold text-aeem-ink dark:text-white">
+                No upcoming events are currently listed.
+              </p>
+              <p className="mt-2 max-w-2xl text-gray-600 dark:text-gray-300">
+                Check back for new workshops, summits, and community activities.
+              </p>
+            </Card>
           )}
-        </div>
-      </section>
+        </Section>
+
+        <Section
+          aria-labelledby="past-heading"
+          className="border-t border-black/10 dark:border-white/10"
+        >
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-aeem-gold">
+              Archive
+            </p>
+            <h2
+              id="past-heading"
+              className="mt-2 text-3xl font-bold tracking-tight text-aeem-ink dark:text-white"
+            >
+              Past events
+            </h2>
+          </div>
+
+          {loading ? (
+            <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {[1, 2, 3].map((item) => (
+                <EventSkeleton key={item} />
+              ))}
+            </div>
+          ) : pastEvents.length > 0 ? (
+            <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {pastEvents.map((event) => (
+                <Card key={event.slug} className="overflow-hidden">
+                  <img
+                    src={event.cover_image_url}
+                    alt=""
+                    width={640}
+                    height={480}
+                    loading="lazy"
+                    className="aspect-[4/3] w-full object-cover"
+                  />
+                  <div className="p-6">
+                    <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs font-semibold text-gray-500 dark:text-gray-400">
+                      <span>{formatDate(event.event_date)}</span>
+                      <span>{event.location}</span>
+                    </div>
+                    <h3 className="mt-3 text-lg font-bold text-aeem-ink dark:text-white">
+                      {event.title}
+                    </h3>
+                    <p className="mt-3 line-clamp-3 text-sm leading-6 text-gray-600 dark:text-gray-300">
+                      {event.description}
+                    </p>
+                    <Link
+                      to={`/events/${event.slug}`}
+                      className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-aeem-forest hover:text-aeem-forest-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus focus-visible:ring-offset-2 dark:text-aeem-gold"
+                    >
+                      View details
+                      <ArrowRight size={16} aria-hidden="true" />
+                    </Link>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          ) : null}
+        </Section>
+      </main>
     </>
   );
 };
