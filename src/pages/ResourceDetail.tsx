@@ -33,7 +33,7 @@ export default function ResourceDetail() {
   useEffect(() => {
     let active = true
     if (!slug) { setLoading(false); return }
-    supabase.from('resources').select('*').eq('slug', slug).eq('published', true).single()
+    supabase.from('resources').select('title, slug, type, description, summary, body, fullBody:full_body, file_url, category, created_at, readingTime:reading_time, tags, image:image_url, bulletPoints:bullet_points').eq('slug', slug).eq('published', true).single()
       .then(({ data, error }) => {
         if (!active) return
         if (error) console.error('Error fetching resource:', error)
