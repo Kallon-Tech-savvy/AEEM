@@ -6,6 +6,7 @@ import { supabase } from '../services/supabase';
 import { getCanonical } from '../lib/seo';
 import { Badge, Button, Card, Container, Section, Stat } from '../components/ui';
 import { IMPACT_STORY_DETAIL_FIELDS } from '../services/contentFields';
+import type { ImpactStoryRow } from '../types/content';
 
 interface StoryData {
   title: string;
@@ -53,18 +54,18 @@ const StoryDetail: React.FC = () => {
           setStory({
             title: data.title,
             quote: data.summary,
-            image: data.coverImage ?? '',
+            image: data.cover_image_url ?? '',
             fileName: data.file_name ?? '',
             stats: {
-              participants: data.participantsCount != null ? `${data.participantsCount} Participants` : '',
-              schools: data.schoolsCount != null ? `${data.schoolsCount} Institutions` : '',
+              participants: data.participants_count != null ? `${data.participants_count} Participants` : '',
+              schools: data.schools_count != null ? `${data.schools_count} Institutions` : '',
               duration: data.duration ?? '',
             },
             overview: data.overview ?? '',
-            focusAreas: data.focusAreas ?? [],
+            focusAreas: data.focus_areas ?? [],
             impact: data.impact ?? '',
-            quoteText: data.quoteText ?? '',
-            quoteAuthor: data.quoteAuthor ?? '',
+            quoteText: data.quote_text ?? '',
+            quoteAuthor: data.quote_author ?? '',
           });
         }
       } catch (error) {
