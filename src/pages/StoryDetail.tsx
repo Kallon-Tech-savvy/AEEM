@@ -70,14 +70,30 @@ const StoryDetail: React.FC = () => {
       try {
         const { data, error } = await supabase
           .from('stories')
-          .select('*')
+          .select('title, quote, image:image_url, file_name, participants, schools, duration, overview, focusAreas:focus_areas, impact, quoteText:quote_text, quoteAuthor:quote_author')
           .eq('slug', slug)
+          .eq('published', true)
           .single();
 
         if (error) throw error;
 
         if (active) {
-          setStory(data as StoryData);
+          setStory({
+            title: data.title,
+            quote: data.quote,
+            image: data.image,
+            fileName: data.file_name ?? '',
+            stats: {
+              participants: data.participants ?? '',
+              schools: data.schools ?? '',
+              duration: data.duration ?? '',
+            },
+            overview: data.overview ?? '',
+            focusAreas: data.focusAreas ?? [],
+            impact: data.impact ?? '',
+            quoteText: data.quoteText ?? '',
+            quoteAuthor: data.quoteAuthor ?? '',
+          });
         }
       } catch (error) {
         console.warn('Story fetch failed; rendering fallback.', error);
