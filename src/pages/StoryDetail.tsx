@@ -37,6 +37,7 @@ const StoryDetail: React.FC = () => {
     let active = true;
 
     const fetchStory = async () => {
+      if (!slug) return;
       setLoading(true);
 
       try {
@@ -49,22 +50,24 @@ const StoryDetail: React.FC = () => {
 
         if (error) throw error;
 
+        const storyRow = data as unknown as ImpactStoryDetailItem;
+
         if (active) {
           setStory({
-            title: data.title,
-            quote: data.summary,
-            image: data.cover_image_url ?? '',
-            fileName: data.file_name ?? '',
+            title: storyRow.title,
+            quote: storyRow.summary,
+            image: storyRow.cover_image_url ?? '',
+            fileName: storyRow.file_name ?? '',
             stats: {
-              participants: data.participants_count != null ? `${data.participants_count} Participants` : '',
-              schools: data.schools_count != null ? `${data.schools_count} Institutions` : '',
-              duration: data.duration ?? '',
+              participants: storyRow.participants_count != null ? `${storyRow.participants_count} Participants` : '',
+              schools: storyRow.schools_count != null ? `${storyRow.schools_count} Institutions` : '',
+              duration: storyRow.duration ?? '',
             },
-            overview: data.overview ?? '',
-            focusAreas: data.focus_areas ?? [],
-            impact: data.impact ?? '',
-            quoteText: data.quote_text ?? '',
-            quoteAuthor: data.quote_author ?? '',
+            overview: storyRow.overview ?? '',
+            focusAreas: storyRow.focus_areas ?? [],
+            impact: storyRow.impact ?? '',
+            quoteText: storyRow.quote_text ?? '',
+            quoteAuthor: storyRow.quote_author ?? '',
           });
         }
       } catch (error) {
