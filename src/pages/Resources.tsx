@@ -4,6 +4,7 @@ import { Search, BookOpen, FileText, Newspaper, ArrowRight, Loader2 } from 'luci
 import { Link } from 'react-router-dom'
 import { supabase } from '../services/supabase'
 import { Badge, Card, Section } from '../components/ui'
+import { RESOURCE_LIST_FIELDS } from '../services/contentFields'
 
 interface Resource {
   id: string
@@ -36,7 +37,7 @@ export default function Resources() {
 
   useEffect(() => {
     let active = true
-    supabase.from('resources').select('id, title, slug, type, description, summary, category, created_at, tags, image:image_url').eq('published', true).order('created_at', { ascending: false })
+    supabase.from('resources').select(RESOURCE_LIST_FIELDS).eq('published', true).order('created_at', { ascending: false })
       .then(({ data, error }) => {
         if (!active) return
         if (error) {
