@@ -195,6 +195,24 @@ export type Database = {
         }
         Relationships: []
       }
+      inquiry_rate_limits: {
+        Row: {
+          key_hash: string
+          window_started_at: string
+          request_count: number
+        }
+        Insert: {
+          key_hash: string
+          window_started_at?: string
+          request_count?: number
+        }
+        Update: {
+          key_hash?: string
+          window_started_at?: string
+          request_count?: number
+        }
+        Relationships: []
+      }
       inquiries: {
         Row: {
           id: string
@@ -239,7 +257,22 @@ export type Database = {
       }
     }
     Views: {}
-    Functions: {}
+    Functions: {
+      cleanup_inquiry_rate_limits: {
+        Args: {
+          p_max_age_seconds?: number
+        }
+        Returns: number
+      }
+      consume_inquiry_rate_limit: {
+        Args: {
+          p_key_hash: string
+          p_window_seconds?: number
+          p_limit?: number
+        }
+        Returns: boolean
+      }
+    }
     Enums: {}
     CompositeTypes: {}
   }
