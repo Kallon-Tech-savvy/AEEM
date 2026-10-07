@@ -61,7 +61,6 @@ export default function Resources() {
       </Section>
 
       <Section>
-        <Container>
           {loading ? (
             <div className="flex min-h-[300px] items-center justify-center">
               <Loader2 className="animate-spin text-aeem-gold" size={32} aria-label="Loading resources" />
@@ -105,7 +104,6 @@ export default function Resources() {
               ))}
             </div>
           )}
-        </Container>
       </Section>
     </>
   )
