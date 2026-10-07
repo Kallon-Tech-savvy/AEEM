@@ -10,19 +10,16 @@ const CONTACT_PHONE = '+232 76 406 281'
 const SUPABASE_FUNCTION_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/submit-inquiry`
 
 async function submitInquiry(payload: Record<string, unknown>): Promise<Response> {
-  const controller = new AbortController()
-  const timeout = window.setTimeout(() => controller.abort(), 12_000)
-
-  try {
-    return await fetch(SUPABASE_FUNCTION_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-      signal: controller.signal,
-    })
-  } finally {
-    window.clearTimeout(timeout)
-  }
+  const anonKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY
+  return fetch(SUPABASE_FUNCTION_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${anonKey}`,
+      'apikey': anonKey
+    },
+    body: JSON.stringify(payload),
+  })
 }
 
 const Contact: React.FC = () => {
