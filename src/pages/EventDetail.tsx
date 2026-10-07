@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async'
 import { Link, useParams } from 'react-router-dom'
 import { ArrowLeft, Calendar, MapPin, Loader2 } from 'lucide-react'
 import { supabase } from '../services/supabase'
-import { Badge, Card, Container, Section } from '../components/ui'
+import { Badge, Card, Section } from '../components/ui'
 import { getCanonical } from '../lib/seo'
 import type { EventListItem } from '../types/content'
 
@@ -59,8 +59,8 @@ export default function EventDetail() {
 
   if (!event) {
     return (
-      <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
-        <Container narrow className="text-center">
+      <Section spacing="large" containerNarrow className="bg-aeem-cream dark:bg-aeem-charcoal">
+        <div className="text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-gold">
             Events
           </p>
@@ -77,7 +77,7 @@ export default function EventDetail() {
             <ArrowLeft size={16} aria-hidden="true" />
             Back to Events
           </Link>
-        </Container>
+        </div>
       </Section>
     )
   }
@@ -106,8 +106,7 @@ export default function EventDetail() {
         )}
       </Helmet>
 
-      <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
-        <Container narrow>
+      <Section spacing="large" containerNarrow className="bg-aeem-cream dark:bg-aeem-charcoal">
           <Link
             to="/events"
             className="inline-flex items-center gap-2 text-sm font-semibold text-aeem-ink/60 hover:text-aeem-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:text-white/60 dark:hover:text-aeem-gold-light"
@@ -141,18 +140,15 @@ export default function EventDetail() {
               />
             </figure>
           )}
-        </Container>
       </Section>
 
-      <Section>
-        <Container narrow>
-          <Card className="p-8">
+      <Section containerNarrow>
+        <Card className="p-8">
             <h2 className="text-2xl font-bold text-aeem-ink dark:text-white">About this Event</h2>
             <p className="mt-4 whitespace-pre-line leading-8 text-aeem-ink/80 dark:text-white/80">
               {event.description}
             </p>
           </Card>
-        </Container>
       </Section>
     </>
   )
