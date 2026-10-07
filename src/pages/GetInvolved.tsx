@@ -123,7 +123,11 @@ export const GetInvolved: React.FC = () => {
       setSubmitted(true)
     } catch (err) {
       console.warn('Inquiry submission failed:', err)
-      setError('We could not submit your inquiry. Please try again.')
+      setError(
+        err instanceof DOMException && err.name === 'AbortError'
+          ? 'The inquiry service took too long to respond. Please check your connection and try again.'
+          : 'We could not submit your inquiry. Please try again.',
+      )
     } finally {
       setIsSubmitting(false)
     }
@@ -151,7 +155,7 @@ export const GetInvolved: React.FC = () => {
           <div className="lg:col-span-2">
             <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-gold">Ways to contribute</p>
             <h2 className="mt-3 text-2xl font-bold text-aeem-ink dark:text-white sm:text-3xl">Choose your path</h2>
-            <div className="mt-8 space-y-3" role="tablist" aria-label="Ways to get involved">
+            <div className="mt-10 space-y-4" role="tablist" aria-label="Ways to get involved">
               {TABS.map(tab => {
                 const Icon = tab.icon
                 const selected = activeTab === tab.id
@@ -182,7 +186,7 @@ export const GetInvolved: React.FC = () => {
                   <h2 className="mt-2 text-2xl font-bold text-aeem-ink dark:text-white">Tell us how you would like to contribute.</h2>
                 </div>
 
-                <div className="grid gap-5 sm:grid-cols-2">
+                <div className="grid gap-6 sm:grid-cols-2">
                   <label className="space-y-2"><span className={LABEL_CLASS}>Full name</span><input required name="full_name" type="text" autoComplete="name" className={FIELD_CLASS} /></label>
                   <label className="space-y-2"><span className={LABEL_CLASS}>Email address</span><input required name="email" type="email" autoComplete="email" className={FIELD_CLASS} /></label>
                   <label className="space-y-2"><span className={LABEL_CLASS}>Phone number <span className="font-normal text-aeem-ink/50">(optional)</span></span><input name="phone" type="tel" autoComplete="tel" className={FIELD_CLASS} placeholder="+232..." /></label>

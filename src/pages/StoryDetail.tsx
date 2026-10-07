@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async'
 import { Link, useParams } from 'react-router-dom'
 import { ArrowLeft, Share2, Loader2, Users, School, Calendar } from 'lucide-react'
 import { supabase } from '../services/supabase'
-import { Button, Card, Container, Section } from '../components/ui'
+import { Button, Card, Section } from '../components/ui'
 import { getCanonical } from '../lib/seo'
 
 interface StoryData {
@@ -99,8 +99,8 @@ export default function StoryDetail() {
 
   if (!story) {
     return (
-      <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
-        <Container narrow className="text-center">
+      <Section spacing="large" containerNarrow className="bg-aeem-cream dark:bg-aeem-charcoal">
+        <div className="text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-gold">
             Impact Report
           </p>
@@ -117,7 +117,7 @@ export default function StoryDetail() {
             <ArrowLeft size={16} aria-hidden="true" />
             Back to Our Impact
           </Link>
-        </Container>
+        </div>
       </Section>
     )
   }
@@ -132,8 +132,7 @@ export default function StoryDetail() {
         <link rel="canonical" href={canonicalUrl} />
       </Helmet>
 
-      <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
-        <Container narrow>
+      <Section spacing="large" containerNarrow className="bg-aeem-cream dark:bg-aeem-charcoal">
           <Link
             to="/impact"
             className="inline-flex items-center gap-2 text-sm font-semibold text-aeem-ink/60 hover:text-aeem-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:text-white/60 dark:hover:text-aeem-gold-light"
@@ -157,12 +156,10 @@ export default function StoryDetail() {
               <img src={story.image} alt={story.title} className="aspect-[16/8] w-full object-cover" />
             </figure>
           )}
-        </Container>
       </Section>
 
-      <Section>
-        <Container narrow>
-          <div className="grid gap-6 sm:grid-cols-3">
+      <Section containerNarrow>
+            <div className="grid gap-6 sm:grid-cols-3">
             {story.stats.participants && (
               <Card className="p-6 text-center">
                 <Users className="mx-auto text-aeem-forest dark:text-aeem-gold-light" size={24} />
@@ -227,8 +224,7 @@ export default function StoryDetail() {
             </Button>
             <p className="sr-only" aria-live="polite">{shareStatus}</p>
           </div>
-        </Container>
-      </Section>
+        </Section>
     </>
   )
 }

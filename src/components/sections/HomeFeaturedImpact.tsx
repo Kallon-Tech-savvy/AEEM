@@ -1,11 +1,10 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
-import { Container, Section, Stat } from '../ui'
+import { Section, Stat } from '../ui'
 
 export default function HomeFeaturedImpact() {
   return (
     <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
-      <Container>
         <div className="grid grid-cols-1 overflow-hidden rounded-2xl border border-aeem-forest/20 bg-aeem-forest dark:border-white/10 lg:grid-cols-2">
           <div className="order-2 flex flex-col justify-center p-8 sm:p-10 lg:order-1 lg:p-14">
             <p className="mb-5 text-xs font-semibold uppercase tracking-[0.18em] text-aeem-gold-light">
@@ -48,7 +47,6 @@ export default function HomeFeaturedImpact() {
             />
           </div>
         </div>
-      </Container>
     </Section>
   )
 }

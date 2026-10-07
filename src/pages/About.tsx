@@ -4,7 +4,7 @@ import { Target, Heart, Eye } from 'lucide-react'
 import MosaicGallery from '../components/sections/MasonryGallery'
 import { getCanonical, SITE_URL } from '../lib/seo'
 import { partners } from '../data/Partner'
-import { Section, Container, Card } from '../components/ui'
+import { Section, Card } from '../components/ui'
 
 const leadershipTeam = [
   { name: 'Patrick P Williams', title: 'Chief Executive Officer', image: '/assets/gallery/CEO.jpg', fileName: 'CEO' },
@@ -63,7 +63,6 @@ const About: React.FC = () => (
     </Section>
 
     <Section aria-labelledby="approach-heading" className="bg-aeem-forest text-white">
-      <Container>
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
           <div>
             <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-aeem-gold-light">How we work</p>
@@ -74,10 +73,9 @@ const About: React.FC = () => (
             <p>The work is grounded in the people and communities AEEM serves, with education and mentorship positioned as tools for participation, leadership, and opportunity.</p>
           </div>
         </div>
-      </Container>
     </Section>
 
-    <Section aria-labelledby="leadership-heading" className="bg-gray-50 dark:bg-[#15181e]">
+    <Section aria-labelledby="leadership-heading className="bg-gray-50 dark:bg-[#15181e]">
       <div className="mb-12 max-w-3xl">
         <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-aeem-gold">Leadership</p>
         <h2 id="leadership-heading" className="text-3xl font-bold text-aeem-ink dark:text-white sm:text-4xl">The people responsible for the movement.</h2>

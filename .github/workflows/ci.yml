@@ -3,9 +3,11 @@ name: CI
 on:
   push:
     branches:
+      - main
       - aeem-v2-foundation
   pull_request:
     branches:
+      - main
       - aeem-v2-foundation
 
 concurrency:
@@ -30,6 +32,9 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Test live inquiry API
+        run: node scripts/test-e2e-api.mjs
 
       - name: Test Edge Function logic
         run: node scripts/test-edge-functions.mjs

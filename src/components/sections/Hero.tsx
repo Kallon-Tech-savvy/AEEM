@@ -58,7 +58,7 @@ export default function Hero() {
       id="home"
       className="relative overflow-hidden bg-aeem-cream pt-24 dark:bg-aeem-charcoal"
     >
-      <Container className="grid min-h-[calc(100vh-1rem)] grid-cols-1 items-center gap-12 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:py-20">
+      <Container className="grid min-h-[calc(100svh-1rem)] grid-cols-1 items-center gap-14 py-20 lg:grid-cols-[1.05fr_0.95fr] lg:gap-24 lg:py-24">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}

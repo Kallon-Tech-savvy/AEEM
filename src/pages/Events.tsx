@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import { Calendar, MapPin, ArrowRight, Loader2 } from 'lucide-react'
 import { supabase } from '../services/supabase'
-import { Badge, Button, Card, Container, Section } from '../components/ui'
+import { Badge, Button, Card, Section } from '../components/ui'
 import { getCanonical } from '../lib/seo'
 import type { EventListItem } from '../types/content'
 
@@ -56,7 +56,6 @@ export default function Events() {
       </Helmet>
 
       <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
-        <Container>
           <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-forest dark:text-aeem-gold-light">
             Convenings & Gatherings
           </p>
@@ -66,11 +65,9 @@ export default function Events() {
           <p className="mt-6 max-w-2xl text-lg leading-8 text-aeem-ink/75 dark:text-white/75">
             Bringing together educators, community leaders, researchers, and advocates to shape equitable education access.
           </p>
-        </Container>
       </Section>
 
       <Section>
-        <Container>
           {loading ? (
             <div className="flex min-h-[300px] items-center justify-center">
               <Loader2 className="animate-spin text-aeem-gold" size={32} aria-label="Loading events" />
@@ -118,7 +115,6 @@ export default function Events() {
               ))}
             </div>
           )}
-        </Container>
       </Section>
     </>
   )
