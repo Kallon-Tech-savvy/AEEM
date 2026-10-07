@@ -18,7 +18,7 @@ export function sanitizeHtml(html: string): string {
 
     if (element.tagName === 'A') {
       const href = element.getAttribute('href') ?? ''
-      const isSafeHref = /^(https?:|mailto:|#|\\/)/i.test(href)
+      const isSafeHref = /^(https?:|mailto:|#|\/)/i.test(href)
       if (!isSafeHref) element.removeAttribute('href')
       else {
         element.setAttribute('target', '_blank')
