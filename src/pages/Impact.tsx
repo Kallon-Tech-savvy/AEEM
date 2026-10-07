@@ -125,14 +125,18 @@ const Impact: React.FC = () => {
             {stories.map((story) => (
               <Card key={story.slug} className="overflow-hidden p-0">
                 <div className="aspect-[16/9] bg-aeem-ink/5">
-                  <img
-                    src={story.cover_image_url}
-                    alt={story.title}
-                    width={1280}
-                    height={720}
-                    loading="lazy"
-                    className="h-full w-full object-cover"
-                  />
+                  {story.cover_image_url ? (
+                    <img
+                      src={story.cover_image_url}
+                      alt={story.title}
+                      width={1280}
+                      height={720}
+                      loading="lazy"
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <div className="h-full w-full bg-aeem-forest" aria-hidden="true" />
+                  )}
                 </div>
                 <div className="p-6 sm:p-8">
                   <div className="flex items-center gap-2 text-sm text-aeem-ink/65">
