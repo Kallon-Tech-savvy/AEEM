@@ -12,9 +12,9 @@ export default function HomeProblem() {
     <Section className="bg-aeem-cream dark:bg-[#0f1115]">
       <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-20">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-aeem-gold">The challenge</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-aeem-blue dark:text-aeem-gold-light">The challenge</p>
           <h2 className="mt-4 text-4xl font-bold leading-tight tracking-tight text-aeem-ink dark:text-white sm:text-5xl">
-            Bridging the Gap in <span className="text-aeem-gold">Educational Access</span>
+            Bridging the Gap in <span className="text-aeem-blue dark:text-aeem-gold-light">Educational Access</span>
           </h2>
           <p className="mt-6 max-w-xl text-lg leading-8 text-aeem-ink/70 dark:text-gray-400">
             Africa's potential is its youth. Yet millions face systemic barriers to quality
@@ -25,7 +25,7 @@ export default function HomeProblem() {
           <ul className="mt-8 space-y-4">
             {points.map((point) => (
               <li key={point} className="flex items-center gap-3 text-base font-semibold text-aeem-ink dark:text-gray-300">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-black/10 bg-white text-aeem-gold dark:border-white/10 dark:bg-white/5">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-black/10 bg-white text-aeem-blue dark:text-aeem-gold-light dark:border-white/10 dark:bg-white/5">
                   <Shield size={17} aria-hidden="true" />
                 </span>
                 {point}

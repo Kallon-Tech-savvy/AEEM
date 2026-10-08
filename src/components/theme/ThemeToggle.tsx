@@ -25,7 +25,7 @@ const ThemeToggle: React.FC = () => {
         className="w-10 h-10 flex items-center justify-center rounded-full bg-aeem-charcoal/15 dark:bg-white/20 text-aeem-charcoal dark:text-aeem-white hover:bg-aeem-gold/10 dark:hover:bg-aeem-gold/20 transition-colors"
         aria-label="Toggle theme"
       >
-        <Icon size={20} className='text-aeem-gold ' />
+        <Icon size={20} className='text-aeem-blue dark:text-aeem-gold-light ' />
       </button>
 
       {isOpen && (

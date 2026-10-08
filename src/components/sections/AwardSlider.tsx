@@ -25,7 +25,7 @@ export function AwardSlider() {
     <Section spacing="default" className="overflow-hidden bg-aeem-cream dark:bg-aeem-charcoal">
         <div className="mb-10 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-aeem-gold">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-aeem-blue dark:text-aeem-gold-light">
               Institutional recognition
             </p>
             <h2 className="text-3xl font-bold tracking-tight text-aeem-ink dark:text-white md:text-4xl">
@@ -37,7 +37,7 @@ export function AwardSlider() {
             <button
               type="button"
               onClick={() => handleScroll('left')}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-aeem-ink/20 text-aeem-ink transition-colors hover:border-aeem-forest hover:text-aeem-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:border-white/20 dark:text-white dark:hover:border-aeem-gold dark:hover:text-aeem-gold"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-aeem-ink/20 text-aeem-ink transition-colors hover:border-aeem-blue hover:text-aeem-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:border-white/20 dark:text-white dark:hover:border-aeem-gold dark:hover:text-aeem-gold"
               aria-label="Scroll recognitions left"
             >
               <ArrowLeft size={18} aria-hidden="true" />
@@ -45,7 +45,7 @@ export function AwardSlider() {
             <button
               type="button"
               onClick={() => handleScroll('right')}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-aeem-ink/20 text-aeem-ink transition-colors hover:border-aeem-forest hover:text-aeem-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:border-white/20 dark:text-white dark:hover:border-aeem-gold dark:hover:text-aeem-gold"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-aeem-ink/20 text-aeem-ink transition-colors hover:border-aeem-blue hover:text-aeem-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:border-white/20 dark:text-white dark:hover:border-aeem-gold dark:hover:text-aeem-gold"
               aria-label="Scroll recognitions right"
             >
               <ArrowRight size={18} aria-hidden="true" />
@@ -68,7 +68,7 @@ export function AwardSlider() {
             {AWARDS.map((award, i) => (
               <article
                 key={`award-${i}`}
-                className="relative flex h-[420px] w-[300px] shrink-0 snap-start flex-col justify-end overflow-hidden rounded-2xl border border-white/10 bg-aeem-forest shadow-sm md:w-[340px]"
+                className="relative flex h-[420px] w-[300px] shrink-0 snap-start flex-col justify-end overflow-hidden rounded-2xl border border-white/10 bg-aeem-blue shadow-sm md:w-[340px]"
               >
                 <img
                   src={award.image}
@@ -93,7 +93,7 @@ export function AwardSlider() {
                   <p className="text-xs font-semibold uppercase tracking-[0.15em] text-aeem-gold-light">
                     {award.issuer}
                   </p>
-                  <h3 className="mt-2 text-2xl font-bold leading-tight">
+                  <h3 className="mt-2 text-2xl font-bold leading-tight text-white">
                     {award.title}
                   </h3>
                   {award.desc ? (

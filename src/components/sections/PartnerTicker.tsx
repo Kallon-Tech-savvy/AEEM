@@ -16,7 +16,7 @@ export function PartnerTicker() {
         <div className="mb-6">
           <h2
             id="partner-heading"
-            className="text-xs font-semibold uppercase tracking-[0.18em] text-aeem-gold"
+            className="text-xs font-semibold uppercase tracking-[0.18em] text-aeem-blue dark:text-aeem-gold-light"
           >
             Partners & institutional relationships
           </h2>

@@ -49,6 +49,7 @@ function lineLen(x2: number, y2: number) {
   return Math.ceil(Math.hypot(x2 - FREETOWN.x, y2 - FREETOWN.y)) + 20
 }
 
+
 const actionLink =
   'inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border px-6 text-base font-semibold transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus focus-visible:ring-offset-2'
 
@@ -64,12 +65,12 @@ export default function Hero() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.55 }}
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-aeem-gold">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-aeem-blue dark:text-aeem-gold-light">
             Fair access to education for all
           </p>
 
           <h1 className="mt-5 max-w-3xl text-5xl font-extrabold leading-[1.02] tracking-tight text-aeem-ink dark:text-white sm:text-6xl lg:text-7xl">
-            Empowering the <span className="text-aeem-gold">Future</span> of Africa
+            Empowering the <span className="text-aeem-blue dark:text-aeem-gold-light">Future</span> of Africa
           </h1>
 
           <p className="mt-6 max-w-2xl text-lg leading-8 text-aeem-ink/70 dark:text-gray-300 sm:text-xl">
@@ -80,13 +81,13 @@ export default function Hero() {
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               to="/impact"
-              className={`${actionLink} border-aeem-forest bg-aeem-forest text-white hover:border-aeem-forest-dark hover:bg-aeem-forest-dark`}
+              className={`${actionLink} border-aeem-blue bg-aeem-blue text-white hover:border-aeem-blue-dark hover:bg-aeem-blue-dark`}
             >
               Explore our Impact <ArrowRight size={18} aria-hidden="true" />
             </Link>
             <Link
               to="/events"
-              className={`${actionLink} border-aeem-forest bg-transparent text-aeem-forest hover:bg-aeem-forest/5 dark:border-aeem-gold dark:text-aeem-gold dark:hover:bg-aeem-gold/10`}
+              className={`${actionLink} border-aeem-blue bg-transparent text-aeem-blue hover:bg-aeem-blue/5 dark:border-aeem-gold dark:text-aeem-gold dark:hover:bg-aeem-gold/10`}
             >
               Upcoming Events
             </Link>
@@ -110,7 +111,7 @@ export default function Hero() {
 
             <path
               d={AFRICA_PATH}
-              fill="#173D28"
+              fill="#17323d"
               stroke="#B8941A"
               strokeWidth="1.2"
               strokeOpacity="0.55"
@@ -171,7 +172,7 @@ export default function Hero() {
             </text>
           </svg>
 
-          <p className="mt-2 text-center text-xs text-aeem-ink/55 dark:text-white/50">
+          <p className="mt-2 text-center text-xs text-aeem-ink/55 dark:text-white/55">
             A growing network of communities, educators, and young people.
           </p>
         </motion.div>

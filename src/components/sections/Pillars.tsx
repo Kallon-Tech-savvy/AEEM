@@ -19,7 +19,7 @@ export default function Pillars() {
       <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2 lg:gap-20">
         <div>
           <h2 className="text-4xl font-bold tracking-tight sm:text-5xl">
-            Our Strategic <span className="text-aeem-gold">Pillars</span>
+            Our Strategic <span className="text-aeem-blue dark:text-aeem-gold-light">Pillars</span>
           </h2>
           <p className="mt-5 max-w-xl text-lg leading-8 text-aeem-ink/75 dark:text-white/75">
             Building a sustainable foundation for educational empowerment across Africa.

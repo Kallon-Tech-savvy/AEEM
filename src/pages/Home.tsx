@@ -52,13 +52,13 @@ export default function Home() {
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <Link
               to="/get-involved"
-              className={`${ctaLink} border-aeem-forest bg-aeem-forest text-white hover:border-aeem-forest-dark hover:bg-aeem-forest-dark`}
+              className={`${ctaLink} border-aeem-blue bg-aeem-blue text-white hover:border-aeem-blue-dark hover:bg-aeem-blue-dark`}
             >
               Join the Movement <ArrowRight size={18} aria-hidden="true" />
             </Link>
             <Link
               to="/contact"
-              className={`${ctaLink} border-aeem-forest bg-transparent text-aeem-forest hover:bg-aeem-forest/5 dark:border-aeem-gold dark:text-aeem-gold dark:hover:bg-aeem-gold/10`}
+              className={`${ctaLink} border-aeem-blue bg-transparent text-aeem-blue hover:bg-aeem-blue/5 dark:border-aeem-gold dark:text-aeem-gold dark:hover:bg-aeem-gold/10`}
             >
               Partner With Us
             </Link>

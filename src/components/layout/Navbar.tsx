@@ -5,7 +5,7 @@ import ThemeToggle from '../theme/ThemeToggle'
 import { Container } from '../ui'
 
 const actionLinkClasses =
-  'inline-flex min-h-11 items-center justify-center rounded-xl border border-aeem-forest bg-aeem-forest px-5 text-sm font-semibold text-white transition-colors duration-150 hover:border-aeem-forest-dark hover:bg-aeem-forest-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus focus-visible:ring-offset-2'
+  'inline-flex min-h-11 items-center justify-center rounded-xl border border-aeem-blue bg-aeem-blue px-5 text-sm font-semibold text-white transition-colors duration-150 hover:border-aeem-blue-dark hover:bg-aeem-blue-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus focus-visible:ring-offset-2'
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -87,15 +87,15 @@ export default function Navbar() {
                 key={link.name}
                 to={link.path}
                 aria-current={active ? 'page' : undefined}
-                className={`relative rounded-sm py-2 text-sm font-semibold transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus focus-visible:ring-offset-2 hover:text-aeem-gold ${
-                  active ? 'text-aeem-gold' : 'text-aeem-charcoal dark:text-white'
+                className={`relative rounded-sm py-2 text-sm font-semibold transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus focus-visible:ring-offset-2 dark:hover:text-aeem-gold ${
+                  active ? 'text-aeem-blue dark:text-aeem-gold-light' : 'text-aeem-charcoal dark:text-white'
                 }`}
               >
                 {link.name}
                 {active ? (
                   <span
                     aria-hidden="true"
-                    className="absolute inset-x-0 -bottom-0.5 h-0.5 bg-aeem-gold"
+                    className="absolute inset-x-0 -bottom-0.5 h-0.5 bg-aeem-blue dark:bg-aeem-gold"
                   />
                 ) : null}
               </Link>

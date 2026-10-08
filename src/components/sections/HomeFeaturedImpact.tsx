@@ -5,7 +5,7 @@ import { Section, Stat } from '../ui'
 export default function HomeFeaturedImpact() {
   return (
     <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
-        <div className="grid grid-cols-1 overflow-hidden rounded-2xl border border-aeem-forest/20 bg-aeem-forest dark:border-white/10 lg:grid-cols-2">
+        <div className="grid grid-cols-1 overflow-hidden rounded-2xl border border-aeem-blue/20 bg-aeem-blue dark:border-white/10 lg:grid-cols-2">
           <div className="order-2 flex flex-col justify-center p-8 sm:p-10 lg:order-1 lg:p-14">
             <p className="mb-5 text-xs font-semibold uppercase tracking-[0.18em] text-aeem-gold-light">
               Featured impact story
@@ -30,7 +30,7 @@ export default function HomeFeaturedImpact() {
             <div className="mt-8">
               <Link
                 to="/impact/i-am-somebody"
-                className="inline-flex items-center gap-2 rounded-xl bg-aeem-gold px-5 py-3 text-sm font-semibold text-aeem-ink transition-colors hover:bg-aeem-gold-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus focus-visible:ring-offset-2 focus-visible:ring-offset-aeem-forest"
+                className="inline-flex items-center gap-2 rounded-xl bg-aeem-gold px-5 py-3 text-sm font-semibold text-aeem-ink transition-colors hover:bg-aeem-gold-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus focus-visible:ring-offset-2 focus-visible:ring-offset-aeem-blue"
               >
                 Read full report
                 <ArrowRight size={18} aria-hidden="true" />

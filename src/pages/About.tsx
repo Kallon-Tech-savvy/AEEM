@@ -34,7 +34,7 @@ const About: React.FC = () => (
 
     <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
       <div className="max-w-4xl">
-        <p className="mb-5 text-sm font-semibold uppercase tracking-[0.2em] text-aeem-gold">Who we are</p>
+        <p className="mb-5 text-sm font-semibold uppercase tracking-[0.2em] text-aeem-blue dark:text-aeem-gold-light">Who we are</p>
         <h1 className="text-4xl font-extrabold leading-tight text-aeem-ink dark:text-white sm:text-5xl lg:text-6xl">
           A youth-led movement working toward educational equity across Africa.
         </h1>
@@ -46,13 +46,13 @@ const About: React.FC = () => (
 
     <Section aria-labelledby="purpose-heading">
       <div className="mb-12 max-w-3xl">
-        <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-aeem-gold">Our purpose</p>
+        <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-aeem-blue dark:text-aeem-gold-light">Our purpose</p>
         <h2 id="purpose-heading" className="text-3xl font-bold text-aeem-ink dark:text-white sm:text-4xl">What guides the work</h2>
       </div>
       <div className="grid gap-6 md:grid-cols-3">
         {purpose.map(({ icon: Icon, title, text }) => (
           <Card key={title} className="p-7 sm:p-8">
-            <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-aeem-forest/10 text-aeem-forest dark:bg-aeem-gold/10 dark:text-aeem-gold">
+            <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-aeem-blue/10 text-aeem-blue dark:bg-aeem-gold/10 dark:text-aeem-gold">
               <Icon size={24} aria-hidden="true" />
             </div>
             <h3 className="text-xl font-semibold text-aeem-ink dark:text-white">{title}</h3>
@@ -62,11 +62,11 @@ const About: React.FC = () => (
       </div>
     </Section>
 
-    <Section aria-labelledby="approach-heading" className="bg-aeem-forest text-white">
+    <Section aria-labelledby="approach-heading" className="bg-aeem-blue/80 dark:bg-aeem-blue/20 text-white">
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
           <div>
-            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-aeem-gold-light">How we work</p>
-            <h2 id="approach-heading" className="text-3xl font-bold sm:text-4xl">Community-led action, advocacy, and empowerment.</h2>
+            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-aeem-blue dark:text-aeem-gold-light">How we work</p>
+            <h2 id="approach-heading" className="text-3xl font-bold sm:text-4xl text-white/90">Community-led action, advocacy, and empowerment.</h2>
           </div>
           <div className="max-w-2xl space-y-6 text-base leading-relaxed text-white/85 sm:text-lg">
             <p>AEEM describes its work through advocacy, community empowerment, and accountable action. These are the practical expressions of its mission to expand access to quality education.</p>
@@ -77,7 +77,7 @@ const About: React.FC = () => (
 
     <Section aria-labelledby="leadership-heading" className="bg-gray-50 dark:bg-[#15181e]">
       <div className="mb-12 max-w-3xl">
-        <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-aeem-gold">Leadership</p>
+        <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-aeem-blue dark:text-aeem-gold-light">Leadership</p>
         <h2 id="leadership-heading" className="text-3xl font-bold text-aeem-ink dark:text-white sm:text-4xl">The people responsible for the movement.</h2>
         <p className="mt-4 text-lg leading-relaxed text-gray-600 dark:text-gray-400">AEEM's leadership team provides the organizational direction behind its work.</p>
       </div>
@@ -92,7 +92,7 @@ const About: React.FC = () => (
             </div>
             <div className="p-6">
               <h3 className="text-lg font-semibold text-aeem-ink dark:text-white">{member.name}</h3>
-              <p className="mt-1 text-sm font-medium text-aeem-forest dark:text-aeem-gold-light">{member.title}</p>
+              <p className="mt-1 text-sm font-medium text-aeem-blue dark:text-aeem-gold-light">{member.title}</p>
             </div>
           </article>
         ))}
@@ -101,7 +101,7 @@ const About: React.FC = () => (
 
     <Section aria-labelledby="life-heading">
       <div className="mb-10 max-w-2xl">
-        <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-aeem-gold">Life at AEEM</p>
+        <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-aeem-blue dark:text-aeem-gold-light">Life at AEEM</p>
         <h2 id="life-heading" className="text-3xl font-bold text-aeem-ink dark:text-white sm:text-4xl">The work is carried by people.</h2>
         <p className="mt-4 text-lg leading-relaxed text-gray-600 dark:text-gray-400">Moments from workshops, community gatherings, mentorship, and team sessions show the human side of the movement.</p>
       </div>
@@ -110,7 +110,7 @@ const About: React.FC = () => (
 
     <Section aria-labelledby="partners-heading" className="bg-gray-50 dark:bg-[#15181e]">
       <div className="mb-10 max-w-2xl">
-        <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-aeem-gold">Relationships</p>
+        <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-aeem-blue dark:text-aeem-gold-light">Relationships</p>
         <h2 id="partners-heading" className="text-3xl font-bold text-aeem-ink dark:text-white sm:text-4xl">Partners and institutional relationships</h2>
         <p className="mt-4 text-lg leading-relaxed text-gray-600 dark:text-gray-400">Organizations represented in AEEM's current partner data.</p>
       </div>

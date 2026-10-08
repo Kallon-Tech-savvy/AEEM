@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 export default function Footer() {
   return (
     <footer className="relative overflow-hidden border-t border-black/10 bg-aeem-cream py-16 text-aeem-ink dark:border-white/10 dark:bg-aeem-charcoal dark:text-white">
-      {/* Background illustration */}
+      {/* Background illustration
       <div
         aria-hidden="true"
         className="pointer-events-none absolute bottom-0 left-0 -z-10 h-full w-full select-none opacity-[0.04] dark:opacity-[0.03]"
@@ -21,7 +21,7 @@ export default function Footer() {
             decoding="async"
           />
         </picture>
-      </div>
+      </div> */}
 
       <div className="relative z-10 mx-auto max-w-7xl px-6">
         <div className="mb-16 grid grid-cols-1 gap-12 md:grid-cols-4">
@@ -29,9 +29,9 @@ export default function Footer() {
           <div className="col-span-1 md:col-span-2">
             <div className="mb-6 flex items-center gap-3">
               <picture className="rounded-xl bg-white p-1 ring-1 ring-black/5 dark:bg-white/10 dark:ring-white/10">
-                <source srcSet="/assets/logo.webp" type="image/webp" width={44} height={36} />
+                <source srcSet="/assets/AEEM_logo.webp" type="image/webp" width={44} height={36} />
                 <img
-                  src="/assets/logo_converted.avif"
+                  src="/assets/AEEM_logo.avif"
                   alt="AEEM Logo"
                   width={44}
                   height={36}
@@ -56,7 +56,7 @@ export default function Footer() {
                   aria-label={label}
                   target={src.startsWith('http') ? '_blank' : undefined}
                   rel={src.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-black/10 bg-white text-aeem-ink transition-colors hover:border-aeem-forest hover:text-aeem-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:border-aeem-gold dark:hover:text-aeem-gold-light"
+                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-black/10 bg-white text-aeem-ink transition-colors hover:border-aeem-blue hover:text-aeem-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:border-aeem-gold dark:hover:text-aeem-gold-light"
                 >
                   <Icon size={18} />
                 </a>
@@ -66,7 +66,7 @@ export default function Footer() {
 
           {/* Navigation */}
           <div>
-            <h4 className="mb-4 text-xs font-bold uppercase tracking-widest text-aeem-forest dark:text-aeem-gold-light">
+            <h4 className="mb-4 text-xs font-bold uppercase tracking-widest text-aeem-blue dark:text-aeem-gold-light">
               Navigation
             </h4>
             <ul className="space-y-3 text-sm md:grid md:grid-cols-2 md:gap-2">
@@ -83,7 +83,7 @@ export default function Footer() {
                 <li key={to}>
                   <Link
                     to={to}
-                    className="inline-block font-medium text-aeem-ink/75 transition-colors hover:text-aeem-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:text-white/75 dark:hover:text-aeem-gold-light"
+                    className="inline-block font-medium text-aeem-ink/75 transition-colors hover:text-aeem-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:text-white/75 dark:hover:text-aeem-gold-light"
                   >
                     {label}
                   </Link>
@@ -94,7 +94,7 @@ export default function Footer() {
 
           {/* Stay connected */}
           <div>
-            <h4 className="mb-4 text-xs font-bold uppercase tracking-widest text-aeem-forest dark:text-aeem-gold-light">
+            <h4 className="mb-4 text-xs font-bold uppercase tracking-widest text-aeem-blue dark:text-aeem-gold-light">
               Stay Connected
             </h4>
             <p className="mb-5 text-sm leading-relaxed text-aeem-ink/75 dark:text-white/75">
@@ -103,13 +103,13 @@ export default function Footer() {
             <div className="flex flex-wrap gap-3">
               <Link
                 to="/resources"
-                className="inline-flex items-center rounded-xl border border-black/10 bg-white px-4 py-2.5 text-sm font-semibold text-aeem-ink transition-colors hover:border-aeem-forest hover:text-aeem-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:border-aeem-gold dark:hover:text-aeem-gold-light"
+                className="inline-flex items-center rounded-xl border border-black/10 bg-white px-4 py-2.5 text-sm font-semibold text-aeem-ink transition-colors hover:border-aeem-blue hover:text-aeem-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:border-aeem-gold dark:hover:text-aeem-gold-light"
               >
                 Resources
               </Link>
               <Link
                 to="/contact"
-                className="inline-flex items-center rounded-xl bg-aeem-forest px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-aeem-forest-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:bg-aeem-gold dark:text-aeem-charcoal"
+                className="inline-flex items-center rounded-xl bg-aeem-blue px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-aeem-blue-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:bg-aeem-gold dark:text-aeem-charcoal"
               >
                 Contact us
               </Link>
@@ -124,7 +124,7 @@ export default function Footer() {
           <div className="flex gap-6 text-xs font-medium text-aeem-ink/70 dark:text-white/70">
             <Link
               to="/privacy"
-              className="transition-colors hover:text-aeem-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus"
+              className="transition-colors text-aeem-blue dark:text-aeem-gold-light hover:text-aeem-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus"
             >
               Privacy Notice
             </Link>
