@@ -9,9 +9,9 @@ export default {
     extend: {
       colors: {
         // Institutional brand tokens
-        'aeem-forest':       '#2C5F2D',
-        'aeem-forest-dark':  '#173D28',
-        'aeem-ink':          '#17201A',
+        'aeem-blue':       '#352c5f',
+        'aeem-blue-dark':  '#1e173d',
+        'aeem-ink':          '#191720',
         'aeem-cream':        '#F7F5EF',
         'aeem-white':        '#FFFFFF',
 
