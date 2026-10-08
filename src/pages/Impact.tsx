@@ -1,29 +1,47 @@
 import React, { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Loader2, Users, School } from 'lucide-react'
+import { ArrowRight, Loader2, Users, School, MapPin } from 'lucide-react'
 import { supabase } from '../services/supabase'
 import { Button, Card, Section } from '../components/ui'
 import { getCanonical } from '../lib/seo'
+import { IMPACT_STORY_LIST_FIELDS } from '../services/contentFields'
 import type { ImpactStoryListItem } from '../types/content'
 
 export default function Impact() {
   const [stories, setStories] = useState<ImpactStoryListItem[]>([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     let active = true
 
-        if (error) throw error;
-        setStories((data ?? []) as unknown as ImpactStoryListItem[]);
-      } catch (error) {
-        console.error('Error fetching impact stories:', error);
-        setError(true);
-        setStories([]);
+    const fetchStories = async () => {
+      try {
+        const { data, error: supabaseError } = await supabase
+          .from('impact_stories')
+          .select(IMPACT_STORY_LIST_FIELDS)
+          .eq('published', true)
+
+        if (supabaseError) throw supabaseError
+
+        if (active) {
+          setStories((data ?? []) as unknown as ImpactStoryListItem[])
+        }
+      } catch (err) {
+        console.error('Error fetching impact stories:', err)
+        if (active) {
+          setError(true)
+          setStories([])
+        }
       } finally {
-        setLoading(false);
+        if (active) {
+          setLoading(false)
+        }
       }
-    };
+    }
+
+    fetchStories()
 
     return () => {
       active = false
@@ -44,15 +62,15 @@ export default function Impact() {
       </Helmet>
 
       <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
-          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-forest dark:text-aeem-gold-light">
-            Verified Outcomes & Field Work
-          </p>
-          <h1 className="mt-4 text-4xl font-bold tracking-tight text-aeem-ink dark:text-white sm:text-5xl lg:text-6xl">
-            Our Impact
-          </h1>
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-aeem-ink/75 dark:text-white/75">
-            Transparent reporting on educational programs, community reach, and institutional partnerships.
-          </p>
+        <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-forest dark:text-aeem-gold-light">
+          Verified Outcomes & Field Work
+        </p>
+        <h1 className="mt-4 text-4xl font-bold tracking-tight text-aeem-ink dark:text-white sm:text-5xl lg:text-6xl">
+          Our Impact
+        </h1>
+        <p className="mt-6 max-w-2xl text-lg leading-8 text-aeem-ink/75 dark:text-white/75">
+          Transparent reporting on educational programs, community reach, and institutional partnerships.
+        </p>
       </Section>
 
       <Section spacing="large" className="bg-aeem-cream" aria-labelledby="stories-heading">
@@ -102,10 +120,15 @@ export default function Impact() {
                   )}
                 </div>
                 <div className="p-6 sm:p-8">
-                  <div className="flex items-center gap-2 text-sm text-aeem-ink/65">
-                    <MapPin size={16} className="text-aeem-gold" aria-hidden="true" />
-                    <span>{story.location}</span>
-                  </div>
+                  {story.location && (
+                    <div className="flex items-center gap-2 text-sm text-aeem-ink/65">
+                      <MapPin size={16} className="text-aeem-gold" aria-hidden="true" />
+                      <span>{story.location}</span>
+                    </div>
+                  )}
+
+                  <h3 className="mt-3 text-xl font-bold text-aeem-ink">{story.title}</h3>
+                  {story.summary && <p className="mt-2 text-sm text-aeem-ink/70">{story.summary}</p>}
 
                   <div className="mt-6 border-t border-black/10 pt-4 dark:border-white/10">
                     <div className="mb-4 flex flex-wrap items-center gap-4 text-xs text-aeem-ink/60 dark:text-white/60">
@@ -129,10 +152,15 @@ export default function Impact() {
                       </Button>
                     </Link>
                   </div>
-                </Card>
-              ))}
-            </div>
-          )}
+                </div>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <Card className="p-8 text-center">
+            <p className="text-base text-aeem-ink/70">No published impact stories found.</p>
+          </Card>
+        )}
       </Section>
     </>
   )

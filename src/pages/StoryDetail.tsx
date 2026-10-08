@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
-import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, CheckCircle2, Link2, Loader2 } from 'lucide-react';
-import { supabase } from '../services/supabase';
-import { getCanonical } from '../lib/seo';
-import { Badge, Button, Card, Container, Section, Stat } from '../components/ui';
-import { IMPACT_STORY_DETAIL_FIELDS } from '../services/contentFields';
-import type { ImpactStoryDetailItem } from '../types/content';
+import React, { useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet-async'
+import { useParams, Link } from 'react-router-dom'
+import { ArrowLeft, Loader2, Share2, Users, School, Calendar } from 'lucide-react'
+import { supabase } from '../services/supabase'
+import { getCanonical } from '../lib/seo'
+import { Button, Card, Section } from '../components/ui'
+import { IMPACT_STORY_DETAIL_FIELDS } from '../services/contentFields'
+import type { ImpactStoryDetailItem } from '../types/content'
 
 interface StoryData {
   title: string
@@ -32,11 +32,15 @@ export default function StoryDetail() {
   const [shareStatus, setShareStatus] = useState('')
 
   useEffect(() => {
-    let active = true;
+    let active = true
 
     const fetchStory = async () => {
-      if (!slug) return;
-      setLoading(true);
+      if (!slug) {
+        setLoading(false)
+        return
+      }
+
+      setLoading(true)
 
       try {
         const { data, error } = await supabase
@@ -44,19 +48,16 @@ export default function StoryDetail() {
           .select(IMPACT_STORY_DETAIL_FIELDS)
           .eq('slug', slug)
           .eq('published', true)
-          .single();
+          .single()
 
-    if (!slug) {
-      setLoading(false)
-      return
-    }
+        if (error) throw error
 
-        const storyRow = data as unknown as ImpactStoryDetailItem;
+        const storyRow = data as unknown as ImpactStoryDetailItem
 
         if (active) {
           setStory({
             title: storyRow.title,
-            quote: storyRow.summary,
+            quote: storyRow.summary ?? '',
             image: storyRow.cover_image_url ?? '',
             fileName: storyRow.file_name ?? '',
             stats: {
@@ -69,16 +70,21 @@ export default function StoryDetail() {
             impact: storyRow.impact ?? '',
             quoteText: storyRow.quote_text ?? '',
             quoteAuthor: storyRow.quote_author ?? '',
-          });
+          })
         }
-      } catch (error) {
-        console.error('Error fetching impact story:', error);
-
+      } catch (err) {
+        console.error('Error fetching impact story:', err)
         if (active) {
-          setStory(null);
+          setStory(null)
         }
-        setLoading(false)
-      })
+      } finally {
+        if (active) {
+          setLoading(false)
+        }
+      }
+    }
+
+    fetchStory()
 
     return () => {
       active = false
@@ -144,98 +150,98 @@ export default function StoryDetail() {
       </Helmet>
 
       <Section spacing="large" containerNarrow className="bg-aeem-cream dark:bg-aeem-charcoal">
-          <Link
-            to="/impact"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-aeem-ink/60 hover:text-aeem-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:text-white/60 dark:hover:text-aeem-gold-light"
-          >
-            <ArrowLeft size={16} aria-hidden="true" />
-            Back to Our Impact
-          </Link>
+        <Link
+          to="/impact"
+          className="inline-flex items-center gap-2 text-sm font-semibold text-aeem-ink/60 hover:text-aeem-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:text-white/60 dark:hover:text-aeem-gold-light"
+        >
+          <ArrowLeft size={16} aria-hidden="true" />
+          Back to Our Impact
+        </Link>
 
-          <h1 className="mt-6 text-4xl font-bold leading-tight text-aeem-ink dark:text-white sm:text-5xl lg:text-6xl">
-            {story.title}
-          </h1>
+        <h1 className="mt-6 text-4xl font-bold leading-tight text-aeem-ink dark:text-white sm:text-5xl lg:text-6xl">
+          {story.title}
+        </h1>
 
-          {story.quote && (
-            <p className="mt-6 text-xl leading-8 text-aeem-ink/70 dark:text-white/70">
-              {story.quote}
-            </p>
-          )}
+        {story.quote && (
+          <p className="mt-6 text-xl leading-8 text-aeem-ink/70 dark:text-white/70">
+            {story.quote}
+          </p>
+        )}
 
-          {story.image && (
-            <figure className="mt-10 overflow-hidden rounded-2xl border border-black/10 dark:border-white/10">
-              <img src={story.image} alt={story.title} className="aspect-[16/8] w-full object-cover" />
-            </figure>
-          )}
+        {story.image && (
+          <figure className="mt-10 overflow-hidden rounded-2xl border border-black/10 dark:border-white/10">
+            <img src={story.image} alt={story.title} className="aspect-[16/8] w-full object-cover" />
+          </figure>
+        )}
       </Section>
 
       <Section containerNarrow>
-            <div className="grid gap-6 sm:grid-cols-3">
-            {story.stats.participants && (
-              <Card className="p-6 text-center">
-                <Users className="mx-auto text-aeem-forest dark:text-aeem-gold-light" size={24} />
-                <p className="mt-2 text-sm font-semibold text-aeem-ink dark:text-white">
-                  {story.stats.participants}
-                </p>
-              </Card>
-            )}
-            {story.stats.schools && (
-              <Card className="p-6 text-center">
-                <School className="mx-auto text-aeem-forest dark:text-aeem-gold-light" size={24} />
-                <p className="mt-2 text-sm font-semibold text-aeem-ink dark:text-white">
-                  {story.stats.schools}
-                </p>
-              </Card>
-            )}
-            {story.stats.duration && (
-              <Card className="p-6 text-center">
-                <Calendar className="mx-auto text-aeem-forest dark:text-aeem-gold-light" size={24} />
-                <p className="mt-2 text-sm font-semibold text-aeem-ink dark:text-white">
-                  {story.stats.duration}
-                </p>
-              </Card>
-            )}
+        <div className="grid gap-6 sm:grid-cols-3">
+          {story.stats.participants && (
+            <Card className="p-6 text-center">
+              <Users className="mx-auto text-aeem-forest dark:text-aeem-gold-light" size={24} />
+              <p className="mt-2 text-sm font-semibold text-aeem-ink dark:text-white">
+                {story.stats.participants}
+              </p>
+            </Card>
+          )}
+          {story.stats.schools && (
+            <Card className="p-6 text-center">
+              <School className="mx-auto text-aeem-forest dark:text-aeem-gold-light" size={24} />
+              <p className="mt-2 text-sm font-semibold text-aeem-ink dark:text-white">
+                {story.stats.schools}
+              </p>
+            </Card>
+          )}
+          {story.stats.duration && (
+            <Card className="p-6 text-center">
+              <Calendar className="mx-auto text-aeem-forest dark:text-aeem-gold-light" size={24} />
+              <p className="mt-2 text-sm font-semibold text-aeem-ink dark:text-white">
+                {story.stats.duration}
+              </p>
+            </Card>
+          )}
+        </div>
+
+        {story.overview && (
+          <div className="mt-10">
+            <h2 className="text-2xl font-bold text-aeem-ink dark:text-white">Overview</h2>
+            <p className="mt-4 whitespace-pre-line leading-8 text-aeem-ink/80 dark:text-white/80">
+              {story.overview}
+            </p>
           </div>
+        )}
 
-          {story.overview && (
-            <div className="mt-10">
-              <h2 className="text-2xl font-bold text-aeem-ink dark:text-white">Overview</h2>
-              <p className="mt-4 whitespace-pre-line leading-8 text-aeem-ink/80 dark:text-white/80">
-                {story.overview}
-              </p>
-            </div>
-          )}
-
-          {story.impact && (
-            <div className="mt-10">
-              <h2 className="text-2xl font-bold text-aeem-ink dark:text-white">Verified Impact</h2>
-              <p className="mt-4 whitespace-pre-line leading-8 text-aeem-ink/80 dark:text-white/80">
-                {story.impact}
-              </p>
-            </div>
-          )}
-
-          {story.quoteText && (
-            <blockquote className="mt-12 rounded-2xl border-l-4 border-aeem-gold bg-aeem-cream/50 p-8 dark:bg-white/5">
-              <p className="text-lg italic leading-relaxed text-aeem-ink dark:text-white">
-                "{story.quoteText}"
-              </p>
-              {story.quoteAuthor && (
-                <footer className="mt-4 text-sm font-semibold text-aeem-forest dark:text-aeem-gold-light">
-                  — {story.quoteAuthor}
-                </footer>
-              )}
-            </blockquote>
-          )}
-
-          <div className="mt-12 border-t border-black/10 pt-6 dark:border-white/10">
-            <Button type="button" variant="secondary" onClick={share}>
-              <Share2 size={17} aria-hidden="true" />
-              Share Report
-            </Button>
-            <p className="sr-only" aria-live="polite">{shareStatus}</p>
+        {story.impact && (
+          <div className="mt-10">
+            <h2 className="text-2xl font-bold text-aeem-ink dark:text-white">Verified Impact</h2>
+            <p className="mt-4 whitespace-pre-line leading-8 text-aeem-ink/80 dark:text-white/80">
+              {story.impact}
+            </p>
           </div>
-        </Section>
+        )}
+
+        {story.quoteText && (
+          <blockquote className="mt-12 rounded-2xl border-l-4 border-aeem-gold bg-aeem-cream/50 p-8 dark:bg-white/5">
+            <p className="text-lg italic leading-relaxed text-aeem-ink dark:text-white">
+              "{story.quoteText}"
+            </p>
+            {story.quoteAuthor && (
+              <footer className="mt-4 text-sm font-semibold text-aeem-forest dark:text-aeem-gold-light">
+                — {story.quoteAuthor}
+              </footer>
+            )}
+          </blockquote>
+        )}
+
+        <div className="mt-12 border-t border-black/10 pt-6 dark:border-white/10">
+          <Button type="button" variant="secondary" onClick={share}>
+            <Share2 size={17} aria-hidden="true" />
+            Share Report
+          </Button>
+          <p className="sr-only" aria-live="polite">{shareStatus}</p>
+        </div>
+      </Section>
     </>
   )
 }

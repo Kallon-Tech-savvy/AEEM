@@ -9,6 +9,7 @@ import {
   isAlreadySubmittedLocally,
   markSubmittedLocally,
   isHoneypotTriggered,
+  submitInquiryApi,
 } from '../services/formUtils'
 import { Badge, Button, Card, Section } from '../components/ui'
 
@@ -22,20 +23,6 @@ const TABS = [
 
 const FIELD_CLASS = 'min-h-11 w-full rounded-xl border border-gray-300 bg-white px-4 text-sm text-aeem-ink outline-none focus:border-aeem-focus focus:ring-2 focus:ring-aeem-focus/20 dark:border-white/15 dark:bg-white/[0.03] dark:text-white'
 const LABEL_CLASS = 'text-sm font-semibold text-aeem-ink dark:text-white'
-const SUPABASE_FUNCTION_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/submit-inquiry`
-
-async function submitInquiry(payload: Record<string, unknown>): Promise<Response> {
-  const anonKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY
-  return fetch(SUPABASE_FUNCTION_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${anonKey}`,
-      'apikey': anonKey
-    },
-    body: JSON.stringify(payload),
-  })
-}
 
 export const GetInvolved: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabId>('volunteer')
@@ -92,7 +79,7 @@ export const GetInvolved: React.FC = () => {
     setIsSubmitting(true)
 
     try {
-      const response = await submitInquiry({
+      const response = await submitInquiryApi({
         inquiry_type: activeTab,
         full_name: fullName,
         email: normEmail,
@@ -170,16 +157,16 @@ export const GetInvolved: React.FC = () => {
             </div>
           </div>
 
-          <Card className="lg:col-span-3" id="involvement-panel">
+          <Card className="px-3 py-6 sm:px-8 lg:col-span-3" id="involvement-panel">
             {submitted ? (
-              <div className="px-2 py-10 text-center sm:px-8">
+              <div className="px-3 py-10 text-center sm:px-8">
                 <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-aeem-forest/10 text-aeem-forest dark:bg-aeem-gold/10 dark:text-aeem-gold-light"><CheckCircle2 size={28} aria-hidden="true" /></div>
                 <h2 className="mt-6 text-2xl font-bold text-aeem-ink dark:text-white">Inquiry received</h2>
                 <p className="mx-auto mt-3 max-w-md leading-7 text-aeem-ink/70 dark:text-white/70">Thank you. Your inquiry has been submitted for review. We will follow up using the contact details you provided.</p>
                 <Button type="button" variant="secondary" className="mt-7" onClick={() => setSubmitted(false)}>Send another inquiry</Button>
               </div>
             ) : (
-              <form id="involvement-form" ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+              <form id="involvement-form" ref={formRef} onSubmit={handleSubmit} className="space-y-6 px-3">
                 <input type="text" name="hp_zip" value={honeypot} onChange={e => setHoneypot(e.target.value)} className="hidden" tabIndex={-1} autoComplete="off" />
                 <div>
                   <p className="text-sm font-semibold text-aeem-gold">{TABS.find(tab => tab.id === activeTab)?.title}</p>
