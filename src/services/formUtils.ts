@@ -26,20 +26,35 @@ export function normalizePhone(phone: string): string {
 
 // ── SHA-256 Submission Key (Web Crypto API) ────────────────────────────────
 //
-// Generates a deterministic, scoped key for (formType, email, scope).
+// Generates a deterministic, scoped key for (formType, scope, email, message).
 // The same inputs always produce the same hash, so:
 //  • localStorage can check it before hitting the network
 //  • The DB unique constraint rejects concurrent duplicates atomically
 //
-// Pattern: SHA-256( "formType:v1:scope:normalised_email" )
+// Pattern: SHA-256( JSON [formType, "v2", scope, normalised_email, normalised_message] )
 //   inquiry       → scope = "contact" | "volunteer" | "partner" | "donor"
+//
+// Only an identical message from the same email and type is a duplicate.
+// Keep in step with generateSubmissionKey in supabase/functions/submit-inquiry.
+
+export function normalizeMessage(message: string): string {
+  // Trim and collapse runs of whitespace; case is preserved.
+  return message.trim().replace(/\s+/g, ' ')
+}
 
 export async function generateSubmissionKey(
   formType: string,
   email: string,
-  scope = 'global'
+  scope: string,
+  message: string
 ): Promise<string> {
-  const raw = `${formType}:v1:${scope}:${normalizeEmail(email)}`
+  const raw = JSON.stringify([
+    formType,
+    'v2',
+    scope,
+    normalizeEmail(email),
+    normalizeMessage(message),
+  ])
   const buffer = await crypto.subtle.digest(
     'SHA-256',
     new TextEncoder().encode(raw)

@@ -69,10 +69,10 @@ export const GetInvolved: React.FC = () => {
       return
     }
 
-    const submissionKey = await generateSubmissionKey('inquiry', normEmail, activeTab)
+    const submissionKey = await generateSubmissionKey('inquiry', normEmail, activeTab, message)
 
     if (isAlreadySubmittedLocally(submissionKey)) {
-      setError('We already have a request on file for this email and inquiry type. Please wait for our team to follow up.')
+      setError('We already received this exact message for this inquiry type. Please wait for our team to follow up, or send a different message.')
       return
     }
 
@@ -93,7 +93,7 @@ export const GetInvolved: React.FC = () => {
 
       if (response.status === 409 || result?.code === 'duplicate_submission') {
         markSubmittedLocally(submissionKey)
-        setError('We already have a request on file for this email and inquiry type. Please wait for our team to follow up.')
+        setError('We already received this exact message for this inquiry type. Please wait for our team to follow up, or send a different message.')
         return
       }
 
@@ -148,8 +148,8 @@ export const GetInvolved: React.FC = () => {
                 const selected = activeTab === tab.id
                 return (
                   <button key={tab.id} type="button" role="tab" aria-selected={selected} aria-controls="involvement-panel" onClick={() => switchTab(tab.id)}
-                    className={`flex w-full items-start gap-4 rounded-2xl border p-5 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus ${selected ? 'border-aeem-forest bg-aeem-forest/5 dark:border-aeem-gold dark:bg-aeem-gold/5' : 'border-black/10 hover:border-aeem-forest/40 dark:border-white/10'}`}>
-                    <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${selected ? 'bg-aeem-forest text-white dark:bg-aeem-gold' : 'bg-aeem-forest/5 text-aeem-forest dark:bg-white/5 dark:text-aeem-gold-light'}`}><Icon size={20} aria-hidden="true" /></span>
+                    className={`flex w-full items-start gap-4 rounded-2xl border p-5 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus ${selected ? 'border-aeem-blue bg-aeem-blue/5 dark:border-aeem-gold dark:bg-aeem-gold/5' : 'border-black/10 hover:border-aeem-blue/40 dark:border-white/10'}`}>
+                    <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${selected ? 'bg-aeem-blue text-white dark:bg-aeem-gold' : 'bg-aeem-blue/5 text-aeem-blue dark:bg-white/5 dark:text-aeem-gold-light'}`}><Icon size={20} aria-hidden="true" /></span>
                     <span><span className="block font-semibold text-aeem-ink dark:text-white">{tab.title}</span><span className="mt-1 block text-sm leading-6 text-aeem-ink/65 dark:text-white/65">{tab.desc}</span></span>
                   </button>
                 )
@@ -160,7 +160,7 @@ export const GetInvolved: React.FC = () => {
           <Card className="px-3 py-6 sm:px-8 lg:col-span-3" id="involvement-panel">
             {submitted ? (
               <div className="px-3 py-10 text-center sm:px-8">
-                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-aeem-forest/10 text-aeem-forest dark:bg-aeem-gold/10 dark:text-aeem-gold-light"><CheckCircle2 size={28} aria-hidden="true" /></div>
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-aeem-blue/10 text-aeem-blue dark:bg-aeem-gold/10 dark:text-aeem-gold-light"><CheckCircle2 size={28} aria-hidden="true" /></div>
                 <h2 className="mt-6 text-2xl font-bold text-aeem-ink dark:text-white">Inquiry received</h2>
                 <p className="mx-auto mt-3 max-w-md leading-7 text-aeem-ink/70 dark:text-white/70">Thank you. Your inquiry has been submitted for review. We will follow up using the contact details you provided.</p>
                 <Button type="button" variant="secondary" className="mt-7" onClick={() => setSubmitted(false)}>Send another inquiry</Button>

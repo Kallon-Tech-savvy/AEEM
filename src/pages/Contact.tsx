@@ -46,9 +46,9 @@ const Contact: React.FC = () => {
       return
     }
 
-    const submissionKey = await generateSubmissionKey('inquiry', email, 'contact')
+    const submissionKey = await generateSubmissionKey('inquiry', email, 'contact', message)
     if (isAlreadySubmittedLocally(submissionKey)) {
-      setError('We already have a request on file from this email. Please wait for our team to follow up.')
+      setError('We already received this exact message from you. Please wait for our team to follow up, or send a different message.')
       return
     }
 
@@ -67,7 +67,7 @@ const Contact: React.FC = () => {
 
       if (response.status === 409 || result?.code === 'duplicate_submission') {
         markSubmittedLocally(submissionKey)
-        setError('We already have a request on file from this email. Please wait for our team to follow up.')
+        setError('We already received this exact message from you. Please wait for our team to follow up, or send a different message.')
         return
       }
 
@@ -124,15 +124,15 @@ const Contact: React.FC = () => {
             </div>
             <Card className="space-y-6 p-6">
               <a href={`mailto:${CONTACT_EMAIL}`} className="flex gap-4 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus">
-                <Mail className="mt-1 shrink-0 text-aeem-forest dark:text-aeem-gold-light" size={20} aria-hidden="true" />
+                <Mail className="mt-1 shrink-0 text-aeem-blue dark:text-aeem-gold-light" size={20} aria-hidden="true" />
                 <span><span className="block font-semibold text-aeem-ink dark:text-white">Email</span><span className="mt-1 block break-all text-sm text-aeem-ink/70 dark:text-white/70">{CONTACT_EMAIL}</span></span>
               </a>
               <a href={`tel:${CONTACT_PHONE.replace(/\s/g, '')}`} className="flex gap-4 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus">
-                <Phone className="mt-1 shrink-0 text-aeem-forest dark:text-aeem-gold-light" size={20} aria-hidden="true" />
+                <Phone className="mt-1 shrink-0 text-aeem-blue dark:text-aeem-gold-light" size={20} aria-hidden="true" />
                 <span><span className="block font-semibold text-aeem-ink dark:text-white">Phone</span><span className="mt-1 block text-sm text-aeem-ink/70 dark:text-white/70">{CONTACT_PHONE}</span></span>
               </a>
               <div className="flex gap-4">
-                <MapPin className="mt-1 shrink-0 text-aeem-forest dark:text-aeem-gold-light" size={20} aria-hidden="true" />
+                <MapPin className="mt-1 shrink-0 text-aeem-blue dark:text-aeem-gold-light" size={20} aria-hidden="true" />
                 <span><span className="block font-semibold text-aeem-ink dark:text-white">Office</span><span className="mt-1 block text-sm text-aeem-ink/70 dark:text-white/70">Freetown, Sierra Leone</span></span>
               </div>
             </Card>
@@ -142,7 +142,7 @@ const Contact: React.FC = () => {
           <Card className="px-3 py-6 sm:px-8 lg:col-span-3">
             {submitted ? (
               <div className="py-10 text-center">
-                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-aeem-forest/10 text-aeem-forest dark:bg-aeem-gold/10 dark:text-aeem-gold-light"><CheckCircle2 size={28} aria-hidden="true" /></div>
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-aeem-blue/10 text-aeem-blue dark:bg-aeem-gold/10 dark:text-aeem-gold-light"><CheckCircle2 size={28} aria-hidden="true" /></div>
                 <h2 className="mt-6 text-2xl font-bold text-aeem-ink dark:text-white">Message received</h2>
                 <p className="mx-auto mt-3 max-w-md leading-7 text-aeem-ink/70 dark:text-white/70">Thank you. Your message has been submitted. We will follow up using the contact details you provided.</p>
                 <Button type="button" variant="secondary" className="mt-7" onClick={() => setSubmitted(false)}>Send another message</Button>

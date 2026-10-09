@@ -39,6 +39,9 @@ jobs:
       - name: Test Edge Function logic
         run: node scripts/test-edge-functions.mjs
 
+      - name: Test submit-inquiry handler (CORS and dedupe key)
+        run: node scripts/test-submit-inquiry-handler.mjs
+
       - name: Lint
         run: npm run lint
 

@@ -1,8 +1,17 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.108.1'
 
+// Extra origins (e.g. a Vercel preview or branch URL) can be added without a
+// code change: supabase secrets set ALLOWED_ORIGINS="https://a.vercel.app,https://b.vercel.app"
+const extraOrigins = (Deno.env.get('ALLOWED_ORIGINS') ?? '')
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean)
+
 const ALLOWED_ORIGINS = new Set([
+  'https://www.aeemmovement.org',
   'https://aeem-w.vercel.app',
   'http://localhost:5173',
+  ...extraOrigins,
 ])
 
 const ALLOWED_INQUIRY_TYPES = new Set(['contact', 'volunteer', 'partner', 'donor'])
@@ -12,7 +21,9 @@ const RATE_LIMIT_MAX_REQUESTS = 5
 
 function corsHeaders(origin: string | null): Record<string, string> {
   const headers: Record<string, string> = {
-    'Access-Control-Allow-Headers': 'content-type',
+    // The browser client sends Authorization + apikey (see submitInquiryApi),
+    // so the preflight must allow them or the POST is blocked before it is sent.
+    'Access-Control-Allow-Headers': 'authorization, apikey, content-type, x-client-info',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Vary': 'Origin',
     'Content-Type': 'application/json; charset=utf-8',
@@ -83,11 +94,24 @@ async function hashRateLimitKey(value: string, secret: string): Promise<string> 
     .join('')
 }
 
+function normalizeMessage(value: string): string {
+  return value.trim().replace(/\s+/g, ' ')
+}
+
+// An Inquiry is a duplicate only when type, email and message all match.
+// Keep in step with generateSubmissionKey in src/services/formUtils.ts.
 async function generateSubmissionKey(
   inquiryType: string,
   email: string,
+  message: string,
 ): Promise<string> {
-  const raw = `inquiry:v1:${inquiryType}:${normalizeEmail(email)}`
+  const raw = JSON.stringify([
+    'inquiry',
+    'v2',
+    inquiryType,
+    normalizeEmail(email),
+    normalizeMessage(message),
+  ])
   const buffer = await crypto.subtle.digest(
     'SHA-256',
     new TextEncoder().encode(raw),
@@ -194,7 +218,7 @@ Deno.serve(async (request) => {
     return json({ ok: false, code: 'invalid_phone' }, 422, origin)
   }
 
-  const submissionKey = await generateSubmissionKey(inquiryType, email)
+  const submissionKey = await generateSubmissionKey(inquiryType, email, message)
 
   const supabaseUrl = Deno.env.get('SUPABASE_URL')
   const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
