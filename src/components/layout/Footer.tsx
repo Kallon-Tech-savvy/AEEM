@@ -11,10 +11,10 @@ export default function Footer() {
         className="pointer-events-none absolute bottom-0 left-0 -z-10 h-full w-full select-none opacity-[0.04] dark:opacity-[0.03]"
       >
         <picture>
-          <source srcSet="/assets/Illustrate africa.avif" type="image/avif" />
-          <source srcSet="/assets/Illustrate africa.webp" type="image/webp" />
+          <source srcSet="/assets/Illustrate-africa.avif" type="image/avif" />
+          <source srcSet="/assets/Illustrate-africa.webp" type="image/webp" />
           <img
-            src="/assets/Illustrate africa.webp"
+            src="/assets/Illustrate-africa.webp"
             alt=""
             className="h-full w-full object-contain object-left-bottom"
             loading="lazy"
