@@ -46,9 +46,9 @@ const Contact: React.FC = () => {
       return
     }
 
-    const submissionKey = await generateSubmissionKey('inquiry', email, 'contact')
+    const submissionKey = await generateSubmissionKey('inquiry', email, 'contact', message)
     if (isAlreadySubmittedLocally(submissionKey)) {
-      setError('We already have a request on file from this email. Please wait for our team to follow up.')
+      setError('We already received this exact message from you. Please wait for our team to follow up, or send a different message.')
       return
     }
 
@@ -67,7 +67,7 @@ const Contact: React.FC = () => {
 
       if (response.status === 409 || result?.code === 'duplicate_submission') {
         markSubmittedLocally(submissionKey)
-        setError('We already have a request on file from this email. Please wait for our team to follow up.')
+        setError('We already received this exact message from you. Please wait for our team to follow up, or send a different message.')
         return
       }
 
