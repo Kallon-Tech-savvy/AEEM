@@ -1,0 +1,177 @@
+{
+  "measuredAt": "2026-10-11T03:06:33.278Z",
+  "profile": {
+    "name": "mid-4g",
+    "description": "mid-range Android, typical 4G",
+    "rttMs": 150,
+    "throughputKbps": 9000,
+    "cpuSlowdownMultiplier": 4,
+    "screen": {
+      "mobile": true,
+      "width": 412,
+      "height": 823,
+      "deviceScaleFactor": 1.75,
+      "disabled": false
+    }
+  },
+  "runsPerRoute": 5,
+  "budgetLcpMs": 1000,
+  "results": {
+    "home": {
+      "runs": 5,
+      "lcpMs": 1821,
+      "lcpMinMs": 1759,
+      "lcpMaxMs": 1942,
+      "fcpMs": 1493,
+      "tbtMs": 9,
+      "transferKB": 1098,
+      "requests": 30,
+      "lcpElement": "section#home > div.mx-auto > div > p.mt-6",
+      "benchmarkIndex": 2780
+    },
+    "about": {
+      "runs": 5,
+      "lcpMs": 1691,
+      "lcpMinMs": 1657,
+      "lcpMaxMs": 1746,
+      "fcpMs": 1471,
+      "tbtMs": 34,
+      "transferKB": 177,
+      "requests": 14,
+      "lcpElement": "section.py-24 > div.mx-auto > div.max-w-4xl > h1.text-4xl",
+      "benchmarkIndex": 2765
+    },
+    "impact": {
+      "runs": 5,
+      "lcpMs": 1910,
+      "lcpMinMs": 1846,
+      "lcpMaxMs": 1946,
+      "fcpMs": 1475,
+      "tbtMs": 17,
+      "transferKB": 399,
+      "requests": 17,
+      "lcpElement": "div.grid > div.rounded-2xl > div.aspect-[16/9] > img.h-full",
+      "benchmarkIndex": 2629
+    },
+    "impact-detail": {
+      "runs": 5,
+      "lcpMs": 2041,
+      "lcpMinMs": 1927,
+      "lcpMaxMs": 2123,
+      "fcpMs": 1475,
+      "tbtMs": 29,
+      "transferKB": 397,
+      "requests": 17,
+      "lcpElement": "section.py-24 > div.mx-auto > figure.mt-10 > img.aspect-[16/8]",
+      "benchmarkIndex": 2697
+    },
+    "events": {
+      "runs": 5,
+      "lcpMs": 1835,
+      "lcpMinMs": 1647,
+      "lcpMaxMs": 1944,
+      "fcpMs": 1459,
+      "tbtMs": 25,
+      "transferKB": 189,
+      "requests": 15,
+      "lcpElement": "main.relative > section.py-24 > div.mx-auto > p.mt-6",
+      "benchmarkIndex": 2769
+    },
+    "event-detail": {
+      "runs": 5,
+      "lcpMs": 2017,
+      "lcpMinMs": 1802,
+      "lcpMaxMs": 2152,
+      "fcpMs": 1451,
+      "tbtMs": 34,
+      "transferKB": 417,
+      "requests": 16,
+      "lcpElement": "section.py-24 > div.mx-auto > figure.mt-10 > img.aspect-[16/8]",
+      "benchmarkIndex": 2770
+    },
+    "get-involved": {
+      "runs": 5,
+      "lcpMs": 1563,
+      "lcpMinMs": 1528,
+      "lcpMaxMs": 1602,
+      "fcpMs": 1394,
+      "tbtMs": 32,
+      "transferKB": 146,
+      "requests": 12,
+      "lcpElement": "section.py-24 > div.mx-auto > div.max-w-3xl > p.mt-6",
+      "benchmarkIndex": 2803
+    },
+    "resources": {
+      "runs": 5,
+      "lcpMs": 1823,
+      "lcpMinMs": 1627,
+      "lcpMaxMs": 1854,
+      "fcpMs": 1466,
+      "tbtMs": 53,
+      "transferKB": 194,
+      "requests": 15,
+      "lcpElement": "main.relative > section.py-24 > div.mx-auto > p.mt-6",
+      "benchmarkIndex": 2758
+    },
+    "resource-detail": {
+      "runs": 5,
+      "lcpMs": 1852,
+      "lcpMinMs": 1818,
+      "lcpMaxMs": 1957,
+      "fcpMs": 1468,
+      "tbtMs": 47,
+      "transferKB": 371,
+      "requests": 16,
+      "lcpElement": "section.py-24 > div.mx-auto > figure.mt-10 > img.aspect-[16/8]",
+      "benchmarkIndex": 2869
+    },
+    "press-kit": {
+      "runs": 5,
+      "lcpMs": 1573,
+      "lcpMinMs": 1558,
+      "lcpMaxMs": 1629,
+      "fcpMs": 1408,
+      "tbtMs": 33,
+      "transferKB": 144,
+      "requests": 12,
+      "lcpElement": "div.mx-auto > div.grid > div > p.mt-4",
+      "benchmarkIndex": 2774
+    },
+    "contact": {
+      "runs": 5,
+      "lcpMs": 1584,
+      "lcpMinMs": 1558,
+      "lcpMaxMs": 1596,
+      "fcpMs": 1398,
+      "tbtMs": 23,
+      "transferKB": 146,
+      "requests": 13,
+      "lcpElement": "section.py-24 > div.mx-auto > div.max-w-3xl > p.mt-6",
+      "benchmarkIndex": 2648
+    },
+    "privacy": {
+      "runs": 5,
+      "lcpMs": 1563,
+      "lcpMinMs": 1545,
+      "lcpMaxMs": 1644,
+      "fcpMs": 1384,
+      "tbtMs": 21,
+      "transferKB": 144,
+      "requests": 12,
+      "lcpElement": "section.py-24 > div.mx-auto > div.max-w-3xl > p.mt-6",
+      "benchmarkIndex": 2555
+    },
+    "not-found": {
+      "runs": 5,
+      "lcpMs": 1660,
+      "lcpMinMs": 1624,
+      "lcpMaxMs": 1683,
+      "fcpMs": 1461,
+      "tbtMs": 22,
+      "transferKB": 174,
+      "requests": 12,
+      "lcpElement": "div.relative > div.mb-16 > div.col-span-1 > p.mb-8",
+      "benchmarkIndex": 2777
+    }
+  }
+}
