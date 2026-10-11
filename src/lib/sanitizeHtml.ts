@@ -6,7 +6,10 @@ export function sanitizeHtml(html: string): string {
 
   const document = new DOMParser().parseFromString(html, 'text/html')
 
-  document.querySelectorAll('*').forEach(element => {
+  // Walk only the body's descendants. The parsed document also contains <html>,
+  // <head> and <body>, and replacing the root element throws, which crashed the
+  // whole resource page for any resource that has a body.
+  document.body.querySelectorAll('*').forEach(element => {
     if (!ALLOWED_TAGS.has(element.tagName)) {
       element.replaceWith(...Array.from(element.childNodes))
       return
