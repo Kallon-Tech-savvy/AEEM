@@ -21,9 +21,11 @@ assert.strictEqual(s.lcpMinMs, 900)
 assert.strictEqual(s.lcpMaxMs, 3000)
 assert.match(markdownTable({ home: s }, 1000), /\| home \| 1000 \|.*\| pass \|/)
 
-// site server mirrors vercel.json: pages go to the app shell, static files do not
-assert.strictEqual(resolveFile('/about'), '/index.html')
-assert.strictEqual(resolveFile('/events/some-slug'), '/index.html')
+// site server mirrors vercel.json: Home is the prerendered index.html, other
+// pages go to the blank app shell, static files are served as they are
+assert.strictEqual(resolveFile('/about'), '/app-shell.html')
+assert.strictEqual(resolveFile('/events/some-slug'), '/app-shell.html')
+assert.strictEqual(resolveFile('/?utm_source=x'), '/index.html')
 assert.strictEqual(resolveFile('/'), '/index.html')
 assert.strictEqual(resolveFile('/assets/index-abc.js'), '/assets/index-abc.js')
 assert.strictEqual(resolveFile('/robots.txt'), '/robots.txt')

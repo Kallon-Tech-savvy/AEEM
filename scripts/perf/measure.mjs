@@ -36,15 +36,17 @@ if (!routes.length) throw new Error('no routes selected')
 
 if (!arg('skip-build', false)) {
   console.log('Building production bundle against the fixture API...')
-  execFileSync('npx', ['vite', 'build', '--outDir', distDir, '--emptyOutDir', '--logLevel', 'warn'], {
-    cwd: root,
-    stdio: 'inherit',
-    env: {
-      ...process.env,
-      VITE_SUPABASE_URL: `http://127.0.0.1:${API_PORT}`,
-      VITE_SUPABASE_PUBLISHABLE_KEY: 'perf-fixture-key',
-    },
-  })
+  const env = {
+    ...process.env,
+    VITE_SUPABASE_URL: `http://127.0.0.1:${API_PORT}`,
+    VITE_SUPABASE_PUBLISHABLE_KEY: 'perf-fixture-key',
+  }
+  const run = (args) => execFileSync('npx', args, { cwd: root, stdio: 'inherit', env })
+  const ssrDir = join(root, '.perf', 'ssr')
+  // The same three steps as `npm run build`: client bundle, server bundle, prerender.
+  run(['vite', 'build', '--outDir', distDir, '--emptyOutDir', '--logLevel', 'warn'])
+  run(['vite', 'build', '--ssr', 'src/entry-server.tsx', '--outDir', ssrDir, '--emptyOutDir', '--logLevel', 'warn'])
+  run(['node', 'scripts/prerender.mjs', '--dist', distDir, '--ssr', join(ssrDir, 'entry-server.js')])
 }
 
 const site = await startSiteServer({ distDir, port: SITE_PORT })

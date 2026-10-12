@@ -17,12 +17,14 @@ const TYPES = {
 }
 const COMPRESSIBLE = new Set(['.html', '.js', '.css', '.json', '.svg', '.xml', '.txt'])
 
-// Mirrors vercel.json: everything except these goes to the app shell.
+// Mirrors vercel.json: "/" is the prerendered Home page (index.html), real
+// files are served as they are, and everything else gets the blank app shell.
 const STATIC_PREFIX = /^\/(robots\.txt|sitemap\.xml|llms\.txt|assets\/)/
 
 export function resolveFile(urlPath) {
   const clean = decodeURIComponent(urlPath.split('?')[0])
-  if (clean === '/' || !STATIC_PREFIX.test(clean)) return '/index.html'
+  if (clean === '/') return '/index.html'
+  if (!STATIC_PREFIX.test(clean)) return '/app-shell.html'
   return clean
 }
 

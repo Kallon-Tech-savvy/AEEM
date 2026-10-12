@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import React, { createContext, useContext, useState, useEffect } from 'react'
+import React, { createContext, useContext, useState, useEffect, startTransition } from 'react'
 
 type ThemeMode = 'light' | 'dark' | 'system'
 
@@ -13,15 +13,39 @@ const ThemeContext = createContext<ThemeContextValue | undefined>(undefined)
 
 const STORAGE_KEY = 'aeem-theme'
 
+function readStoredTheme(): ThemeMode {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY)
+    return stored === 'light' || stored === 'dark' || stored === 'system' ? stored : 'system'
+  } catch {
+    return 'system' // storage blocked (private mode, strict settings)
+  }
+}
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<ThemeMode>(() => {
-    if (typeof window === 'undefined') return 'system'
-    return (localStorage.getItem(STORAGE_KEY) as ThemeMode) ?? 'system'
-  })
+  // The first render must be identical on the server (prerendered HTML) and in
+  // the browser, so it cannot read localStorage. The stored choice is loaded
+  // right after mount. Until then index.html's inline script has already put
+  // the right light/dark class on <html>, so nothing flashes.
+  const [theme, setThemeState] = useState<ThemeMode>('system')
+  const [loaded, setLoaded] = useState(false)
 
   const [isDark, setIsDark] = useState(false)
 
   useEffect(() => {
+    // A transition, not a plain update: changing this context while part of the
+    // prerendered page is still waiting for its lazy chunk would make React
+    // throw that part away and render it again (React error 421). A transition
+    // waits until hydration has finished instead.
+    startTransition(() => {
+      setThemeState(readStoredTheme())
+      setLoaded(true)
+    })
+  }, [])
+
+  useEffect(() => {
+    if (!loaded) return
+
     const root = window.document.documentElement
 
     const applyTheme = (currentTheme: ThemeMode) => {
@@ -32,7 +56,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
       root.classList.remove('light', 'dark')
       root.classList.add(resolvedTheme)
-      setIsDark(resolvedTheme === 'dark')
+      // Same reason as above: this runs right after hydration for dark mode users.
+      startTransition(() => setIsDark(resolvedTheme === 'dark'))
     }
 
     applyTheme(theme)
@@ -43,7 +68,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       mediaQuery.addEventListener('change', handler)
       return () => mediaQuery.removeEventListener('change', handler)
     }
-  }, [theme])
+  }, [theme, loaded])
 
   const setTheme = (next: ThemeMode) => {
     setThemeState(next)

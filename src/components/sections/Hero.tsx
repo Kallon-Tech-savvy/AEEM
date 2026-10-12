@@ -60,8 +60,11 @@ export default function Hero() {
       className="relative overflow-hidden bg-aeem-cream pt-24 dark:bg-aeem-charcoal"
     >
       <Container className="grid min-h-[calc(100svh-1rem)] grid-cols-1 items-center gap-14 py-20 lg:grid-cols-[1.05fr_0.95fr] lg:gap-24 lg:py-24">
+        {/* initial={false}: the text is drawn in its final state from the first paint.
+            It used to start at opacity 0 and slide in, which hid the prerendered
+            headline until JavaScript had loaded (see ADR 0002). */}
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
+          initial={false}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.55 }}
         >

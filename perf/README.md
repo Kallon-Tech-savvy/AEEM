@@ -48,3 +48,7 @@ Lighthouse is run in **simulate** mode: it loads the page once at full speed and
 - Treat differences smaller than the min-max spread as noise.
 - The "LCP element" column says what the browser considered the main content. It is the first thing to look at when a page is slow.
 - This does not replace testing on a real phone. It is a repeatable yardstick for deciding whether a change helped.
+
+## The floor under this profile
+
+A trivial page (one headline and a paragraph, inline styles, a single request, no CSS or JavaScript files) measured about **750 ms** LCP and about 630 ms FCP under both profiles, so a round trip of 150 ms plus a 4x slower CPU leaves roughly 250 ms of the 1000 ms budget for everything a real page adds. The harness serves plain HTTP from the local machine; real HTTPS adds at least one more round trip (about 150 ms), so the real floor is higher. Every extra file on the path to first paint (a stylesheet, a font, a script that must run first) costs about one round trip. Measured 2026-10-12 with a throwaway script; to repeat it, serve any single-file page through `scripts/perf/server.mjs`.
