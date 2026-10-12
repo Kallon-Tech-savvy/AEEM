@@ -1,6 +1,6 @@
 {
   "rewrites": [
-    { "source": "/((?!robots.txt|sitemap.xml|assets/|llms.txt).*)", "destination": "/" }
+    { "source": "/((?!robots.txt|sitemap.xml|assets/|llms.txt).*)", "destination": "/app-shell.html" }
   ],
   "headers": [
     {

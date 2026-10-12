@@ -4,6 +4,10 @@ import react from '@vitejs/plugin-react'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  // Only used by the build-time prerender (src/entry-server.tsx). Bundling every
+  // dependency avoids Node's CommonJS/ESM mismatches (react-helmet-async has no
+  // named ESM exports in Node) and keeps a single copy of React in the bundle.
+  ssr: { noExternal: true },
   build: {
     rollupOptions: {
       output: {

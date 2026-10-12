@@ -45,5 +45,8 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      - name: Typecheck and build
+      - name: Typecheck and build (includes the Home prerender)
         run: npm run build
+
+      - name: Test prerender output
+        run: npm run test:prerender

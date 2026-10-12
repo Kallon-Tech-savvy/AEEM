@@ -62,27 +62,40 @@ function AnimatedRoutes() {
   )
 }
 
+// ─── App shell ────────────────────────────────────────────────────────────────
+// Everything that lives inside a router. Split out so the build-time prerender
+// (src/entry-server.tsx) can render it inside a StaticRouter while the browser
+// renders it inside a BrowserRouter. Both must render the same markup.
+
+export function AppShell() {
+  return (
+    <>
+      {/*
+        ScrollToTop: fires window.scrollTo on every pathname change.
+        Must live inside a router for useLocation(), but outside <Layout>
+        so it runs before the new page renders.
+
+        ScrollToTopButton: the visible ↑ button — unrelated component,
+        kept here alongside its sibling for clarity.
+      */}
+      <ScrollToTop />
+      <ScrollToTopButton />
+      <Layout>
+        <AnimatedRoutes />
+      </Layout>
+    </>
+  )
+}
+
 // ─── App root ─────────────────────────────────────────────────────────────────
 
 function App() {
   return (
     <HelmetProvider>
-        <Router>
-          {/*
-            ScrollToTop: fires window.scrollTo on every pathname change.
-            Must live inside <Router> for useLocation(), but outside <Layout>
-            so it runs before the new page renders.
-
-            ScrollToTopButton: the visible ↑ button — unrelated component,
-            kept here alongside its sibling for clarity.
-          */}
-          <ScrollToTop />
-          <ScrollToTopButton />
-          <Layout>
-            <AnimatedRoutes />
-          </Layout>
-        </Router>
-      </HelmetProvider>
+      <Router>
+        <AppShell />
+      </Router>
+    </HelmetProvider>
   )
 }
 

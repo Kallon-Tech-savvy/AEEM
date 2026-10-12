@@ -6,9 +6,13 @@
   "scripts": {
     "dev": "vite",
     "optimize-images": "node scripts/optimize-images.js",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && npm run prerender",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "perf": "node scripts/perf/measure.mjs",
+    "perf:test": "node scripts/perf/stats.test.mjs",
+    "prerender": "vite build --ssr src/entry-server.tsx --outDir .prerender --emptyOutDir && node scripts/prerender.mjs",
+    "test:prerender": "node scripts/test-prerender.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.108.1",
@@ -32,12 +36,14 @@
     "@types/three": "^0.184.1",
     "@vitejs/plugin-react": "^6.0.2",
     "autoprefixer": "^10.4.16",
+    "chrome-launcher": "^1.2.2",
     "dotenv": "^17.4.2",
     "eslint": "^9.39.4",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.26",
     "glob": "^11.0.1",
     "globals": "^17.6.0",
+    "lighthouse": "^12.8.2",
     "postcss": "^8.4.31",
     "sharp": "^0.35.5",
     "tailwindcss": "^3.3.5",
