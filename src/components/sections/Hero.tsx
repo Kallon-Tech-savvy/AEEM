@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Container } from '../ui'
@@ -36,19 +35,14 @@ const AFRICA_PATH =
 const FREETOWN = { x: 30, y: 206 }
 
 const CITIES = [
-  { name: 'Conakry', x: 24, y: 192, delay: 0.4 },
-  { name: 'Monrovia', x: 46, y: 223, delay: 0.6 },
-  { name: 'Dakar', x: 5, y: 160, delay: 0.8 },
-  { name: 'Accra', x: 107, y: 226, delay: 1.4 },
-  { name: 'Lagos', x: 133, y: 220, delay: 1.8 },
-  { name: 'Kampala', x: 314, y: 266, delay: 3.6 },
-  { name: 'Nairobi', x: 348, y: 276, delay: 3.8 },
+  { name: 'Conakry', x: 24, y: 192 },
+  { name: 'Monrovia', x: 46, y: 223 },
+  { name: 'Dakar', x: 5, y: 160 },
+  { name: 'Accra', x: 107, y: 226 },
+  { name: 'Lagos', x: 133, y: 220 },
+  { name: 'Kampala', x: 314, y: 266 },
+  { name: 'Nairobi', x: 348, y: 276 },
 ]
-
-function lineLen(x2: number, y2: number) {
-  return Math.ceil(Math.hypot(x2 - FREETOWN.x, y2 - FREETOWN.y)) + 20
-}
-
 
 const actionLink =
   'inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border px-6 text-base font-semibold transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus focus-visible:ring-offset-2'
@@ -60,14 +54,9 @@ export default function Hero() {
       className="relative overflow-hidden bg-aeem-cream pt-24 dark:bg-aeem-charcoal"
     >
       <Container className="grid min-h-[calc(100svh-1rem)] grid-cols-1 items-center gap-14 py-20 lg:grid-cols-[1.05fr_0.95fr] lg:gap-24 lg:py-24">
-        {/* initial={false}: the text is drawn in its final state from the first paint.
-            It used to start at opacity 0 and slide in, which hid the prerendered
-            headline until JavaScript had loaded (see ADR 0002). */}
-        <motion.div
-          initial={false}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.55 }}
-        >
+        {/* Drawn in its final state from the first paint. Framer Motion used
+            to hide this column until JavaScript ran (see ADR 0002 and #35). */}
+        <div>
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-aeem-blue dark:text-aeem-gold-light">
             Fair access to education for all
           </p>
@@ -95,14 +84,9 @@ export default function Hero() {
               Upcoming Events
             </Link>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          className="relative mx-auto w-full max-w-[520px]"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.15 }}
-        >
+        <div className="relative mx-auto w-full max-w-[520px]">
           <svg
             viewBox="0 0 440 530"
             xmlns="http://www.w3.org/2000/svg"
@@ -120,47 +104,36 @@ export default function Hero() {
               strokeOpacity="0.55"
             />
 
-            {CITIES.map((city) => {
-              const len = lineLen(city.x, city.y)
-
-              return (
-                <motion.line
-                  key={`ln-${city.name}`}
-                  x1={FREETOWN.x}
-                  y1={FREETOWN.y}
-                  x2={city.x}
-                  y2={city.y}
-                  stroke="#D4AF37"
-                  strokeWidth="0.8"
-                  strokeOpacity="0.65"
-                  strokeDasharray={len}
-                  initial={{ strokeDashoffset: len }}
-                  animate={{ strokeDashoffset: 0 }}
-                  transition={{ duration: 0.8, delay: city.delay, ease: 'easeOut' }}
-                />
-              )
-            })}
+            {CITIES.map((city) => (
+              <line
+                key={`ln-${city.name}`}
+                x1={FREETOWN.x}
+                y1={FREETOWN.y}
+                x2={city.x}
+                y2={city.y}
+                stroke="#D4AF37"
+                strokeWidth="0.8"
+                strokeOpacity="0.65"
+              />
+            ))}
 
             {CITIES.map((city) => (
-              <motion.circle
+              <circle
                 key={`dot-${city.name}`}
                 cx={city.x}
                 cy={city.y}
                 r={2.5}
                 fill="#D4AF37"
-                initial={{ opacity: 0, r: 0 }}
-                animate={{ opacity: 0.9, r: 2.5 }}
-                transition={{ delay: city.delay + 0.65, duration: 0.25 }}
+                opacity={0.9}
               />
             ))}
 
-            <motion.circle
+            <circle
               cx={FREETOWN.x}
               cy={FREETOWN.y}
               r={5}
               fill="#D4AF37"
-              animate={{ opacity: [1, 0.55, 1] }}
-              transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+              className="motion-safe:animate-pulse"
             />
 
             <text
@@ -178,7 +151,7 @@ export default function Hero() {
           <p className="mt-2 text-center text-xs text-aeem-ink/55 dark:text-white/55">
             A growing network of communities, educators, and young people.
           </p>
-        </motion.div>
+        </div>
       </Container>
     </section>
   )

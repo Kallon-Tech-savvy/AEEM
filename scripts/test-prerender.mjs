@@ -27,6 +27,12 @@ assert.match(home, /<div id="root" data-prerendered="\/">[\s\S]*<h1[\s\S]*Empowe
   'index.html should contain the Home headline inside #root')
 assert.ok(home.includes('Pioneering inclusive, equitable, and quality education'),
   'index.html should contain the Home hero paragraph')
+const homeSection = home.match(/<section[^>]*\sid="home"[\s\S]*?<\/section>/)
+assert.ok(homeSection, 'index.html should contain the Home hero section')
+assert.ok(!/opacity:\s*0(?!\.\d)/.test(homeSection[0]),
+  'the hero first screen must not start hidden (no opacity:0 in the prerendered markup)')
+assert.ok(!/transform:\s*translateX\(-/.test(homeSection[0]),
+  'the hero text must not start off-screen')
 assert.ok(home.includes('Help build a future where every child can learn, lead and thrive.'),
   'index.html should contain content from lazily loaded sections too, not only the first screen')
 assert.ok(!home.includes('Loading page'), 'index.html must not contain the page loading spinner')
