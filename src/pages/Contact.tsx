@@ -77,7 +77,26 @@ const Contact: React.FC = () => {
       }
 
       if (!response.ok) {
-        throw new Error(typeof result?.code === 'string' ? result.code : `HTTP ${response.status}`)
+        // Keep server diagnostics actionable without exposing request contents.
+        const code = typeof result?.code === 'string' ? result.code : ''
+        const messages: Record<string, string> = {
+          invalid_fields: 'Some required details are missing or invalid. Please review the form and try again.',
+          invalid_email: 'Please check the email address and try again.',
+          invalid_phone: 'Please check the phone number or leave it blank.',
+          origin_not_allowed: 'This form is temporarily unavailable from this page. Please contact AEEM by email or phone.',
+          service_unavailable: 'The inquiry service is temporarily unavailable. Your message was not confirmed as sent. Please try again later or contact AEEM directly.',
+        }
+        setError(
+          messages[code] ??
+            (response.status >= 500
+              ? 'The inquiry service is temporarily unavailable. Your message was not confirmed as sent. Please try again later or contact AEEM directly.'
+              : 'We could not submit your message. Please review the form and try again.'),
+        )
+        console.warn('Inquiry API rejected submission:', {
+          status: response.status,
+          code: code || 'unknown',
+        })
+        return
       }
 
       markSubmittedLocally(submissionKey)
@@ -85,11 +104,19 @@ const Contact: React.FC = () => {
       setFormData({ full_name: '', email: '', phone: '', message: '' })
       setHoneypot('')
     } catch (err) {
-      console.warn('Inquiry submission failed:', err)
+      console.warn('Inquiry submission failed:', {
+        kind: err instanceof DOMException && err.name === 'AbortError'
+          ? 'timeout'
+          : err instanceof TypeError
+            ? 'network_or_cors'
+            : 'unexpected',
+      })
       setError(
         err instanceof DOMException && err.name === 'AbortError'
           ? 'The inquiry service took too long to respond. Please check your connection and try again.'
-          : 'We could not send your message. Please try again.',
+          : err instanceof TypeError
+            ? 'We could not connect to the inquiry service. Check your internet connection and try again. If the problem continues, contact AEEM directly.'
+            : 'We could not send your message. Please try again or contact AEEM directly.',
       )
     } finally {
       setIsSubmitting(false)
