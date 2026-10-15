@@ -28,7 +28,14 @@ export default function Resources() {
         } else {
           setResources((data ?? []) as unknown as ResourceListItem[])
         }
-        setLoading(false)
+      })
+      .catch((err: unknown) => {
+        if (!active) return
+        console.error('Error fetching resources:', err)
+        setError(true)
+      })
+      .finally(() => {
+        if (active) setLoading(false)
       })
 
     return () => {
