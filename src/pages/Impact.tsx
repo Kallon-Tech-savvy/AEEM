@@ -96,7 +96,7 @@ export default function Impact() {
           </div>
         ) : error ? (
           <Card className="p-8">
-            <h3 className="text-xl font-semibold text-aeem-ink darK:text-white/90">Impact stories are temporarily unavailable.</h3>
+            <h3 className="text-xl font-semibold text-aeem-ink dark:text-white/90">Impact stories are temporarily unavailable.</h3>
             <p className="mt-3 leading-7 text-aeem-ink/70 dark:text-white/70">
               We could not load the published story archive right now. Please try again later.
             </p>
