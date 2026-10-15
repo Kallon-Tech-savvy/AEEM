@@ -28,7 +28,7 @@ export default function Resources() {
           console.error('Error fetching resources:', supabaseError)
           setError(true)
         } else {
-          setResources((data ?? []) as unknown as ResourceListItem[])
+          setResources(data ?? [])
         }
       } catch (err) {
         if (!active) return
