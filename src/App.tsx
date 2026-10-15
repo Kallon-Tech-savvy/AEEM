@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react'
+import { Component, lazy, Suspense, type ErrorInfo, type ReactNode } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 
@@ -87,13 +87,61 @@ export function AppShell() {
   )
 }
 
+// ─── App error boundary ───────────────────────────────────────────────────────
+// Non-home routes use an empty HTML shell and depend on client-side rendering.
+// If a lazy route chunk fails or a component throws, show a recoverable error
+// instead of leaving visitors with a blank white page.
+class AppErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
+  state = { hasError: false }
+
+  static getDerivedStateFromError() {
+    return { hasError: true }
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error('AEEM route rendering failed:', error, info.componentStack)
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <main className="mx-auto flex min-h-[60vh] max-w-2xl flex-col items-center justify-center px-6 py-16 text-center">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">This page could not load</h1>
+          <p className="mt-3 max-w-prose text-gray-600 dark:text-gray-300">
+            Something went wrong while opening this page. Try again, or return to the homepage.
+          </p>
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
+            <button
+              type="button"
+              onClick={() => window.location.reload()}
+              className="rounded-lg bg-aeem-green px-5 py-3 font-semibold text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aeem-gold"
+            >
+              Try again
+            </button>
+            <a
+              href="/"
+              className="rounded-lg border border-gray-300 px-5 py-3 font-semibold text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aeem-gold dark:border-gray-600 dark:text-white"
+            >
+              Go to homepage
+            </a>
+          </div>
+        </main>
+      )
+    }
+
+    return this.props.children
+  }
+}
+
 // ─── App root ─────────────────────────────────────────────────────────────────
 
 function App() {
   return (
     <HelmetProvider>
       <Router>
-        <AppShell />
+        <AppErrorBoundary>
+          <AppShell />
+        </AppErrorBoundary>
       </Router>
     </HelmetProvider>
   )
