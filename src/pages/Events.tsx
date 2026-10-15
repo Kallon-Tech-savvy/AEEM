@@ -34,7 +34,7 @@ export default function Events() {
           console.error('Error fetching events:', error)
           setEvents([])
         } else {
-          setEvents((data ?? []) as unknown as EventListItem[])
+          setEvents(data ?? [])
         }
       } catch (err) {
         if (!active) return
