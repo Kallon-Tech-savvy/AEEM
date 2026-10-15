@@ -146,22 +146,27 @@ async function testDeployedSiteBundle() {
   )
 
   const html = await page.text()
-  const assetPattern = /(?:\.\/|\/)?assets\/[^"'\x60\\s]+\.js/g
+  // Follow both HTML asset paths and relative imports in built JS chunks.
+  // Resolve each reference against the file that contains it; relative imports
+  // such as "./Contact-....js" are relative to the importing chunk, not /contact.
+  const assetPattern = /(?:\.\/|\/)?(?:assets\/)?[^"'\x60\\s]+\.js/g
   const discoveredAssets = new Set()
+  const siteOrigin = new URL(page.url).origin
 
-  // Vite/Rolldown may put the inquiry client in a lazy-loaded route chunk.
-  // Follow local JS asset references recursively instead of inspecting only
-  // the entry script, which can miss code that is loaded after navigation.
-  function discoverAssets(source) {
+  function discoverAssets(source, baseUrl) {
     for (const match of source.matchAll(assetPattern)) {
-      const assetUrl = new URL(match[0].replace(/^\.\//, '/'), page.url)
-      if (assetUrl.origin === new URL(page.url).origin) {
+      const reference = match[0]
+      if (!reference.startsWith('./') && !reference.startsWith('/') && !reference.startsWith('assets/')) {
+        continue
+      }
+      const assetUrl = new URL(reference, baseUrl)
+      if (assetUrl.origin === siteOrigin && assetUrl.pathname.endsWith('.js')) {
         discoveredAssets.add(assetUrl.toString())
       }
     }
   }
 
-  discoverAssets(html)
+  discoverAssets(html, page.url)
   assert.ok(discoveredAssets.size > 0, 'No application JavaScript bundle was found on /contact')
 
   const pendingAssets = [...discoveredAssets]
@@ -179,7 +184,7 @@ async function testDeployedSiteBundle() {
     bundleContents.push(source)
 
     const before = discoveredAssets.size
-    discoverAssets(source)
+    discoverAssets(source, src)
     if (discoveredAssets.size > before) {
       for (const assetUrl of discoveredAssets) {
         if (!inspectedAssets.has(assetUrl)) pendingAssets.push(assetUrl)
