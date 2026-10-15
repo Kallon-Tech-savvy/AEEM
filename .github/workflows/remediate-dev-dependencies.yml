@@ -28,7 +28,13 @@ jobs:
         run: npm ci
 
       - name: Update development dependencies within declared ranges
-        run: npm update --save-dev
+        run: >-
+          npm update --save-dev
+          @eslint/js @types/node @types/react @types/react-dom @types/three
+          @vitejs/plugin-react autoprefixer chrome-launcher dotenv eslint
+          eslint-plugin-react-hooks eslint-plugin-react-refresh glob globals
+          lighthouse postcss sharp tailwindcss ts-node typescript
+          typescript-eslint vite
 
       - name: Verify clean install, lint, build, and prerender
         run: |
