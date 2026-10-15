@@ -89,10 +89,9 @@ async function post(body) {
   }
 }
 
-// 2. Origin allowlist: both real hosts, localhost, and the ALLOWED_ORIGINS secret pass; others do not.
+// 2. Origin allowlist: the deployed Vercel host, localhost, and ALLOWED_ORIGINS secret pass; unowned/unknown hosts do not.
 for (const origin of [
   'https://aeem-w.vercel.app',
-  'https://www.aeemmovement.org',
   'http://localhost:5173',
   'https://preview-test.vercel.app',
 ]) {
@@ -101,9 +100,11 @@ for (const origin of [
   assert.strictEqual(res.headers.get('access-control-allow-origin'), origin)
 }
 {
-  const res = await preflight('https://evil.example.com', 'content-type')
-  assert.strictEqual(res.status, 403)
-  assert.strictEqual(res.headers.get('access-control-allow-origin'), null)
+  for (const origin of ['https://www.aeemmovement.org', 'https://evil.example.com']) {
+    const res = await preflight(origin, 'content-type')
+    assert.strictEqual(res.status, 403, `${origin} should not be allowed`)
+    assert.strictEqual(res.headers.get('access-control-allow-origin'), null)
+  }
 }
 
 // 3. Dedupe key: the server's key must equal the key the form computes, and
