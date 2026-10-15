@@ -1,0 +1,90 @@
+name: Remediate compatible dev dependencies
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: dev-dependency-remediation
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install current lockfile
+        run: npm ci
+
+      - name: Update development dependencies within declared ranges
+        run: >-
+          npm update --save-dev
+          @eslint/js @types/node @types/react @types/react-dom @types/three
+          @vitejs/plugin-react autoprefixer chrome-launcher dotenv eslint
+          eslint-plugin-react-hooks eslint-plugin-react-refresh glob globals
+          lighthouse postcss sharp tailwindcss ts-node typescript
+          typescript-eslint vite
+
+      - name: Verify clean install, lint, build, and prerender
+        run: |
+          npm ci
+          npm run lint
+          npm run build
+          npm run test:prerender
+
+      - name: Summarize post-update audit
+        shell: bash
+        run: |
+          set +e
+          npm audit --json > npm-audit-after.json
+          audit_status=$?
+          set -e
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs'
+          const report = JSON.parse(fs.readFileSync('npm-audit-after.json', 'utf8'))
+          const totals = report.metadata?.vulnerabilities
+          if (!totals) throw new Error('npm audit did not return vulnerability totals')
+          const summary = [
+            '## Development dependency remediation audit',
+            '',
+            '| Severity | Count |',
+            '|---|---:|',
+            ...Object.entries(totals).map(([severity, count]) => `| ${severity} | ${count} |`),
+            '',
+            'Review the full npm audit report before merging. Major-version migrations are intentionally excluded.'
+          ].join('\n')
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, summary + '\n')
+          console.log(JSON.stringify(totals, null, 2))
+          NODE
+          rm npm-audit-after.json
+          if [ "$audit_status" -gt 1 ]; then
+            echo "npm audit exited unexpectedly with status $audit_status"
+            exit "$audit_status"
+          fi
+
+      - name: Open dependency update pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: chore/compatible-dev-dependency-updates
+          delete-branch: true
+          commit-message: "chore: update compatible development dependencies"
+          title: "chore: update compatible development dependencies"
+          body: |
+            Updates development dependencies within their existing semver ranges and regenerates package-lock.json through npm.
+
+            The workflow runs a clean npm ci, lint, production build, prerender test, and reports the post-update npm audit summary. It intentionally avoids forced major upgrades.
+          add-paths: |
+            package.json
+            package-lock.json
