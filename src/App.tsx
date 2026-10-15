@@ -114,7 +114,7 @@ class AppErrorBoundary extends Component<{ children: ReactNode }, { hasError: bo
             <button
               type="button"
               onClick={() => window.location.reload()}
-              className="rounded-lg bg-aeem-green px-5 py-3 font-semibold text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aeem-gold"
+              className="rounded-lg bg-aeem-blue px-5 py-3 font-semibold text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aeem-gold"
             >
               Try again
             </button>

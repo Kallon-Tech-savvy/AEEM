@@ -22,9 +22,9 @@ export function Button({
         size === 'md' && 'min-h-11 px-5 text-sm',
         size === 'lg' && 'min-h-12 px-6 text-base',
         variant === 'primary' &&
-          'border-aeem-forest bg-aeem-forest text-white hover:border-aeem-forest-dark hover:bg-aeem-forest-dark dark:border-aeem-gold dark:bg-aeem-gold dark:text-aeem-charcoal dark:hover:border-amber-400 dark:hover:bg-amber-400',
+          'border-aeem-blue bg-aeem-blue text-white hover:border-aeem-blue-dark hover:bg-aeem-blue-dark dark:border-aeem-gold dark:bg-aeem-gold dark:text-aeem-charcoal dark:hover:border-amber-400 dark:hover:bg-amber-400',
         variant === 'secondary' &&
-          'border-aeem-forest bg-transparent text-aeem-forest hover:bg-aeem-forest/5 dark:border-aeem-gold-light dark:text-aeem-gold-light dark:hover:bg-aeem-gold/10',
+          'border-aeem-blue bg-transparent text-aeem-blue hover:bg-aeem-blue/5 dark:border-aeem-gold-light dark:text-aeem-gold-light dark:hover:bg-aeem-gold/10',
         variant === 'ghost' &&
           'border-transparent bg-transparent text-aeem-ink hover:bg-black/5 dark:text-white dark:hover:bg-white/10',
         className,
