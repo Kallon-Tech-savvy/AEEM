@@ -16,16 +16,13 @@ async function testInquiryFunctionReachability() {
   const options = await fetch(functionUrl, {
     method: 'OPTIONS',
     headers: {
-      Origin: 'https://www.aeemmovement.org',
+      Origin: process.env.AEEM_SITE_URL || 'https://aeem-w.vercel.app',
       'Access-Control-Request-Method': 'POST',
       'Access-Control-Request-Headers': 'content-type',
     },
-  }).catch((err) => ({ status: 0, headers: new Headers(), error: err }))
-
-  if (options.status === 404 || options.status === 0) {
-    console.log(`• Skipping submit-inquiry CORS test: function not reached (HTTP ${options.status})`)
-    return
-  }
+  }).catch((err) => {
+    throw new Error(`Could not reach submit-inquiry CORS preflight endpoint: ${err.message}`)
+  })
 
   assert.strictEqual(
     options.status,
@@ -35,7 +32,7 @@ async function testInquiryFunctionReachability() {
 
   assert.strictEqual(
     options.headers.get('access-control-allow-origin'),
-    'https://www.aeemmovement.org',
+    'https://aeem-w.vercel.app',
     'Expected an explicit allow-origin for the canonical site',
   )
 
@@ -61,7 +58,7 @@ async function testInquiryValidation() {
   const response = await fetch(functionUrl, {
     method: 'POST',
     headers: {
-      Origin: 'https://www.aeemmovement.org',
+      Origin: process.env.AEEM_SITE_URL || 'https://aeem-w.vercel.app',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
@@ -70,12 +67,9 @@ async function testInquiryValidation() {
       email: 'endpoint-smoke-test@example.com',
       message: 'This request should be rejected before any database write.',
     }),
-  }).catch((err) => ({ status: 0, json: async () => null, error: err }))
-
-  if (response.status === 404 || response.status === 0) {
-    console.log(`• Skipping submit-inquiry validation test: function not reached (HTTP ${response.status})`)
-    return
-  }
+  }).catch((err) => {
+    throw new Error(`Could not reach submit-inquiry validation endpoint: ${err.message}`)
+  })
 
   const body = await readJson(response)
 
@@ -100,7 +94,7 @@ async function testInquiryHoneypot() {
   const response = await fetch(functionUrl, {
     method: 'POST',
     headers: {
-      Origin: 'https://www.aeemmovement.org',
+      Origin: process.env.AEEM_SITE_URL || 'https://aeem-w.vercel.app',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
@@ -110,12 +104,9 @@ async function testInquiryHoneypot() {
       message: 'This request must not create a database record.',
       honeypot: 'filled-by-smoke-test',
     }),
-  }).catch((err) => ({ status: 0, json: async () => null, error: err }))
-
-  if (response.status === 404 || response.status === 0) {
-    console.log(`• Skipping submit-inquiry honeypot test: function not reached (HTTP ${response.status})`)
-    return
-  }
+  }).catch((err) => {
+    throw new Error(`Could not reach submit-inquiry honeypot endpoint: ${err.message}`)
+  })
 
   const body = await readJson(response)
 
@@ -135,7 +126,7 @@ async function testInquiryHoneypot() {
 
 async function testDeployedSiteBundle() {
   const customSiteUrl = process.env.AEEM_SITE_URL
-  const siteUrl = customSiteUrl || 'https://www.aeemmovement.org'
+  const siteUrl = customSiteUrl || 'https://aeem-w.vercel.app'
   console.log(`Testing deployed site bundle at ${siteUrl}...`)
 
   let page
@@ -145,11 +136,7 @@ async function testDeployedSiteBundle() {
       headers: { Accept: 'text/html' },
     })
   } catch (err) {
-    if (!customSiteUrl) {
-      console.log(`• Skipping deployed site bundle test: default site ${siteUrl} is not reachable (${err.message})`)
-      return
-    }
-    throw err
+    throw new Error(`Could not reach deployed site ${siteUrl}: ${err.message}`)
   }
 
   assert.strictEqual(
