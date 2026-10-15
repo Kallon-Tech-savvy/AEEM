@@ -124,6 +124,8 @@ export function isHoneypotTriggered(value: string): boolean {
 }
 // ── Inquiry Edge Function API ──────────────────────────────────────────────
 
+const INQUIRY_REQUEST_TIMEOUT_MS = 15_000
+
 export async function submitInquiryApi(payload: Record<string, unknown>): Promise<Response> {
   const supabaseUrl = import.meta.env.VITE_SUPABASE_URL ?? ''
   const functionUrl = `${supabaseUrl}/functions/v1/submit-inquiry`
@@ -132,13 +134,24 @@ export async function submitInquiryApi(payload: Record<string, unknown>): Promis
     import.meta.env.VITE_SUPABASE_ANON_KEY ||
     ''
 
-  return fetch(functionUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${anonKey}`,
-      apikey: anonKey,
-    },
-    body: JSON.stringify(payload),
-  })
+  const controller = new AbortController()
+  const timeoutId = window.setTimeout(
+    () => controller.abort(),
+    INQUIRY_REQUEST_TIMEOUT_MS,
+  )
+
+  try {
+    return await fetch(functionUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${anonKey}`,
+        apikey: anonKey,
+      },
+      body: JSON.stringify(payload),
+      signal: controller.signal,
+    })
+  } finally {
+    window.clearTimeout(timeoutId)
+  }
 }
