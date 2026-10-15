@@ -86,13 +86,11 @@ const GalleryItem = memo(({ photo, index, onClick }: GalleryItemProps) => {
   ].join(' ');
 
   return (
-    <div
-      role="button"
-      tabIndex={0}
+    <button
+      type="button"
       aria-label={`Open ${photo.title}`}
       onClick={() => onClick(index)}
-      onKeyDown={e => e.key === 'Enter' && onClick(index)}
-      className={`group relative overflow-hidden rounded-2xl shadow-soft transition-all duration-500 hover:shadow-xl hover:-translate-y-1 bg-aeem-charcoal/5 cursor-pointer ${spanClass}`}
+      className={`group relative w-full overflow-hidden rounded-2xl border-0 p-0 text-left shadow-soft transition-all duration-500 hover:shadow-xl hover:-translate-y-1 bg-aeem-charcoal/5 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus focus-visible:ring-offset-2 ${spanClass}`}
     >
       <picture>
         <img
@@ -117,7 +115,7 @@ const GalleryItem = memo(({ photo, index, onClick }: GalleryItemProps) => {
           </p>
         )}
       </div>
-    </div>
+    </button>
   );
 });
 
