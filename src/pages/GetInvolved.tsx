@@ -31,6 +31,35 @@ export const GetInvolved: React.FC = () => {
   const [error, setError] = useState<string | null>(null)
   const [honeypot, setHoneypot] = useState('')
   const formRef = useRef<HTMLFormElement>(null)
+  const tabRefs = useRef<Array<HTMLButtonElement | null>>([])
+
+  const handleTabKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>, currentIndex: number) => {
+    let nextIndex: number
+    switch (event.key) {
+      case 'ArrowRight':
+      case 'ArrowDown':
+        nextIndex = (currentIndex + 1) % TABS.length
+        break
+      case 'ArrowLeft':
+      case 'ArrowUp':
+        nextIndex = (currentIndex - 1 + TABS.length) % TABS.length
+        break
+      case 'Home':
+        nextIndex = 0
+        break
+      case 'End':
+        nextIndex = TABS.length - 1
+        break
+      default:
+        return
+    }
+
+    event.preventDefault()
+    const nextTab = TABS[nextIndex]
+    if (!nextTab) return
+    switchTab(nextTab.id)
+    tabRefs.current[nextIndex]?.focus()
+  }
 
   const switchTab = (tab: TabId) => {
     setActiveTab(tab)
@@ -143,11 +172,11 @@ export const GetInvolved: React.FC = () => {
             <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-gold">Ways to contribute</p>
             <h2 className="mt-3 text-2xl font-bold text-aeem-ink dark:text-white sm:text-3xl">Choose your path</h2>
             <div className="mt-10 space-y-4" role="tablist" aria-label="Ways to get involved">
-              {TABS.map(tab => {
+              {TABS.map((tab, index) => {
                 const Icon = tab.icon
                 const selected = activeTab === tab.id
                 return (
-                  <button key={tab.id} type="button" role="tab" aria-selected={selected} aria-controls="involvement-panel" onClick={() => switchTab(tab.id)}
+                  <button key={tab.id} ref={element => { tabRefs.current[index] = element }} type="button" role="tab" id={`involvement-tab-${tab.id}`} tabIndex={selected ? 0 : -1} aria-selected={selected} aria-controls="involvement-panel" onClick={() => switchTab(tab.id)} onKeyDown={event => handleTabKeyDown(event, index)}
                     className={`flex w-full items-start gap-4 rounded-2xl border p-5 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus ${selected ? 'border-aeem-forest bg-aeem-forest/5 dark:border-aeem-gold dark:bg-aeem-gold/5' : 'border-black/10 hover:border-aeem-forest/40 dark:border-white/10'}`}>
                     <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${selected ? 'bg-aeem-forest text-white dark:bg-aeem-gold' : 'bg-aeem-forest/5 text-aeem-forest dark:bg-white/5 dark:text-aeem-gold-light'}`}><Icon size={20} aria-hidden="true" /></span>
                     <span><span className="block font-semibold text-aeem-ink dark:text-white">{tab.title}</span><span className="mt-1 block text-sm leading-6 text-aeem-ink/65 dark:text-white/65">{tab.desc}</span></span>
@@ -157,7 +186,7 @@ export const GetInvolved: React.FC = () => {
             </div>
           </div>
 
-          <Card className="px-3 py-6 sm:px-8 lg:col-span-3" id="involvement-panel">
+          <Card className="px-3 py-6 sm:px-8 lg:col-span-3" id="involvement-panel" role="tabpanel" aria-labelledby={`involvement-tab-${activeTab}`}>
             {submitted ? (
               <div className="px-3 py-10 text-center sm:px-8">
                 <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-aeem-forest/10 text-aeem-forest dark:bg-aeem-gold/10 dark:text-aeem-gold-light"><CheckCircle2 size={28} aria-hidden="true" /></div>
