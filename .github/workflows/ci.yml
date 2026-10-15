@@ -33,6 +33,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Report dependency audit (informational)
+        run: node scripts/report-npm-audit.mjs
+
       - name: Test Edge Function logic
         run: node scripts/test-edge-functions.mjs
 
