@@ -21,12 +21,14 @@ export default function Events() {
   useEffect(() => {
     let active = true
 
-    supabase
-      .from('events')
-      .select('id, title, slug, description, event_date, location, status, cover_image_url')
-      .eq('published', true)
-      .order('event_date', { ascending: false })
-      .then(({ data, error }) => {
+    const loadEvents = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('events')
+          .select('id, title, slug, description, event_date, location, status, cover_image_url')
+          .eq('published', true)
+          .order('event_date', { ascending: false })
+
         if (!active) return
         if (error) {
           console.error('Error fetching events:', error)
@@ -34,8 +36,16 @@ export default function Events() {
         } else {
           setEvents((data ?? []) as unknown as EventListItem[])
         }
-        setLoading(false)
-      })
+      } catch (err) {
+        if (!active) return
+        console.error('Error fetching events:', err)
+        setEvents([])
+      } finally {
+        if (active) setLoading(false)
+      }
+    }
+
+    void loadEvents()
 
     return () => {
       active = false

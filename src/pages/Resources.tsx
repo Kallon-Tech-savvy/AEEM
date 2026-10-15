@@ -15,12 +15,14 @@ export default function Resources() {
   useEffect(() => {
     let active = true
 
-    supabase
-      .from('resources')
-      .select('id, title, slug, type, description, summary, category, created_at, tags, image_url')
-      .eq('published', true)
-      .order('created_at', { ascending: false })
-      .then(({ data, error: supabaseError }) => {
+    const loadResources = async () => {
+      try {
+        const { data, error: supabaseError } = await supabase
+          .from('resources')
+          .select('id, title, slug, type, description, summary, category, created_at, tags, image_url')
+          .eq('published', true)
+          .order('created_at', { ascending: false })
+
         if (!active) return
         if (supabaseError) {
           console.error('Error fetching resources:', supabaseError)
@@ -28,8 +30,16 @@ export default function Resources() {
         } else {
           setResources((data ?? []) as unknown as ResourceListItem[])
         }
-        setLoading(false)
-      })
+      } catch (err) {
+        if (!active) return
+        console.error('Error fetching resources:', err)
+        setError(true)
+      } finally {
+        if (active) setLoading(false)
+      }
+    }
+
+    void loadResources()
 
     return () => {
       active = false
