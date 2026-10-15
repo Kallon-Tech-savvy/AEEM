@@ -9,9 +9,19 @@ export function AwardSlider() {
   const carouselRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (carouselRef.current) {
-      setWidth(Math.max(0, carouselRef.current.scrollWidth - carouselRef.current.offsetWidth))
+    const carousel = carouselRef.current
+    if (!carousel) return
+
+    const updateWidth = () => {
+      setWidth(Math.max(0, carousel.scrollWidth - carousel.offsetWidth))
     }
+
+    updateWidth()
+
+    const observer = new ResizeObserver(updateWidth)
+    observer.observe(carousel)
+
+    return () => observer.disconnect()
   }, [])
 
   const handleScroll = (direction: 'left' | 'right') => {
