@@ -34,7 +34,14 @@ export default function Events() {
         } else {
           setEvents((data ?? []) as unknown as EventListItem[])
         }
-        setLoading(false)
+      })
+      .catch((err: unknown) => {
+        if (!active) return
+        console.error('Error fetching events:', err)
+        setEvents([])
+      })
+      .finally(() => {
+        if (active) setLoading(false)
       })
 
     return () => {
