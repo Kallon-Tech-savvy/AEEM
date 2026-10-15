@@ -146,26 +146,27 @@ async function testDeployedSiteBundle() {
   )
 
   const html = await page.text()
-  // Follow both HTML asset paths and relative imports in built JS chunks.
-  // Resolve each reference against the file that contains it; relative imports
-  // such as "./Contact-....js" are relative to the importing chunk, not /contact.
-  const assetPattern = /(?:\.\/|\/)?(?:assets\/)?[^"'\x60\\s]+\.js/g
+  // Parse actual HTML script sources and JavaScript module specifiers instead
+  // of scanning arbitrary text, which can miss or mis-resolve minified imports.
+  const moduleReferencePattern = /(?:\\bsrc\\s*=\\s*|\\bfrom\\s*|\\bimport\\s*\\()\\s*["'`]([^"'`]+\\.js(?:\\?[^"'`]*)?)["'`]/g
   const discoveredAssets = new Set()
   const siteOrigin = new URL(page.url).origin
 
   function discoverAssets(source, baseUrl) {
-    for (const match of source.matchAll(assetPattern)) {
-      const reference = match[0]
+    for (const match of source.matchAll(moduleReferencePattern)) {
+      const reference = match[1]
       if (!reference.startsWith('./') && !reference.startsWith('/') && !reference.startsWith('assets/')) {
         continue
       }
-      // Vite emits root-based "./assets/..." URLs in HTML and JS, but
-      // "./Chunk.js" imports inside /assets/*.js are relative to that chunk.
+
+      // Vite emits "./assets/..." paths relative to the site root, while
+      // "./Chunk.js" module imports are relative to the importing chunk.
       const assetUrl = reference.startsWith('./assets/')
         ? new URL(reference.slice(2), siteOrigin)
         : reference.startsWith('assets/')
           ? new URL(`/${reference}`, siteOrigin)
           : new URL(reference, baseUrl)
+
       if (assetUrl.origin === siteOrigin && assetUrl.pathname.endsWith('.js')) {
         discoveredAssets.add(assetUrl.toString())
       }
@@ -189,11 +190,10 @@ async function testDeployedSiteBundle() {
     const source = await response.text()
     bundleContents.push(source)
 
-    const before = discoveredAssets.size
     discoverAssets(source, src)
-    if (discoveredAssets.size > before) {
-      for (const assetUrl of discoveredAssets) {
-        if (!inspectedAssets.has(assetUrl)) pendingAssets.push(assetUrl)
+    for (const assetUrl of discoveredAssets) {
+      if (!inspectedAssets.has(assetUrl) && !pendingAssets.includes(assetUrl)) {
+        pendingAssets.push(assetUrl)
       }
     }
   }
