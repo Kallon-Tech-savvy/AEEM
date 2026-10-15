@@ -148,7 +148,7 @@ async function testDeployedSiteBundle() {
   const html = await page.text()
   // Parse actual HTML script sources and JavaScript module specifiers instead
   // of scanning arbitrary text, which can miss or mis-resolve minified imports.
-  const moduleReferencePattern = /(?:\\bsrc\\s*=\\s*|\\bfrom\\s*|\\bimport\\s*\\()\\s*["'`]([^"'`]+\\.js(?:\\?[^"'`]*)?)["'`]/g
+  const moduleReferencePattern = /(?:\bsrc\s*=\s*|\bfrom\s*|\bimport\s*\()\s*["'`]([^"'`]+\.js(?:\?[^"'`]*)?)["'`]/g
   const discoveredAssets = new Set()
   const siteOrigin = new URL(page.url).origin
 
