@@ -61,7 +61,7 @@ export default function ResourceDetail() {
     <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-gold">Knowledge Hub</p>
     <h1 className="mt-4 text-3xl font-bold text-aeem-ink dark:text-white sm:text-4xl">Resource not found.</h1>
     <p className="mx-auto mt-4 max-w-xl leading-7 text-aeem-ink/70 dark:text-white/70">This resource does not exist, is unpublished, or is temporarily unavailable.</p>
-    <Link to="/resources" className="mt-8 inline-flex min-h-11 items-center gap-2 rounded-xl border border-aeem-forest bg-aeem-forest px-5 text-sm font-semibold text-white hover:bg-aeem-forest-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus"><ArrowLeft size={16} aria-hidden="true" />Back to Knowledge Hub</Link>
+    <Link to="/resources" className="mt-8 inline-flex min-h-11 items-center gap-2 rounded-xl border border-aeem-blue bg-aeem-blue px-5 text-sm font-semibold text-white hover:bg-aeem-blue-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus"><ArrowLeft size={16} aria-hidden="true" />Back to Knowledge Hub</Link>
   </div></Section>
 
   const description = resource.description ?? resource.summary ?? ''
@@ -88,7 +88,7 @@ export default function ResourceDetail() {
     </Helmet>
 
     <Section spacing="large" containerNarrow className="bg-aeem-cream dark:bg-aeem-charcoal">
-        <Link to="/resources" className="inline-flex items-center gap-2 text-sm font-semibold text-aeem-ink/60 hover:text-aeem-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:text-white/60 dark:hover:text-aeem-gold-light"><ArrowLeft size={16} aria-hidden="true" />Back to Knowledge Hub</Link>
+        <Link to="/resources" className="inline-flex items-center gap-2 text-sm font-semibold text-aeem-ink/60 hover:text-aeem-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:text-white/60 dark:hover:text-aeem-gold-light"><ArrowLeft size={16} aria-hidden="true" />Back to Knowledge Hub</Link>
         <div className="mt-10 flex flex-wrap items-center gap-3"><Badge>{type}</Badge>{year && <span className="text-sm text-aeem-ink/60 dark:text-white/60">{year}</span>}{resource.reading_time && <span className="inline-flex items-center gap-1.5 text-sm text-aeem-ink/60 dark:text-white/60"><Clock size={14} aria-hidden="true" />{resource.reading_time}</span>}</div>
         <h1 className="mt-6 text-4xl font-bold leading-tight text-aeem-ink dark:text-white sm:text-5xl lg:text-6xl">{resource.title}</h1>
         {resource.summary && <p className="mt-6 text-xl leading-8 text-aeem-ink/70 dark:text-white/70">{resource.summary}</p>}
