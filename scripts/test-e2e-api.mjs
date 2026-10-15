@@ -146,25 +146,48 @@ async function testDeployedSiteBundle() {
   )
 
   const html = await page.text()
-  const scriptSources = [...html.matchAll(/<script[^>]+src=["']([^"']+)["']/gi)]
-    .map((match) => match[1])
-    .filter((src) => src.includes('/assets/'))
+  const assetPattern = /(?:\.\/|\/)?assets\/[^"'\x60\\s]+\.js/g
+  const discoveredAssets = new Set()
 
-  assert.ok(scriptSources.length > 0, 'No application JavaScript bundle was found on /contact')
+  // Vite/Rolldown may put the inquiry client in a lazy-loaded route chunk.
+  // Follow local JS asset references recursively instead of inspecting only
+  // the entry script, which can miss code that is loaded after navigation.
+  function discoverAssets(source) {
+    for (const match of source.matchAll(assetPattern)) {
+      const assetUrl = new URL(match[0].replace(/^\.\//, '/'), page.url)
+      if (assetUrl.origin === new URL(page.url).origin) {
+        discoveredAssets.add(assetUrl.toString())
+      }
+    }
+  }
 
-  const absoluteSources = scriptSources.map((src) =>
-    new URL(src, page.url).toString(),
-  )
+  discoverAssets(html)
+  assert.ok(discoveredAssets.size > 0, 'No application JavaScript bundle was found on /contact')
 
-  const bundles = await Promise.all(
-    absoluteSources.map(async (src) => {
-      const response = await fetch(src)
-      assert.strictEqual(response.status, 200, `Failed to fetch application bundle: ${src}`)
-      return response.text()
-    }),
-  )
+  const pendingAssets = [...discoveredAssets]
+  const inspectedAssets = new Set()
+  const bundleContents = []
 
-  const appCode = bundles.join('\n')
+  while (pendingAssets.length > 0) {
+    const src = pendingAssets.pop()
+    if (inspectedAssets.has(src)) continue
+    inspectedAssets.add(src)
+
+    const response = await fetch(src)
+    assert.strictEqual(response.status, 200, `Failed to fetch application bundle: ${src}`)
+    const source = await response.text()
+    bundleContents.push(source)
+
+    const before = discoveredAssets.size
+    discoverAssets(source)
+    if (discoveredAssets.size > before) {
+      for (const assetUrl of discoveredAssets) {
+        if (!inspectedAssets.has(assetUrl)) pendingAssets.push(assetUrl)
+      }
+    }
+  }
+
+  const appCode = bundleContents.join('\n')
   assert.doesNotMatch(
     appCode,
     /\/rest\/v1\/subscriptions/,
