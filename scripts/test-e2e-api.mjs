@@ -159,7 +159,13 @@ async function testDeployedSiteBundle() {
       if (!reference.startsWith('./') && !reference.startsWith('/') && !reference.startsWith('assets/')) {
         continue
       }
-      const assetUrl = new URL(reference, baseUrl)
+      // Vite emits root-based "./assets/..." URLs in HTML and JS, but
+      // "./Chunk.js" imports inside /assets/*.js are relative to that chunk.
+      const assetUrl = reference.startsWith('./assets/')
+        ? new URL(reference.slice(2), siteOrigin)
+        : reference.startsWith('assets/')
+          ? new URL(`/${reference}`, siteOrigin)
+          : new URL(reference, baseUrl)
       if (assetUrl.origin === siteOrigin && assetUrl.pathname.endsWith('.js')) {
         discoveredAssets.add(assetUrl.toString())
       }
