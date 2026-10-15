@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Container } from '../ui'
@@ -54,6 +54,8 @@ const actionLink =
   'inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border px-6 text-base font-semibold transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus focus-visible:ring-offset-2'
 
 export default function Hero() {
+  const shouldReduceMotion = useReducedMotion()
+
   return (
     <section
       id="home"
@@ -66,7 +68,7 @@ export default function Hero() {
         <motion.div
           initial={false}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.55 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.55 }}
         >
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-aeem-blue dark:text-aeem-gold-light">
             Fair access to education for all
@@ -99,9 +101,9 @@ export default function Hero() {
 
         <motion.div
           className="relative mx-auto w-full max-w-[520px]"
-          initial={{ opacity: 0 }}
+          initial={shouldReduceMotion ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.15 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.8, delay: 0.15 }}
         >
           <svg
             viewBox="0 0 440 530"
@@ -134,9 +136,9 @@ export default function Hero() {
                   strokeWidth="0.8"
                   strokeOpacity="0.65"
                   strokeDasharray={len}
-                  initial={{ strokeDashoffset: len }}
+                  initial={shouldReduceMotion ? false : { strokeDashoffset: len }}
                   animate={{ strokeDashoffset: 0 }}
-                  transition={{ duration: 0.8, delay: city.delay, ease: 'easeOut' }}
+                  transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.8, delay: city.delay, ease: 'easeOut' }}
                 />
               )
             })}
@@ -148,9 +150,9 @@ export default function Hero() {
                 cy={city.y}
                 r={2.5}
                 fill="#D4AF37"
-                initial={{ opacity: 0, r: 0 }}
+                initial={shouldReduceMotion ? false : { opacity: 0, r: 0 }}
                 animate={{ opacity: 0.9, r: 2.5 }}
-                transition={{ delay: city.delay + 0.65, duration: 0.25 }}
+                transition={shouldReduceMotion ? { duration: 0 } : { delay: city.delay + 0.65, duration: 0.25 }}
               />
             ))}
 
@@ -159,8 +161,8 @@ export default function Hero() {
               cy={FREETOWN.y}
               r={5}
               fill="#D4AF37"
-              animate={{ opacity: [1, 0.55, 1] }}
-              transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+              animate={shouldReduceMotion ? { opacity: 1 } : { opacity: [1, 0.55, 1] }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
             />
 
             <text
