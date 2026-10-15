@@ -27,22 +27,26 @@ export default function EventDetail() {
       return
     }
 
-    supabase
-      .from('events')
-      .select('id, title, slug, description, event_date, location, status, cover_image_url')
-      .eq('slug', slug)
-      .eq('published', true)
-      .single()
-      .then(({ data, error }) => {
-        if (!active) return
-        if (error || !data) {
-          console.error('Error fetching event:', error)
-          setEvent(null)
-        } else {
-          setEvent(data as unknown as EventListItem)
-        }
-        setLoading(false)
-      })
+    const loadEvent = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('events')
+          .select('id, title, slug, description, event_date, location, status, cover_image_url')
+          .eq('slug', slug)
+          .eq('published', true)
+          .single()
+
+        if (error) throw error
+        if (active) setEvent(data as unknown as EventListItem)
+      } catch (err) {
+        console.error('Error fetching event:', err)
+        if (active) setEvent(null)
+      } finally {
+        if (active) setLoading(false)
+      }
+    }
+
+    void loadEvent()
 
     return () => {
       active = false
