@@ -76,7 +76,7 @@ export default function EventDetail() {
           </p>
           <Link
             to="/events"
-            className="mt-8 inline-flex min-h-11 items-center gap-2 rounded-xl border border-aeem-forest bg-aeem-forest px-5 text-sm font-semibold text-white hover:bg-aeem-forest-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus"
+            className="mt-8 inline-flex min-h-11 items-center gap-2 rounded-xl border border-aeem-blue bg-aeem-blue px-5 text-sm font-semibold text-white hover:bg-aeem-blue-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus"
           >
             <ArrowLeft size={16} aria-hidden="true" />
             Back to Events
@@ -113,7 +113,7 @@ export default function EventDetail() {
       <Section spacing="large" containerNarrow className="bg-aeem-cream dark:bg-aeem-charcoal">
           <Link
             to="/events"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-aeem-ink/60 hover:text-aeem-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:text-white/60 dark:hover:text-aeem-gold-light"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-aeem-ink/60 hover:text-aeem-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:text-white/60 dark:hover:text-aeem-gold-light"
           >
             <ArrowLeft size={16} aria-hidden="true" />
             Back to Events
