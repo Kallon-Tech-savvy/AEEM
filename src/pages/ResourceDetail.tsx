@@ -17,13 +17,26 @@ export default function ResourceDetail() {
   useEffect(() => {
     let active = true
     if (!slug) { setLoading(false); return }
-    supabase.from('resources').select('title, slug, type, description, summary, body, full_body, file_url, category, created_at, reading_time, tags, image_url, bullet_points').eq('slug', slug).eq('published', true).single()
-      .then(({ data, error }) => {
-        if (!active) return
-        if (error) console.error('Error fetching resource:', error)
-        setResource(error ? null : data as unknown as ResourceDetailItem)
-        setLoading(false)
-      })
+    const loadResource = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('resources')
+          .select('title, slug, type, description, summary, body, full_body, file_url, category, created_at, reading_time, tags, image_url, bullet_points')
+          .eq('slug', slug)
+          .eq('published', true)
+          .single()
+
+        if (error) throw error
+        if (active) setResource(data as unknown as ResourceDetailItem)
+      } catch (err) {
+        console.error('Error fetching resource:', err)
+        if (active) setResource(null)
+      } finally {
+        if (active) setLoading(false)
+      }
+    }
+
+    void loadResource()
     return () => { active = false }
   }, [slug])
 
