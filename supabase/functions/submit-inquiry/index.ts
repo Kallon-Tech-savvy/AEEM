@@ -8,8 +8,7 @@ const extraOrigins = (Deno.env.get('ALLOWED_ORIGINS') ?? '')
   .filter(Boolean)
 
 const ALLOWED_ORIGINS = new Set([
-  'https://www.aeemmovement.org',
-  'https://aeem-w.vercel.app',
+    'https://aeem-w.vercel.app',
   'http://localhost:5173',
   ...extraOrigins,
 ])
