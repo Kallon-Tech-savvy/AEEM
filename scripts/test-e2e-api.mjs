@@ -241,10 +241,12 @@ async function testPublicContentEndpoint(table) {
 
 async function run() {
   try {
-    await testDeployedSiteBundle()
+    // Verify the deployed API before inspecting frontend assets. This separates
+    // real endpoint failures from a stale or incomplete bundle-discovery check.
     await testInquiryFunctionReachability()
     await testInquiryValidation()
     await testInquiryHoneypot()
+    await testDeployedSiteBundle()
     await testPublicContentEndpoint('events')
     await testPublicContentEndpoint('impact_stories')
     await testPublicContentEndpoint('resources')
