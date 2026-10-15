@@ -22,6 +22,14 @@ function readStoredTheme(): ThemeMode {
   }
 }
 
+function persistTheme(theme: ThemeMode): void {
+  try {
+    localStorage.setItem(STORAGE_KEY, theme)
+  } catch {
+    // Theme changes still apply for this session when storage is unavailable.
+  }
+}
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   // The first render must be identical on the server (prerendered HTML) and in
   // the browser, so it cannot read localStorage. The stored choice is loaded
@@ -72,7 +80,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   const setTheme = (next: ThemeMode) => {
     setThemeState(next)
-    localStorage.setItem(STORAGE_KEY, next)
+    persistTheme(next)
   }
 
   return (
