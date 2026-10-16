@@ -59,7 +59,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative overflow-hidden bg-aeem-cream pt-24 dark:bg-aeem-charcoal"
+      className="relative overflow-hidden bg-aeem-cream pt-24 dark:bg-aeem-dark-bg"
     >
       <Container className="grid min-h-[calc(100svh-1rem)] grid-cols-1 items-center gap-14 py-20 lg:grid-cols-[1.05fr_0.95fr] lg:gap-24 lg:py-24">
         {/* initial={false}: the text is drawn in its final state from the first paint.
