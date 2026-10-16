@@ -10,7 +10,7 @@ const approach = [
 
 export default function HomeApproach() {
   return (
-    <Section className="bg-white dark:bg-[#15181e]">
+    <Section className="bg-white dark:bg-aeem-dark-bg">
       <div className="mx-auto max-w-3xl text-center">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-aeem-blue dark:text-aeem-gold-light">Methodology</p>
         <h2 className="mt-4 text-4xl font-bold tracking-tight text-aeem-ink dark:text-white sm:text-5xl">
