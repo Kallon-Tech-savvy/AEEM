@@ -102,7 +102,7 @@ export default function ResourceDetail() {
       </article>
 
       {resource.file_url && <Card className="mt-12 flex flex-col gap-5 p-6 sm:flex-row sm:items-center sm:justify-between">
-        <div><h2 className="text-xl font-semibold text-aeem-ink dark:text-white">Download this resource</h2><p className="mt-1 text-sm text-aeem-ink/65 dark:text-white/65">Open the published file in a new tab.</p></div>
+        <div><h2 className="type-card-title text-aeem-ink dark:text-white">Download this resource</h2><p className="mt-1 text-sm text-aeem-ink/65 dark:text-white/65">Open the published file in a new tab.</p></div>
         <Button type="button" onClick={() => { const url = resource.file_url; if (url) window.open(url, '_blank', 'noopener,noreferrer') }}><Download size={17} aria-hidden="true" />Download</Button>
       </Card>}
 
