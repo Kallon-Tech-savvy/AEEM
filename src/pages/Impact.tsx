@@ -79,7 +79,7 @@ export default function Impact() {
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-aeem-forest dark:text-aeem-gold-light">
               Impact stories
             </p>
-            <h2 id="stories-heading" className="mt-3 text-3xl font-bold text-aeem-ink dark:text-white/90 sm:text-4xl">
+            <h2 id="stories-heading" className="mt-3 type-section-title text-aeem-ink dark:text-aeem-dark-text">
               From program activity to human outcomes
             </h2>
             <p className="mt-4 text-base leading-relaxed text-aeem-ink/70 dark:text-white/70">
