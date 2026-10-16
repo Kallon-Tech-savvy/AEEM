@@ -13,10 +13,10 @@ export default function HomeApproach() {
     <Section className="bg-white dark:bg-aeem-dark-bg">
       <div className="mx-auto max-w-3xl text-center">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-aeem-forest dark:text-aeem-gold-light">Methodology</p>
-        <h2 className="mt-4 text-4xl font-bold tracking-tight text-aeem-ink dark:text-white sm:text-5xl">
+        <h2 className="mt-4 type-section-title text-aeem-ink dark:text-aeem-dark-text">
           Our Approach to <span className="text-aeem-forest dark:text-aeem-gold-light">Change</span>
         </h2>
-        <p className="mt-5 text-lg italic leading-8 text-aeem-ink/65 dark:text-gray-400">
+        <p className="mt-5 text-lg italic leading-8 text-aeem-charcoal-soft dark:text-aeem-dark-muted">
           “Fair access to quality education for every child through community-led action,
           clarity, and care.”
         </p>
@@ -28,8 +28,8 @@ export default function HomeApproach() {
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-aeem-forest text-white dark:bg-aeem-gold dark:text-aeem-ink">
               <Icon size={24} aria-hidden="true" />
             </div>
-            <h3 className="mt-6 text-xl font-semibold text-aeem-ink dark:text-white">{title}</h3>
-            <p className="mt-3 text-base leading-7 text-gray-600 dark:text-gray-400">{desc}</p>
+            <h3 className="mt-6 type-card-title text-aeem-ink dark:text-aeem-dark-text">{title}</h3>
+            <p className="mt-3 text-base leading-7 text-aeem-charcoal-soft dark:text-aeem-dark-muted">{desc}</p>
           </Card>
         ))}
       </div>
