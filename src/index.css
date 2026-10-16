@@ -29,18 +29,18 @@
    ────────────────────────────────────────────────────────── */
 :root {
   /* Backgrounds */
-  --color-bg:          #F8F7F4;
-  --color-surface:     #EFEDE8;
-  --color-surface-alt: #E5E2DB;
-  --color-border:      #C8C4BC;
-  --color-border-sub:  #DEDAD3;
+  --color-bg:          #F7F5EF;
+  --color-surface:     #FFFFFF;
+  --color-surface-alt: #EAF2E8;
+  --color-border:      #D6D3CC;
+  --color-border-sub:  #D6D3CC;
 
   /* Text */
-  --color-text-primary:   #1A1A1A;   /* ~18:1 on --color-bg            */
+  --color-text-primary:   #17201A;   /* Canonical AEEM ink */
   --color-text-secondary: #3D3D3D;   /* ~11:1 on --color-bg            */
   --color-text-muted:     #5C5750;   /* ~ 5:1 on --color-bg — AA large */
   --color-text-disabled:  #9A9590;   /* Disabled only, not for content */
-  --color-text-inverse:   #F8F7F4;
+  --color-text-inverse:   #FFFFFF;
 
   /* Canonical AEEM brand palette */
   --color-brand-primary: #2C5F2D;
@@ -54,7 +54,7 @@
   --color-gold-subtle: #D4AF37;   /* Large text / decorative only      */
   --color-gold-deep:   #8A6E12;   /* Hover / active — ~8.1:1           */
   --color-gold-tint:   #FDF6DC;   /* Gold-tinted bg for callouts       */
-  --color-charcoal:    #1A1A1A;
+  --color-charcoal:    #17201A;
 
   /* Semantic */
   --color-success:      #0D9B6E;
@@ -87,23 +87,23 @@
    Applied when <html class="dark"> (toggled by ThemeProvider)
    ────────────────────────────────────────────────────────── */
 .dark {
-  --color-bg:          #0f0f0f;
-  --color-surface:     #1F1F1D; /* slightly lighter for improved separation */
+  --color-bg:          #111110;
+  --color-surface:     #1C1C1A; /* Canonical AEEM dark surface */
   --color-surface-alt: #272725;
-  --color-border:      #50504C; /* stronger border for contrast */
+  --color-border:      #3B3B38; /* Canonical AEEM dark border */
   --color-border-sub:  #3B3B38;
 
-  --color-text-primary:   #FBF8F2;   /* brighter for improved contrast */
+  --color-text-primary:   #F0EDE6;   /* Canonical AEEM dark text */
   --color-text-secondary: #E6E1D9;   /* clearer secondary text */
   --color-text-muted:     #CFC6B8;   /* higher contrast muted text */
   --color-text-disabled:  #6B6762;
-  --color-text-inverse:   #0f0f0f;
+  --color-text-inverse:   #111110;
 
   --color-gold:        #E1C85A;   /* tuned for better readability on dark */
   --color-gold-subtle: #ECD286;
   --color-gold-deep:   #C9A934;
   --color-gold-tint:   #221C08;
-  --color-charcoal:    #FBF8F2;
+  --color-charcoal:    #F0EDE6;
 
   --color-success:      #34D399;
   --color-success-bg:   #022C22;
