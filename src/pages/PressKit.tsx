@@ -19,7 +19,7 @@ const PressKit: React.FC = () => (
     <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
       <div className="max-w-3xl">
         <Badge>Media resources</Badge>
-        <h1 className="mt-5 text-4xl font-bold leading-tight text-aeem-ink dark:text-white sm:text-5xl lg:text-6xl">Press resources for understanding AEEM.</h1>
+        <h1 className="mt-5 type-page-title text-aeem-ink dark:text-aeem-dark-text">Press resources for understanding AEEM.</h1>
         <p className="mt-6 max-w-2xl text-lg leading-8 text-aeem-ink/70 dark:text-white/70">
           Use this page as a starting point for organizational context, approved visual identity assets, and media inquiries.
         </p>
