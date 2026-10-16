@@ -50,7 +50,7 @@ const PressKit: React.FC = () => (
           <div className="flex items-start gap-4">
             <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-aeem-forest/5 text-aeem-forest dark:bg-aeem-gold/10 dark:text-aeem-gold-light"><ImageIcon size={21} aria-hidden="true" /></div>
             <div>
-              <h2 className="text-xl font-bold text-aeem-ink dark:text-white">Brand assets</h2>
+              <h2 className="type-card-title text-aeem-ink dark:text-white">Brand assets</h2>
               <p className="mt-2 text-sm leading-6 text-aeem-ink/65 dark:text-white/65">The current AEEM logo is available directly from the site. Additional packaged logo formats should be published here only when an authoritative asset pack exists.</p>
               <a href="/assets/AEEM_logo.png" download className="mt-5 inline-flex items-center rounded-xl bg-aeem-forest px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-aeem-forest-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus">
                 Download current logo
