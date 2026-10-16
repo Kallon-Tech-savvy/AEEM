@@ -12,7 +12,7 @@ export default function HomeApproach() {
   return (
     <Section className="bg-white dark:bg-aeem-dark-bg">
       <div className="mx-auto max-w-3xl text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-aeem-forest dark:text-aeem-gold-light">Methodology</p>
+        <p className="type-eyebrow text-aeem-forest dark:text-aeem-gold-light">Methodology</p>
         <h2 className="mt-4 type-section-title text-aeem-ink dark:text-aeem-dark-text">
           Our Approach to <span className="text-aeem-forest dark:text-aeem-gold-light">Change</span>
         </h2>
