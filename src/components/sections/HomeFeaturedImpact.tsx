@@ -30,7 +30,7 @@ export default function HomeFeaturedImpact() {
             <div className="mt-8">
               <Link
                 to="/impact/i-am-somebody"
-                className="inline-flex items-center gap-2 rounded-xl bg-aeem-gold px-5 py-3 text-sm font-semibold text-aeem-ink transition-colors hover:bg-aeem-gold-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus focus-visible:ring-offset-2 focus-visible:ring-offset-aeem-blue"
+                className="inline-flex items-center gap-2 rounded-xl bg-aeem-gold px-5 py-3 text-sm font-semibold text-aeem-ink transition-colors hover:bg-aeem-gold-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus focus-visible:ring-offset-2 focus-visible:ring-offset-aeem-forest"
               >
                 Read full report
                 <ArrowRight size={18} aria-hidden="true" />
