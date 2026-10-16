@@ -169,7 +169,7 @@ export const GetInvolved: React.FC = () => {
       <Section>
         <div className="grid gap-10 lg:grid-cols-5 lg:gap-16">
           <div className="lg:col-span-2">
-            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-gold-dark">Ways to contribute</p>
+            <p className="type-eyebrow text-aeem-gold-dark dark:text-aeem-gold-light">Ways to contribute</p>
             <h2 className="mt-3 type-section-title text-aeem-ink dark:text-aeem-dark-text">Choose your path</h2>
             <div className="mt-10 space-y-4" role="tablist" aria-label="Ways to get involved">
               {TABS.map((tab, index) => {
