@@ -50,9 +50,9 @@
   --color-brand-highlight: #E94E77;
 
   /* Accessible gold utility, distinct from decorative brand gold */
-  --color-gold:        #B8941A;   /* ~5.2:1 on --color-bg — AA normal  */
+  --color-gold:        #765500;   /* High-contrast gold text on light surfaces */
   --color-gold-subtle: #D4AF37;   /* Large text / decorative only      */
-  --color-gold-deep:   #8A6E12;   /* Hover / active — ~8.1:1           */
+  --color-gold-deep:   #5F4500;   /* Darker hover state for clear contrast */
   --color-gold-tint:   #FDF6DC;   /* Gold-tinted bg for callouts       */
   --color-charcoal:    #17201A;
 
