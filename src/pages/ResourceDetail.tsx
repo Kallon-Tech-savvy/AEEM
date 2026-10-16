@@ -58,7 +58,7 @@ export default function ResourceDetail() {
   if (loading) return <div className="flex min-h-[60vh] items-center justify-center"><Loader2 className="animate-spin text-aeem-gold-dark dark:text-aeem-gold-light" size={32} aria-label="Loading resource" /></div>
 
   if (!resource) return <Section spacing="large" containerNarrow className="bg-aeem-cream dark:bg-aeem-charcoal"><div className="text-center">
-    <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-gold-dark dark:text-aeem-gold-light">Knowledge Hub</p>
+    <p className="type-eyebrow text-aeem-gold-dark dark:text-aeem-gold-light">Knowledge Hub</p>
     <h1 className="mt-4 type-page-title text-aeem-ink dark:text-aeem-dark-text">Resource not found.</h1>
     <p className="mx-auto mt-4 max-w-xl leading-7 text-aeem-charcoal-soft dark:text-aeem-dark-muted">This resource does not exist, is unpublished, or is temporarily unavailable.</p>
     <Link to="/resources" className="mt-8 inline-flex min-h-11 items-center gap-2 rounded-xl border border-aeem-forest bg-aeem-forest px-5 text-sm font-semibold text-white hover:bg-aeem-forest-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus"><ArrowLeft size={16} aria-hidden="true" />Back to Knowledge Hub</Link>
