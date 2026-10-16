@@ -73,7 +73,7 @@ export default function Impact() {
         </p>
       </Section>
 
-      <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-dark-bg-mid" aria-labelledby="stories-heading">
+      <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-dark-surface" aria-labelledby="stories-heading">
         <div className="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-3xl">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-aeem-blue dark:text-aeem-gold-light">
@@ -116,7 +116,7 @@ export default function Impact() {
                       className="h-full w-full object-cover"
                     />
                   ) : (
-                    <div className="h-full w-full bg-aeem-blue dark:bg-aeem-dark-bg-mid" aria-hidden="true" />
+                    <div className="h-full w-full bg-aeem-blue dark:bg-aeem-dark-surface" aria-hidden="true" />
                   )}
                 </div>
                 <div className="p-6 sm:p-8">
