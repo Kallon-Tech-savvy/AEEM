@@ -74,7 +74,7 @@ export default function Resources() {
       <Section>
         {loading ? (
           <div className="flex min-h-[300px] items-center justify-center">
-            <Loader2 className="animate-spin text-aeem-gold" size={32} aria-label="Loading resources" />
+            <Loader2 className="animate-spin text-aeem-forest dark:text-aeem-gold-light" size={32} aria-label="Loading resources" />
           </div>
         ) : error ? (
           <Card className="p-12 text-center">
