@@ -137,7 +137,7 @@ const Contact: React.FC = () => {
       <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
         <div className="max-w-3xl">
           <Badge>Get in touch</Badge>
-          <h1 className="mt-5 text-4xl font-bold leading-tight text-aeem-ink dark:text-white sm:text-5xl lg:text-6xl">A direct line to AEEM.</h1>
+          <h1 className="mt-5 type-page-title text-aeem-ink dark:text-aeem-dark-text">A direct line to AEEM.</h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-aeem-ink/70 dark:text-white/70">For general questions, program inquiries, partnerships, or media requests, send a message or use the contact details below.</p>
         </div>
       </Section>
