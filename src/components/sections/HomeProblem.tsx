@@ -9,7 +9,7 @@ const points = [
 
 export default function HomeProblem() {
   return (
-    <Section className="bg-aeem-cream dark:bg-[#0f1115]">
+    <Section className="bg-aeem-cream dark:bg-aeem-dark-bg">
       <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-20">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-aeem-blue dark:text-aeem-gold-light">The challenge</p>
