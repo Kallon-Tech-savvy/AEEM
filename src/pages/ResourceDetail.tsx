@@ -57,7 +57,7 @@ export default function ResourceDetail() {
 
   if (loading) return <div className="flex min-h-[60vh] items-center justify-center"><Loader2 className="animate-spin text-aeem-gold-dark dark:text-aeem-gold-light" size={32} aria-label="Loading resource" /></div>
 
-  if (!resource) return <Section spacing="large" containerNarrow className="bg-aeem-cream dark:bg-aeem-charcoal"><div className="text-center">
+  if (!resource) return <Section spacing="large" containerNarrow className="bg-aeem-cream dark:bg-aeem-dark-bg"><div className="text-center">
     <p className="type-eyebrow text-aeem-gold-dark dark:text-aeem-gold-light">Knowledge Hub</p>
     <h1 className="mt-4 type-page-title text-aeem-ink dark:text-aeem-dark-text">Resource not found.</h1>
     <p className="mx-auto mt-4 max-w-xl leading-7 text-aeem-charcoal-soft dark:text-aeem-dark-muted">This resource does not exist, is unpublished, or is temporarily unavailable.</p>
@@ -87,7 +87,7 @@ export default function ResourceDetail() {
       )}
     </Helmet>
 
-    <Section spacing="large" containerNarrow className="bg-aeem-cream dark:bg-aeem-charcoal">
+    <Section spacing="large" containerNarrow className="bg-aeem-cream dark:bg-aeem-dark-bg">
         <Link to="/resources" className="inline-flex items-center gap-2 text-sm font-semibold text-aeem-ink/60 hover:text-aeem-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:text-white/60 dark:hover:text-aeem-gold-light"><ArrowLeft size={16} aria-hidden="true" />Back to Knowledge Hub</Link>
         <div className="mt-10 flex flex-wrap items-center gap-3"><Badge>{type}</Badge>{year && <span className="text-sm text-aeem-charcoal-soft dark:text-aeem-dark-muted">{year}</span>}{resource.reading_time && <span className="inline-flex items-center gap-1.5 text-sm text-aeem-charcoal-soft dark:text-aeem-dark-muted"><Clock size={14} aria-hidden="true" />{resource.reading_time}</span>}</div>
         <h1 className="mt-6 type-page-title text-aeem-ink dark:text-aeem-dark-text">{resource.title}</h1>
