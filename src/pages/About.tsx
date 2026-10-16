@@ -83,7 +83,7 @@ const About: React.FC = () => (
       </div>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {leadershipTeam.map((member) => (
-          <article key={member.name} className="overflow-hidden rounded-2xl border border-gray-200 bg-white dark:border-white/10 dark:bg-white/[0.03]">
+          <article key={member.name} className="overflow-hidden rounded-2xl border border-aeem-border bg-aeem-surface dark:border-aeem-dark-border dark:bg-aeem-dark-surface">
             <div className="aspect-[4/5] overflow-hidden bg-gray-200 dark:bg-gray-800">
               <picture>
                 <source type="image/webp" srcSet={`/assets/gallery/${member.fileName}.webp`} sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" />
@@ -116,10 +116,10 @@ const About: React.FC = () => (
       </div>
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
         {partners.map((partner) => (
-          <div key={partner.name} className="flex min-h-[128px] flex-col items-center justify-center rounded-2xl border border-gray-200 bg-white p-5 text-center dark:border-white/10 dark:bg-white/[0.03]">
+          <div key={partner.name} className="flex min-h-[128px] flex-col items-center justify-center rounded-2xl border border-aeem-border bg-aeem-surface p-5 text-center dark:border-aeem-dark-border dark:bg-aeem-dark-surface">
             <img src={partner.url} alt={`${partner.name} logo`} width={160} height={80} loading="lazy" decoding="async" className="h-16 w-full object-contain opacity-80" />
             <span className="mt-3 text-sm font-semibold text-aeem-ink dark:text-aeem-dark-text">{partner.name}</span>
-            <span className="mt-1 text-[10px] leading-tight text-gray-500">{partner.sub}</span>
+            <span className="mt-1 text-xs leading-tight text-aeem-charcoal-soft dark:text-aeem-dark-muted">{partner.sub}</span>
           </div>
         ))}
       </div>
