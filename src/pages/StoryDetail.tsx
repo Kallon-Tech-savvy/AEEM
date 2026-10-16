@@ -118,7 +118,7 @@ export default function StoryDetail() {
     return (
       <Section spacing="large" containerNarrow className="bg-aeem-cream dark:bg-aeem-charcoal">
         <div className="text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-gold-dark dark:text-aeem-gold-light">
+          <p className="type-eyebrow text-aeem-gold-dark dark:text-aeem-gold-light">
             Impact Report
           </p>
           <h1 className="mt-4 type-page-title text-aeem-ink dark:text-aeem-dark-text">
