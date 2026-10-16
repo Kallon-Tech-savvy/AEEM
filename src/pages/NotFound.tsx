@@ -56,7 +56,7 @@ const NotFound: React.FC = () => {
             <div className="flex flex-col sm:flex-row gap-5 justify-center">
               <Link
                 to="/"
-                className="inline-flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-aeem-gold to-yellow-500 text-aeem-charcoal rounded-full font-bold hover:shadow-[0_10px_30px_rgba(212,175,55,0.4)] hover:-translate-y-1 transition-all active:scale-95 text-sm ring-1 ring-yellow-400/50"
+                className="inline-flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-aeem-gold to-aeem-gold-light text-aeem-charcoal rounded-full font-bold hover:shadow-[0_10px_30px_rgba(212,175,55,0.4)] hover:-translate-y-1 transition-all active:scale-95 text-sm ring-1 ring-yellow-400/50"
               >
                 <Home size={18} /> Back to Home
               </Link>
