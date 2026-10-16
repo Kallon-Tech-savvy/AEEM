@@ -12,11 +12,11 @@ const NotFound: React.FC = () => {
         <meta name="description" content="The page you are looking for does not exist on the AEEM platform." />
       </Helmet>
 
-      <section className="min-h-screen bg-aeem-cream dark:bg-aeem-dark-bg text-aeem-charcoal dark:text-white flex items-center justify-center pt-20 overflow-hidden relative perspective-[1000px]">
+      <section className="min-h-screen bg-aeem-cream dark:bg-aeem-dark-bg text-aeem-ink dark:text-aeem-dark-text flex items-center justify-center pt-20 overflow-hidden relative perspective-[1000px]">
         
         {/* Ambient bloom backgrounds for depth */}
         <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-aeem-gold/20 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-aeem-focus/10 dark:bg-blue-900/20 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-aeem-forest/10 dark:bg-aeem-gold/5 rounded-full blur-[100px] pointer-events-none" />
         
         {/* Subtle dot grid with perspective fade */}
         <div
@@ -33,7 +33,7 @@ const NotFound: React.FC = () => {
             initial={{ opacity: 0, scale: 0.9, rotateX: 10, y: 30 }}
             animate={{ opacity: 1, scale: 1, rotateX: 0, y: 0 }}
             transition={{ duration: 0.7, type: "spring", bounce: 0.4 }}
-            className="bg-white/60 dark:bg-black/40 backdrop-blur-2xl border border-white/40 dark:border-white/10 p-10 md:p-14 rounded-[3rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_30px_100px_-15px_rgba(0,0,0,0.5)] ring-1 ring-black/5 dark:ring-white/5"
+            className="bg-aeem-surface/90 dark:bg-aeem-dark-surface/90 backdrop-blur-2xl border border-aeem-border dark:border-aeem-dark-border p-10 md:p-14 rounded-[3rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_30px_100px_-15px_rgba(0,0,0,0.5)] ring-1 ring-black/5 dark:ring-white/5"
           >
             {/* Warning Icon Badge - Elevated */}
             <div className="w-24 h-24 bg-gradient-to-br from-aeem-gold/20 to-aeem-gold/5 border border-aeem-gold/30 text-aeem-forest dark:text-aeem-gold-light rounded-full flex items-center justify-center mx-auto mb-8 shadow-[0_10px_30px_rgba(212,175,55,0.2)]">
@@ -62,7 +62,7 @@ const NotFound: React.FC = () => {
               </Link>
               <Link
                 to="/contact"
-                className="inline-flex items-center justify-center gap-2 px-6 py-4 bg-white/50 dark:bg-white/5 backdrop-blur-md border border-aeem-border dark:border-aeem-dark-border text-aeem-charcoal dark:text-white rounded-full font-bold hover:bg-white dark:hover:bg-white/10 hover:-translate-y-1 hover:shadow-xl transition-all active:scale-95 text-sm"
+                className="inline-flex items-center justify-center gap-2 px-6 py-4 bg-aeem-surface/80 dark:bg-aeem-dark-surface/80 backdrop-blur-md border border-aeem-border dark:border-aeem-dark-border text-aeem-ink dark:text-aeem-dark-text rounded-full font-bold hover:bg-white dark:hover:bg-white/10 hover:-translate-y-1 hover:shadow-xl transition-all active:scale-95 text-sm"
               >
                 <ArrowLeft size={18} /> Contact Support
               </Link>
