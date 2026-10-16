@@ -78,14 +78,14 @@ export default function Resources() {
           </div>
         ) : error ? (
           <Card className="p-12 text-center">
-            <h2 className="text-2xl font-bold text-aeem-ink dark:text-white">Resources are temporarily unavailable</h2>
+            <h2 className="type-section-title text-aeem-ink dark:text-white">Resources are temporarily unavailable</h2>
             <p className="mt-2 text-aeem-ink/70 dark:text-white/70">
               We could not load the knowledge hub resources right now. Please try again later.
             </p>
           </Card>
         ) : resources.length === 0 ? (
           <Card className="p-12 text-center">
-            <h2 className="text-2xl font-bold text-aeem-ink dark:text-white">No resources available at this time</h2>
+            <h2 className="type-section-title text-aeem-ink dark:text-white">No resources available at this time</h2>
             <p className="mt-2 text-aeem-ink/70 dark:text-white/70">
               Check back soon as we publish open access materials and research documentation.
             </p>
@@ -102,7 +102,7 @@ export default function Resources() {
                       {new Date(resource.created_at).getFullYear()}
                     </span>
                   </div>
-                  <h2 className="mt-4 text-xl font-bold text-aeem-ink dark:text-white">
+                  <h2 className="mt-4 type-card-title text-aeem-ink dark:text-white">
                     {resource.title}
                   </h2>
                   <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-aeem-ink/75 dark:text-white/75">
