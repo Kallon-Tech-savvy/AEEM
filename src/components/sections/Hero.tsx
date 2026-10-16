@@ -92,7 +92,7 @@ export default function Hero() {
             </Link>
             <Link
               to="/events"
-              className={`${actionLink} border-aeem-forest bg-transparent text-aeem-forest hover:bg-aeem-forest/5 dark:border-aeem-gold dark:text-aeem-gold dark:hover:bg-aeem-gold/10`}
+              className={`${actionLink} border-aeem-forest bg-transparent text-aeem-forest hover:bg-aeem-forest/5 dark:border-aeem-gold dark:text-aeem-gold-light dark:hover:bg-aeem-gold/10`}
             >
               Upcoming Events
             </Link>
