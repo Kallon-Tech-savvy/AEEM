@@ -65,7 +65,7 @@ const About: React.FC = () => (
     <Section aria-labelledby="approach-heading" className="bg-aeem-forest/80 dark:bg-aeem-forest/20 text-white">
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
           <div>
-            <p className="mb-3 type-eyebrow text-aeem-forest dark:text-aeem-gold-light">How we work</p>
+            <p className="mb-3 type-eyebrow text-aeem-gold-light">How we work</p>
             <h2 id="approach-heading" className="type-section-title text-white/90">Community-led action, advocacy, and empowerment.</h2>
           </div>
           <div className="max-w-2xl space-y-6 text-base leading-relaxed text-white/85 sm:text-lg">
