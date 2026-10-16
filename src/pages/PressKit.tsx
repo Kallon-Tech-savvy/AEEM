@@ -16,7 +16,7 @@ const PressKit: React.FC = () => (
       <meta property="og:url" content={getCanonical('/press-kit')} />
     </Helmet>
 
-    <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
+    <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-dark-bg">
       <div className="max-w-3xl">
         <Badge>Media resources</Badge>
         <h1 className="mt-5 type-page-title text-aeem-ink dark:text-aeem-dark-text">Press resources for understanding AEEM.</h1>
