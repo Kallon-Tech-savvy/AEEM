@@ -65,7 +65,7 @@ const PressKit: React.FC = () => (
       <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-center">
         <div className="max-w-2xl">
           <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-gold-light">Media inquiries</p>
-          <h2 className="mt-3 text-3xl font-bold">Need an interview, statement, or additional material?</h2>
+          <h2 className="mt-3 type-section-title">Need an interview, statement, or additional material?</h2>
           <p className="mt-4 leading-7 text-white/75">Contact AEEM directly and explain what you need, your deadline, and the context in which the material will be used.</p>
         </div>
         <Link to="/contact" className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 font-semibold text-aeem-forest hover:bg-aeem-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70">Contact AEEM <ArrowRight size={18} aria-hidden="true" /></Link>
