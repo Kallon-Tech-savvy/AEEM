@@ -18,7 +18,7 @@ const Privacy: React.FC = () => (
     <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
       <div className="max-w-3xl">
         <Badge>Privacy</Badge>
-        <h1 className="mt-5 text-4xl font-bold leading-tight text-aeem-ink dark:text-white sm:text-5xl">Privacy notice</h1>
+        <h1 className="mt-5 type-page-title text-aeem-ink dark:text-aeem-dark-text">Privacy notice</h1>
         <p className="mt-6 text-lg leading-8 text-aeem-ink/70 dark:text-white/70">
           This notice describes the information the current AEEM website asks you to provide through its public forms and how those forms are intended to be used.
         </p>
