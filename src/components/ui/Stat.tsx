@@ -22,7 +22,7 @@ export function Stat({ value, label, detail, source, tone = 'default', className
       </div>
       <div className={cn(
         'mt-2 text-sm font-semibold',
-        inverse ? 'text-white/90' : 'text-aeem-ink dark:text-white',
+        inverse ? 'text-white/90' : 'text-aeem-ink dark:text-aeem-dark-text',
       )}>
         {label}
       </div>
