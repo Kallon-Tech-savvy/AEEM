@@ -45,7 +45,7 @@ export default function Home() {
           <h2 className="mt-4 type-section-title text-aeem-ink dark:text-aeem-dark-text">
             Help build a future where every child can learn, lead and thrive.
           </h2>
-          <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-aeem-ink/70 dark:text-gray-400">
+          <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-aeem-charcoal-soft dark:text-aeem-dark-muted">
             Join AEEM as a volunteer, partner, advocate, mentor, or supporter.
           </p>
 
