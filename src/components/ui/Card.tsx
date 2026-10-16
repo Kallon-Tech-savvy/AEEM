@@ -9,8 +9,8 @@ export function Card({ className, interactive = false, ...props }: CardProps) {
   return (
     <div
       className={cn(
-        'rounded-2xl border border-gray-200 bg-white dark:border-white/10 dark:bg-white/[0.03]',
-        interactive && 'transition-colors duration-150 hover:border-aeem-forest/40 hover:bg-aeem-forest/[0.02] dark:hover:border-aeem-gold/40 dark:hover:bg-white/[0.05]',
+        'rounded-2xl border border-aeem-border bg-aeem-surface dark:border-aeem-dark-border dark:bg-aeem-dark-surface',
+        interactive && 'transition-colors duration-150 hover:border-aeem-forest/50 hover:bg-aeem-forest-light dark:hover:border-aeem-gold/60 dark:hover:bg-white/[0.05]',
         className,
       )}
       {...props}
