@@ -147,7 +147,7 @@ const Contact: React.FC = () => {
           <div className="space-y-7 lg:col-span-2">
             <div>
               <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-gold-dark">Contact details</p>
-              <h2 className="mt-3 text-2xl font-bold text-aeem-ink dark:text-white">Reach us directly</h2>
+              <h2 className="mt-3 type-section-title text-aeem-ink dark:text-white">Reach us directly</h2>
             </div>
             <Card className="space-y-6 p-6">
               <a href={`mailto:${CONTACT_EMAIL}`} className="flex gap-4 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus">
@@ -170,7 +170,7 @@ const Contact: React.FC = () => {
             {submitted ? (
               <div className="py-10 text-center">
                 <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-aeem-forest/10 text-aeem-forest dark:bg-aeem-gold/10 dark:text-aeem-gold-light"><CheckCircle2 size={28} aria-hidden="true" /></div>
-                <h2 className="mt-6 text-2xl font-bold text-aeem-ink dark:text-white">Message received</h2>
+                <h2 className="mt-6 type-card-title text-aeem-ink dark:text-white">Message received</h2>
                 <p className="mx-auto mt-3 max-w-md leading-7 text-aeem-ink/70 dark:text-white/70">Thank you. Your message has been submitted. We will follow up using the contact details you provided.</p>
                 <Button type="button" variant="secondary" className="mt-7" onClick={() => setSubmitted(false)}>Send another message</Button>
               </div>
@@ -178,7 +178,7 @@ const Contact: React.FC = () => {
               <form onSubmit={handleSubmit} className="space-y-6 px-3">
                 <input type="text" name="hp_contact" value={honeypot} onChange={e => setHoneypot(e.target.value)} className="hidden" tabIndex={-1} autoComplete="off" />
                 <div>
-                  <h2 className="text-2xl font-bold text-aeem-ink dark:text-white">Send a message</h2>
+                  <h2 className="type-section-title text-aeem-ink dark:text-white">Send a message</h2>
                   <p className="mt-2 text-sm text-aeem-ink/65 dark:text-white/65">Tell us what you need and include any relevant deadline or context.</p>
                 </div>
                 <div className="grid gap-6 sm:grid-cols-2">
