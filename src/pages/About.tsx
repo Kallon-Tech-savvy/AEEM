@@ -32,7 +32,7 @@ const About: React.FC = () => (
       <meta property="og:image" content={`${SITE_URL}/assets/logo_converted.avif`} />
     </Helmet>
 
-    <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
+    <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-dark-bg">
       <div className="max-w-4xl">
         <p className="mb-5 text-sm font-semibold uppercase tracking-[0.2em] text-aeem-blue dark:text-aeem-gold-light">Who we are</p>
         <h1 className="text-4xl font-extrabold leading-tight text-aeem-ink dark:text-white sm:text-5xl lg:text-6xl">
@@ -75,7 +75,7 @@ const About: React.FC = () => (
         </div>
     </Section>
 
-    <Section aria-labelledby="leadership-heading" className="bg-gray-50 dark:bg-[#15181e]">
+    <Section aria-labelledby="leadership-heading" className="bg-gray-50 dark:bg-aeem-dark-bg">
       <div className="mb-12 max-w-3xl">
         <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-aeem-blue dark:text-aeem-gold-light">Leadership</p>
         <h2 id="leadership-heading" className="text-3xl font-bold text-aeem-ink dark:text-white sm:text-4xl">The people responsible for the movement.</h2>
@@ -108,7 +108,7 @@ const About: React.FC = () => (
       <MosaicGallery />
     </Section>
 
-    <Section aria-labelledby="partners-heading" className="bg-gray-50 dark:bg-[#15181e]">
+    <Section aria-labelledby="partners-heading" className="bg-gray-50 dark:bg-aeem-dark-bg">
       <div className="mb-10 max-w-2xl">
         <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-aeem-blue dark:text-aeem-gold-light">Relationships</p>
         <h2 id="partners-heading" className="text-3xl font-bold text-aeem-ink dark:text-white sm:text-4xl">Partners and institutional relationships</h2>
