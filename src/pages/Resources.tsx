@@ -59,7 +59,7 @@ export default function Resources() {
         <link rel="canonical" href={canonicalUrl} />
       </Helmet>
 
-      <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
+      <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-dark-bg">
         <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-blue dark:text-aeem-gold-light">
           Research & Open Access
         </p>
