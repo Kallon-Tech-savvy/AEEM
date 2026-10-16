@@ -190,7 +190,7 @@ export const GetInvolved: React.FC = () => {
             {submitted ? (
               <div className="px-3 py-10 text-center sm:px-8">
                 <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-aeem-forest/10 text-aeem-forest dark:bg-aeem-gold/10 dark:text-aeem-gold-light"><CheckCircle2 size={28} aria-hidden="true" /></div>
-                <h2 className="mt-6 text-2xl font-bold text-aeem-ink dark:text-white">Inquiry received</h2>
+                <h2 className="mt-6 type-card-title text-aeem-ink dark:text-white">Inquiry received</h2>
                 <p className="mx-auto mt-3 max-w-md leading-7 text-aeem-ink/70 dark:text-white/70">Thank you. Your inquiry has been submitted for review. We will follow up using the contact details you provided.</p>
                 <Button type="button" variant="secondary" className="mt-7" onClick={() => setSubmitted(false)}>Send another inquiry</Button>
               </div>
@@ -199,7 +199,7 @@ export const GetInvolved: React.FC = () => {
                 <input type="text" name="hp_zip" value={honeypot} onChange={e => setHoneypot(e.target.value)} className="hidden" tabIndex={-1} autoComplete="off" />
                 <div>
                   <p className="text-sm font-semibold text-aeem-gold-dark">{TABS.find(tab => tab.id === activeTab)?.title}</p>
-                  <h2 className="mt-2 text-2xl font-bold text-aeem-ink dark:text-white">Tell us how you would like to contribute.</h2>
+                  <h2 className="mt-2 type-section-title text-aeem-ink dark:text-white">Tell us how you would like to contribute.</h2>
                 </div>
 
                 <div className="grid gap-6 sm:grid-cols-2">
