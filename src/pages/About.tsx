@@ -108,7 +108,7 @@ const About: React.FC = () => (
       <MosaicGallery />
     </Section>
 
-    <Section aria-labelledby="partners-heading" className="bg-gray-50 dark:bg-aeem-dark-bg">
+    <Section aria-labelledby="partners-heading" className="bg-aeem-cream dark:bg-aeem-dark-bg">
       <div className="mb-10 max-w-2xl">
         <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-aeem-forest dark:text-aeem-gold-light">Relationships</p>
         <h2 id="partners-heading" className="type-section-title text-aeem-ink dark:text-aeem-dark-text">Partners and institutional relationships</h2>
