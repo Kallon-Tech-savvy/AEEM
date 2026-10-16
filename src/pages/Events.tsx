@@ -80,7 +80,7 @@ export default function Events() {
       <Section>
           {loading ? (
             <div className="flex min-h-[300px] items-center justify-center">
-              <Loader2 className="animate-spin text-aeem-gold-dark" size={32} aria-label="Loading events" />
+              <Loader2 className="animate-spin text-aeem-gold-dark dark:text-aeem-gold-light" size={32} aria-label="Loading events" />
             </div>
           ) : events.length === 0 ? (
             <Card className="p-12 text-center">
