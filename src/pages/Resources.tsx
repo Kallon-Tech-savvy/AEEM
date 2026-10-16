@@ -60,7 +60,7 @@ export default function Resources() {
       </Helmet>
 
       <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-dark-bg">
-        <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-forest dark:text-aeem-gold-light">
+        <p className="type-eyebrow text-aeem-forest dark:text-aeem-gold-light">
           Research & Open Access
         </p>
         <h1 className="mt-4 type-page-title text-aeem-ink dark:text-aeem-dark-text">
