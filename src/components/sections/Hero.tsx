@@ -74,7 +74,7 @@ export default function Hero() {
             Fair access to education for all
           </p>
 
-          <h1 className="mt-5 max-w-3xl text-5xl font-extrabold leading-[1.02] tracking-tight text-aeem-ink dark:text-white sm:text-6xl lg:text-7xl">
+          <h1 className="type-page-title text-aeem-ink dark:text-aeem-dark-text">
             Empowering the <span className="text-aeem-blue dark:text-aeem-gold-light">Future</span> of Africa
           </h1>
 
