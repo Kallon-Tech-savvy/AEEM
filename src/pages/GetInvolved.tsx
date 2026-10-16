@@ -169,7 +169,7 @@ export const GetInvolved: React.FC = () => {
       <Section>
         <div className="grid gap-10 lg:grid-cols-5 lg:gap-16">
           <div className="lg:col-span-2">
-            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-gold">Ways to contribute</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-gold-dark">Ways to contribute</p>
             <h2 className="mt-3 text-2xl font-bold text-aeem-ink dark:text-white sm:text-3xl">Choose your path</h2>
             <div className="mt-10 space-y-4" role="tablist" aria-label="Ways to get involved">
               {TABS.map((tab, index) => {
@@ -198,7 +198,7 @@ export const GetInvolved: React.FC = () => {
               <form id="involvement-form" ref={formRef} onSubmit={handleSubmit} className="space-y-6 px-3">
                 <input type="text" name="hp_zip" value={honeypot} onChange={e => setHoneypot(e.target.value)} className="hidden" tabIndex={-1} autoComplete="off" />
                 <div>
-                  <p className="text-sm font-semibold text-aeem-gold">{TABS.find(tab => tab.id === activeTab)?.title}</p>
+                  <p className="text-sm font-semibold text-aeem-gold-dark">{TABS.find(tab => tab.id === activeTab)?.title}</p>
                   <h2 className="mt-2 text-2xl font-bold text-aeem-ink dark:text-white">Tell us how you would like to contribute.</h2>
                 </div>
 
