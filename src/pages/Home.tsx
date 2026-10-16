@@ -41,7 +41,7 @@ export default function Home() {
 
       <Section className="bg-aeem-cream text-center dark:bg-aeem-dark-bg">
         <div className="mx-auto max-w-3xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-aeem-gold-dark">Get involved</p>
+          <p className="type-eyebrow text-aeem-gold-dark dark:text-aeem-gold-light">Get involved</p>
           <h2 className="mt-4 type-section-title text-aeem-ink dark:text-aeem-dark-text">
             Help build a future where every child can learn, lead and thrive.
           </h2>
