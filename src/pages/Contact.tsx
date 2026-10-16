@@ -146,7 +146,7 @@ const Contact: React.FC = () => {
         <div className="grid gap-10 lg:grid-cols-5 lg:gap-16">
           <div className="space-y-7 lg:col-span-2">
             <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-gold-dark">Contact details</p>
+              <p className="type-eyebrow text-aeem-gold-dark dark:text-aeem-gold-light">Contact details</p>
               <h2 className="mt-3 type-section-title text-aeem-ink dark:text-aeem-dark-text">Reach us directly</h2>
             </div>
             <Card className="space-y-6 p-6">
