@@ -84,7 +84,7 @@ export default function Events() {
             </div>
           ) : events.length === 0 ? (
             <Card className="p-12 text-center">
-              <h2 className="text-2xl font-bold text-aeem-ink dark:text-white">No upcoming events scheduled</h2>
+              <h2 className="type-section-title text-aeem-ink dark:text-white">No upcoming events scheduled</h2>
               <p className="mt-2 text-aeem-ink/70 dark:text-white/70">
                 Check back soon or sign up to receive announcements about upcoming convenings and workshops.
               </p>
@@ -101,7 +101,7 @@ export default function Events() {
                         {formatDate(event.event_date)}
                       </span>
                     </div>
-                    <h2 className="mt-4 text-xl font-bold text-aeem-ink dark:text-white">
+                    <h2 className="mt-4 type-card-title text-aeem-ink dark:text-white">
                       {event.title}
                     </h2>
                     <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-aeem-ink/75 dark:text-white/75">
