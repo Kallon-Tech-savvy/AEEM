@@ -32,7 +32,7 @@ const NotFound      = lazy(() => import('./pages/NotFound'))
 
 const PageLoader = () => (
   <div className="flex justify-center items-center min-h-[60vh]" aria-label="Loading page">
-    <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-aeem-gold" />
+    <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-aeem-forest dark:border-aeem-gold-light" />
   </div>
 )
 
