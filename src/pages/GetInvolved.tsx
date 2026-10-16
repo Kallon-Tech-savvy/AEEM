@@ -159,7 +159,7 @@ export const GetInvolved: React.FC = () => {
       <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
         <div className="max-w-3xl">
           <Badge>Take action</Badge>
-          <h1 className="mt-5 text-4xl font-bold leading-tight text-aeem-ink dark:text-white sm:text-5xl lg:text-6xl">There is a place for your contribution.</h1>
+          <h1 className="mt-5 type-page-title text-aeem-ink dark:text-aeem-dark-text">There is a place for your contribution.</h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-aeem-ink/70 dark:text-white/70">
             Choose the path that best matches how you want to work with AEEM. We will use your inquiry to understand the opportunity before following up.
           </p>
