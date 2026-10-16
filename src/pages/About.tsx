@@ -34,7 +34,7 @@ const About: React.FC = () => (
 
     <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-dark-bg">
       <div className="max-w-4xl">
-        <p className="mb-5 text-sm font-semibold uppercase tracking-[0.2em] text-aeem-forest dark:text-aeem-gold-light">Who we are</p>
+        <p className="mb-5 type-eyebrow text-aeem-forest dark:text-aeem-gold-light">Who we are</p>
         <h1 className="type-page-title text-aeem-ink dark:text-aeem-dark-text">
           A youth-led movement working toward educational equity across Africa.
         </h1>
@@ -46,7 +46,7 @@ const About: React.FC = () => (
 
     <Section aria-labelledby="purpose-heading">
       <div className="mb-12 max-w-3xl">
-        <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-aeem-forest dark:text-aeem-gold-light">Our purpose</p>
+        <p className="mb-3 type-eyebrow text-aeem-forest dark:text-aeem-gold-light">Our purpose</p>
         <h2 id="purpose-heading" className="type-section-title text-aeem-ink dark:text-aeem-dark-text">What guides the work</h2>
       </div>
       <div className="grid gap-6 md:grid-cols-3">
@@ -75,7 +75,7 @@ const About: React.FC = () => (
         </div>
     </Section>
 
-    <Section aria-labelledby="leadership-heading" className="bg-gray-50 dark:bg-aeem-dark-bg">
+    <Section aria-labelledby="leadership-heading" className="bg-aeem-cream dark:bg-aeem-dark-bg">
       <div className="mb-12 max-w-3xl">
         <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-aeem-forest dark:text-aeem-gold-light">Leadership</p>
         <h2 id="leadership-heading" className="type-section-title text-aeem-ink dark:text-aeem-dark-text">The people responsible for the movement.</h2>
@@ -84,7 +84,7 @@ const About: React.FC = () => (
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {leadershipTeam.map((member) => (
           <article key={member.name} className="overflow-hidden rounded-2xl border border-aeem-border bg-aeem-surface dark:border-aeem-dark-border dark:bg-aeem-dark-surface">
-            <div className="aspect-[4/5] overflow-hidden bg-gray-200 dark:bg-gray-800">
+            <div className="aspect-[4/5] overflow-hidden bg-aeem-forest-light dark:bg-aeem-dark-surface">
               <picture>
                 <source type="image/webp" srcSet={`/assets/gallery/${member.fileName}.webp`} sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" />
                 <img src={member.image} alt={member.name} width={360} height={450} loading="lazy" decoding="async" className="h-full w-full object-cover" />
