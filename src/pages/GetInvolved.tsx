@@ -198,7 +198,7 @@ export const GetInvolved: React.FC = () => {
               <form id="involvement-form" ref={formRef} onSubmit={handleSubmit} className="space-y-6 px-3">
                 <input type="text" name="hp_zip" value={honeypot} onChange={e => setHoneypot(e.target.value)} className="hidden" tabIndex={-1} autoComplete="off" />
                 <div>
-                  <p className="text-sm font-semibold text-aeem-gold-dark">{TABS.find(tab => tab.id === activeTab)?.title}</p>
+                  <p className="text-sm font-semibold text-aeem-gold-dark dark:text-aeem-gold-light">{TABS.find(tab => tab.id === activeTab)?.title}</p>
                   <h2 className="mt-2 type-section-title text-aeem-ink dark:text-aeem-dark-text">Tell us how you would like to contribute.</h2>
                 </div>
 
