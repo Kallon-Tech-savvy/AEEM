@@ -70,12 +70,12 @@ export default function Hero() {
           animate={{ opacity: 1, x: 0 }}
           transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.55 }}
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-aeem-blue dark:text-aeem-gold-light">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-aeem-forest dark:text-aeem-gold-light">
             Fair access to education for all
           </p>
 
           <h1 className="type-page-title text-aeem-ink dark:text-aeem-dark-text">
-            Empowering the <span className="text-aeem-blue dark:text-aeem-gold-light">Future</span> of Africa
+            Empowering the <span className="text-aeem-forest dark:text-aeem-gold-light">Future</span> of Africa
           </h1>
 
           <p className="mt-6 max-w-2xl text-lg leading-8 text-aeem-ink/70 dark:text-gray-300 sm:text-xl">
@@ -86,13 +86,13 @@ export default function Hero() {
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               to="/impact"
-              className={`${actionLink} border-aeem-blue bg-aeem-blue text-white hover:border-aeem-blue-dark hover:bg-aeem-blue-dark`}
+              className={`${actionLink} border-aeem-forest bg-aeem-forest text-white hover:border-aeem-forest-dark hover:bg-aeem-forest-dark`}
             >
               Explore our Impact <ArrowRight size={18} aria-hidden="true" />
             </Link>
             <Link
               to="/events"
-              className={`${actionLink} border-aeem-blue bg-transparent text-aeem-blue hover:bg-aeem-blue/5 dark:border-aeem-gold dark:text-aeem-gold dark:hover:bg-aeem-gold/10`}
+              className={`${actionLink} border-aeem-forest bg-transparent text-aeem-forest hover:bg-aeem-forest/5 dark:border-aeem-gold dark:text-aeem-gold dark:hover:bg-aeem-gold/10`}
             >
               Upcoming Events
             </Link>
