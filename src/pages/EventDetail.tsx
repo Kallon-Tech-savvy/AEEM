@@ -148,7 +148,7 @@ export default function EventDetail() {
 
       <Section containerNarrow>
         <Card className="p-8">
-            <h2 className="text-2xl font-bold text-aeem-ink dark:text-white">About this Event</h2>
+            <h2 className="type-section-title text-aeem-ink dark:text-white">About this Event</h2>
             <p className="mt-4 whitespace-pre-line leading-8 text-aeem-ink/80 dark:text-white/80">
               {event.description}
             </p>
