@@ -42,7 +42,14 @@
   --color-text-disabled:  #9A9590;   /* Disabled only, not for content */
   --color-text-inverse:   #F8F7F4;
 
-  /* Brand */
+  /* Canonical AEEM brand palette */
+  --color-brand-primary: #2C5F2D;
+  --color-brand-primary-hover: #173D28;
+  --color-brand-accent: #FFC72C;
+  --color-brand-accent-text: #765500;
+  --color-brand-highlight: #E94E77;
+
+  /* Accessible gold utility, distinct from decorative brand gold */
   --color-gold:        #B8941A;   /* ~5.2:1 on --color-bg — AA normal  */
   --color-gold-subtle: #D4AF37;   /* Large text / decorative only      */
   --color-gold-deep:   #8A6E12;   /* Hover / active — ~8.1:1           */
@@ -282,29 +289,34 @@
   .btn:active        { transform: none; }
 
   .btn-primary {
-    background-color: var(--color-gold);
-    color: #1A1A1A; /* hard-coded for contrast on any gold shade */
+    background-color: var(--color-brand-primary);
+    color: #FFFFFF;
   }
   .btn-primary:hover {
-    background-color: var(--color-gold-deep);
-    color: #F8F7F4;
+    background-color: var(--color-brand-primary-hover);
+    color: #FFFFFF;
     box-shadow: none;
   }
 
-  /* Ensure primary buttons remain readable in dark mode */
+  /* Keep primary actions consistent across themes. */
   .dark .btn-primary {
-    color: #0f0f0f; /* dark text on gold for contrast */
+    background-color: var(--color-brand-primary);
+    color: #FFFFFF;
+  }
+
+  .dark .btn-primary:hover {
+    background-color: var(--color-brand-primary-hover);
   }
 
   .btn-outline {
     background-color: transparent;
-    border-color: var(--color-gold);
-    color: var(--color-gold);
+    border-color: var(--color-brand-primary);
+    color: var(--color-brand-primary);
   }
   .btn-outline:hover {
     background-color: var(--color-gold-tint);
-    border-color: var(--color-gold-deep);
-    color: var(--color-gold-deep);
+    border-color: var(--color-brand-primary-hover);
+    color: var(--color-brand-primary-hover);
   }
 
   .btn-ghost {
@@ -393,6 +405,49 @@
 @layer utilities {
 
   .text-balance { text-wrap: balance; }
+
+  /* Shared typographic roles. Prefer these over page-specific size combinations. */
+  .type-page-title {
+    font-size: var(--font-5xl);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+  }
+
+  .type-section-title {
+    font-size: var(--font-4xl);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  .type-card-title {
+    font-size: var(--font-xl);
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+  }
+
+  .type-body {
+    font-size: var(--font-base);
+    line-height: 1.7;
+  }
+
+  .type-supporting {
+    font-size: var(--font-sm);
+    line-height: 1.6;
+  }
+
+  .type-eyebrow {
+    font-size: var(--font-xs);
+    font-weight: 700;
+    line-height: 1.4;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
 
   /* Theme-aware colour utilities */
   .text-primary   { color: var(--color-text-primary);   }
