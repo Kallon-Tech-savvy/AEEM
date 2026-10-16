@@ -156,7 +156,7 @@ export const GetInvolved: React.FC = () => {
         <meta name="description" content="Volunteer, partner, or support the Africa Education Empowerment Movement." />
       </Helmet>
 
-      <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
+      <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-dark-bg">
         <div className="max-w-3xl">
           <Badge>Take action</Badge>
           <h1 className="mt-5 type-page-title text-aeem-ink dark:text-aeem-dark-text">There is a place for your contribution.</h1>
