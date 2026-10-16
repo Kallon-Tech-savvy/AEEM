@@ -109,7 +109,7 @@ export default function StoryDetail() {
   if (loading) {
     return (
       <Section className="flex min-h-[60vh] items-center justify-center">
-        <Loader2 className="animate-spin text-aeem-gold" size={32} aria-label="Loading impact report" />
+        <Loader2 className="animate-spin text-aeem-gold-dark dark:text-aeem-gold-light" size={32} aria-label="Loading impact report" />
       </Section>
     )
   }
@@ -118,10 +118,10 @@ export default function StoryDetail() {
     return (
       <Section spacing="large" containerNarrow className="bg-aeem-cream dark:bg-aeem-charcoal">
         <div className="text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-gold">
+          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-gold-dark dark:text-aeem-gold-light">
             Impact Report
           </p>
-          <h1 className="mt-4 text-3xl font-bold text-aeem-ink dark:text-white sm:text-4xl">
+          <h1 className="mt-4 type-page-title text-aeem-ink dark:text-aeem-dark-text">
             Report not found.
           </h1>
           <p className="mx-auto mt-4 max-w-xl leading-7 text-aeem-ink/70 dark:text-white/70">
@@ -158,7 +158,7 @@ export default function StoryDetail() {
           Back to Our Impact
         </Link>
 
-        <h1 className="mt-6 text-4xl font-bold leading-tight text-aeem-ink dark:text-white sm:text-5xl lg:text-6xl">
+        <h1 className="mt-6 type-page-title text-aeem-ink dark:text-aeem-dark-text">
           {story.title}
         </h1>
 
