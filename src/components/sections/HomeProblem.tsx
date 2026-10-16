@@ -12,7 +12,7 @@ export default function HomeProblem() {
     <Section className="bg-aeem-cream dark:bg-aeem-dark-bg">
       <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-20">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-aeem-forest dark:text-aeem-gold-light">The challenge</p>
+          <p className="type-eyebrow text-aeem-forest dark:text-aeem-gold-light">The challenge</p>
           <h2 className="mt-4 type-section-title text-aeem-ink dark:text-aeem-dark-text">
             Bridging the Gap in <span className="text-aeem-forest dark:text-aeem-gold-light">Educational Access</span>
           </h2>
