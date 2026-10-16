@@ -65,7 +65,7 @@ export default function Impact() {
         <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-blue dark:text-aeem-gold-light">
           Verified Outcomes & Field Work
         </p>
-        <h1 className="mt-4 text-4xl font-bold tracking-tight text-aeem-ink dark:text-white sm:text-5xl lg:text-6xl">
+        <h1 className="mt-4 type-page-title text-aeem-ink dark:text-aeem-dark-text">
           Our Impact
         </h1>
         <p className="mt-6 max-w-2xl text-lg leading-8 text-aeem-ink/75 dark:text-white/75">
