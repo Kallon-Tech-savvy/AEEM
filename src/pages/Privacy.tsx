@@ -26,7 +26,7 @@ const Privacy: React.FC = () => (
     </Section>
 
     <Section>
-      <article className="prose prose-lg max-w-3xl text-aeem-ink dark:prose-invert">
+      <article className="prose prose-lg max-w-3xl text-aeem-ink prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-aeem-ink prose-p:leading-7 prose-a:text-aeem-forest prose-a:underline-offset-4 dark:prose-invert dark:prose-headings:text-aeem-dark-text dark:prose-a:text-aeem-gold-light">
         <h2>Information you choose to submit</h2>
         <p>The website may collect your name, email address, phone number, organization or institution, and the message you provide when you submit a contact or involvement inquiry.</p>
         <h2>Why we collect it</h2>
