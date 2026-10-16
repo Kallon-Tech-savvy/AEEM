@@ -29,7 +29,7 @@ const PressKit: React.FC = () => (
     <Section>
       <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
         <div>
-          <p className="type-eyebrow text-aeem-gold-dark">Organization</p>
+          <p className="type-eyebrow text-aeem-gold-dark dark:text-aeem-gold-light">Organization</p>
           <h2 className="mt-3 type-section-title text-aeem-ink dark:text-aeem-dark-text">Start with the facts.</h2>
           <p className="mt-4 max-w-xl leading-7 text-aeem-charcoal-soft dark:text-aeem-dark-muted">
             For current organizational information, programs, impact evidence, and leadership context, use the primary pages on this site. Downloadable briefing and fact-sheet files are not currently published in the repository, so this page does not present placeholder download buttons.
