@@ -78,7 +78,7 @@ export default function Hero() {
             Empowering the <span className="text-aeem-forest dark:text-aeem-gold-light">Future</span> of Africa
           </h1>
 
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-aeem-ink/70 dark:text-gray-300 sm:text-xl">
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-aeem-charcoal-soft dark:text-aeem-dark-muted sm:text-xl">
             Pioneering inclusive, equitable, and quality education across the continent through
             community-led action and innovative mentorship.
           </p>
@@ -116,8 +116,8 @@ export default function Hero() {
 
             <path
               d={AFRICA_PATH}
-              fill="#17323d"
-              stroke="#B8941A"
+              fill="var(--color-brand-primary-hover)"
+              stroke="var(--color-gold-subtle)"
               strokeWidth="1.2"
               strokeOpacity="0.55"
             />
@@ -132,7 +132,7 @@ export default function Hero() {
                   y1={FREETOWN.y}
                   x2={city.x}
                   y2={city.y}
-                  stroke="#D4AF37"
+                  stroke="var(--color-gold-subtle)"
                   strokeWidth="0.8"
                   strokeOpacity="0.65"
                   strokeDasharray={len}
@@ -149,7 +149,7 @@ export default function Hero() {
                 cx={city.x}
                 cy={city.y}
                 r={2.5}
-                fill="#D4AF37"
+                fill="var(--color-gold-subtle)"
                 initial={shouldReduceMotion ? false : { opacity: 0, r: 0 }}
                 animate={{ opacity: 0.9, r: 2.5 }}
                 transition={shouldReduceMotion ? { duration: 0 } : { delay: city.delay + 0.65, duration: 0.25 }}
@@ -160,7 +160,7 @@ export default function Hero() {
               cx={FREETOWN.x}
               cy={FREETOWN.y}
               r={5}
-              fill="#D4AF37"
+              fill="var(--color-gold-subtle)"
               animate={shouldReduceMotion ? { opacity: 1 } : { opacity: [1, 0.55, 1] }}
               transition={shouldReduceMotion ? { duration: 0 } : { duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
             />
@@ -168,7 +168,7 @@ export default function Hero() {
             <text
               x={FREETOWN.x + 10}
               y={FREETOWN.y - 7}
-              fill="#D4AF37"
+              fill="var(--color-gold-subtle)"
               fontSize="8"
               fontWeight="600"
               fontFamily="sans-serif"
@@ -177,7 +177,7 @@ export default function Hero() {
             </text>
           </svg>
 
-          <p className="mt-2 text-center text-xs text-aeem-ink/55 dark:text-white/55">
+          <p className="mt-2 text-center text-xs text-aeem-charcoal-soft dark:text-aeem-dark-muted">
             A growing network of communities, educators, and young people.
           </p>
         </motion.div>
