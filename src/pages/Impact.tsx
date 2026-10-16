@@ -122,7 +122,7 @@ export default function Impact() {
                 <div className="p-6 sm:p-8">
                   {story.location && (
                     <div className="flex items-center gap-2 text-sm text-aeem-ink/65 dark:text-white/65">
-                      <MapPin size={16} className="text-aeem-gold" aria-hidden="true" />
+                      <MapPin size={16} className="text-aeem-gold-dark" aria-hidden="true" />
                       <span>{story.location}</span>
                     </div>
                   )}
