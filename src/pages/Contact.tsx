@@ -134,7 +134,7 @@ const Contact: React.FC = () => {
         <meta property="og:url" content={getCanonical('/contact')} />
       </Helmet>
 
-      <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
+      <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-dark-bg">
         <div className="max-w-3xl">
           <Badge>Get in touch</Badge>
           <h1 className="mt-5 type-page-title text-aeem-ink dark:text-aeem-dark-text">A direct line to AEEM.</h1>
