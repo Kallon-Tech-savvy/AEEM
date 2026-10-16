@@ -70,7 +70,7 @@ export default function Hero() {
           animate={{ opacity: 1, x: 0 }}
           transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.55 }}
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-aeem-forest dark:text-aeem-gold-light">
+          <p className="type-eyebrow text-aeem-forest dark:text-aeem-gold-light">
             Fair access to education for all
           </p>
 
