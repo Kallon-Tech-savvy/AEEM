@@ -319,6 +319,18 @@
     color: var(--color-brand-primary-hover);
   }
 
+  /* Outline actions need a light foreground against dark surfaces. */
+  .dark .btn-outline {
+    border-color: var(--color-gold);
+    color: var(--color-gold);
+  }
+
+  .dark .btn-outline:hover {
+    background-color: var(--color-gold-tint);
+    border-color: var(--color-gold-subtle);
+    color: var(--color-gold-subtle);
+  }
+
   .btn-ghost {
     background-color: transparent;
     color: var(--color-text-secondary);
