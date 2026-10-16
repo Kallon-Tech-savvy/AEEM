@@ -35,7 +35,7 @@ const About: React.FC = () => (
     <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-dark-bg">
       <div className="max-w-4xl">
         <p className="mb-5 text-sm font-semibold uppercase tracking-[0.2em] text-aeem-blue dark:text-aeem-gold-light">Who we are</p>
-        <h1 className="text-4xl font-extrabold leading-tight text-aeem-ink dark:text-white sm:text-5xl lg:text-6xl">
+        <h1 className="type-page-title text-aeem-ink dark:text-aeem-dark-text">
           A youth-led movement working toward educational equity across Africa.
         </h1>
         <p className="mt-7 max-w-3xl text-lg leading-relaxed text-gray-700 dark:text-gray-300 sm:text-xl">
