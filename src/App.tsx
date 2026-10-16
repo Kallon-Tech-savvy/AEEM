@@ -106,21 +106,21 @@ class AppErrorBoundary extends Component<{ children: ReactNode }, { hasError: bo
     if (this.state.hasError) {
       return (
         <main className="mx-auto flex min-h-[60vh] max-w-2xl flex-col items-center justify-center px-6 py-16 text-center">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">This page could not load</h1>
-          <p className="mt-3 max-w-prose text-gray-600 dark:text-gray-300">
+          <h1 className="type-section-title text-aeem-ink dark:text-aeem-dark-text">This page could not load</h1>
+          <p className="mt-3 max-w-prose text-aeem-charcoal-soft dark:text-aeem-dark-muted">
             Something went wrong while opening this page. Try again, or return to the homepage.
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <button
               type="button"
               onClick={() => window.location.reload()}
-              className="rounded-lg bg-aeem-blue px-5 py-3 font-semibold text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aeem-gold"
+              className="rounded-lg bg-aeem-forest px-5 py-3 font-semibold text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aeem-gold-dark"
             >
               Try again
             </button>
             <a
               href="/"
-              className="rounded-lg border border-gray-300 px-5 py-3 font-semibold text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aeem-gold dark:border-gray-600 dark:text-white"
+              className="rounded-lg border border-aeem-border px-5 py-3 font-semibold text-aeem-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aeem-gold-dark dark:border-aeem-dark-border dark:text-white"
             >
               Go to homepage
             </a>
