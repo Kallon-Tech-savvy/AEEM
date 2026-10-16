@@ -41,7 +41,7 @@ const NotFound: React.FC = () => {
             </div>
 
             {/* Huge 404 Typography - Extruded effect */}
-            <h1 className="text-8xl md:text-9xl font-black mb-6 tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-gray-800 to-gray-500 dark:from-white dark:via-gray-200 dark:to-gray-500 drop-shadow-2xl">
+            <h1 className="text-8xl md:text-9xl font-black mb-6 tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-aeem-ink to-aeem-charcoal-soft dark:from-aeem-dark-text dark:via-aeem-dark-text dark:to-aeem-dark-muted drop-shadow-2xl">
               404
             </h1>
 
