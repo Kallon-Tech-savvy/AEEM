@@ -62,7 +62,7 @@ export default function Impact() {
       </Helmet>
 
       <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-dark-bg">
-        <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-forest dark:text-aeem-gold-light">
+        <p className="type-eyebrow text-aeem-forest dark:text-aeem-gold-light">
           Verified Outcomes & Field Work
         </p>
         <h1 className="mt-4 type-page-title text-aeem-ink dark:text-aeem-dark-text">
@@ -76,7 +76,7 @@ export default function Impact() {
       <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-dark-surface" aria-labelledby="stories-heading">
         <div className="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-3xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-aeem-forest dark:text-aeem-gold-light">
+            <p className="type-eyebrow text-aeem-forest dark:text-aeem-gold-light">
               Impact stories
             </p>
             <h2 id="stories-heading" className="mt-3 type-section-title text-aeem-ink dark:text-aeem-dark-text">
@@ -105,7 +105,7 @@ export default function Impact() {
           <div className="grid gap-8 lg:grid-cols-2">
             {stories.map((story) => (
               <Card key={story.slug} className="overflow-hidden p-0">
-                <div className="aspect-[16/9] bg-aeem-ink/5">
+                <div className="aspect-[16/9] bg-aeem-forest-light dark:bg-aeem-dark-bg">
                   {story.cover_image_url ? (
                     <img
                       src={story.cover_image_url}
@@ -122,7 +122,7 @@ export default function Impact() {
                 <div className="p-6 sm:p-8">
                   {story.location && (
                     <div className="flex items-center gap-2 text-sm text-aeem-charcoal-soft dark:text-aeem-dark-muted">
-                      <MapPin size={16} className="text-aeem-gold-dark" aria-hidden="true" />
+                      <MapPin size={16} className="text-aeem-gold-dark dark:text-aeem-gold-light" aria-hidden="true" />
                       <span>{story.location}</span>
                     </div>
                   )}
@@ -130,7 +130,7 @@ export default function Impact() {
                   <h3 className="mt-3 type-card-title text-aeem-ink dark:text-aeem-dark-text">{story.title}</h3>
                   {story.summary && <p className="mt-2 text-sm text-aeem-charcoal-soft dark:text-aeem-dark-muted">{story.summary}</p>}
 
-                  <div className="mt-6 border-t border-black/10 pt-4 dark:border-white/10">
+                  <div className="mt-6 border-t border-aeem-border pt-4 dark:border-aeem-dark-border">
                     <div className="mb-4 flex flex-wrap items-center gap-4 text-xs text-aeem-charcoal-soft dark:text-aeem-dark-muted">
                       {story.participants_count != null && (
                         <span className="inline-flex items-center gap-1">
