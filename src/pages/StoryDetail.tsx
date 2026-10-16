@@ -205,7 +205,7 @@ export default function StoryDetail() {
 
         {story.overview && (
           <div className="mt-10">
-            <h2 className="text-2xl font-bold text-aeem-ink dark:text-white">Overview</h2>
+            <h2 className="type-section-title text-aeem-ink dark:text-white">Overview</h2>
             <p className="mt-4 whitespace-pre-line leading-8 text-aeem-ink/80 dark:text-white/80">
               {story.overview}
             </p>
@@ -214,7 +214,7 @@ export default function StoryDetail() {
 
         {story.impact && (
           <div className="mt-10">
-            <h2 className="text-2xl font-bold text-aeem-ink dark:text-white">Verified Impact</h2>
+            <h2 className="type-section-title text-aeem-ink dark:text-white">Verified Impact</h2>
             <p className="mt-4 whitespace-pre-line leading-8 text-aeem-ink/80 dark:text-white/80">
               {story.impact}
             </p>
