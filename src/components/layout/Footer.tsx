@@ -56,7 +56,7 @@ export default function Footer() {
                   aria-label={label}
                   target={src.startsWith('http') ? '_blank' : undefined}
                   rel={src.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-black/10 bg-white text-aeem-ink transition-colors hover:border-aeem-forest hover:text-aeem-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:border-aeem-gold dark:hover:text-aeem-gold-light"
+                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-black/10 bg-white text-aeem-ink transition-colors hover:border-aeem-forest hover:text-aeem-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:border-aeem-gold dark:hover:text-aeem-gold-dark-light"
                 >
                   <Icon size={18} />
                 </a>
@@ -83,7 +83,7 @@ export default function Footer() {
                 <li key={to}>
                   <Link
                     to={to}
-                    className="inline-block font-medium text-aeem-ink/75 transition-colors hover:text-aeem-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:text-white/75 dark:hover:text-aeem-gold-light"
+                    className="inline-block font-medium text-aeem-ink/75 transition-colors hover:text-aeem-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:text-white/75 dark:hover:text-aeem-gold-dark-light"
                   >
                     {label}
                   </Link>
@@ -103,7 +103,7 @@ export default function Footer() {
             <div className="flex flex-wrap gap-3">
               <Link
                 to="/resources"
-                className="inline-flex items-center rounded-xl border border-black/10 bg-white px-4 py-2.5 text-sm font-semibold text-aeem-ink transition-colors hover:border-aeem-forest hover:text-aeem-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:border-aeem-gold dark:hover:text-aeem-gold-light"
+                className="inline-flex items-center rounded-xl border border-black/10 bg-white px-4 py-2.5 text-sm font-semibold text-aeem-ink transition-colors hover:border-aeem-forest hover:text-aeem-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:border-aeem-gold dark:hover:text-aeem-gold-dark-light"
               >
                 Resources
               </Link>
@@ -124,7 +124,7 @@ export default function Footer() {
           <div className="flex gap-6 text-xs font-medium text-aeem-ink/70 dark:text-white/70">
             <Link
               to="/privacy"
-              className="transition-colors text-aeem-forest dark:text-aeem-gold-light hover:text-aeem-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus"
+              className="transition-colors text-aeem-forest dark:text-aeem-gold-light hover:text-aeem-gold-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus"
             >
               Privacy Notice
             </Link>
