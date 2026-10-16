@@ -52,7 +52,7 @@ const About: React.FC = () => (
       <div className="grid gap-6 md:grid-cols-3">
         {purpose.map(({ icon: Icon, title, text }) => (
           <Card key={title} className="p-7 sm:p-8">
-            <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-aeem-forest/10 text-aeem-forest dark:bg-aeem-gold/10 dark:text-aeem-gold">
+            <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-aeem-forest/10 text-aeem-forest dark:bg-aeem-gold/10 dark:text-aeem-gold-light">
               <Icon size={24} aria-hidden="true" />
             </div>
             <h3 className="text-xl font-semibold text-aeem-ink dark:text-white">{title}</h3>
