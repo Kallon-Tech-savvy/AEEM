@@ -33,13 +33,13 @@ export default function Home() {
       <HomeApproach />
       <HomeFeaturedImpact />
 
-      <Suspense fallback={<div className="min-h-[400px] w-full bg-aeem-cream dark:bg-[#0f1115]" />}>
+      <Suspense fallback={<div className="min-h-[400px] w-full bg-aeem-cream dark:bg-aeem-dark-bg" />}>
         <AwardSlider />
         <PartnerTicker />
         <Pillars />
       </Suspense>
 
-      <Section className="bg-aeem-cream text-center dark:bg-aeem-charcoal">
+      <Section className="bg-aeem-cream text-center dark:bg-aeem-dark-bg">
         <div className="mx-auto max-w-3xl">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-aeem-gold">Get involved</p>
           <h2 className="mt-4 text-4xl font-bold tracking-tight text-aeem-ink dark:text-white sm:text-5xl">
