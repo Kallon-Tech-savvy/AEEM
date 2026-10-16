@@ -66,7 +66,7 @@ export default function Footer() {
 
           {/* Navigation */}
           <div>
-            <h4 className="mb-4 text-xs font-bold uppercase tracking-widest text-aeem-forest dark:text-aeem-gold-light">
+            <h4 className="mb-4 type-eyebrow text-aeem-forest dark:text-aeem-gold-light">
               Navigation
             </h4>
             <ul className="space-y-3 text-sm md:grid md:grid-cols-2 md:gap-2">
@@ -94,7 +94,7 @@ export default function Footer() {
 
           {/* Stay connected */}
           <div>
-            <h4 className="mb-4 text-xs font-bold uppercase tracking-widest text-aeem-forest dark:text-aeem-gold-light">
+            <h4 className="mb-4 type-eyebrow text-aeem-forest dark:text-aeem-gold-light">
               Stay Connected
             </h4>
             <p className="mb-5 text-sm leading-relaxed text-aeem-ink/75 dark:text-white/75">
