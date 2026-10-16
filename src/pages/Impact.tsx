@@ -68,7 +68,7 @@ export default function Impact() {
         <h1 className="mt-4 type-page-title text-aeem-ink dark:text-aeem-dark-text">
           Our Impact
         </h1>
-        <p className="mt-6 max-w-2xl text-lg leading-8 text-aeem-ink/75 dark:text-white/75">
+        <p className="mt-6 max-w-2xl text-lg leading-8 text-aeem-charcoal-soft dark:text-aeem-dark-muted">
           Transparent reporting on educational programs, community reach, and institutional partnerships.
         </p>
       </Section>
@@ -82,7 +82,7 @@ export default function Impact() {
             <h2 id="stories-heading" className="mt-3 type-section-title text-aeem-ink dark:text-aeem-dark-text">
               From program activity to human outcomes
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-aeem-ink/70 dark:text-white/70">
+            <p className="mt-4 text-base leading-relaxed text-aeem-charcoal-soft dark:text-aeem-dark-muted">
               Each story should connect an identified need to an intervention and,
               where evidence exists, a measurable or documented outcome.
             </p>
@@ -96,8 +96,8 @@ export default function Impact() {
           </div>
         ) : error ? (
           <Card className="p-8">
-            <h3 className="text-xl font-semibold text-aeem-ink dark:text-white/90">Impact stories are temporarily unavailable.</h3>
-            <p className="mt-3 leading-7 text-aeem-ink/70 dark:text-white/70">
+            <h3 className="type-card-title text-aeem-ink dark:text-aeem-dark-text">Impact stories are temporarily unavailable.</h3>
+            <p className="mt-3 leading-7 text-aeem-charcoal-soft dark:text-aeem-dark-muted">
               We could not load the published story archive right now. Please try again later.
             </p>
           </Card>
@@ -121,17 +121,17 @@ export default function Impact() {
                 </div>
                 <div className="p-6 sm:p-8">
                   {story.location && (
-                    <div className="flex items-center gap-2 text-sm text-aeem-ink/65 dark:text-white/65">
+                    <div className="flex items-center gap-2 text-sm text-aeem-charcoal-soft dark:text-aeem-dark-muted">
                       <MapPin size={16} className="text-aeem-gold-dark" aria-hidden="true" />
                       <span>{story.location}</span>
                     </div>
                   )}
 
-                  <h3 className="mt-3 text-xl font-bold text-aeem-ink dark:text-white">{story.title}</h3>
-                  {story.summary && <p className="mt-2 text-sm text-aeem-ink/70 dark:text-white/70">{story.summary}</p>}
+                  <h3 className="mt-3 type-card-title text-aeem-ink dark:text-aeem-dark-text">{story.title}</h3>
+                  {story.summary && <p className="mt-2 text-sm text-aeem-charcoal-soft dark:text-aeem-dark-muted">{story.summary}</p>}
 
                   <div className="mt-6 border-t border-black/10 pt-4 dark:border-white/10">
-                    <div className="mb-4 flex flex-wrap items-center gap-4 text-xs text-aeem-ink/60 dark:text-white/60">
+                    <div className="mb-4 flex flex-wrap items-center gap-4 text-xs text-aeem-charcoal-soft dark:text-aeem-dark-muted">
                       {story.participants_count != null && (
                         <span className="inline-flex items-center gap-1">
                           <Users size={13} aria-hidden="true" />
@@ -158,7 +158,7 @@ export default function Impact() {
           </div>
         ) : (
           <Card className="p-8 text-center">
-            <p className="text-base text-aeem-ink/70 dark:text-white/70">No published impact stories found.</p>
+            <p className="text-base text-aeem-charcoal-soft dark:text-aeem-dark-muted">No published impact stories found.</p>
           </Card>
         )}
       </Section>
