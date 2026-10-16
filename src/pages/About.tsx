@@ -38,7 +38,7 @@ const About: React.FC = () => (
         <h1 className="type-page-title text-aeem-ink dark:text-aeem-dark-text">
           A youth-led movement working toward educational equity across Africa.
         </h1>
-        <p className="mt-7 max-w-3xl text-lg leading-relaxed text-gray-700 dark:text-gray-300 sm:text-xl">
+        <p className="mt-7 max-w-3xl text-lg leading-relaxed text-aeem-charcoal-soft dark:text-aeem-dark-muted sm:text-xl">
           AEEM is a youth-led movement dedicated to bridging the barriers that prevent quality education from reaching every child in Africa.
         </p>
       </div>
@@ -55,8 +55,8 @@ const About: React.FC = () => (
             <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-aeem-forest/10 text-aeem-forest dark:bg-aeem-gold/10 dark:text-aeem-gold-light">
               <Icon size={24} aria-hidden="true" />
             </div>
-            <h3 className="text-xl font-semibold text-aeem-ink dark:text-white">{title}</h3>
-            <p className="mt-3 leading-relaxed text-gray-600 dark:text-gray-400">{text}</p>
+            <h3 className="type-card-title text-aeem-ink dark:text-aeem-dark-text">{title}</h3>
+            <p className="mt-3 leading-relaxed text-aeem-charcoal-soft dark:text-aeem-dark-muted">{text}</p>
           </Card>
         ))}
       </div>
@@ -79,7 +79,7 @@ const About: React.FC = () => (
       <div className="mb-12 max-w-3xl">
         <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-aeem-forest dark:text-aeem-gold-light">Leadership</p>
         <h2 id="leadership-heading" className="type-section-title text-aeem-ink dark:text-aeem-dark-text">The people responsible for the movement.</h2>
-        <p className="mt-4 text-lg leading-relaxed text-gray-600 dark:text-gray-400">AEEM's leadership team provides the organizational direction behind its work.</p>
+        <p className="mt-4 text-lg leading-relaxed text-aeem-charcoal-soft dark:text-aeem-dark-muted">AEEM's leadership team provides the organizational direction behind its work.</p>
       </div>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {leadershipTeam.map((member) => (
@@ -91,7 +91,7 @@ const About: React.FC = () => (
               </picture>
             </div>
             <div className="p-6">
-              <h3 className="text-lg font-semibold text-aeem-ink dark:text-white">{member.name}</h3>
+              <h3 className="type-card-title text-aeem-ink dark:text-aeem-dark-text">{member.name}</h3>
               <p className="mt-1 text-sm font-medium text-aeem-forest dark:text-aeem-gold-light">{member.title}</p>
             </div>
           </article>
@@ -103,7 +103,7 @@ const About: React.FC = () => (
       <div className="mb-10 max-w-2xl">
         <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-aeem-forest dark:text-aeem-gold-light">Life at AEEM</p>
         <h2 id="life-heading" className="type-section-title text-aeem-ink dark:text-aeem-dark-text">The work is carried by people.</h2>
-        <p className="mt-4 text-lg leading-relaxed text-gray-600 dark:text-gray-400">Moments from workshops, community gatherings, mentorship, and team sessions show the human side of the movement.</p>
+        <p className="mt-4 text-lg leading-relaxed text-aeem-charcoal-soft dark:text-aeem-dark-muted">Moments from workshops, community gatherings, mentorship, and team sessions show the human side of the movement.</p>
       </div>
       <MosaicGallery />
     </Section>
@@ -112,13 +112,13 @@ const About: React.FC = () => (
       <div className="mb-10 max-w-2xl">
         <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-aeem-forest dark:text-aeem-gold-light">Relationships</p>
         <h2 id="partners-heading" className="type-section-title text-aeem-ink dark:text-aeem-dark-text">Partners and institutional relationships</h2>
-        <p className="mt-4 text-lg leading-relaxed text-gray-600 dark:text-gray-400">Organizations represented in AEEM's current partner data.</p>
+        <p className="mt-4 text-lg leading-relaxed text-aeem-charcoal-soft dark:text-aeem-dark-muted">Organizations represented in AEEM's current partner data.</p>
       </div>
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
         {partners.map((partner) => (
           <div key={partner.name} className="flex min-h-[128px] flex-col items-center justify-center rounded-2xl border border-gray-200 bg-white p-5 text-center dark:border-white/10 dark:bg-white/[0.03]">
             <img src={partner.url} alt={`${partner.name} logo`} width={160} height={80} loading="lazy" decoding="async" className="h-16 w-full object-contain opacity-80" />
-            <span className="mt-3 text-sm font-semibold text-aeem-ink dark:text-white">{partner.name}</span>
+            <span className="mt-3 text-sm font-semibold text-aeem-ink dark:text-aeem-dark-text">{partner.name}</span>
             <span className="mt-1 text-[10px] leading-tight text-gray-500">{partner.sub}</span>
           </div>
         ))}
