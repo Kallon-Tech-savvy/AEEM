@@ -8,13 +8,13 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="relative min-h-screen font-sans bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white to-gray-50 dark:from-[#2a2d35] dark:to-aeem-charcoal text-aeem-charcoal dark:text-aeem-white transition-colors duration-500">
+    <div className="relative min-h-screen bg-aeem-cream font-sans text-aeem-ink transition-colors duration-300 dark:bg-aeem-dark-bg dark:text-aeem-dark-text">
       <Navbar />
-      
+
       <main className="relative z-10">
         {children}
       </main>
-      
+
       <Footer />
     </div>
   );
