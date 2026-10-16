@@ -11,7 +11,7 @@ export default function HomeFeaturedImpact() {
               Featured impact story
             </p>
 
-            <h2 className="max-w-xl text-4xl font-extrabold leading-tight text-white md:text-5xl">
+            <h2 className="max-w-xl type-section-title text-white">
               I AM SOMEBODY Initiative
             </h2>
 
