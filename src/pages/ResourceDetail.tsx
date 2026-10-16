@@ -107,7 +107,7 @@ export default function ResourceDetail() {
       </Card>}
 
       <div className="mt-12 flex flex-col gap-6 border-t border-black/10 pt-6 dark:border-white/10 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex flex-wrap items-center gap-2">{resource.tags?.length ? <><span className="mr-1 text-xs font-semibold uppercase tracking-[0.12em] text-aeem-charcoal-soft dark:text-aeem-dark-muted">Topics</span>{resource.tags.map(tag => <Badge key={tag}>{tag}</Badge>)}</> : null}</div>
+        <div className="flex flex-wrap items-center gap-2">{resource.tags?.length ? <><span className="mr-1 type-eyebrow text-aeem-charcoal-soft dark:text-aeem-dark-muted">Topics</span>{resource.tags.map(tag => <Badge key={tag}>{tag}</Badge>)}</> : null}</div>
         <div><Button type="button" variant="secondary" onClick={share}><Share2 size={17} aria-hidden="true" />Share</Button><p className="sr-only" aria-live="polite">{shareStatus}</p></div>
       </div>
     </Section>
