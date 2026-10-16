@@ -60,7 +60,7 @@ export default function ResourceDetail() {
   if (!resource) return <Section spacing="large" containerNarrow className="bg-aeem-cream dark:bg-aeem-charcoal"><div className="text-center">
     <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-gold-dark dark:text-aeem-gold-light">Knowledge Hub</p>
     <h1 className="mt-4 type-page-title text-aeem-ink dark:text-aeem-dark-text">Resource not found.</h1>
-    <p className="mx-auto mt-4 max-w-xl leading-7 text-aeem-ink/70 dark:text-white/70">This resource does not exist, is unpublished, or is temporarily unavailable.</p>
+    <p className="mx-auto mt-4 max-w-xl leading-7 text-aeem-charcoal-soft dark:text-aeem-dark-muted">This resource does not exist, is unpublished, or is temporarily unavailable.</p>
     <Link to="/resources" className="mt-8 inline-flex min-h-11 items-center gap-2 rounded-xl border border-aeem-forest bg-aeem-forest px-5 text-sm font-semibold text-white hover:bg-aeem-forest-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus"><ArrowLeft size={16} aria-hidden="true" />Back to Knowledge Hub</Link>
   </div></Section>
 
@@ -89,9 +89,9 @@ export default function ResourceDetail() {
 
     <Section spacing="large" containerNarrow className="bg-aeem-cream dark:bg-aeem-charcoal">
         <Link to="/resources" className="inline-flex items-center gap-2 text-sm font-semibold text-aeem-ink/60 hover:text-aeem-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:text-white/60 dark:hover:text-aeem-gold-light"><ArrowLeft size={16} aria-hidden="true" />Back to Knowledge Hub</Link>
-        <div className="mt-10 flex flex-wrap items-center gap-3"><Badge>{type}</Badge>{year && <span className="text-sm text-aeem-ink/60 dark:text-white/60">{year}</span>}{resource.reading_time && <span className="inline-flex items-center gap-1.5 text-sm text-aeem-ink/60 dark:text-white/60"><Clock size={14} aria-hidden="true" />{resource.reading_time}</span>}</div>
+        <div className="mt-10 flex flex-wrap items-center gap-3"><Badge>{type}</Badge>{year && <span className="text-sm text-aeem-charcoal-soft dark:text-aeem-dark-muted">{year}</span>}{resource.reading_time && <span className="inline-flex items-center gap-1.5 text-sm text-aeem-charcoal-soft dark:text-aeem-dark-muted"><Clock size={14} aria-hidden="true" />{resource.reading_time}</span>}</div>
         <h1 className="mt-6 type-page-title text-aeem-ink dark:text-aeem-dark-text">{resource.title}</h1>
-        {resource.summary && <p className="mt-6 text-xl leading-8 text-aeem-ink/70 dark:text-white/70">{resource.summary}</p>}
+        {resource.summary && <p className="mt-6 text-xl leading-8 text-aeem-charcoal-soft dark:text-aeem-dark-muted">{resource.summary}</p>}
         {resource.image_url && <figure className="mt-10 overflow-hidden rounded-2xl border border-black/10 dark:border-white/10"><img src={resource.image_url} alt={resource.title} className="aspect-[16/8] w-full object-cover" /></figure>}
     </Section>
 
@@ -102,12 +102,12 @@ export default function ResourceDetail() {
       </article>
 
       {resource.file_url && <Card className="mt-12 flex flex-col gap-5 p-6 sm:flex-row sm:items-center sm:justify-between">
-        <div><h2 className="type-card-title text-aeem-ink dark:text-white">Download this resource</h2><p className="mt-1 text-sm text-aeem-ink/65 dark:text-white/65">Open the published file in a new tab.</p></div>
+        <div><h2 className="type-card-title text-aeem-ink dark:text-aeem-dark-text">Download this resource</h2><p className="mt-1 text-sm text-aeem-charcoal-soft dark:text-aeem-dark-muted">Open the published file in a new tab.</p></div>
         <Button type="button" onClick={() => { const url = resource.file_url; if (url) window.open(url, '_blank', 'noopener,noreferrer') }}><Download size={17} aria-hidden="true" />Download</Button>
       </Card>}
 
       <div className="mt-12 flex flex-col gap-6 border-t border-black/10 pt-6 dark:border-white/10 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex flex-wrap items-center gap-2">{resource.tags?.length ? <><span className="mr-1 text-xs font-semibold uppercase tracking-[0.12em] text-aeem-ink/50 dark:text-white/50">Topics</span>{resource.tags.map(tag => <Badge key={tag}>{tag}</Badge>)}</> : null}</div>
+        <div className="flex flex-wrap items-center gap-2">{resource.tags?.length ? <><span className="mr-1 text-xs font-semibold uppercase tracking-[0.12em] text-aeem-charcoal-soft dark:text-aeem-dark-muted">Topics</span>{resource.tags.map(tag => <Badge key={tag}>{tag}</Badge>)}</> : null}</div>
         <div><Button type="button" variant="secondary" onClick={share}><Share2 size={17} aria-hidden="true" />Share</Button><p className="sr-only" aria-live="polite">{shareStatus}</p></div>
       </div>
     </Section>
