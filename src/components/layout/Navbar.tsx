@@ -5,7 +5,7 @@ import ThemeToggle from '../theme/ThemeToggle'
 import { Container } from '../ui'
 
 const actionLinkClasses =
-  'inline-flex min-h-11 items-center justify-center rounded-xl border border-aeem-blue bg-aeem-blue px-5 text-sm font-semibold text-white transition-colors duration-150 hover:border-aeem-blue-dark hover:bg-aeem-blue-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus focus-visible:ring-offset-2'
+  'inline-flex min-h-11 items-center justify-center rounded-xl border border-aeem-forest bg-aeem-forest px-5 text-sm font-semibold text-white transition-colors duration-150 hover:border-aeem-forest-dark hover:bg-aeem-forest-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus focus-visible:ring-offset-2 dark:focus-visible:ring-offset-aeem-dark-bg'
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -55,7 +55,7 @@ export default function Navbar() {
       aria-label="Primary navigation"
       className={`fixed inset-x-0 top-0 z-[100] py-4 transition-colors duration-200 ${
         isScrolled || isMobileMenuOpen
-          ? 'border-b border-black/10 bg-white/95 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-aeem-charcoal/95'
+          ? 'border-b border-aeem-border/80 bg-aeem-surface/95 shadow-sm backdrop-blur-sm dark:border-aeem-dark-border dark:bg-aeem-dark-surface/95'
           : 'bg-transparent'
       }`}
     >
@@ -87,15 +87,15 @@ export default function Navbar() {
                 key={link.name}
                 to={link.path}
                 aria-current={active ? 'page' : undefined}
-                className={`relative rounded-sm py-2 text-sm font-semibold transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus focus-visible:ring-offset-2 dark:hover:text-aeem-gold ${
-                  active ? 'text-aeem-blue dark:text-aeem-gold-light' : 'text-aeem-charcoal dark:text-white'
+                className={`relative rounded-sm py-2 text-sm font-semibold transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus focus-visible:ring-offset-2 dark:hover:text-aeem-gold-light ${
+                  active ? 'text-aeem-forest dark:text-aeem-gold-light' : 'text-aeem-ink dark:text-aeem-dark-text'
                 }`}
               >
                 {link.name}
                 {active ? (
                   <span
                     aria-hidden="true"
-                    className="absolute inset-x-0 -bottom-0.5 h-0.5 bg-aeem-blue dark:bg-aeem-gold"
+                    className="absolute inset-x-0 -bottom-0.5 h-0.5 bg-aeem-forest dark:bg-aeem-gold-light"
                   />
                 ) : null}
               </Link>
@@ -115,7 +115,7 @@ export default function Navbar() {
             ref={menuButtonRef}
             type="button"
             onClick={() => setIsMobileMenuOpen((open) => !open)}
-            className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-xl text-aeem-charcoal transition-colors duration-150 hover:bg-black/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus focus-visible:ring-offset-2 dark:text-aeem-gold dark:hover:bg-white/10"
+            className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-xl text-aeem-ink transition-colors duration-150 hover:bg-aeem-forest/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus focus-visible:ring-offset-2 dark:text-aeem-dark-text dark:hover:bg-white/10"
             aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={isMobileMenuOpen}
             aria-controls="mobile-primary-navigation"
@@ -128,7 +128,7 @@ export default function Navbar() {
       {isMobileMenuOpen ? (
         <div
           id="mobile-primary-navigation"
-          className="absolute inset-x-0 top-full border-t border-black/10 bg-white dark:border-white/10 dark:bg-aeem-charcoal md:hidden"
+          className="absolute inset-x-0 top-full border-t border-aeem-border bg-aeem-surface dark:border-aeem-dark-border dark:bg-aeem-dark-surface md:hidden"
         >
           <Container className="flex flex-col gap-1 py-6">
             {navLinks.map((link, index) => {
@@ -143,8 +143,8 @@ export default function Navbar() {
                   aria-current={active ? 'page' : undefined}
                   className={`rounded-lg px-3 py-3 text-lg font-semibold transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus focus-visible:ring-offset-2 ${
                     active
-                      ? 'bg-aeem-gold/10 text-aeem-gold'
-                      : 'text-aeem-charcoal hover:bg-black/5 dark:text-white dark:hover:bg-white/10'
+                      ? 'bg-aeem-forest-light text-aeem-forest dark:bg-white/5 dark:text-aeem-gold-light'
+                      : 'text-aeem-ink hover:bg-aeem-forest/5 dark:text-aeem-dark-text dark:hover:bg-white/10'
                   }`}
                 >
                   {link.name}
