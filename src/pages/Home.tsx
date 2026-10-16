@@ -41,7 +41,7 @@ export default function Home() {
 
       <Section className="bg-aeem-cream text-center dark:bg-aeem-dark-bg">
         <div className="mx-auto max-w-3xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-aeem-gold">Get involved</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-aeem-gold-dark">Get involved</p>
           <h2 className="mt-4 text-4xl font-bold tracking-tight text-aeem-ink dark:text-white sm:text-5xl">
             Help build a future where every child can learn, lead and thrive.
           </h2>
@@ -58,7 +58,7 @@ export default function Home() {
             </Link>
             <Link
               to="/contact"
-              className={`${ctaLink} border-aeem-forest bg-transparent text-aeem-forest hover:bg-aeem-forest/5 dark:border-aeem-gold dark:text-aeem-gold dark:hover:bg-aeem-gold/10`}
+              className={`${ctaLink} border-aeem-forest bg-transparent text-aeem-forest hover:bg-aeem-forest/5 dark:border-aeem-gold dark:text-aeem-gold-dark dark:hover:bg-aeem-gold/10`}
             >
               Partner With Us
             </Link>
