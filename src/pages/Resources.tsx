@@ -59,14 +59,14 @@ export default function Resources() {
         <link rel="canonical" href={canonicalUrl} />
       </Helmet>
 
-      <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
-        <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-blue dark:text-aeem-gold-light">
+      <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-dark-bg">
+        <p className="type-eyebrow text-aeem-forest dark:text-aeem-gold-light">
           Research & Open Access
         </p>
-        <h1 className="mt-4 text-4xl font-bold tracking-tight text-aeem-ink dark:text-white sm:text-5xl lg:text-6xl">
+        <h1 className="mt-4 type-page-title text-aeem-ink dark:text-aeem-dark-text">
           Knowledge Hub
         </h1>
-        <p className="mt-6 max-w-2xl text-lg leading-8 text-aeem-ink/75 dark:text-white/75">
+        <p className="mt-6 max-w-2xl text-lg leading-8 text-aeem-charcoal-soft dark:text-aeem-dark-muted">
           Publications, framework documents, and research materials for educators and policy advocates.
         </p>
       </Section>
@@ -74,19 +74,19 @@ export default function Resources() {
       <Section>
         {loading ? (
           <div className="flex min-h-[300px] items-center justify-center">
-            <Loader2 className="animate-spin text-aeem-gold" size={32} aria-label="Loading resources" />
+            <Loader2 className="animate-spin text-aeem-forest dark:text-aeem-gold-light" size={32} aria-label="Loading resources" />
           </div>
         ) : error ? (
           <Card className="p-12 text-center">
-            <h2 className="text-2xl font-bold text-aeem-ink dark:text-white">Resources are temporarily unavailable</h2>
-            <p className="mt-2 text-aeem-ink/70 dark:text-white/70">
+            <h2 className="type-section-title text-aeem-ink dark:text-aeem-dark-text">Resources are temporarily unavailable</h2>
+            <p className="mt-2 text-aeem-charcoal-soft dark:text-aeem-dark-muted">
               We could not load the knowledge hub resources right now. Please try again later.
             </p>
           </Card>
         ) : resources.length === 0 ? (
           <Card className="p-12 text-center">
-            <h2 className="text-2xl font-bold text-aeem-ink dark:text-white">No resources available at this time</h2>
-            <p className="mt-2 text-aeem-ink/70 dark:text-white/70">
+            <h2 className="type-section-title text-aeem-ink dark:text-aeem-dark-text">No resources available at this time</h2>
+            <p className="mt-2 text-aeem-charcoal-soft dark:text-aeem-dark-muted">
               Check back soon as we publish open access materials and research documentation.
             </p>
           </Card>
@@ -97,15 +97,15 @@ export default function Resources() {
                 <div>
                   <div className="flex items-center justify-between gap-2">
                     <Badge>{resource.category ?? resource.type ?? 'Resource'}</Badge>
-                    <span className="inline-flex items-center gap-1 text-xs text-aeem-ink/60 dark:text-white/60">
+                    <span className="inline-flex items-center gap-1 text-xs text-aeem-charcoal-soft dark:text-aeem-dark-muted">
                       <BookOpen size={13} aria-hidden="true" />
                       {new Date(resource.created_at).getFullYear()}
                     </span>
                   </div>
-                  <h2 className="mt-4 text-xl font-bold text-aeem-ink dark:text-white">
+                  <h2 className="mt-4 type-card-title text-aeem-ink dark:text-aeem-dark-text">
                     {resource.title}
                   </h2>
-                  <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-aeem-ink/75 dark:text-white/75">
+                  <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-aeem-charcoal-soft dark:text-aeem-dark-muted">
                     {resource.summary ?? resource.description}
                   </p>
                 </div>

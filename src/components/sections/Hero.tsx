@@ -59,7 +59,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative overflow-hidden bg-aeem-cream pt-24 dark:bg-aeem-charcoal"
+      className="relative overflow-hidden bg-aeem-cream pt-24 dark:bg-aeem-dark-bg"
     >
       <Container className="grid min-h-[calc(100svh-1rem)] grid-cols-1 items-center gap-14 py-20 lg:grid-cols-[1.05fr_0.95fr] lg:gap-24 lg:py-24">
         {/* initial={false}: the text is drawn in its final state from the first paint.
@@ -70,15 +70,15 @@ export default function Hero() {
           animate={{ opacity: 1, x: 0 }}
           transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.55 }}
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-aeem-blue dark:text-aeem-gold-light">
+          <p className="type-eyebrow text-aeem-forest dark:text-aeem-gold-light">
             Fair access to education for all
           </p>
 
-          <h1 className="mt-5 max-w-3xl text-5xl font-extrabold leading-[1.02] tracking-tight text-aeem-ink dark:text-white sm:text-6xl lg:text-7xl">
-            Empowering the <span className="text-aeem-blue dark:text-aeem-gold-light">Future</span> of Africa
+          <h1 className="type-page-title text-aeem-ink dark:text-aeem-dark-text">
+            Empowering the <span className="text-aeem-forest dark:text-aeem-gold-light">Future</span> of Africa
           </h1>
 
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-aeem-ink/70 dark:text-gray-300 sm:text-xl">
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-aeem-charcoal-soft dark:text-aeem-dark-muted sm:text-xl">
             Pioneering inclusive, equitable, and quality education across the continent through
             community-led action and innovative mentorship.
           </p>
@@ -86,13 +86,13 @@ export default function Hero() {
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               to="/impact"
-              className={`${actionLink} border-aeem-blue bg-aeem-blue text-white hover:border-aeem-blue-dark hover:bg-aeem-blue-dark`}
+              className={`${actionLink} border-aeem-forest bg-aeem-forest text-white hover:border-aeem-forest-dark hover:bg-aeem-forest-dark`}
             >
               Explore our Impact <ArrowRight size={18} aria-hidden="true" />
             </Link>
             <Link
               to="/events"
-              className={`${actionLink} border-aeem-blue bg-transparent text-aeem-blue hover:bg-aeem-blue/5 dark:border-aeem-gold dark:text-aeem-gold dark:hover:bg-aeem-gold/10`}
+              className={`${actionLink} border-aeem-forest bg-transparent text-aeem-forest hover:bg-aeem-forest/5 dark:border-aeem-gold dark:text-aeem-gold-light dark:hover:bg-aeem-gold/10`}
             >
               Upcoming Events
             </Link>
@@ -116,8 +116,8 @@ export default function Hero() {
 
             <path
               d={AFRICA_PATH}
-              fill="#17323d"
-              stroke="#B8941A"
+              fill="var(--color-brand-primary-hover)"
+              stroke="var(--color-gold-subtle)"
               strokeWidth="1.2"
               strokeOpacity="0.55"
             />
@@ -132,7 +132,7 @@ export default function Hero() {
                   y1={FREETOWN.y}
                   x2={city.x}
                   y2={city.y}
-                  stroke="#D4AF37"
+                  stroke="var(--color-gold-subtle)"
                   strokeWidth="0.8"
                   strokeOpacity="0.65"
                   strokeDasharray={len}
@@ -149,7 +149,7 @@ export default function Hero() {
                 cx={city.x}
                 cy={city.y}
                 r={2.5}
-                fill="#D4AF37"
+                fill="var(--color-gold-subtle)"
                 initial={shouldReduceMotion ? false : { opacity: 0, r: 0 }}
                 animate={{ opacity: 0.9, r: 2.5 }}
                 transition={shouldReduceMotion ? { duration: 0 } : { delay: city.delay + 0.65, duration: 0.25 }}
@@ -160,7 +160,7 @@ export default function Hero() {
               cx={FREETOWN.x}
               cy={FREETOWN.y}
               r={5}
-              fill="#D4AF37"
+              fill="var(--color-gold-subtle)"
               animate={shouldReduceMotion ? { opacity: 1 } : { opacity: [1, 0.55, 1] }}
               transition={shouldReduceMotion ? { duration: 0 } : { duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
             />
@@ -168,7 +168,7 @@ export default function Hero() {
             <text
               x={FREETOWN.x + 10}
               y={FREETOWN.y - 7}
-              fill="#D4AF37"
+              fill="var(--color-gold-subtle)"
               fontSize="8"
               fontWeight="600"
               fontFamily="sans-serif"
@@ -177,7 +177,7 @@ export default function Hero() {
             </text>
           </svg>
 
-          <p className="mt-2 text-center text-xs text-aeem-ink/55 dark:text-white/55">
+          <p className="mt-2 text-center text-xs text-aeem-charcoal-soft dark:text-aeem-dark-muted">
             A growing network of communities, educators, and young people.
           </p>
         </motion.div>

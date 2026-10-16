@@ -134,11 +134,11 @@ const Contact: React.FC = () => {
         <meta property="og:url" content={getCanonical('/contact')} />
       </Helmet>
 
-      <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
+      <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-dark-bg">
         <div className="max-w-3xl">
           <Badge>Get in touch</Badge>
-          <h1 className="mt-5 text-4xl font-bold leading-tight text-aeem-ink dark:text-white sm:text-5xl lg:text-6xl">A direct line to AEEM.</h1>
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-aeem-ink/70 dark:text-white/70">For general questions, program inquiries, partnerships, or media requests, send a message or use the contact details below.</p>
+          <h1 className="mt-5 type-page-title text-aeem-ink dark:text-aeem-dark-text">A direct line to AEEM.</h1>
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-aeem-charcoal-soft dark:text-aeem-dark-muted">For general questions, program inquiries, partnerships, or media requests, send a message or use the contact details below.</p>
         </div>
       </Section>
 
@@ -146,47 +146,47 @@ const Contact: React.FC = () => {
         <div className="grid gap-10 lg:grid-cols-5 lg:gap-16">
           <div className="space-y-7 lg:col-span-2">
             <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-gold">Contact details</p>
-              <h2 className="mt-3 text-2xl font-bold text-aeem-ink dark:text-white">Reach us directly</h2>
+              <p className="type-eyebrow text-aeem-gold-dark dark:text-aeem-gold-light">Contact details</p>
+              <h2 className="mt-3 type-section-title text-aeem-ink dark:text-aeem-dark-text">Reach us directly</h2>
             </div>
             <Card className="space-y-6 p-6">
               <a href={`mailto:${CONTACT_EMAIL}`} className="flex gap-4 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus">
                 <Mail className="mt-1 shrink-0 text-aeem-forest dark:text-aeem-gold-light" size={20} aria-hidden="true" />
-                <span><span className="block font-semibold text-aeem-ink dark:text-white">Email</span><span className="mt-1 block break-all text-sm text-aeem-ink/70 dark:text-white/70">{CONTACT_EMAIL}</span></span>
+                <span><span className="block font-semibold text-aeem-ink dark:text-aeem-dark-text">Email</span><span className="mt-1 block break-all text-sm text-aeem-charcoal-soft dark:text-aeem-dark-muted">{CONTACT_EMAIL}</span></span>
               </a>
               <a href={`tel:${CONTACT_PHONE.replace(/\s/g, '')}`} className="flex gap-4 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus">
                 <Phone className="mt-1 shrink-0 text-aeem-forest dark:text-aeem-gold-light" size={20} aria-hidden="true" />
-                <span><span className="block font-semibold text-aeem-ink dark:text-white">Phone</span><span className="mt-1 block text-sm text-aeem-ink/70 dark:text-white/70">{CONTACT_PHONE}</span></span>
+                <span><span className="block font-semibold text-aeem-ink dark:text-aeem-dark-text">Phone</span><span className="mt-1 block text-sm text-aeem-charcoal-soft dark:text-aeem-dark-muted">{CONTACT_PHONE}</span></span>
               </a>
               <div className="flex gap-4">
                 <MapPin className="mt-1 shrink-0 text-aeem-forest dark:text-aeem-gold-light" size={20} aria-hidden="true" />
-                <span><span className="block font-semibold text-aeem-ink dark:text-white">Office</span><span className="mt-1 block text-sm text-aeem-ink/70 dark:text-white/70">Freetown, Sierra Leone</span></span>
+                <span><span className="block font-semibold text-aeem-ink dark:text-aeem-dark-text">Office</span><span className="mt-1 block text-sm text-aeem-charcoal-soft dark:text-aeem-dark-muted">Freetown, Sierra Leone</span></span>
               </div>
             </Card>
-            <p className="text-sm leading-6 text-aeem-ink/60 dark:text-white/60">For sensitive matters, do not include identity documents, financial information, passwords, or other confidential credentials in this form.</p>
+            <p className="text-sm leading-6 text-aeem-charcoal-soft dark:text-aeem-dark-muted">For sensitive matters, do not include identity documents, financial information, passwords, or other confidential credentials in this form.</p>
           </div>
 
           <Card className="px-3 py-6 sm:px-8 lg:col-span-3">
             {submitted ? (
               <div className="py-10 text-center">
                 <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-aeem-forest/10 text-aeem-forest dark:bg-aeem-gold/10 dark:text-aeem-gold-light"><CheckCircle2 size={28} aria-hidden="true" /></div>
-                <h2 className="mt-6 text-2xl font-bold text-aeem-ink dark:text-white">Message received</h2>
-                <p className="mx-auto mt-3 max-w-md leading-7 text-aeem-ink/70 dark:text-white/70">Thank you. Your message has been submitted. We will follow up using the contact details you provided.</p>
+                <h2 className="mt-6 type-card-title text-aeem-ink dark:text-aeem-dark-text">Message received</h2>
+                <p className="mx-auto mt-3 max-w-md leading-7 text-aeem-charcoal-soft dark:text-aeem-dark-muted">Thank you. Your message has been submitted. We will follow up using the contact details you provided.</p>
                 <Button type="button" variant="secondary" className="mt-7" onClick={() => setSubmitted(false)}>Send another message</Button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6 px-3">
                 <input type="text" name="hp_contact" value={honeypot} onChange={e => setHoneypot(e.target.value)} className="hidden" tabIndex={-1} autoComplete="off" />
                 <div>
-                  <h2 className="text-2xl font-bold text-aeem-ink dark:text-white">Send a message</h2>
-                  <p className="mt-2 text-sm text-aeem-ink/65 dark:text-white/65">Tell us what you need and include any relevant deadline or context.</p>
+                  <h2 className="type-section-title text-aeem-ink dark:text-aeem-dark-text">Send a message</h2>
+                  <p className="mt-2 text-sm text-aeem-charcoal-soft dark:text-aeem-dark-muted">Tell us what you need and include any relevant deadline or context.</p>
                 </div>
                 <div className="grid gap-6 sm:grid-cols-2">
-                  <label className="space-y-2"><span className="text-sm font-semibold text-aeem-ink dark:text-white">Full name</span><input required name="full_name" autoComplete="name" value={formData.full_name} onChange={e => setFormData({...formData, full_name: e.target.value})} className="min-h-11 w-full rounded-xl border border-gray-300 bg-white px-4 text-sm outline-none focus:border-aeem-focus focus:ring-2 focus:ring-aeem-focus/20 dark:border-white/15 dark:bg-white/[0.03] dark:text-white" /></label>
-                  <label className="space-y-2"><span className="text-sm font-semibold text-aeem-ink dark:text-white">Email address</span><input required type="email" name="email" autoComplete="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="min-h-11 w-full rounded-xl border border-gray-300 bg-white px-4 text-sm outline-none focus:border-aeem-focus focus:ring-2 focus:ring-aeem-focus/20 dark:border-white/15 dark:bg-white/[0.03] dark:text-white" /></label>
-                  <label className="space-y-2"><span className="text-sm font-semibold text-aeem-ink dark:text-white">Phone <span className="font-normal text-aeem-ink/50">(optional)</span></span><input name="phone" type="tel" autoComplete="tel" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className="min-h-11 w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm outline-none focus:border-aeem-focus focus:ring-2 focus:ring-aeem-focus/20 dark:border-white/15 dark:bg-white/[0.03] dark:text-white" /></label>
+                  <label className="space-y-2"><span className="text-sm font-semibold text-aeem-ink dark:text-aeem-dark-text">Full name</span><input required name="full_name" autoComplete="name" value={formData.full_name} onChange={e => setFormData({...formData, full_name: e.target.value})} className="min-h-11 w-full rounded-xl border border-aeem-border bg-aeem-surface px-4 text-sm outline-none focus:border-aeem-focus focus:ring-2 focus:ring-aeem-focus/20 dark:border-aeem-dark-border dark:bg-aeem-dark-bg dark:text-aeem-dark-text" /></label>
+                  <label className="space-y-2"><span className="text-sm font-semibold text-aeem-ink dark:text-aeem-dark-text">Email address</span><input required type="email" name="email" autoComplete="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="min-h-11 w-full rounded-xl border border-aeem-border bg-aeem-surface px-4 text-sm outline-none focus:border-aeem-focus focus:ring-2 focus:ring-aeem-focus/20 dark:border-aeem-dark-border dark:bg-aeem-dark-bg dark:text-aeem-dark-text" /></label>
+                  <label className="space-y-2"><span className="text-sm font-semibold text-aeem-ink dark:text-aeem-dark-text">Phone <span className="font-normal text-aeem-ink/50">(optional)</span></span><input name="phone" type="tel" autoComplete="tel" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className="min-h-11 w-full rounded-xl border border-aeem-border bg-aeem-surface px-4 py-3 text-sm outline-none focus:border-aeem-focus focus:ring-2 focus:ring-aeem-focus/20 dark:border-aeem-dark-border dark:bg-aeem-dark-bg dark:text-aeem-dark-text" /></label>
                 </div>
-                <label className="block space-y-2"><span className="text-sm font-semibold text-aeem-ink dark:text-white">Message</span><textarea required name="message" rows={7} maxLength={3000} value={formData.message} onChange={e => setFormData({...formData, message: e.target.value})} className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm outline-none focus:border-aeem-focus focus:ring-2 focus:ring-aeem-focus/20 dark:border-white/15 dark:bg-white/[0.03] dark:text-white" placeholder="How can we help?" /></label>
+                <label className="block space-y-2"><span className="text-sm font-semibold text-aeem-ink dark:text-aeem-dark-text">Message</span><textarea required name="message" rows={7} maxLength={3000} value={formData.message} onChange={e => setFormData({...formData, message: e.target.value})} className="w-full rounded-xl border border-aeem-border bg-aeem-surface px-4 py-3 text-sm outline-none focus:border-aeem-focus focus:ring-2 focus:ring-aeem-focus/20 dark:border-aeem-dark-border dark:bg-aeem-dark-bg dark:text-aeem-dark-text" placeholder="How can we help?" /></label>
                 {error && <div role="alert" className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-700 dark:border-red-900/50 dark:bg-red-950/20 dark:text-red-300">{error}</div>}
                 <Button type="submit" disabled={isSubmitting} className="w-full">{isSubmitting ? 'Sending…' : <><Send size={18} aria-hidden="true" /> Send message</>}</Button>
               </form>

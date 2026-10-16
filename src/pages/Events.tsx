@@ -65,14 +65,14 @@ export default function Events() {
         <link rel="canonical" href={canonicalUrl} />
       </Helmet>
 
-      <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
-          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-blue dark:text-aeem-gold-light">
+      <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-dark-bg">
+          <p className="type-eyebrow text-aeem-forest dark:text-aeem-gold-light">
             Convenings & Gatherings
           </p>
-          <h1 className="mt-4 text-4xl font-bold tracking-tight text-aeem-ink dark:text-white sm:text-5xl lg:text-6xl">
+          <h1 className="mt-4 type-page-title text-aeem-ink dark:text-aeem-dark-text">
             AEEM Events
           </h1>
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-aeem-ink/75 dark:text-white/75">
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-aeem-charcoal-soft dark:text-aeem-dark-muted">
             Bringing together educators, community leaders, researchers, and advocates to shape equitable education access.
           </p>
       </Section>
@@ -80,12 +80,12 @@ export default function Events() {
       <Section>
           {loading ? (
             <div className="flex min-h-[300px] items-center justify-center">
-              <Loader2 className="animate-spin text-aeem-gold" size={32} aria-label="Loading events" />
+              <Loader2 className="animate-spin text-aeem-gold-dark dark:text-aeem-gold-light" size={32} aria-label="Loading events" />
             </div>
           ) : events.length === 0 ? (
             <Card className="p-12 text-center">
-              <h2 className="text-2xl font-bold text-aeem-ink dark:text-white">No upcoming events scheduled</h2>
-              <p className="mt-2 text-aeem-ink/70 dark:text-white/70">
+              <h2 className="type-section-title text-aeem-ink dark:text-aeem-dark-text">No upcoming events scheduled</h2>
+              <p className="mt-2 text-aeem-charcoal-soft dark:text-aeem-dark-muted">
                 Check back soon or sign up to receive announcements about upcoming convenings and workshops.
               </p>
             </Card>
@@ -96,21 +96,21 @@ export default function Events() {
                   <div>
                     <div className="flex items-center justify-between gap-2">
                       <Badge>{event.status === 'upcoming' ? 'Upcoming' : 'Past Event'}</Badge>
-                      <span className="inline-flex items-center gap-1 text-xs text-aeem-ink/60 dark:text-white/60">
+                      <span className="inline-flex items-center gap-1 text-xs text-aeem-charcoal-soft dark:text-aeem-dark-muted">
                         <Calendar size={13} aria-hidden="true" />
                         {formatDate(event.event_date)}
                       </span>
                     </div>
-                    <h2 className="mt-4 text-xl font-bold text-aeem-ink dark:text-white">
+                    <h2 className="mt-4 type-card-title text-aeem-ink dark:text-aeem-dark-text">
                       {event.title}
                     </h2>
-                    <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-aeem-ink/75 dark:text-white/75">
+                    <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-aeem-charcoal-soft dark:text-aeem-dark-muted">
                       {event.description}
                     </p>
                   </div>
 
                   <div className="mt-6 border-t border-black/10 pt-4 dark:border-white/10">
-                    <div className="mb-4 flex items-center gap-1.5 text-xs text-aeem-ink/60 dark:text-white/60">
+                    <div className="mb-4 flex items-center gap-1.5 text-xs text-aeem-charcoal-soft dark:text-aeem-dark-muted">
                       <MapPin size={13} aria-hidden="true" />
                       <span>{event.location}</span>
                     </div>

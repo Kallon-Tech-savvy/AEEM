@@ -8,42 +8,48 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Institutional brand tokens
-        'aeem-blue':       '#352c5f',
-        'aeem-blue-dark':  '#1e173d',
-        'aeem-ink':          '#191720',
-        'aeem-cream':        '#F7F5EF',
-        'aeem-white':        '#FFFFFF',
+        // Canonical AEEM brand palette. Use semantic variants for text and controls.
+        'aeem-forest':       '#2C5F2D',
+        'aeem-forest-dark':  '#173D28',
+        'aeem-forest-light': '#EAF2E8',
+        'aeem-gold':         '#FFC72C',
+        'aeem-gold-light':   '#FFD966',
+        'aeem-gold-dark':    '#765500',
+        'aeem-pink':         '#E94E77',
+        'aeem-pink-dark':    '#A91F49',
 
-        // ── Light Mode Tokens ──────────────────────────────────────────────
-        // Gold: bumped from #D4AF37 to #B8941A for 4.5:1+ contrast on white
-        'aeem-gold':         '#B8941A',   // AA on #F8F7F4 (≈5.2:1)
-        'aeem-gold-light':   '#D4AF37',   // Decorative only
-        'aeem-gold-dark':    '#8A6E12',   // Hover/active deepened gold (≈8.1:1)
+        // Transitional aliases for existing page classes; migrate consumers to forest tokens.
+        'aeem-blue':         '#2C5F2D',
+        'aeem-blue-dark':    '#173D28',
 
-        // Charcoal
-        'aeem-charcoal':     '#17201A',   // Body text on light bg (≈18:1)
-        'aeem-charcoal-mid': '#3D3D3D',   // Secondary text (≈11:1)
-        'aeem-charcoal-soft':'#6B6B6B',   // Tertiary text — meets AA large (≈4.6:1)
+        // Content and surfaces
+        'aeem-ink':           '#17201A',
+        'aeem-cream':         '#F7F5EF',
+        'aeem-white':         '#FFFFFF',
+        'aeem-charcoal':      '#17201A',
+        'aeem-charcoal-mid':  '#3D3D3D',
+        'aeem-charcoal-soft': '#5C5750',
+        'aeem-bg':            '#F7F5EF',
+        'aeem-surface':       '#FFFFFF',
+        'aeem-border':        '#D6D3CC',
 
-        // Backgrounds
-        'aeem-bg':           '#F7F5EF',   // Global warm white
-        'aeem-surface':      '#FFFFFF',   // Card surface (slightly deeper)
-        'aeem-border':       '#D6D3CC',   // Borders on light bg
+        // Dark-theme surfaces and text
+        'aeem-dark-bg':      '#111110',
+        'aeem-dark-surface': '#1C1C1A',
+        'aeem-dark-border':  '#3B3B38',
+        'aeem-dark-text':    '#F0EDE6',
+        'aeem-dark-muted':   '#CFC6B8',
 
-        // ── Dark Mode Tokens ───────────────────────────────────────────────
-        'aeem-dark-bg':      '#111110',   // Base dark canvas
-        'aeem-dark-surface': '#1C1C1A',   // Card/panel surface
-        'aeem-dark-border':  '#2E2E2C',   // Subtle borders
-        'aeem-dark-text':    '#F0EDE6',   // Primary text on dark (≈17:1)
-        'aeem-dark-muted':   '#A89F91',   // Muted text on dark — AA large (≈4.6:1)
-
-        // ── Semantic ───────────────────────────────────────────────────────
-        'aeem-success':      '#0D9B6E',   // Darker green — AA on white (≈5.1:1)
+        // Semantic states
+        'aeem-success':      '#0D7957',
         'aeem-success-bg':   '#D1FAE5',
-        'aeem-error':        '#C0392B',   // Deeper red — AA on white (≈5.5:1)
+        'aeem-error':        '#B42318',
         'aeem-error-bg':     '#FEE2E2',
-        'aeem-focus':        '#1A6BCC',   // Blue focus ring (≈7:1 on white)
+        'aeem-warning':      '#8A4B08',
+        'aeem-warning-bg':   '#FEF3C7',
+        'aeem-info':         '#1A6BCC',
+        'aeem-info-bg':      '#EFF6FF',
+        'aeem-focus':        '#1A6BCC',
       },
 
       boxShadow: {
@@ -56,7 +62,7 @@ export default {
         'dark-gold':  'none',
         // Focus ring
         'focus-ring': '0 0 0 3px rgba(26,107,204,0.5)',
-        'focus-gold': '0 0 0 3px rgba(184,148,26,0.5)',
+        'focus-gold': '0 0 0 3px rgba(118,85,0,0.45)',
       },
 
       fontFamily: {

@@ -33,32 +33,32 @@ export default function Home() {
       <HomeApproach />
       <HomeFeaturedImpact />
 
-      <Suspense fallback={<div className="min-h-[400px] w-full bg-aeem-cream dark:bg-[#0f1115]" />}>
+      <Suspense fallback={<div className="min-h-[400px] w-full bg-aeem-cream dark:bg-aeem-dark-bg" />}>
         <AwardSlider />
         <PartnerTicker />
         <Pillars />
       </Suspense>
 
-      <Section className="bg-aeem-cream text-center dark:bg-aeem-charcoal">
+      <Section className="bg-aeem-cream text-center dark:bg-aeem-dark-bg">
         <div className="mx-auto max-w-3xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-aeem-gold">Get involved</p>
-          <h2 className="mt-4 text-4xl font-bold tracking-tight text-aeem-ink dark:text-white sm:text-5xl">
+          <p className="type-eyebrow text-aeem-gold-dark dark:text-aeem-gold-light">Get involved</p>
+          <h2 className="mt-4 type-section-title text-aeem-ink dark:text-aeem-dark-text">
             Help build a future where every child can learn, lead and thrive.
           </h2>
-          <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-aeem-ink/70 dark:text-gray-400">
+          <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-aeem-charcoal-soft dark:text-aeem-dark-muted">
             Join AEEM as a volunteer, partner, advocate, mentor, or supporter.
           </p>
 
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <Link
               to="/get-involved"
-              className={`${ctaLink} border-aeem-blue bg-aeem-blue text-white hover:border-aeem-blue-dark hover:bg-aeem-blue-dark`}
+              className={`${ctaLink} border-aeem-forest bg-aeem-forest text-white hover:border-aeem-forest-dark hover:bg-aeem-forest-dark`}
             >
               Join the Movement <ArrowRight size={18} aria-hidden="true" />
             </Link>
             <Link
               to="/contact"
-              className={`${ctaLink} border-aeem-blue bg-transparent text-aeem-blue hover:bg-aeem-blue/5 dark:border-aeem-gold dark:text-aeem-gold dark:hover:bg-aeem-gold/10`}
+              className={`${ctaLink} border-aeem-forest bg-transparent text-aeem-forest hover:bg-aeem-forest/5 dark:border-aeem-gold dark:text-aeem-gold-dark dark:hover:bg-aeem-gold/10`}
             >
               Partner With Us
             </Link>

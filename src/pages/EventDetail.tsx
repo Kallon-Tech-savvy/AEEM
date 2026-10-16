@@ -56,7 +56,7 @@ export default function EventDetail() {
   if (loading) {
     return (
       <Section className="flex min-h-[60vh] items-center justify-center">
-        <Loader2 className="animate-spin text-aeem-gold" size={32} aria-label="Loading event details" />
+        <Loader2 className="animate-spin text-aeem-gold-dark dark:text-aeem-gold-light" size={32} aria-label="Loading event details" />
       </Section>
     )
   }
@@ -65,18 +65,18 @@ export default function EventDetail() {
     return (
       <Section spacing="large" containerNarrow className="bg-aeem-cream dark:bg-aeem-charcoal">
         <div className="text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-gold">
+          <p className="type-eyebrow text-aeem-gold-dark dark:text-aeem-gold-light">
             Events
           </p>
-          <h1 className="mt-4 text-3xl font-bold text-aeem-ink dark:text-white sm:text-4xl">
+          <h1 className="mt-4 type-page-title text-aeem-ink dark:text-aeem-dark-text">
             Event not found.
           </h1>
-          <p className="mx-auto mt-4 max-w-xl leading-7 text-aeem-ink/70 dark:text-white/70">
+          <p className="mx-auto mt-4 max-w-xl leading-7 text-aeem-charcoal-soft dark:text-aeem-dark-muted">
             This event does not exist, is unpublished, or is temporarily unavailable.
           </p>
           <Link
             to="/events"
-            className="mt-8 inline-flex min-h-11 items-center gap-2 rounded-xl border border-aeem-blue bg-aeem-blue px-5 text-sm font-semibold text-white hover:bg-aeem-blue-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus"
+            className="mt-8 inline-flex min-h-11 items-center gap-2 rounded-xl border border-aeem-forest bg-aeem-forest px-5 text-sm font-semibold text-white hover:bg-aeem-forest-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus"
           >
             <ArrowLeft size={16} aria-hidden="true" />
             Back to Events
@@ -113,7 +113,7 @@ export default function EventDetail() {
       <Section spacing="large" containerNarrow className="bg-aeem-cream dark:bg-aeem-charcoal">
           <Link
             to="/events"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-aeem-ink/60 hover:text-aeem-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:text-white/60 dark:hover:text-aeem-gold-light"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-aeem-ink/60 hover:text-aeem-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aeem-focus dark:text-white/60 dark:hover:text-aeem-gold-light"
           >
             <ArrowLeft size={16} aria-hidden="true" />
             Back to Events
@@ -121,17 +121,17 @@ export default function EventDetail() {
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Badge>{event.status === 'upcoming' ? 'Upcoming Event' : 'Past Event'}</Badge>
-            <span className="inline-flex items-center gap-1.5 text-sm text-aeem-ink/60 dark:text-white/60">
+            <span className="inline-flex items-center gap-1.5 text-sm text-aeem-charcoal-soft dark:text-aeem-dark-muted">
               <Calendar size={14} aria-hidden="true" />
               {formatDate(event.event_date)}
             </span>
-            <span className="inline-flex items-center gap-1.5 text-sm text-aeem-ink/60 dark:text-white/60">
+            <span className="inline-flex items-center gap-1.5 text-sm text-aeem-charcoal-soft dark:text-aeem-dark-muted">
               <MapPin size={14} aria-hidden="true" />
               {event.location}
             </span>
           </div>
 
-          <h1 className="mt-6 text-4xl font-bold leading-tight text-aeem-ink dark:text-white sm:text-5xl lg:text-6xl">
+          <h1 className="mt-6 type-page-title text-aeem-ink dark:text-aeem-dark-text">
             {event.title}
           </h1>
 
@@ -148,8 +148,8 @@ export default function EventDetail() {
 
       <Section containerNarrow>
         <Card className="p-8">
-            <h2 className="text-2xl font-bold text-aeem-ink dark:text-white">About this Event</h2>
-            <p className="mt-4 whitespace-pre-line leading-8 text-aeem-ink/80 dark:text-white/80">
+            <h2 className="type-section-title text-aeem-ink dark:text-aeem-dark-text">About this Event</h2>
+            <p className="mt-4 whitespace-pre-line leading-8 text-aeem-ink dark:text-aeem-dark-text">
               {event.description}
             </p>
           </Card>

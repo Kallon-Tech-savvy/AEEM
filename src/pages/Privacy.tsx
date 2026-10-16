@@ -15,18 +15,18 @@ const Privacy: React.FC = () => (
       <meta property="og:url" content={getCanonical('/privacy')} />
     </Helmet>
 
-    <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
+    <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-dark-bg">
       <div className="max-w-3xl">
         <Badge>Privacy</Badge>
-        <h1 className="mt-5 text-4xl font-bold leading-tight text-aeem-ink dark:text-white sm:text-5xl">Privacy notice</h1>
-        <p className="mt-6 text-lg leading-8 text-aeem-ink/70 dark:text-white/70">
+        <h1 className="mt-5 type-page-title text-aeem-ink dark:text-aeem-dark-text">Privacy notice</h1>
+        <p className="mt-6 text-lg leading-8 text-aeem-charcoal-soft dark:text-aeem-dark-muted">
           This notice describes the information the current AEEM website asks you to provide through its public forms and how those forms are intended to be used.
         </p>
       </div>
     </Section>
 
     <Section>
-      <article className="prose prose-lg max-w-3xl text-aeem-ink dark:prose-invert">
+      <article className="legal-prose max-w-3xl">
         <h2>Information you choose to submit</h2>
         <p>The website may collect your name, email address, phone number, organization or institution, and the message you provide when you submit a contact or involvement inquiry.</p>
         <h2>Why we collect it</h2>

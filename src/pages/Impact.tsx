@@ -61,28 +61,28 @@ export default function Impact() {
         <link rel="canonical" href={canonicalUrl} />
       </Helmet>
 
-      <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal">
-        <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-blue dark:text-aeem-gold-light">
+      <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-dark-bg">
+        <p className="type-eyebrow text-aeem-forest dark:text-aeem-gold-light">
           Verified Outcomes & Field Work
         </p>
-        <h1 className="mt-4 text-4xl font-bold tracking-tight text-aeem-ink dark:text-white sm:text-5xl lg:text-6xl">
+        <h1 className="mt-4 type-page-title text-aeem-ink dark:text-aeem-dark-text">
           Our Impact
         </h1>
-        <p className="mt-6 max-w-2xl text-lg leading-8 text-aeem-ink/75 dark:text-white/75">
+        <p className="mt-6 max-w-2xl text-lg leading-8 text-aeem-charcoal-soft dark:text-aeem-dark-muted">
           Transparent reporting on educational programs, community reach, and institutional partnerships.
         </p>
       </Section>
 
-      <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-charcoal-mid" aria-labelledby="stories-heading">
+      <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-dark-surface" aria-labelledby="stories-heading">
         <div className="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-3xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-aeem-blue dark:text-aeem-gold-light">
+            <p className="type-eyebrow text-aeem-forest dark:text-aeem-gold-light">
               Impact stories
             </p>
-            <h2 id="stories-heading" className="mt-3 text-3xl font-bold text-aeem-ink dark:text-white/90 sm:text-4xl">
+            <h2 id="stories-heading" className="mt-3 type-section-title text-aeem-ink dark:text-aeem-dark-text">
               From program activity to human outcomes
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-aeem-ink/70 dark:text-white/70">
+            <p className="mt-4 text-base leading-relaxed text-aeem-charcoal-soft dark:text-aeem-dark-muted">
               Each story should connect an identified need to an intervention and,
               where evidence exists, a measurable or documented outcome.
             </p>
@@ -91,13 +91,13 @@ export default function Impact() {
 
         {loading ? (
           <div className="flex items-center justify-center py-24" role="status" aria-live="polite">
-            <Loader2 className="h-8 w-8 animate-spin text-aeem-blue dark:text-aeem-gold-light" aria-hidden="true" />
+            <Loader2 className="h-8 w-8 animate-spin text-aeem-forest dark:text-aeem-gold-light" aria-hidden="true" />
             <span className="sr-only">Loading impact stories</span>
           </div>
         ) : error ? (
           <Card className="p-8">
-            <h3 className="text-xl font-semibold text-aeem-ink dark:text-white/90">Impact stories are temporarily unavailable.</h3>
-            <p className="mt-3 leading-7 text-aeem-ink/70 dark:text-white/70">
+            <h3 className="type-card-title text-aeem-ink dark:text-aeem-dark-text">Impact stories are temporarily unavailable.</h3>
+            <p className="mt-3 leading-7 text-aeem-charcoal-soft dark:text-aeem-dark-muted">
               We could not load the published story archive right now. Please try again later.
             </p>
           </Card>
@@ -105,7 +105,7 @@ export default function Impact() {
           <div className="grid gap-8 lg:grid-cols-2">
             {stories.map((story) => (
               <Card key={story.slug} className="overflow-hidden p-0">
-                <div className="aspect-[16/9] bg-aeem-ink/5">
+                <div className="aspect-[16/9] bg-aeem-forest-light dark:bg-aeem-dark-bg">
                   {story.cover_image_url ? (
                     <img
                       src={story.cover_image_url}
@@ -116,22 +116,22 @@ export default function Impact() {
                       className="h-full w-full object-cover"
                     />
                   ) : (
-                    <div className="h-full w-full bg-aeem-blue dark:bg-aeem-charcoal-mid" aria-hidden="true" />
+                    <div className="h-full w-full bg-aeem-forest dark:bg-aeem-dark-surface" aria-hidden="true" />
                   )}
                 </div>
                 <div className="p-6 sm:p-8">
                   {story.location && (
-                    <div className="flex items-center gap-2 text-sm text-aeem-ink/65 dark:text-white/65">
-                      <MapPin size={16} className="text-aeem-gold" aria-hidden="true" />
+                    <div className="flex items-center gap-2 text-sm text-aeem-charcoal-soft dark:text-aeem-dark-muted">
+                      <MapPin size={16} className="text-aeem-gold-dark dark:text-aeem-gold-light" aria-hidden="true" />
                       <span>{story.location}</span>
                     </div>
                   )}
 
-                  <h3 className="mt-3 text-xl font-bold text-aeem-ink dark:text-white">{story.title}</h3>
-                  {story.summary && <p className="mt-2 text-sm text-aeem-ink/70 dark:text-white/70">{story.summary}</p>}
+                  <h3 className="mt-3 type-card-title text-aeem-ink dark:text-aeem-dark-text">{story.title}</h3>
+                  {story.summary && <p className="mt-2 text-sm text-aeem-charcoal-soft dark:text-aeem-dark-muted">{story.summary}</p>}
 
-                  <div className="mt-6 border-t border-black/10 pt-4 dark:border-white/10">
-                    <div className="mb-4 flex flex-wrap items-center gap-4 text-xs text-aeem-ink/60 dark:text-white/60">
+                  <div className="mt-6 border-t border-aeem-border pt-4 dark:border-aeem-dark-border">
+                    <div className="mb-4 flex flex-wrap items-center gap-4 text-xs text-aeem-charcoal-soft dark:text-aeem-dark-muted">
                       {story.participants_count != null && (
                         <span className="inline-flex items-center gap-1">
                           <Users size={13} aria-hidden="true" />
@@ -158,7 +158,7 @@ export default function Impact() {
           </div>
         ) : (
           <Card className="p-8 text-center">
-            <p className="text-base text-aeem-ink/70 dark:text-white/70">No published impact stories found.</p>
+            <p className="text-base text-aeem-charcoal-soft dark:text-aeem-dark-muted">No published impact stories found.</p>
           </Card>
         )}
       </Section>
