@@ -62,7 +62,7 @@ export default function Impact() {
       </Helmet>
 
       <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-dark-bg">
-        <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-blue dark:text-aeem-gold-light">
+        <p className="text-sm font-semibold uppercase tracking-[0.16em] text-aeem-forest dark:text-aeem-gold-light">
           Verified Outcomes & Field Work
         </p>
         <h1 className="mt-4 type-page-title text-aeem-ink dark:text-aeem-dark-text">
@@ -76,7 +76,7 @@ export default function Impact() {
       <Section spacing="large" className="bg-aeem-cream dark:bg-aeem-dark-surface" aria-labelledby="stories-heading">
         <div className="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-3xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-aeem-blue dark:text-aeem-gold-light">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-aeem-forest dark:text-aeem-gold-light">
               Impact stories
             </p>
             <h2 id="stories-heading" className="mt-3 text-3xl font-bold text-aeem-ink dark:text-white/90 sm:text-4xl">
@@ -91,7 +91,7 @@ export default function Impact() {
 
         {loading ? (
           <div className="flex items-center justify-center py-24" role="status" aria-live="polite">
-            <Loader2 className="h-8 w-8 animate-spin text-aeem-blue dark:text-aeem-gold-light" aria-hidden="true" />
+            <Loader2 className="h-8 w-8 animate-spin text-aeem-forest dark:text-aeem-gold-light" aria-hidden="true" />
             <span className="sr-only">Loading impact stories</span>
           </div>
         ) : error ? (
@@ -116,7 +116,7 @@ export default function Impact() {
                       className="h-full w-full object-cover"
                     />
                   ) : (
-                    <div className="h-full w-full bg-aeem-blue dark:bg-aeem-dark-surface" aria-hidden="true" />
+                    <div className="h-full w-full bg-aeem-forest dark:bg-aeem-dark-surface" aria-hidden="true" />
                   )}
                 </div>
                 <div className="p-6 sm:p-8">
