@@ -71,7 +71,7 @@ export default function EventDetail() {
           <h1 className="mt-4 type-page-title text-aeem-ink dark:text-aeem-dark-text">
             Event not found.
           </h1>
-          <p className="mx-auto mt-4 max-w-xl leading-7 text-aeem-ink/70 dark:text-white/70">
+          <p className="mx-auto mt-4 max-w-xl leading-7 text-aeem-charcoal-soft dark:text-aeem-dark-muted">
             This event does not exist, is unpublished, or is temporarily unavailable.
           </p>
           <Link
@@ -121,11 +121,11 @@ export default function EventDetail() {
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Badge>{event.status === 'upcoming' ? 'Upcoming Event' : 'Past Event'}</Badge>
-            <span className="inline-flex items-center gap-1.5 text-sm text-aeem-ink/60 dark:text-white/60">
+            <span className="inline-flex items-center gap-1.5 text-sm text-aeem-charcoal-soft dark:text-aeem-dark-muted">
               <Calendar size={14} aria-hidden="true" />
               {formatDate(event.event_date)}
             </span>
-            <span className="inline-flex items-center gap-1.5 text-sm text-aeem-ink/60 dark:text-white/60">
+            <span className="inline-flex items-center gap-1.5 text-sm text-aeem-charcoal-soft dark:text-aeem-dark-muted">
               <MapPin size={14} aria-hidden="true" />
               {event.location}
             </span>
@@ -148,8 +148,8 @@ export default function EventDetail() {
 
       <Section containerNarrow>
         <Card className="p-8">
-            <h2 className="type-section-title text-aeem-ink dark:text-white">About this Event</h2>
-            <p className="mt-4 whitespace-pre-line leading-8 text-aeem-ink/80 dark:text-white/80">
+            <h2 className="type-section-title text-aeem-ink dark:text-aeem-dark-text">About this Event</h2>
+            <p className="mt-4 whitespace-pre-line leading-8 text-aeem-ink dark:text-aeem-dark-text">
               {event.description}
             </p>
           </Card>
