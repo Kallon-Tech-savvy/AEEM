@@ -251,6 +251,39 @@
     border-color: rgba(255, 255, 255, 0.08);
   }
 
+  /* Legal and policy pages use explicit styles; no typography plugin is required. */
+  .legal-prose {
+    color: var(--color-text-primary);
+    font-size: var(--font-base);
+    line-height: 1.75;
+  }
+
+  .legal-prose h2 {
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+    font-size: var(--font-2xl);
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    color: var(--color-text-primary);
+  }
+
+  .legal-prose p {
+    margin-top: 1rem;
+    line-height: 1.75;
+  }
+
+  .legal-prose a {
+    color: var(--color-brand-primary);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .dark .legal-prose a {
+    color: var(--color-gold);
+  }
+
   /* Card */
   .card {
     background:    var(--color-surface);
