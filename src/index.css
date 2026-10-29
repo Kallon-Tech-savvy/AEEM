@@ -4,11 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── 1. Fluid Typography ───────────────────────────────────
-   Uses clamp() to create a responsive typographic scale that
-   adapts smoothly between mobile and desktop breakpoints.
-   Based on the modular scale with a 1.25 ratio, but feel free
-   to adjust the values to fit your design needs!                */
 :root {
   --font-xs:   clamp(0.75rem,  0.71rem + 0.20vw, 0.875rem);
   --font-sm:   clamp(0.875rem, 0.81rem + 0.30vw, 1rem);
@@ -23,10 +18,6 @@
   --font-7xl:  clamp(4rem,     3rem    + 5.00vw, 7.5rem);
 }
 
-
-/* ── 2. Design Tokens — Light Mode (default) ────────────────
-   All ratios tested against WCAG AA (4.5:1 normal / 3:1 large)
-   ────────────────────────────────────────────────────────── */
 :root {
   /* Backgrounds */
   --color-bg:          #F8F7F4;
@@ -75,10 +66,6 @@
   --transition-slow: 400ms ease-out;
 }
 
-
-/* ── 3. Design Tokens — Dark Mode ───────────────────────────
-   Applied when <html class="dark"> (toggled by ThemeProvider)
-   ────────────────────────────────────────────────────────── */
 .dark {
   --color-bg:          #0f0f0f;
   --color-surface:     #1F1F1D; /* slightly lighter for improved separation */
@@ -117,11 +104,6 @@
 }
 
 
-/* ── 4. prefers-reduced-motion ──────────────────────────────
-   Collapses all transitions and animations to near-zero.
-   ThemeProvider.tsx exposes useReducedMotion() so Framer
-   Motion components can also respect this preference.
-   ────────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   :root {
     --transition-fast: 0ms;
@@ -158,9 +140,6 @@
                       color            var(--transition-base);
   }
 
-  /* ── Global focus ────────────────────────────────────────
-     Visible for keyboard / AT users; hidden on mouse via
-     :focus-visible (supported in all modern browsers).     */
   :focus-visible {
     outline:        2px solid var(--color-focus);
     outline-offset: 3px;

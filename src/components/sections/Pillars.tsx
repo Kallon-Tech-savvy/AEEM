@@ -35,7 +35,7 @@ export default function Pillars() {
                 viewport={{ once: true, margin: '-40px' }}
                 className="flex gap-5"
               >
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-aeem-forest text-white dark:bg-aeem-gold dark:text-aeem-ink">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-aeem-blue text-white dark:bg-aeem-gold dark:text-aeem-ink">
                   <pillar.icon size={24} aria-hidden="true" />
                 </div>
                 <div>
