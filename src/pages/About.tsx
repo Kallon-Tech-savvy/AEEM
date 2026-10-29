@@ -45,7 +45,7 @@ const About: React.FC = () => (
     </Section>
 
     <Section aria-labelledby="purpose-heading">
-      <div className="mb-12 max-w-3xl">
+      <div className="mb-4 max-w-3xl">
         <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-aeem-blue dark:text-aeem-gold-light">Our purpose</p>
         <h2 id="purpose-heading" className="text-3xl font-bold text-aeem-ink dark:text-white sm:text-4xl">What guides the work</h2>
       </div>
@@ -76,7 +76,7 @@ const About: React.FC = () => (
     </Section>
 
     <Section aria-labelledby="leadership-heading" className="bg-gray-50 dark:bg-[#15181e]">
-      <div className="mb-12 max-w-3xl">
+      <div className="mb-4 max-w-3xl">
         <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-aeem-blue dark:text-aeem-gold-light">Leadership</p>
         <h2 id="leadership-heading" className="text-3xl font-bold text-aeem-ink dark:text-white sm:text-4xl">The people responsible for the movement.</h2>
         <p className="mt-4 text-lg leading-relaxed text-gray-600 dark:text-gray-400">AEEM's leadership team provides the organizational direction behind its work.</p>
@@ -100,7 +100,7 @@ const About: React.FC = () => (
     </Section>
 
     <Section aria-labelledby="life-heading">
-      <div className="mb-10 max-w-2xl">
+      <div className="mb-4 max-w-2xl">
         <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-aeem-blue dark:text-aeem-gold-light">Life at AEEM</p>
         <h2 id="life-heading" className="text-3xl font-bold text-aeem-ink dark:text-white sm:text-4xl">The work is carried by people.</h2>
         <p className="mt-4 text-lg leading-relaxed text-gray-600 dark:text-gray-400">Moments from workshops, community gatherings, mentorship, and team sessions show the human side of the movement.</p>
@@ -109,7 +109,7 @@ const About: React.FC = () => (
     </Section>
 
     <Section aria-labelledby="partners-heading" className="bg-gray-50 dark:bg-[#15181e]">
-      <div className="mb-10 max-w-2xl">
+      <div className="mb-4 max-w-2xl">
         <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-aeem-blue dark:text-aeem-gold-light">Relationships</p>
         <h2 id="partners-heading" className="text-3xl font-bold text-aeem-ink dark:text-white sm:text-4xl">Partners and institutional relationships</h2>
         <p className="mt-4 text-lg leading-relaxed text-gray-600 dark:text-gray-400">Organizations represented in AEEM's current partner data.</p>
