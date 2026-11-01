@@ -9,8 +9,8 @@ export default {
     extend: {
       colors: {
         // Institutional brand tokens
-        'aeem-blue':       '#352c5f',
-        'aeem-blue-dark':  '#1e173d',
+        'aeem-blue':       '#1A6BCC',
+        'aeem-blue-dark':  '#1557A0',
         'aeem-ink':          '#191720',
         'aeem-cream':        '#F7F5EF',
         'aeem-white':        '#FFFFFF',
@@ -43,7 +43,7 @@ export default {
         'aeem-success-bg':   '#D1FAE5',
         'aeem-error':        '#C0392B',   // Deeper red — AA on white (≈5.5:1)
         'aeem-error-bg':     '#FEE2E2',
-        'aeem-focus':        '#1A6BCC',   // Blue focus ring (≈7:1 on white)
+        'aeem-focus':        '#1A6BCC',   // Blue focus ring (≈5.2:1 on white)
       },
 
       boxShadow: {
